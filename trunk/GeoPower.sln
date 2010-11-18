@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "SRC\System\System
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geometry", "SRC\Geometry\build\msvc100\Geometry\Geometry.vcxproj", "{108E75A3-0A92-489A-B1A9-8F071D40A108}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Carto", "SRC\Carto\Carto.vcxproj", "{7A2ABDEF-A6C0-449C-9A1D-659D83526905}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Debug|Win32.Build.0 = Debug|Win32
 		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Win32.ActiveCfg = Release|Win32
 		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Win32.Build.0 = Release|Win32
+		{7A2ABDEF-A6C0-449C-9A1D-659D83526905}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7A2ABDEF-A6C0-449C-9A1D-659D83526905}.Debug|Win32.Build.0 = Debug|Win32
+		{7A2ABDEF-A6C0-449C-9A1D-659D83526905}.Release|Win32.ActiveCfg = Release|Win32
+		{7A2ABDEF-A6C0-449C-9A1D-659D83526905}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
