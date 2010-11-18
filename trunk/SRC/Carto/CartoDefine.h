@@ -18,6 +18,4 @@
 
 #endif
 
-#include "SmartPtr.h"
-#include "SystemDefine.h"
 #endif

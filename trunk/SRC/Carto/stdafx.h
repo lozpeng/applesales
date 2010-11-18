@@ -14,7 +14,8 @@
 
 
 //
-
+#include "SystemDefine.h"
+#include "ISerialization.h"
 #include "CartoDefine.h"
 
 
