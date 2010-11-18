@@ -9,7 +9,7 @@
 #ifndef ILayer_H
 #define Ilayer_H
 
-#include "ISerialization.h"
+
 namespace Carto 
 {
 	class CARTO_DLL ILayer : public SYSTEM::ISerialization
