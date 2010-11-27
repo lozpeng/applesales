@@ -24,25 +24,19 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SystemDefine.h">
+    <ClInclude Include="DisplayDef.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SmartPtr.h">
+    <ClInclude Include="DisplayTransformation.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Exception.h">
+    <ClInclude Include="DisplayHeader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ISerialization.h">
+    <ClInclude Include="BitmapOperation.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IArchive.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SystemUnit.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="alm.h">
+    <ClInclude Include="CDC.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,22 +44,19 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="System.cpp">
+    <ClCompile Include="Display.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Exception.cpp">
+    <ClCompile Include="DisplayTransformation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="IArchive.cpp">
+    <ClCompile Include="BitmapOperation.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ISerialization.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="SystemUnit.cpp">
+    <ClCompile Include="CDC.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

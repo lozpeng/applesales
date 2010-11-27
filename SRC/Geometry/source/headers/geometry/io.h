@@ -58,7 +58,7 @@ namespace io { // geos.io
 #include <Geometry/io/CLocalizer.h>
 //#include <Geometry/io/Writer.h>
 
-#include <Geometry/io/GeometrySerializor.h>
+//#include <Geometry/io/GeometrySerializor.h>
 
 #ifdef __GNUC__
 #warning *** DEPRECATED: You are using deprecated header io.h. Please, update your sources according to new layout of GEOS headers and namespaces
