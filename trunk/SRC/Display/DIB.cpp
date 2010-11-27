@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "DIB.h"
 
-namespace otDisplay
+namespace Display
 {
 
 #define RECTWIDTH(rctRect)		(rctRect.right - rctRect.left)

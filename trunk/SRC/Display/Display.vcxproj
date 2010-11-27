@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="BitmapOperation.h" />
     <ClInclude Include="CDC.h" />
+    <ClInclude Include="DIB.h" />
     <ClInclude Include="DisplayDef.h" />
     <ClInclude Include="DisplayHeader.h" />
     <ClInclude Include="DisplayTransformation.h" />
@@ -96,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="BitmapOperation.cpp" />
     <ClCompile Include="CDC.cpp" />
+    <ClCompile Include="DIB.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="DisplayTransformation.cpp" />
     <ClCompile Include="dllmain.cpp">

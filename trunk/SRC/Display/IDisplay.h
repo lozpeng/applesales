@@ -10,9 +10,6 @@
 
 namespace otDisplay
 {
-
-	
-
 class ISymbol;
 
 class DISPLAY_DLL IDisplay : public otSystem::CRef 

@@ -1,3 +1,10 @@
+//////////////////////////////////////////////////////////////////////
+// 版权(c) 2010-2020, 天地智绘
+// 作者：  9527
+// 时间：  2008/11/27
+// 描述：  坐标转换
+//////////////////////////////////////////////////////////////////////
+
 #ifndef _DisplayTransformation_h
 #define _DisplayTransformation_h
 
@@ -316,22 +323,12 @@ protected:
 
 	void ConvertGeoToDisplay( const std::vector<GEOMETRY::geom::Coordinate> &cs , INT_POINT *pts , unsigned long &UseCount);
 
-    
-
-
 protected:
 	//世界坐标的单位
 	SYSTEM::SYS_UNIT_TYPE m_unit;
-
 	//参考比例尺
 	double	  m_referenceScale;
-
-
-
 	VIEW_POSITION m_viewPositon;
-
-
-
 };
 
 }
