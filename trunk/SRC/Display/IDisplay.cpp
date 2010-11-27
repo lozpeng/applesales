@@ -2,9 +2,9 @@
 #include "IDisplay.h"
 #include "ISymbol.h"
 #include "CDC.h"
-#include "TextSymbol.h"
+//#include "TextSymbol.h"
 
-namespace otDisplay
+namespace Display
 {
 
 static boost::signal<void ()> gCallbackUpdteGeography;
@@ -35,7 +35,7 @@ IDisplay::~IDisplay()
 	}	
 }
 
-otSystem::CSharedPtr<IDisplay> IDisplay::Clone()
+SYSTEM::CSmartPtr<IDisplay> IDisplay::Clone()
 {
 	IDisplay* pDisplay = new IDisplay;
 	*pDisplay = *this;
@@ -53,7 +53,7 @@ BOOL IDisplay::GetBeLayoutDisplay()
 	return m_bLayoutDis;
 }
 
-otDisplay::CDisplayTransformation& IDisplay::GetDisplayTransformation()
+Display::CDisplayTransformation& IDisplay::GetDisplayTransformation()
 {
 	return m_cDisplayTransformation;
 }
@@ -142,35 +142,35 @@ void IDisplay::DrawBackgroud()
 
 void IDisplay::SetDC(long hDC, long lWidth, long lHeight )
 {
-	OTBEGIN
+	//OTBEGIN
 		if(hDC == NULL)
 			m_pDC->CreateExDC( lWidth , lHeight );
 		else
 			m_pDC->SetDC( hDC , lWidth , lHeight );
 	m_cDisplayTransformation.SetViewBound(0, lWidth, 0, lHeight);
 
-	OTEND_NORET
+	////OTEND_NORET
 }
 
 /**
 * 获得绘制DC
 * @return 若获得成功返回CDC
 */
-otDisplay::CDC* IDisplay::GetDrawDC()
+Display::CDC* IDisplay::GetDrawDC()
 {
 	return m_pDC;
 }
 
 
 
-BOOL IDisplay::SetSymbol(otDisplay::ISymbol* pSymbol)
+BOOL IDisplay::SetSymbol(Display::ISymbol* pSymbol)
 {
-	OTBEGIN
+	//OTBEGIN
 		if( bDraw )
-			OTFALSERETURN(FALSE,"违反了调用规则：不允许在BEGINE-END的范围中调用");
+			//OTFALSERETURN(FALSE,"违反了调用规则：不允许在BEGINE-END的范围中调用");
 
 	if(pSymbol == NULL || m_pDC->GetSafeHdc() == NULL )
-		OTFALSERETURN2(FALSE,"Symbol == %ld || m_pDC.hDC == %ld", pSymbol, m_pDC->GetSafeHdc() );
+		//OTFALSERETURN2(FALSE,"Symbol == %ld || m_pDC.hDC == %ld", pSymbol, m_pDC->GetSafeHdc() );
 
 
 	//对符号进行缩放
@@ -200,14 +200,15 @@ BOOL IDisplay::SetSymbol(otDisplay::ISymbol* pSymbol)
 
 	m_stackpSymbol.push_back(m_pSymbol);
 
-	OTEND(TRUE,FALSE)
+	//OTEND(TRUE,FALSE)
+		return TRUE;
 }
 
 
 int IDisplay::SetSymbolInStack(ISymbol* pSymbol)
 {
 	if(pSymbol == NULL || m_pDC->GetSafeHdc() == NULL )
-		OTFALSERETURN(FALSE,"Symbol or DC is Null" );
+		//OTFALSERETURN(FALSE,"Symbol or DC is Null" );
 
 	//对符号进行缩放
 	if(m_bLayoutDis)
@@ -239,9 +240,9 @@ int IDisplay::SetSymbolInStack(ISymbol* pSymbol)
 
 BOOL IDisplay::Begin()
 {
-	OTBEGIN
+	//OTBEGIN
 		if( m_pDC->GetSafeHdc() == NULL )
-			OTFALSERETURN1(FALSE,"NOTREADY: m_pDC.hDC == %ld", m_pDC->GetSafeHdc() );
+			//OTFALSERETURN1(FALSE,"NOTREADY: m_pDC.hDC == %ld", m_pDC->GetSafeHdc() );
 
 	////////////////////
 	OnBeginDraw( m_pDC->GetSafeHdc() );
@@ -253,11 +254,12 @@ BOOL IDisplay::Begin()
 
 	bDraw = TRUE;
 
+	return bDraw;
 	//IRasterSymbolPtr pRsSym = m_pSymbol;
 	//if( pRsSym != NULL )
 	//	pRsSym->BeginDrawRaster();
 
-	OTEND(TRUE,FALSE)
+	//OTEND(TRUE,FALSE)
 }
 
 void IDisplay::End()
@@ -315,7 +317,7 @@ void IDisplay::End()
 	OnEndDraw( m_pDC->GetSafeHdc() );
 }
 
-void IDisplay::Draw(const TT_GEOMETRY::geom::Geometry* pGeometry)
+void IDisplay::Draw(const GEOMETRY::geom::Geometry* pGeometry)
 {
 	void *p = NULL;
 	if( pGeometry == NULL )
@@ -323,16 +325,16 @@ void IDisplay::Draw(const TT_GEOMETRY::geom::Geometry* pGeometry)
 
 	//矢量切割
 	BOOL bNewGeo = FALSE;
-	TT_GEOMETRY::geom::Geometry *pDrawGeometry = NULL;	
+	GEOMETRY::geom::Geometry *pDrawGeometry = NULL;	
 	if(m_bPrint)
 	{
-		TT_GEOMETRY::geom::GeometryTypeId typeId = pGeometry->getGeometryTypeId();
+		GEOMETRY::geom::GeometryTypeId typeId = pGeometry->getGeometryTypeId();
 		if(typeId != GEOM_CIRCLE && typeId != GEOM_ELLIPSE && typeId != GEOM_BEZIERSPLINE)
 		{
 			RECT rect; 
 			DIS_RECT disrect;
-			TT_GEOMETRY::geom::Envelope viewEnv;
-			TT_GEOMETRY::geom::Geometry* pViewGeo = NULL;
+			GEOMETRY::geom::Envelope viewEnv;
+			GEOMETRY::geom::Geometry* pViewGeo = NULL;
 
 			rect = m_cDisplayTransformation.GetViewBound().GetRect();
 			disrect.left = rect.left;
@@ -340,62 +342,62 @@ void IDisplay::Draw(const TT_GEOMETRY::geom::Geometry* pGeometry)
 			disrect.top = rect.top;
 			disrect.bottom = rect.bottom;
 			m_cDisplayTransformation.TransformToGeo(disrect, &viewEnv);
-			pViewGeo = TT_GEOMETRY::geom::GeometryFactory::getDefaultInstance()->toGeometry(&viewEnv);
+			pViewGeo = GEOMETRY::geom::GeometryFactory::getDefaultInstance()->toGeometry(&viewEnv);
 			if(!pViewGeo->intersects(pGeometry))
 				return;
 
 			pDrawGeometry = pViewGeo->intersection(pGeometry);	
 			bNewGeo = TRUE;
-			TT_GEOMETRY::geom::GeometryFactory::getDefaultInstance()->destroyGeometry(pViewGeo);
+			GEOMETRY::geom::GeometryFactory::getDefaultInstance()->destroyGeometry(pViewGeo);
 		}
 		else
 		{
-			pDrawGeometry =  (TT_GEOMETRY::geom::Geometry*)pGeometry;
+			pDrawGeometry =  (GEOMETRY::geom::Geometry*)pGeometry;
 		}
 	}
 	else
 	{
-		pDrawGeometry =  (TT_GEOMETRY::geom::Geometry*)pGeometry;
+		pDrawGeometry =  (GEOMETRY::geom::Geometry*)pGeometry;
 	}
 
 
 	//生成显示图形
-	TT_GEOMETRY::geom::GeometryTypeId GTypeID = pDrawGeometry->getGeometryTypeId();
-	if(GTypeID == TT_GEOMETRY::geom::GEOS_POINT)
+	GEOMETRY::geom::GeometryTypeId GTypeID = pDrawGeometry->getGeometryTypeId();
+	if(GTypeID == GEOMETRY::geom::GEOS_POINT)
 	{
-		TT_GEOMETRY::geom::Point* pPoint= (TT_GEOMETRY::geom::Point*)pDrawGeometry;
+		GEOMETRY::geom::Point* pPoint= (GEOMETRY::geom::Point*)pDrawGeometry;
 		p = (void*)m_cDisplayTransformation.TransformToDisplay( pPoint );
 	}
-	else if(GTypeID == TT_GEOMETRY::geom::GEOS_LINESTRING|| GTypeID == TT_GEOMETRY::geom::GEOS_LINEARRING)
+	else if(GTypeID == GEOMETRY::geom::GEOS_LINESTRING|| GTypeID == GEOMETRY::geom::GEOS_LINEARRING)
 	{
-		TT_GEOMETRY::geom::LineString* pLine = (TT_GEOMETRY::geom::LineString*)pDrawGeometry;
+		GEOMETRY::geom::LineString* pLine = (GEOMETRY::geom::LineString*)pDrawGeometry;
 		p = (void*)m_cDisplayTransformation.TransformToDisplay( pLine );
 	}
-	else if(GTypeID == TT_GEOMETRY::geom::GEOS_POLYGON)
+	else if(GTypeID == GEOMETRY::geom::GEOS_POLYGON)
 	{
-		TT_GEOMETRY::geom::Polygon* pPoly = (TT_GEOMETRY::geom::Polygon*)pDrawGeometry;
+		GEOMETRY::geom::Polygon* pPoly = (GEOMETRY::geom::Polygon*)pDrawGeometry;
 		p = (void*)m_cDisplayTransformation.TransformToDisplay( pPoly );
 	}
-	else if(GTypeID ==TT_GEOMETRY::geom::GEOM_CIRCLE)
+	else if(GTypeID ==GEOMETRY::geom::GEOM_CIRCLE)
 	{
-		TT_GEOMETRY::geom::Circle *pc =(TT_GEOMETRY::geom::Circle*)pDrawGeometry;
+		GEOMETRY::geom::Circle *pc =(GEOMETRY::geom::Circle*)pDrawGeometry;
 		p =(void*)m_cDisplayTransformation.TransformToDisplay(pc);	
 	}
-	else if(GTypeID ==TT_GEOMETRY::geom::GEOM_ELLIPSE)
+	else if(GTypeID ==GEOMETRY::geom::GEOM_ELLIPSE)
 	{
-		TT_GEOMETRY::geom::Ellipse *pe =(TT_GEOMETRY::geom::Ellipse*)pDrawGeometry;
+		GEOMETRY::geom::Ellipse *pe =(GEOMETRY::geom::Ellipse*)pDrawGeometry;
 		p =(void*)m_cDisplayTransformation.TransformToDisplay(pe);
 	}
-	else if(GTypeID == TT_GEOMETRY::geom::GEOM_BEZIERSPLINE)
+	else if(GTypeID == GEOMETRY::geom::GEOM_BEZIERSPLINE)
 	{
-		TT_GEOMETRY::geom::BezierSpline *pb =(TT_GEOMETRY::geom::BezierSpline*)pDrawGeometry;
+		GEOMETRY::geom::BezierSpline *pb =(GEOMETRY::geom::BezierSpline*)pDrawGeometry;
 		p =(void*)m_cDisplayTransformation.TransformToDisplay(pb);
 	}
-	else if(GTypeID == TT_GEOMETRY::geom::GEOS_MULTIPOINT
-		|| GTypeID == TT_GEOMETRY::geom::GEOS_MULTILINESTRING || 
-		GTypeID == TT_GEOMETRY::geom::GEOS_MULTIPOLYGON )
+	else if(GTypeID == GEOMETRY::geom::GEOS_MULTIPOINT
+		|| GTypeID == GEOMETRY::geom::GEOS_MULTILINESTRING || 
+		GTypeID == GEOMETRY::geom::GEOS_MULTIPOLYGON )
 	{
-		TT_GEOMETRY::geom::GeometryCollection *pGeoCol = (TT_GEOMETRY::geom::GeometryCollection*)pDrawGeometry;
+		GEOMETRY::geom::GeometryCollection *pGeoCol = (GEOMETRY::geom::GeometryCollection*)pDrawGeometry;
 		for(int i = 0 ; i < pGeoCol->getNumGeometries() ; i++ )
 			IDisplay::Draw( pGeoCol->getGeometryN(i) );
 
@@ -418,7 +420,7 @@ void IDisplay::Draw(const TT_GEOMETRY::geom::Geometry* pGeometry)
 	if(m_pSymbol != NULL && p)
 		m_pSymbol->Draw( p );
 	else
-		OTTRACE("Symbol is NULL in IDisplay Draw");
+		//OTTRACE("Symbol is NULL in IDisplay Draw");
 
 	////释放绘制对象
 	if(p)
@@ -433,87 +435,89 @@ void IDisplay::Draw(const TT_GEOMETRY::geom::Geometry* pGeometry)
 	}
 
 	if(bNewGeo)
-		TT_GEOMETRY::geom::GeometryFactory::getDefaultInstance()->destroyGeometry(pDrawGeometry);
+		GEOMETRY::geom::GeometryFactory::getDefaultInstance()->destroyGeometry(pDrawGeometry);
 }
 
 /**
 * 绘制
 * @param pEnvelope 矩形
 */
-void IDisplay::Draw(const TT_GEOMETRY::geom::Envelope* pEnvelope)
+void IDisplay::Draw(const GEOMETRY::geom::Envelope* pEnvelope)
 {
 	void *p = NULL;
 	p = (void*)m_cDisplayTransformation.TransformToDisplay( pEnvelope);
 	if(m_pSymbol != NULL)
 		m_pSymbol->Draw( p);
 	else
-		OTTRACE("Symbol is NULL in IDisplay Draw");
+		//OTTRACE("Symbol is NULL in IDisplay Draw");
 
 	FreeDisplayObj(p);
 }
-DIS_RECT IDisplay::Draw(const TT_GEOMETRY::geom::Envelope* pEnvelope,  const std::string strText, BOOL bScaleWithMap, unsigned int dwDTFormat)
+DIS_RECT IDisplay::Draw(const GEOMETRY::geom::Envelope* pEnvelope,  const std::string strText, BOOL bScaleWithMap, unsigned int dwDTFormat)
 {
-	DIS_TEXT* pTextObj = m_cDisplayTransformation.TransformToDisplay( pEnvelope, strText );
-	CTextSymbol* pTextSymbol = (CTextSymbol*)m_pSymbol; 
+	//DIS_TEXT* pTextObj = m_cDisplayTransformation.TransformToDisplay( pEnvelope, strText );
+	//CTextSymbol* pTextSymbol = (CTextSymbol*)m_pSymbol; 
 
-	
-	if(pTextSymbol != NULL)
-	{
-		pTextSymbol->SetDrawFormat(dwDTFormat);
-		pTextSymbol->Draw( pTextObj);
-	
-		DIS_RECT rect = pTextObj->textPos;
-		FreeDisplayObj(pTextObj);
+	//
+	//if(pTextSymbol != NULL)
+	//{
+	//	pTextSymbol->SetDrawFormat(dwDTFormat);
+	//	pTextSymbol->Draw( pTextObj);
+	//
+	//	DIS_RECT rect = pTextObj->textPos;
+	//	FreeDisplayObj(pTextObj);
 
-		return rect;
-	}
-	else
-	{
-		OTTRACE("Symbol is NULL in IDisplay Draw");
-	}
+	//	return rect;
+	//}
+	//else
+	//{
+	//	//OTTRACE("Symbol is NULL in IDisplay Draw");
+	//}
 
 
-	if(pTextObj)
-	{
-		FreeDisplayObj(pTextObj);
-	}
+	//if(pTextObj)
+	//{
+	//	FreeDisplayObj(pTextObj);
+	//}
+	DIS_RECT rectDis;
+	return rectDis;
 }
 
 DIS_RECT IDisplay::Draw(const DIS_RECT* rect,  const std::string strText, BOOL bScaleWithMap, unsigned int dwDTFormat)
 {
-	CTextSymbol* pTextSymbol = (CTextSymbol*)m_pSymbol; 
+	//CTextSymbol* pTextSymbol = (CTextSymbol*)m_pSymbol; 
 
-	DIS_TEXT* pTextObj = NULL;
-	CreateDisplayText(pTextObj, strText.size());
-	pTextObj->textPos = *rect;
-	strcpy(pTextObj->cText, strText.c_str());
+	//DIS_TEXT* pTextObj = NULL;
+	//CreateDisplayText(pTextObj, strText.size());
+	//pTextObj->textPos = *rect;
+	//strcpy(pTextObj->cText, strText.c_str());
 
-	if(pTextSymbol != NULL)
-	{
-		pTextSymbol->SetDrawFormat(dwDTFormat);
-		pTextSymbol->Draw( pTextObj);
+	//if(pTextSymbol != NULL)
+	//{
+	//	pTextSymbol->SetDrawFormat(dwDTFormat);
+	//	pTextSymbol->Draw( pTextObj);
 
-		DIS_RECT rect = pTextObj->textPos;
-		FreeDisplayObj(pTextObj);
-		return rect;
-	}
-	else
-	{
-		OTTRACE("Symbol is NULL in IDisplay Draw");
-	}
+	//	DIS_RECT rect = pTextObj->textPos;
+	//	FreeDisplayObj(pTextObj);
+	//	return rect;
+	//}
+	//else
+	//{
+	//	//OTTRACE("Symbol is NULL in IDisplay Draw");
+	//}
 
-	if(pTextObj)
-	{
-		FreeDisplayObj(pTextObj);
-	}
+	//if(pTextObj)
+	//{
+	//	FreeDisplayObj(pTextObj);
+	//}
+	DIS_RECT rectDis;
+	return rectDis;
 }
 
 void IDisplay::Draw(void* pObject)
 {
 	if(m_pSymbol != NULL)
 		m_pSymbol->Draw( pObject );
-	else
-		OTTRACE("Symbol is NULL in IDisplay Draw");
 }
 
 
@@ -521,7 +525,7 @@ void IDisplay::Draw(void* pObject)
 BOOL IDisplay::SelectStackSymbol(int index)
 {
 	if( index > m_stackpSymbol.size() - 1 )
-		OTFALSERETURN(FALSE,"index is out of range");
+		//OTFALSERETURN(FALSE,"index is out of range");
 
 	m_pSymbol = m_stackpSymbol[index];
 
