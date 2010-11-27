@@ -13,8 +13,8 @@
  *
  **********************************************************************/
 
-#ifndef TT_GEOMETRY_H
-#define TT_GEOMETRY_H
+#ifndef GEOMETRY_H
+#define GEOMETRY_H
 
 /*
  * \file geos.h
@@ -33,4 +33,4 @@
 namespace GEOMETRY {
 }
 
-#endif
+#endif //GEOMETRY_H
