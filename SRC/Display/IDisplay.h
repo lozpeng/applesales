@@ -8,11 +8,14 @@
 #include <boost/signals/connection.hpp>
 
 
-namespace otDisplay
+namespace Display
 {
+
+	
+
 class ISymbol;
 
-class DISPLAY_DLL IDisplay : public otSystem::CRef 
+class DISPLAY_DLL IDisplay// : public SYSTEM::CRef 
 {
 public:
 	IDisplay();
@@ -20,7 +23,7 @@ public:
 
 public:
 
-	otSystem::CSharedPtr<IDisplay> Clone();
+	SYSTEM::CSmartPtr<IDisplay> Clone();
 
 	//设置是否是制图display
 	void SetLayoutDisplay(BOOL bLayoutDis);
@@ -45,18 +48,18 @@ public:
 	* 绘制
 	* @param pGeometry 几何体
 	*/
-	virtual void Draw(const TT_GEOMETRY::geom::Geometry* pGeometry);
+	virtual void Draw(const GEOMETRY::geom::Geometry* pGeometry);
 	/**
 	* 绘制
 	* @param pEnvelope 矩形
 	*/
-	virtual void Draw(const TT_GEOMETRY::geom::Envelope* pEnvelope);
+	virtual void Draw(const GEOMETRY::geom::Envelope* pEnvelope);
 	/**
 	* 绘制文字
 	* @param pEnvelope 文字的位置
 	* @param strText 文字
 	*/
-	virtual DIS_RECT Draw(const TT_GEOMETRY::geom::Envelope* pEnvelope,  const std::string strText, BOOL bScaleWithMap , unsigned int dwDTFormat= DT_NOCLIP | DT_NOPREFIX | DT_LEFT | DT_TOP);
+	virtual DIS_RECT Draw(const GEOMETRY::geom::Envelope* pEnvelope,  const std::string strText, BOOL bScaleWithMap , unsigned int dwDTFormat= DT_NOCLIP | DT_NOPREFIX | DT_LEFT | DT_TOP);
 	DIS_RECT Draw(const DIS_RECT* rect,  const std::string strText, BOOL bScaleWithMap, unsigned int dwDTFormat);
 
 	void Draw(void* pObject);
@@ -177,7 +180,7 @@ protected:
 
 	//
 	CDisplayTransformation m_cDisplayTransformation;
-	otDisplay::CDC* m_pDC;	
+	Display::CDC* m_pDC;	
 
 	//
 	ISymbol* m_pSymbol;
@@ -191,7 +194,7 @@ protected:
 	
 };
 
-typedef otSystem::CSharedPtr<IDisplay> IDisplayPtr;
+typedef SYSTEM::CSmartPtr<IDisplay> IDisplayPtr;
 
 }
 
