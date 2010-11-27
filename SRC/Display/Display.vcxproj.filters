@@ -39,6 +39,9 @@
     <ClInclude Include="CDC.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DIB.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -57,6 +60,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CDC.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DIB.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

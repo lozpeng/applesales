@@ -1,8 +1,8 @@
-#ifndef _OTDISPLAY_DIB_h
-#define _OTDISPLAY_DIB_h
+#ifndef _DIB_h
+#define _DIB_h
 
 
-namespace otDisplay
+namespace Display
 {
 /********************************************************************************
 * CDIB封装了设备无关位图的结构，用于栅格数据的绘制
