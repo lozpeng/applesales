@@ -24,7 +24,7 @@ typedef __POSITION * POSITION;
 #ifdef __ATLBASE_H__
 #define ASSERT ATLASSERT
 #endif
-namespace System{
+namespace SYSTEM{
     template < class TYPE, class ARG_TYPE = TYPE >
     class CArray {
     public:
@@ -152,7 +152,7 @@ namespace System{
 }
 
 
-namespace System{
+namespace SYSTEM{
     template < class TYPE, class ARG_TYPE >
     class CList {
     public:
@@ -339,7 +339,7 @@ namespace System{
 }
 
 
-namespace System{
+namespace SYSTEM{
     template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE >
     class CMap {
     public:
@@ -401,11 +401,11 @@ namespace System{
 /////////////////////////////////////////////////////////////////////
 
 template < class TYPE, class ARG_TYPE >
-System::CArray<TYPE, ARG_TYPE>::CArray() {
+SYSTEM::CArray<TYPE, ARG_TYPE>::CArray() {
 }
 
 template < class TYPE, class ARG_TYPE >
-System::CArray<TYPE, ARG_TYPE>::~CArray() {
+SYSTEM::CArray<TYPE, ARG_TYPE>::~CArray() {
     array.clear();
 }
 
@@ -416,12 +416,12 @@ System::CArray<TYPE, ARG_TYPE>::~CArray() {
 
 
 template < class TYPE, class ARG_TYPE >
-System::CList<TYPE, ARG_TYPE>::CList() {
+SYSTEM::CList<TYPE, ARG_TYPE>::CList() {
 }
 
 
 template < class TYPE, class ARG_TYPE >
-System::CList<TYPE, ARG_TYPE>::~CList() {
+SYSTEM::CList<TYPE, ARG_TYPE>::~CList() {
     RemoveAll();
     ASSERT(list.size() == 0);
 }
@@ -433,11 +433,11 @@ System::CList<TYPE, ARG_TYPE>::~CList() {
 ////////////////////////////////////////////////////////////////
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE >
-System::CMap<KEY, ARG_KEY, VALUE, ARG_VALUE>::CMap() {
+SYSTEM::CMap<KEY, ARG_KEY, VALUE, ARG_VALUE>::CMap() {
 }
 
 template < class KEY, class ARG_KEY, class VALUE, class ARG_VALUE >
-System::CMap<KEY, ARG_KEY, VALUE, ARG_VALUE>::~CMap() {
+SYSTEM::CMap<KEY, ARG_KEY, VALUE, ARG_VALUE>::~CMap() {
     map.clear();
 }
 
