@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GeodatabaseDefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialReference.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Feature.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ICursor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IFeatureClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IFeatureCursor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IFeatureDataset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IFeatureSelection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IGeoTransform.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IRasterCatalog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IRasterDataset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IRow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ISelectionSet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ITable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IWorkspace.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IWorkspaceFactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjTransform.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectionSet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleQuery.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialQuery.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IGeoDataObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureEditCache.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SqlWhereParser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Geodatabase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Feature.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IFeatureClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IFeatureCursor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IFeatureDataset.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IFeatureSelection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IGeoTransform.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IRasterCatalog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IRasterDataset.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IRow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ITable.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IWorkspace.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjTransform.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectionSet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialReference.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IWorkspaceFactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IGeoDataObject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureEditCache.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SqlWhereParser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
