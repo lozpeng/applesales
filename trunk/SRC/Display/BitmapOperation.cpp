@@ -977,7 +977,7 @@ void * Display::CBitmapOperation::GetBitmapColor( void * Bitmapdata )
 	int size = 0;
 	PALETTEENTRY pe1[256];
 	memset(pe1,204,sizeof(PALETTEENTRY)*256);
-	System::CArray < unsigned long > arraype;
+	SYSTEM::CArray < unsigned long > arraype;
 	LPBYTE m_lp = ( LPBYTE )Bitmapdata;
 	if( !m_lp )
 	{
