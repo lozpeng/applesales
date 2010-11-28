@@ -7,8 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geometry", "SRC\Geometry\bu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Display", "SRC\Display\Display.vcxproj", "{0BBE07C2-25F4-45E4-8771-352E835550DC}"
 EndProject
-Global
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Carto", "SRC\Carto\Carto.vcxproj", "{7A2ABDEF-A6C0-449C-9A1D-659D83526905}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geodatabase", "SRC\Geodatabase\Geodatabase.vcxproj", "{91600171-E617-418F-89BF-4B4E70E9B2B7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataSourceRaster", "SRC\DataSourceRaster\DataSourceRaster.vcxproj", "{FE581161-F2B6-4DE3-A06C-3645A96AAC38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,14 @@ Global
 		{7A2ABDEF-A6C0-449C-9A1D-659D83526905}.Debug|Win32.Build.0 = Debug|Win32
 		{7A2ABDEF-A6C0-449C-9A1D-659D83526905}.Release|Win32.ActiveCfg = Release|Win32
 		{7A2ABDEF-A6C0-449C-9A1D-659D83526905}.Release|Win32.Build.0 = Release|Win32
+		{91600171-E617-418F-89BF-4B4E70E9B2B7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{91600171-E617-418F-89BF-4B4E70E9B2B7}.Debug|Win32.Build.0 = Debug|Win32
+		{91600171-E617-418F-89BF-4B4E70E9B2B7}.Release|Win32.ActiveCfg = Release|Win32
+		{91600171-E617-418F-89BF-4B4E70E9B2B7}.Release|Win32.Build.0 = Release|Win32
+		{FE581161-F2B6-4DE3-A06C-3645A96AAC38}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FE581161-F2B6-4DE3-A06C-3645A96AAC38}.Debug|Win32.Build.0 = Debug|Win32
+		{FE581161-F2B6-4DE3-A06C-3645A96AAC38}.Release|Win32.ActiveCfg = Release|Win32
+		{FE581161-F2B6-4DE3-A06C-3645A96AAC38}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
