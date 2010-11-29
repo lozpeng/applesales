@@ -22,6 +22,6 @@
 #include "DisplayDef.h"
 #include "DisplayHeader.h"
 #include "CartoHeader.h"
-//#include "ILayer.h"
-//#include "IRender.h"
+#include "ILayer.h"
+#include "IRender.h"
 // TODO: 在此处引用程序需要的其他头文件
