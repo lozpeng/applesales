@@ -13,27 +13,27 @@ namespace Carto
 	*/
 	enum LAYER_TYPE
 	{
-		eUnknown,
-		eFeatureLayer,
-		eRasterLayer,
-		eTinLayer,
-		eGraphicLayer
+		UnknownLayer,
+		FeatureLayer,
+		RasterLayer,
+		TinLayer,
+		GraphicLayer
 
 	};
 
 	enum LAYER_POSITION
 	{
-		TBottom,
-		TNormal,
-		TTop
+		LTBottom,
+		LTNormal,
+		LTTop
 	};
 
 	enum SELECT_OPTION
 	{
-		TSELECT_REPLACE,
-		TSELECT_ADD,
-		TSELECT_SUBTRACT,
-		TSELECT_INTERSECT
+		SELECT_REPLACE,
+		SELECT_ADD,
+		SELECT_SUBTRACT,
+		SELECT_INTERSECT
 	};
 
 	/** 
@@ -53,7 +53,6 @@ namespace Carto
 		PIERENDER = 0x09,
 		TRIANGLERENDER = 0x10,
 		CHARTRENDER = 0x11,//图表专题图
-		CUSTOMRENDER = 0x12,/**< 自定义专题，用于编写扩展专题*/
 	};
 
 	/** 
