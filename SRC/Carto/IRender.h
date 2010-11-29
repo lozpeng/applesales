@@ -146,60 +146,6 @@ protected:
 typedef SYSTEM::CSmartPtr<IRender> IRenderPtr;
 
 
-/** @interface */
-/** 
-* 扩展专题接口
-*/
-class CARTO_DLL IExtRender : public IRender
-{
-public:
-
-	/**
-	* 获得扩展专题名
-	* @return 扩展专题名
-	*/
-	virtual const std::string& GetExtRenderName();
-
-	/**
-	* 获得扩展专题描述
-	* @return 返回扩展专题描述
-	*/
-	virtual const std::string& GetExtRenderDescription();	//2007.10.23张维添加
-	virtual void SetProperties( const char* PropertyName , const _variant_t& PropertyValue);//2007.11.30张维修改
-	virtual _variant_t GetProperties(const char* PropertyName);
-
-	/**
-	* 复制新的专题
-	* @return 返回专题
-	*/
-	virtual SYSTEM::CSmartPtr<IRender> CopyNewRender();
-
-	/**
-	* 序列化操作
-	* @param ar 文档流
-	*/
-	virtual void serialization(SYSTEM::IArchive &ar);
-	virtual Display::ISymbolPtr CreateSymbolFromInSideSymbolName() = 0;//2007.12.4张维添加
-
-	/**
-	* 设置页面名称
-	* @param pageName 页面名称
-	*/
-	virtual void SetPageName(std::string pageName);
-
-	/**
-	* 获得页面名称
-	* @return 页面名称
-	*/
-	virtual std::string GetPageName();
-protected:
-	IExtRender();
-	std::string m_extRenderName;	//2007.10.23张维修改
-	std::string m_extRenderDescription;//2007.10.23张维添加
-	std::string m_pageName;
-};
-
-typedef SYSTEM::CSmartPtr<IExtRender> IExtRenderPtr;
 
 }
 
