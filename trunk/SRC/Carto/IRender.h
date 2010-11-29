@@ -74,7 +74,7 @@ public:
 	* 设置Render图层
 	* @return
 	*/
-//	void SetAffineTransform(CAffineTransformPtr pAffineTransform) { m_pAffineTransform = pAffineTransform; }
+	void SetAffineTransform(CAffineTransformPtr pAffineTransform) { m_pAffineTransform = pAffineTransform; }
 
 	/**
 	* 获得高亮显示的颜色
@@ -139,7 +139,7 @@ protected:
 	long m_lFeaturetype;
 
 	Display::ISymbolPtr m_pHighLightSymbol;
-	//Carto::CAffineTransformPtr m_pAffineTransform;
+	Carto::CAffineTransformPtr m_pAffineTransform;
 
 };
 

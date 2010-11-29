@@ -6,8 +6,8 @@
 //////////////////////////////////////////////////////////////////////
 
 
-#ifndef ILayer_H
-#define Ilayer_H
+#ifndef _ILayer_H
+#define _ILayer_H
 
 #include <Geometry/geom/Envelope.h>
 #include "IGeoDataObject.h"
