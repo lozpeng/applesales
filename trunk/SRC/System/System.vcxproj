@@ -87,7 +87,6 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="alm.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="IArchive.h" />
     <ClInclude Include="ISerialization.h" />
