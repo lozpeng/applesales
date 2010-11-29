@@ -48,6 +48,9 @@
     <ClInclude Include="SimpleRender.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="IRasterRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -75,6 +78,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SimpleRender.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IRasterRender.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
