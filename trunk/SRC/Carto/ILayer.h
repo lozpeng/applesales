@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
   // 版权(c) 2010-2020, 天地智绘
   // 作者：  hhzhao
-  // 时间：  2010/11/18
+  // 时间：  2010/11/15
   // 描述：  数据层的接口定义，其它地理数据层（栅格、矢量等层）均由其派生
 //////////////////////////////////////////////////////////////////////
 
@@ -10,11 +10,11 @@
 #define Ilayer_H
 
 #include <Geometry/geom/Envelope.h>
-//#include "IDataObject.h"
+#include "IGeoDataObject.h"
 #include "IDisplay.h"
-//#include "SimpleQuery.h"
+#include "SimpleQuery.h"
 #include "AffineTransform.h"
-//#include "LegendInfo.h"
+#include "LegendInfo.h"
 
 namespace GEOMETRY
 {
@@ -46,7 +46,7 @@ public:
 	* @param pDataObject 数据对象
 	* @return 若加载成功则返回true，否则为false
 	*/
-	//virtual bool SetData(GeodataModel::IDataObjectPtr pDataObject);
+	virtual bool SetData(Geodatabase::IGeodataObjectPtr pDataObject);
 
 	/**
 	* 绘制
@@ -88,7 +88,7 @@ public:
 
 	/**
 	* 序列化操作
-	* @param otSystem::IArchive &ar 文档流
+	* @param System::IArchive &ar 文档流
 	*/
 	virtual void serialization(SYSTEM::IArchive &ar);
 
@@ -97,7 +97,7 @@ public:
 	* @param query 查询条件
 	* @return 
 	*/
-	//virtual void Select(GeodataModel::CSimpleQuery* query, SELECT_OPTION selectOption = TSELECT_REPLACE);
+	virtual void Select(Geodatabase::CSimpleQuery* query, SELECT_OPTION selectOption = TSELECT_REPLACE);
 
 	virtual void ClearSelectionSet()=0;
 
@@ -113,7 +113,7 @@ public:
 	* @param pDataObject 数据对象
 	* @return 若创建成功则为图层，失败为NULL
 	*/
-	//static SYSTEM::CSmartPtr<ILayer> CreateLayer(GeodataModel::IDataObjectPtr pDataObject);
+	static SYSTEM::CSmartPtr<ILayer> CreateLayer(Geodatabase::IGeodataObjectPtr pDataObject);
 
 	/**
 	* 获得显示状态
@@ -131,7 +131,7 @@ public:
 	* 获得数据图层
 	* @return 若获取成功为数据图层，否则为NULL
 	*/
-	//GeodataModel::IDataObjectPtr GetDataObject(void) { return m_pDataObject;}
+	Geodatabase::IGeodataObjectPtr GetDataObject(void) { return m_pDataObject;}
 
 	/**
 	* 获得透明值 
@@ -218,7 +218,7 @@ public:
 	/*
 	* 得到图例的信息
 	*/
-//	virtual CLegendInfoPtr GetLegendInfo();
+	virtual CLegendInfoPtr GetLegendInfo();
 
 
 
@@ -234,7 +234,7 @@ protected:
 	std::string m_csDescription;
 
 	//layer's data object
-	//GeodataModel::IDataObjectPtr m_pDataObject;
+	Geodatabase::IGeodataObjectPtr m_pDataObject;
 
 	//layer type
 	LAYER_TYPE m_layerType;

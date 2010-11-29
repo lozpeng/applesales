@@ -19,7 +19,7 @@ ILayer::ILayer()
 	m_dScaleMin = 100;
 	m_layerType = eUnknown;
 
-	//m_pDataObject.reset();
+	m_pDataObject.reset();
 	m_Name = "";
 	m_csDescription = "";
 
@@ -32,23 +32,23 @@ ILayer::~ILayer()
 
 }
 
-//bool ILayer::SetData(GeodataModel::IDataObjectPtr pDataObject)
-//{
-//	m_pDataObject = pDataObject;
-//
-//	if(pDataObject)
-//		SetName( pDataObject->Getname().c_str() );
-//
-//	return true;
-//}
+bool ILayer::SetData(Geodatabase::IGeodataObjectPtr pDataObject)
+{
+	m_pDataObject = pDataObject;
+
+	if(pDataObject)
+		SetName( pDataObject->Getname().c_str() );
+
+	return true;
+}
 
 GEOMETRY::geom::Envelope ILayer::GetEnvelope()
 {
 	GEOMETRY::geom::Envelope envelop;
 	envelop.setToNull();
 
-	//if(m_pDataObject.get() != NULL);
-	//	m_pDataObject->GetExtent(&envelop);
+	if(m_pDataObject.get() != NULL);
+		m_pDataObject->GetExtent(&envelop);
 
 
 	//如果是动态投影，则将数据范围转换到目标投影坐标系下
@@ -96,8 +96,8 @@ void ILayer::serialization(SYSTEM::IArchive &ar)
 	}
 	else
 	{
-		//if(type != eGraphicLayer)
-		//	m_pDataObject->serialization(ar);
+		if(type != eGraphicLayer)
+			m_pDataObject->serialization(ar);
 
 		long lAuxiLayerCnt = m_auxiliaryLayers.size();
 		ar & lAuxiLayerCnt;
@@ -106,22 +106,22 @@ void ILayer::serialization(SYSTEM::IArchive &ar)
 	}
 }
 
-//ILayerPtr ILayer::CreateLayer(GeodataModel::IDataObjectPtr pDataObject)
-//{
-//	ILayerPtr player;
-//	switch ( pDataObject->GetType() )
-//	{
-//	case GeodataModel::OT_FEATURECLASS:
-//		return CFeatureLayer::CreateFeatureLayer( pDataObject );
-//	case GeodataModel::OT_RASTERDATASET:
-//		return CRasterLayer::CreateRasterLayer(pDataObject);
-//	/*case OT_TINLAYER:
-//		return CTinLayer::CreateTinLayer(pDataObject);*/
-//	default:
-//		return NULL;
-//	}
-//	return NULL;
-//}
+ILayerPtr ILayer::CreateLayer(Geodatabase::IGeodataObjectPtr pDataObject)
+{
+	ILayerPtr player;
+	switch ( pDataObject->GetType() )
+	{
+	//case Geodatabase::OT_FEATURECLASS:
+	//	return CFeatureLayer::CreateFeatureLayer( pDataObject );
+	//case Geodatabase::OT_RASTERDATASET:
+	//	return CRasterLayer::CreateRasterLayer(pDataObject);
+	/*case OT_TINLAYER:
+		return CTinLayer::CreateTinLayer(pDataObject);*/
+	default:
+		return NULL;
+	}
+	return NULL;
+}
 
 ILayerPtr ILayer::CreateLayerFromStream( SYSTEM::IArchive &ar )
 {
@@ -230,14 +230,14 @@ void ILayer::Draw(Display::IDisplayPtr pDisplay,DRAW_CONTENT content)
 		GetAuxiliaryLayer(i)->Draw(pDisplay,content);
 }
 
-//void ILayer::Select(GeodataModel::CSimpleQuery* query, SELECT_OPTION selectOption)
-//{
-//
-//}
+void ILayer::Select(Geodatabase::CSimpleQuery* query, SELECT_OPTION selectOption)
+{
 
-//CLegendInfoPtr ILayer::GetLegendInfo()
-//{
-//	return NULL;
-//}
+}
+
+CLegendInfoPtr ILayer::GetLegendInfo()
+{
+	return NULL;
+}
 
 }

@@ -87,8 +87,11 @@
   <ItemGroup>
     <ClInclude Include="AffineTransform.h" />
     <ClInclude Include="CartoDefine.h" />
+    <ClInclude Include="CartoHeader.h" />
     <ClInclude Include="ILayer.h" />
+    <ClInclude Include="IRender.h" />
     <ClInclude Include="LayerArray.h" />
+    <ClInclude Include="LegendInfo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -104,7 +107,9 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ILayer.cpp" />
+    <ClCompile Include="IRender.cpp" />
     <ClCompile Include="LayerArray.cpp" />
+    <ClCompile Include="LegendInfo.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
