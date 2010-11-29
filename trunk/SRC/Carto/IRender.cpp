@@ -77,11 +77,6 @@ SYSTEM::CSmartPtr<IRender>  IRender::CreateRenderFromStream(SYSTEM::IArchive &ar
 	ar & i;
 	std::string renderName = "";
 
-	if (i == CUSTOMRENDER)
-	{
-		ar & renderName;
-	}
-
 	IRenderPtr pRender = CreateRender( (RENDER_TYPE)i , renderName);
 
 	ar.GetCurrentPos() = startpos; 
@@ -137,67 +132,5 @@ Carto::CLegendInfoPtr IRender::GetLegendInfo()
 	return NULL;
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-// IExtRender
 
-const std::string& Carto::IExtRender::GetExtRenderName()
-{
-	return m_extRenderName;
-}
-
-const std::string& Carto::IExtRender::GetExtRenderDescription()
-{
-	return m_extRenderDescription;
-}
-
-void Carto::IExtRender::SetProperties( const char* PropertyName , const _variant_t& PropertyValue)
-{
-
-}
-_variant_t Carto::IExtRender::GetProperties(const char* PropertyName)
-{
-	return NULL;
-}
-
-Carto::IRenderPtr Carto::IExtRender::CopyNewRender()
-{
-	Carto::IExtRenderPtr pRend;
-	SYSTEM::CBinArchive ar;
-
-	serialization( ar );
-	ar.SetReadState();
-	ar.SetPosToBegin();
-	pRend = CreateRenderFromStream( ar );
-
-	return pRend;
-}
-
-void Carto::IExtRender::serialization(SYSTEM::IArchive &ar)
-{
-	Carto::IRender::serialization(ar);
-
-	ar & m_extRenderName;
-	ar & m_extRenderDescription;
-	ar & m_pageName;
-}
-
-Carto::IExtRender::IExtRender()
-{
-	m_type = CUSTOMRENDER;
-}
-
-Display::ISymbolPtr Carto::IExtRender::CreateSymbolFromInSideSymbolName()
-{
-	return NULL;
-}
-
-void Carto::IExtRender::SetPageName(std::string pageName)
-{
-	m_pageName = pageName;
-}
-
-std::string Carto::IExtRender::GetPageName()
-{
-	return m_pageName;
-}
 }

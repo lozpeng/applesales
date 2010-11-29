@@ -17,7 +17,7 @@ ILayer::ILayer()
 	m_bScaleRange = false;
 	m_dScaleMax = 1000;
 	m_dScaleMin = 100;
-	m_layerType = eUnknown;
+	m_layerType = UnknownLayer;
 
 	m_pDataObject.reset();
 	m_Name = "";
@@ -80,7 +80,7 @@ void ILayer::serialization(SYSTEM::IArchive &ar)
 
 	if( ar.IsRead() )
 	{
-		if(type != eGraphicLayer)
+		if(type != GraphicLayer)
 		{
 			//m_pDataObject = CGeoDataDriverManager::GetDataObject(ar);
 		}
@@ -96,7 +96,7 @@ void ILayer::serialization(SYSTEM::IArchive &ar)
 	}
 	else
 	{
-		if(type != eGraphicLayer)
+		if(type != GraphicLayer)
 			m_pDataObject->serialization(ar);
 
 		long lAuxiLayerCnt = m_auxiliaryLayers.size();

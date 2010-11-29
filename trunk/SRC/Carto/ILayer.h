@@ -97,7 +97,7 @@ public:
 	* @param query ²éÑ¯Ìõ¼þ
 	* @return 
 	*/
-	virtual void Select(Geodatabase::CSimpleQuery* query, SELECT_OPTION selectOption = TSELECT_REPLACE);
+	virtual void Select(Geodatabase::CSimpleQuery* query, SELECT_OPTION selectOption = SELECT_REPLACE);
 
 	virtual void ClearSelectionSet()=0;
 
