@@ -9,12 +9,12 @@
 #define LAYERARRAY_H
 
 
-#include "alm.h"
 #include "ILayer.h"
+#include <vector>
 
 namespace Carto{
 
-class CARTO_DLL CLayerArray : public SYSTEM::CArray<ILayerPtr> , public SYSTEM::ISerialization 
+class CARTO_DLL CLayerArray : public std::vector<ILayerPtr> , public SYSTEM::ISerialization 
 {
 public:
 
@@ -33,6 +33,18 @@ public:
 	long FindIndex(Carto::ILayerPtr ptrLayer);
 
 	CLayerArray& operator =(const CLayerArray& la);
+
+	inline ILayerPtr GetAt(int nIndex) const {
+		_ASSERT(nIndex < (int)size());
+		return (*this)[nIndex];
+	};
+
+	inline void RemoveAt(int nIndex) {
+		_ASSERT(nIndex >= 0 && nIndex < (int)size());
+
+	    erase(begin() + nIndex);
+		
+	};
 };
 
 }

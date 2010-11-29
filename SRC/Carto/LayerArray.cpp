@@ -12,7 +12,7 @@ namespace Carto{
 		{
 			return TRUE;
 		}
-		long lsize =GetSize();
+		long lsize =this->size();
 		if(From<0 || From>=lsize)
 		{
 			return FALSE;
@@ -22,10 +22,10 @@ namespace Carto{
 			return FALSE;
 		}
 
-		Carto::ILayerPtr pLayer =ElementAt(From);
+		Carto::ILayerPtr pLayer =(*this)[From];
 
 		RemoveAt(From);        
-		InsertAt(To, pLayer);
+		insert(begin() + To, 1, pLayer);
 
 		return TRUE;
 	}
@@ -45,16 +45,16 @@ namespace Carto{
 			{
 				ILayerPtr player = ILayer::CreateLayerFromStream( ar );
 				if( player != NULL )
-					Add( player );
+					push_back( player );
 			}
 		}
 		else
 		{
-			long Size = GetSize();
+			long Size = size();
 			ar & Size;
 			for (long i = 0 ; i < Size ; i++ )
 			{
-				ILayerPtr player = GetAt(i);
+				ILayerPtr player = (*this)[i];
 				player->serialization( ar );
 			}
 
@@ -68,10 +68,10 @@ namespace Carto{
 		{
 			return -1; //ERROR
 		}
-		long lSize = this->GetSize();
+		long lSize =size();
 		for (long i = 0; i < lSize; i++)
 		{
-			Carto::ILayerPtr tempLayer = this->GetAt(i);
+			Carto::ILayerPtr tempLayer = (*this)[i];
 			if (tempLayer == ptrLayer)
 			{
 				return i;
@@ -82,7 +82,8 @@ namespace Carto{
 
 	Carto::CLayerArray& Carto::CLayerArray::operator =(const CLayerArray& la)
 	{
-		Copy( *(SYSTEM::CArray<ILayerPtr>*)(&la) );
+		clear();
+		insert(end(), la.begin(), la.end());
 		return *this;
 	}
 }
