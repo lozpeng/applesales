@@ -36,6 +36,15 @@
     <ClInclude Include="LayerArray.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="LegendInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CartoHeader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -54,6 +63,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="LayerArray.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LegendInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IRender.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
