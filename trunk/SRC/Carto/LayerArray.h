@@ -32,6 +32,33 @@ public:
 
 	long FindIndex(Carto::ILayerPtr ptrLayer);
 
+
+	inline int Add(Carto::ILayerPtr ptrLayer) {
+		push_back(ptrLayer);
+		return (int)(size() - 1);
+	};
+
+	inline void RemoveAt(int nIndex, int nCount = 1) {
+		_ASSERT(nIndex >= 0 && nIndex < (int)size() && nIndex + nCount <= (int)size());
+
+		int i;
+		std::vector < ILayerPtr >::iterator pos = begin();
+		for (i = 0; i < nIndex; i++, pos++);
+
+		if (nCount == 1) erase(begin() + nIndex);
+		else {
+			erase(begin() + nIndex, begin() + nIndex + nCount);
+		}
+	};
+	inline void InsertAt(int nIndex, Carto::ILayerPtr ptrLayer, int nCount = 1) 
+	{
+		_ASSERT(nIndex >= 0);
+		if (nIndex > (int)size()) 
+			insert(end(), nCount, ptrLayer);
+		else 
+			insert(begin() + nIndex, nCount, ptrLayer);
+	};
+
 	CLayerArray& operator =(const CLayerArray& la);
 
 	inline ILayerPtr GetAt(int nIndex) const {
@@ -39,12 +66,12 @@ public:
 		return (*this)[nIndex];
 	};
 
-	inline void RemoveAt(int nIndex) {
-		_ASSERT(nIndex >= 0 && nIndex < (int)size());
 
-	    erase(begin() + nIndex);
-		
+	inline void RemoveAll() {
+		clear();
 	};
+
+	inline int GetSize() const { return (int)size(); };
 };
 
 }
