@@ -47,7 +47,7 @@ GEOMETRY::geom::Envelope ILayer::GetEnvelope()
 	GEOMETRY::geom::Envelope envelop;
 	envelop.setToNull();
 
-	if(m_pDataObject.get() != NULL);
+	if(m_pDataObject.get() != NULL)
 		m_pDataObject->GetExtent(&envelop);
 
 

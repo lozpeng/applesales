@@ -33,9 +33,6 @@
     <ClInclude Include="AffineTransform.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="LayerArray.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="LegendInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -49,6 +46,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="IRasterRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerArray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,9 +71,6 @@
     <ClCompile Include="AffineTransform.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LayerArray.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="LegendInfo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -81,6 +81,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IRasterRender.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerArray.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
