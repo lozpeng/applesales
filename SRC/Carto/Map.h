@@ -160,7 +160,7 @@ namespace Carto
 		void Clear();
 
 		// 浅copy，图层级对象为引用关系
-		//otSystem::CSharedPtr<CGeoMap> Clone();
+		//otSystem::CSmartPtr<CGeoMap> Clone();
 
 		/**
 		* 更新地图投影

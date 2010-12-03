@@ -94,6 +94,7 @@
     <ClInclude Include="LayerArray.h" />
     <ClInclude Include="LegendInfo.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="RasterRGBRender.h" />
     <ClInclude Include="SimpleRender.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -115,6 +116,7 @@
     <ClCompile Include="LayerArray.cpp" />
     <ClCompile Include="LegendInfo.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="RasterRGBRender.cpp" />
     <ClCompile Include="SimpleRender.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

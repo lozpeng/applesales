@@ -134,7 +134,7 @@ ILayerPtr ILayer::CreateLayerFromStream( SYSTEM::IArchive &ar )
 
 	switch((LAYER_TYPE)type)
 	{
-	/*case  otCarto::eFeatureLayer:
+	/*case  Carto::eFeatureLayer:
 		{
 			ILayerPtr player( new CFeatureLayer() );
 			if( player == NULL )
@@ -144,7 +144,7 @@ ILayerPtr ILayer::CreateLayerFromStream( SYSTEM::IArchive &ar )
 			return player;
 		}		
 		break;
-	case otCarto::eRasterLayer:
+	case Carto::eRasterLayer:
 		{
 			ILayerPtr player( new CRasterLayer() );
 			if( player == NULL )
@@ -154,7 +154,7 @@ ILayerPtr ILayer::CreateLayerFromStream( SYSTEM::IArchive &ar )
 			return player;
 		}		
 		break;
-	case  otCarto::eGraphicLayer:
+	case  Carto::eGraphicLayer:
 		{
 			ILayerPtr player( new CGraphicLayer() );
 			if( player == NULL )

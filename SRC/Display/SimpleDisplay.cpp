@@ -4,22 +4,25 @@
 #include "DisplayTransformation.h"
 #include "CDC.h"
 
-
-Display::CSimpleDisplay::CSimpleDisplay(BOOL bLayoutDisplay)
+namespace Display
 {
+	CSimpleDisplay::CSimpleDisplay(BOOL bLayoutDisplay)
+	{
+	}
+
+	CSimpleDisplay::~CSimpleDisplay()
+	{
+	}
+
+
+	void CSimpleDisplay::OnBegineDraw( long hDC )
+	{
+
+	}
+
+	void CSimpleDisplay::OnEndDraw( long hDC )
+	{
+
+	}
 }
 
-Display::CSimpleDisplay::~CSimpleDisplay()
-{
-}
-
-
-void Display::CSimpleDisplay::OnBegineDraw( long hDC )
-{
-
-}
-
-void Display::CSimpleDisplay::OnEndDraw( long hDC )
-{
-
-}

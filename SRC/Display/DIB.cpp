@@ -495,4 +495,4 @@ bool CDIB::GetPalette(unsigned char *pucRed, unsigned char *pucGreen, unsigned c
 
 }
 
-}//namespace otDisplay
+}//namespace Display
