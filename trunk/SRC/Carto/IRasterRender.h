@@ -1,17 +1,10 @@
-//////////////////////////////////////////////////////////////////////
-// 版权(c) 2010-2020, 天地智绘
-// 作者：  hhzhao
-// 时间：  2010/11/18
-// 描述：  栅格数据层的渲染
-//////////////////////////////////////////////////////////////////////
-
 #ifndef _IRASTER_RENDER_h
 #define _IRASTER_RENDER_h
 
 #include "IDisplay.h"
 #include "LegendInfo.h"
 
-namespace Geodatabase
+namespace GeodataModel
 {
 	class IRasterDataset;
 }
@@ -19,7 +12,7 @@ namespace Geodatabase
 namespace Carto
 {
 
-class  CARTO_DLL IRasterRender : public SYSTEM::ISerialization
+class  CARTO_DLL IRasterRender : SYSTEM::ISerialization
 {
 public:
 	IRasterRender();
@@ -32,7 +25,7 @@ public:
 	* @param pDisplay 智能指针，指向显示接口
 	* @param pRaster 栅格数据源
 	*/
-	virtual void Draw( Display::IDisplayPtr pDisplay,Geodatabase::IRasterDataset* pRaster) = 0;
+	virtual void Draw( Display::IDisplayPtr pDisplay,GeodataModel::IRasterDataset* pRaster) = 0;
 
 	/**
 	* 对当前专题进行序列化操作
@@ -70,9 +63,6 @@ public:
 	*/
 	virtual void ApplyPaletteDraw(BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue);
 
-
-	virtual void SetAffineTransform(CAffineTransformPtr affineTransPtr);
-
 	/*
 	* 得到图例的信息
 	*/
@@ -85,13 +75,8 @@ protected:
 
 	std::string m_extRenderName;
 
-
 	//渲染的栅格数据源
-	Geodatabase::IRasterDataset* m_pRasterDataset;
-
-	//用于动态投影
-	CAffineTransformPtr m_pAffineTransform;
-
+	GeodataModel::IRasterDataset* m_pRasterDataset;
 
 };
 

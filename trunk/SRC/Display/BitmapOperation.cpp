@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "BitmapOperation.h"
-#include "alm.h"
+//#include "alm.h"
 Display::CBitmapOperation::CBitmapOperation(void)
 {
 }
@@ -977,7 +977,7 @@ void * Display::CBitmapOperation::GetBitmapColor( void * Bitmapdata )
 	int size = 0;
 	PALETTEENTRY pe1[256];
 	memset(pe1,204,sizeof(PALETTEENTRY)*256);
-	SYSTEM::CArray < unsigned long > arraype;
+	std::vector < unsigned long > arraype;
 	LPBYTE m_lp = ( LPBYTE )Bitmapdata;
 	if( !m_lp )
 	{
@@ -1063,11 +1063,11 @@ void * Display::CBitmapOperation::GetBitmapColor( void * Bitmapdata )
 	{
 		if( pe1[k].peFlags != 204 )
 		{
-			arraype.Add( RGB( pe1[k].peRed, pe1[k].peGreen, pe1[k].peBlue ));
+			arraype.push_back( RGB( pe1[k].peRed, pe1[k].peGreen, pe1[k].peBlue ));
 		}
 	}
-	unsigned long* parray = new unsigned long[ arraype .GetSize()+1];
-	int lens = arraype .GetSize()+1;
+	unsigned long* parray = new unsigned long[ arraype .size()+1];
+	int lens = arraype .size()+1;
 	parray[0] = lens - 1;
 	for ( int t = 1; t < lens; t++ )
 	{

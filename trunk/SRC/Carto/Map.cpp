@@ -752,7 +752,7 @@ namespace Carto
 
 	//void CGeoMap::InitGraphicLayer()
 	//{
-	//	m_pGraphicLayer.reset(new otCarto::CGraphicLayer(m_Envelope));
+	//	m_pGraphicLayer.reset(new Carto::CGraphicLayer(m_Envelope));
 	//}
 
 	boost::signals::connection  CMap::RegisterDeleteLayer(boost::function<void (ILayerPtr)> fun)
