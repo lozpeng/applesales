@@ -4,6 +4,7 @@
 #include "irasterrender.h"
 #include "IRasterRender.h"
 #include "CartoHeader.h"
+#include "IRasterDataset.h"
 
 #include <list>
 using std::list;
@@ -17,11 +18,66 @@ namespace Carto
 		~CRasterRGBRender(void);
 	public:
 		/**
-	* 对选中的记录集进行绘制
-	* @param pDisplay 智能指针，指向显示接口
-	* @param pRaster 栅格数据源
-	*/
-	virtual void Draw( Display::IDisplayPtr pDisplay,GeodataModel::IRasterDataset* pRaster);
+		* 对选中的记录集进行绘制
+		* @param pDisplay 智能指针，指向显示接口
+		* @param pRaster 栅格数据源
+		*/
+		virtual void Draw( Display::IDisplayPtr pDisplay,Geodatabase::IRasterDataset* pRaster);
+		/**
+		* 获得显示红色波段的序号
+		* @return long
+		*/
+		long GetRedBandIndex() const {return m_ShowBandIndex[0];};
+
+		/**
+		* 设置显示红色波段的序号
+		* @param lindex 波段序号
+		*/
+		void SetRedBandIndex(long lindex){m_ShowBandIndex[0] =lindex;UpdateBandPixelInfo(1);};
+
+		/**
+		* 获得显示绿色波段的序号
+		* @return long
+		*/
+		long GetGreenBandIndex() const {return m_ShowBandIndex[1];};
+
+		/**
+		* 设置显示绿色波段的序号
+		* @param lindex 波段序号
+		*/
+		void SetGreenBandIndex(long lindex) {m_ShowBandIndex[1] =lindex;UpdateBandPixelInfo(2);};
+
+		/**
+		* 获得显示蓝色波段的序号
+		* @return long
+		*/
+		long GetBlueBandIndex() const {return m_ShowBandIndex[2];};
+
+		/**
+		* 设置显示蓝色波段的序号
+		* @param lindex 波段序号
+		*/
+		void SetBlueBandIndex(long lindex) {m_ShowBandIndex[2] =lindex;UpdateBandPixelInfo(3);};
+
+		/**
+		* 设置彩色或灰度显示状态
+		*/
+		void SetRGBMode(BOOL bRGB) {m_bRGB = bRGB;};
+
+		/**
+		* 获得彩色或灰度显示状态，TRUE为真彩色显示，FALSE为灰度显示
+		*/
+		BOOL GetRGBMode() {return m_bRGB;};
+		/** 
+		* 在通道组合改变后更新通道统计信息结构
+		*/
+		bool UpdateBandPixelInfo(unsigned short RGBType /*R - 1,G - 2,B - 3 */);
+		/** 
+    * 设置某一显示通道的统计信息
+	* @param pi 统计信息结构体
+	* @param RGBType 指定R G B
+    */
+	void SetPixelInfo(const PIXEL_INFO &pi, unsigned short RGBType/*R - 1 , G - 2 , B - 3 */ );
 	protected:
 
 		Display::IDisplayPtr m_pDisplay;
