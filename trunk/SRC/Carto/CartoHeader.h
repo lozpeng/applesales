@@ -67,11 +67,11 @@ namespace Carto
 	typedef struct _PIXEL_INFO {
 
 		bool           Valid; 
-		float         mp_pHist[256];
-		float         Max;
-		float         Min;
-		float         Avg;
-		float         Std;
+		double         mp_pHist[256];
+		double         Max;
+		double         Min;
+		double         Avg;
+		double         Std;
 		_PIXEL_INFO()
 		{
 			Valid = false;

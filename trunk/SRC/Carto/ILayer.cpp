@@ -2,7 +2,7 @@
 
 #include "ILayer.h"
 //#include "FeatureLayer.h"
-//#include "RasterLayer.h"
+#include "RasterLayer.h"
 //#include "GraphicLayer.h"
 //#include "IDataObject.h"
 //#include "GeoDataDriverManager.h"
@@ -111,12 +111,12 @@ ILayerPtr ILayer::CreateLayer(Geodatabase::IGeodataObjectPtr pDataObject)
 	ILayerPtr player;
 	switch ( pDataObject->GetType() )
 	{
-	//case Geodatabase::OT_FEATURECLASS:
-	//	return CFeatureLayer::CreateFeatureLayer( pDataObject );
-	//case Geodatabase::OT_RASTERDATASET:
-	//	return CRasterLayer::CreateRasterLayer(pDataObject);
-	/*case OT_TINLAYER:
-		return CTinLayer::CreateTinLayer(pDataObject);*/
+	//case Geodatabase::GDT_FEATUREDATASET:
+		//return CFeatureLayer::CreateFeatureLayer( pDataObject );
+	case Geodatabase::GDT_RASTERDATASET:
+		return CRasterLayer::CreateRasterLayer(pDataObject);
+	//case GDT_TINDATASET:
+		//return CTinLayer::CreateTinLayer(pDataObject);
 	default:
 		return NULL;
 	}
