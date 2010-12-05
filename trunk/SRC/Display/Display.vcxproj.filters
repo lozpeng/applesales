@@ -51,6 +51,9 @@
     <ClInclude Include="IDisplay.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TextSymbol.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +84,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IDisplay.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TextSymbol.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

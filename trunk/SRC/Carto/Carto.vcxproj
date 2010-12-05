@@ -88,9 +88,11 @@
     <ClInclude Include="AffineTransform.h" />
     <ClInclude Include="CartoDefine.h" />
     <ClInclude Include="CartoHeader.h" />
+    <ClInclude Include="FeatureLayer.h" />
     <ClInclude Include="ILayer.h" />
     <ClInclude Include="IRasterRender.h" />
     <ClInclude Include="IRender.h" />
+    <ClInclude Include="LabelRender.h" />
     <ClInclude Include="LayerArray.h" />
     <ClInclude Include="LegendInfo.h" />
     <ClInclude Include="Map.h" />
@@ -110,9 +112,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="FeatureLayer.cpp" />
     <ClCompile Include="ILayer.cpp" />
     <ClCompile Include="IRasterRender.cpp" />
     <ClCompile Include="IRender.cpp" />
+    <ClCompile Include="LabelRender.cpp" />
     <ClCompile Include="LayerArray.cpp" />
     <ClCompile Include="LegendInfo.cpp" />
     <ClCompile Include="Map.cpp" />
