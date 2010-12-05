@@ -23,6 +23,18 @@ namespace Carto
 		* @param pRaster 栅格数据源
 		*/
 		virtual void Draw( Display::IDisplayPtr pDisplay,Geodatabase::IRasterDataset* pRaster);
+		/** 
+		* 准备用于绘制的数据
+		* @param envelop 读取的数据块地理范围
+		*/
+		void ReadDrawData(GEOMETRY::geom::Envelope dataDrawExtent);
+	private:
+
+		/**
+		* 读出数据LUT并根据LUT显示数据
+		*/
+		BOOL DibDraw();
+	public:
 		/**
 		* 获得显示红色波段的序号
 		* @return long
@@ -73,11 +85,11 @@ namespace Carto
 		*/
 		bool UpdateBandPixelInfo(unsigned short RGBType /*R - 1,G - 2,B - 3 */);
 		/** 
-    * 设置某一显示通道的统计信息
-	* @param pi 统计信息结构体
-	* @param RGBType 指定R G B
-    */
-	void SetPixelInfo(const PIXEL_INFO &pi, unsigned short RGBType/*R - 1 , G - 2 , B - 3 */ );
+		* 设置某一显示通道的统计信息
+		* @param pi 统计信息结构体
+		* @param RGBType 指定R G B
+		*/
+		void SetPixelInfo(const PIXEL_INFO &pi, unsigned short RGBType/*R - 1 , G - 2 , B - 3 */ );
 	protected:
 
 		Display::IDisplayPtr m_pDisplay;

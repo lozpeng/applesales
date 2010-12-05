@@ -351,7 +351,7 @@ bool	CDSRasterDataset::SetPixel(long lBandIndex,long lCol,  long lRow, void *pvV
 	return true;
 }
 
-bool CDSRasterDataset::DataReadBandNormalize(long lBandIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer,double minValue,double maxValue)
+bool CDSRasterDataset::DataReadBandNormalize(long lBandIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer,double& minValue,double& maxValue)
 {
 	 if(m_pDataset==NULL || lBandIndex<1 || lBandIndex>m_lBand)
 	{

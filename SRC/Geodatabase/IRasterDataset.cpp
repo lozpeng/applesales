@@ -100,7 +100,7 @@ bool	IRasterDataset::SetPixel(long lChannelIndex,long lCol,  long lRow, void *pv
 	return false;
 }
 
-bool IRasterDataset::DataReadBandNormalize(long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer,double minValue,double maxValue)
+bool IRasterDataset::DataReadBandNormalize(long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer,double& minValue,double& maxValue)
 {
 	return false;
 }
