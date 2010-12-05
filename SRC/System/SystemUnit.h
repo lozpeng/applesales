@@ -1,6 +1,7 @@
 #ifndef _SYSTEM_UNIT_CONVERTER_H
 #define _SYSTEM_UNIT_CONVERTER_H
 
+#include <string>
 
 namespace SYSTEM
 {
