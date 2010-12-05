@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FeatureLayer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ILayer.cpp"
 				>
 			</File>
@@ -202,6 +206,10 @@
 			</File>
 			<File
 				RelativePath=".\IRender.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LabelRender.cpp"
 				>
 			</File>
 			<File
@@ -267,6 +275,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FeatureLayer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ILayer.h"
 				>
 			</File>
@@ -276,6 +288,10 @@
 			</File>
 			<File
 				RelativePath=".\IRender.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LabelRender.h"
 				>
 			</File>
 			<File

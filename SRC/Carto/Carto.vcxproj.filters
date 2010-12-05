@@ -57,6 +57,12 @@
     <ClInclude Include="RasterRGBRender.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="FeatureLayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelRender.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -93,6 +99,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RasterRGBRender.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureLayer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LabelRender.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
