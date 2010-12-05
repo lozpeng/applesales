@@ -180,7 +180,6 @@ public:
 	bool ReadPyramidNormal(long lLevel,long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer);
 
 
-
 protected:
 
 	IRasterCatalog *m_pRasterCatalog;

@@ -4,7 +4,7 @@
 #include "IDisplay.h"
 #include "LegendInfo.h"
 
-namespace GeodataModel
+namespace Geodatabase
 {
 	class IRasterDataset;
 }
@@ -25,7 +25,7 @@ public:
 	* @param pDisplay 智能指针，指向显示接口
 	* @param pRaster 栅格数据源
 	*/
-	virtual void Draw( Display::IDisplayPtr pDisplay,GeodataModel::IRasterDataset* pRaster) = 0;
+	virtual void Draw( Display::IDisplayPtr pDisplay,Geodatabase::IRasterDataset* pRaster) = 0;
 
 	/**
 	* 对当前专题进行序列化操作
@@ -76,7 +76,7 @@ protected:
 	std::string m_extRenderName;
 
 	//渲染的栅格数据源
-	GeodataModel::IRasterDataset* m_pRasterDataset;
+	Geodatabase::IRasterDataset* m_pRasterDataset;
 
 };
 

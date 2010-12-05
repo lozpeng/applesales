@@ -217,6 +217,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RasterLayer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RasterRGBRender.cpp"
 				>
 			</File>
@@ -284,6 +288,10 @@
 			</File>
 			<File
 				RelativePath=".\Map.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RasterLayer.h"
 				>
 			</File>
 			<File

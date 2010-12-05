@@ -9,7 +9,7 @@ namespace Carto
 	CRasterRGBRender::~CRasterRGBRender(void)
 	{
 	}
-	void CRasterRGBRender::Draw(Display::IDisplayPtr pDisplay, GeodataModel::IRasterDataset *pRaster)
+	void CRasterRGBRender::Draw(Display::IDisplayPtr pDisplay, Geodatabase::IRasterDataset *pRaster)
 	{
 	//	if(!pRaster)
 	//	{
@@ -57,5 +57,28 @@ namespace Carto
 	//	}
 	//	DibDraw();
 	}
+	bool CRasterRGBRender::UpdateBandPixelInfo(unsigned short RGBType)
+{
+	if(!m_pRasterDataset)
+		return false;
+
+	/*if (!m_pRasterDataset->GetChannelStatisInfo(m_ShowBandIndex[RGBType-1],m_PixelInfo[RGBType-1].mp_pHist,&m_PixelInfo[RGBType-1].Max,&m_PixelInfo[RGBType-1].Min,&m_PixelInfo[RGBType-1].Avg,&m_PixelInfo[RGBType-1].Std))
+	{
+		m_PixelInfo[RGBType-1].Valid = false;
+		return false;
+	}	
+
+	m_PixelInfo[RGBType-1].Valid = true;*/
+	return true;
+}
+	void CRasterRGBRender::SetPixelInfo(const PIXEL_INFO &pi, unsigned short RGBType)
+{
+   assert(RGBType>=1 && RGBType <= 3);
+
+	RGBType--;
+
+	m_PixelInfo[RGBType] = pi;
+}
+
 }
 
