@@ -4,7 +4,7 @@
 #include "Feature.h"
 #include "IFeatureSelection.h"
 #include "IFeatureClass.h"
-//#include "SymbolFactory.h"
+#include "SymbolFactory.h"
 
 namespace Carto
 {
@@ -215,7 +215,7 @@ void CSimpleRender::serialization(SYSTEM::IArchive &ar)
 
 	if( ar.IsRead() )
 	{
-//		m_pSymbol = Display::CSymbolFactory::CreateSymbolFromStream( ar );
+		m_pSymbol = Display::CSymbolFactory::CreateSymbolFromStream( ar );
 	}
 	else
 		m_pSymbol->serialization( ar );

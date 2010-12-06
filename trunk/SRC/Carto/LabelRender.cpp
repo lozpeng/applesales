@@ -4,7 +4,7 @@
 #include "IFeatureCursor.h"
 #include "Feature.h"
 #include "IFeatureClass.h"
-//#include "SymbolFactory.h"
+#include "SymbolFactory.h"
 
 namespace Carto
 {
@@ -26,7 +26,7 @@ void CLabelRender::serialization(SYSTEM::IArchive &ar)
 	SYSTEM::ISerialization::serialization( ar );
 	if( ar.IsRead() )
 	{
-		//m_pSymbol = Display::CSymbolFactory::CreateSymbolFromStream( ar );		
+		m_pSymbol = Display::CSymbolFactory::CreateSymbolFromStream( ar );		
 	}
 	else
 	{

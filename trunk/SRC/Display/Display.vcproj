@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DisplayCache.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DisplayTransformation.cpp"
 				>
 			</File>
@@ -209,11 +213,39 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IFillSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ILineSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\IMarkerSymbol.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ISymbol.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\SelectionSymbol.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SimpleDisplay.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SimpleFillSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SimpleLineSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SimpleMarkerSymbol.cpp"
 				>
 			</File>
 			<File
@@ -235,6 +267,10 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\SymbolFactory.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\TextSymbol.cpp"
@@ -259,6 +295,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DisplayCache.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DisplayDef.h"
 				>
 			</File>
@@ -275,7 +315,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IFillSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ILineSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IMarkerSymbol.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ISymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SelectionSymbol.h"
 				>
 			</File>
 			<File
@@ -283,7 +339,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SimpleFillSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SimpleLineSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SimpleMarkerSymbol.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SymbolFactory.h"
 				>
 			</File>
 			<File
