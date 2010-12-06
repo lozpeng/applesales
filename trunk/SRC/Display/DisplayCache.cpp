@@ -79,14 +79,14 @@ BOOL Display::CDisplayCache::UseCache( DISPLAY_HANDLE_NODE *pNode , Display::ISy
 // Çå³ýËùÓÐ»º´æ
 void Display::CDisplayCache::ClearCache()
 {
-	//SYSTEM::CArray< DISPLAY_HANDLE_NODE* > nodes;
-	//std::set<otDisplay::DISPLAY_HANDLE_NODE *>::iterator item;
-	//for ( item = DisplayCacheNodes.begin() ; item != DisplayCacheNodes.end() ; item++ )
-	//{
-	//	nodes.Add( (*item) );
-	//}
-	//for ( int i = 0 ; i < nodes.GetSize() ; i++ )
-	//{
-	//	ReleaseCache( nodes[i] );
-	//}
+	std::vector< DISPLAY_HANDLE_NODE* > nodes;
+	std::set<Display::DISPLAY_HANDLE_NODE *>::iterator item;
+	for ( item = DisplayCacheNodes.begin() ; item != DisplayCacheNodes.end() ; item++ )
+	{
+		nodes.push_back( (*item) );
+	}
+	for ( int i = 0 ; i < nodes.size() ; i++ )
+	{
+		ReleaseCache( nodes[i] );
+	}
 }
