@@ -37,7 +37,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Carto", "SRC\Carto\Carto.vc
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "SRC\Client\Client.vcproj", "{0099F326-D7A0-40D6-9DDB-36260C8A0F70}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataSourcesFile", "SRC\DataSourcesFile\DataSourcesFile.vcproj", "{8C9174EB-D8B8-4FF7-851B-1051735FC9C2}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -73,10 +73,10 @@ Global
 		{13A9B48E-4AF7-461D-B458-E57288427A87}.Debug|Win32.Build.0 = Debug|Win32
 		{13A9B48E-4AF7-461D-B458-E57288427A87}.Release|Win32.ActiveCfg = Release|Win32
 		{13A9B48E-4AF7-461D-B458-E57288427A87}.Release|Win32.Build.0 = Release|Win32
-		{0099F326-D7A0-40D6-9DDB-36260C8A0F70}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0099F326-D7A0-40D6-9DDB-36260C8A0F70}.Debug|Win32.Build.0 = Debug|Win32
-		{0099F326-D7A0-40D6-9DDB-36260C8A0F70}.Release|Win32.ActiveCfg = Release|Win32
-		{0099F326-D7A0-40D6-9DDB-36260C8A0F70}.Release|Win32.Build.0 = Release|Win32
+		{8C9174EB-D8B8-4FF7-851B-1051735FC9C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8C9174EB-D8B8-4FF7-851B-1051735FC9C2}.Debug|Win32.Build.0 = Debug|Win32
+		{8C9174EB-D8B8-4FF7-851B-1051735FC9C2}.Release|Win32.ActiveCfg = Release|Win32
+		{8C9174EB-D8B8-4FF7-851B-1051735FC9C2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
