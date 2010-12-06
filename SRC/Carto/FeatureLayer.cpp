@@ -4,8 +4,8 @@
 #include "IFeatureClass.h"
 #include "SimpleRender.h"
 #include "SimpleQuery.h"
-//#include "SymbolFactory.h"
-//#include "StyleManager.h"
+#include "SymbolFactory.h"
+#include "SelectionSymbol.h"
 
 namespace Carto
 {
@@ -112,42 +112,40 @@ bool CFeatureLayer::SetData(Geodatabase::IGeodataObjectPtr pDataObject)
 
 	Display::ISymbolPtr pSymbol,pSelSymbol;
 
-	//if( GetFeatureType() == GEOS_POINT || GetFeatureType() == GEOS_MULTIPOINT )
-	//{
-	//	pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_MARKER_SYMBOL);
+	if( GetFeatureType() == GEOS_POINT || GetFeatureType() == GEOS_MULTIPOINT )
+	{
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_MARKER_SYMBOL);
 
-	//	pSelSymbol =Display::CStyleManager::GetInstance()->GetHighLightPtSymbol();
-	//}
-	//else if( GetFeatureType() == GEOS_LINESTRING || GetFeatureType() == GEOS_MULTILINESTRING )
-	//{
-	//	pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
+		pSelSymbol =Display::CSelectionSymbol::GetInstance()->GetHighLightPtSymbol();
+	}
+	else if( GetFeatureType() == GEOS_LINESTRING || GetFeatureType() == GEOS_MULTILINESTRING )
+	{
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
 
-	//	pSelSymbol =Display::CStyleManager::GetInstance()->GetHighLightLineSymbol();
-	//}
-	//else if( GetFeatureType() == GEOS_POLYGON || GetFeatureType() == GEOS_MULTIPOLYGON )
-	//{
-	//	pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+		pSelSymbol =Display::CSelectionSymbol::GetInstance()->GetHighLightLineSymbol();
+	}
+	else if( GetFeatureType() == GEOS_POLYGON || GetFeatureType() == GEOS_MULTIPOLYGON )
+	{
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
 
-	//	pSelSymbol =Display::CStyleManager::GetInstance()->GetHighLightAreaSymbol();
-	//}
-	///*else if( GetFeatureType() == OT_FEATURE_CONTOUR )
-	//pSymbol = otDisplay::CSymbolFactory::CreateSymbol(OT_SIMPLE_LINE_SYMBOL);*/
-	//else if( GetFeatureType() == GEOS_GEOMETRYCOLLECTION )
-	//{
-	//	// »ìºÏÍ¼²ã
-	//	m_pRender = IRender::CreateRender( MIXSIMPLERENDER );
-	//	pcRender = dynamic_cast<Carto::CSimpleRender*>(m_pRender.get());
-	//	pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_MARKER_SYMBOL);
-	//	pcRender->SetSymbol( pSymbol );
-	//	pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
-	//	pcRender->SetSymbol( pSymbol );
-	//	pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
-	//	pcRender->SetSymbol( pSymbol );
-	//	return true;
-	//}
-	//pcRender->SetSymbol( pSymbol );
+		pSelSymbol =Display::CSelectionSymbol::GetInstance()->GetHighLightAreaSymbol();
+	}
+	else if( GetFeatureType() == GEOS_GEOMETRYCOLLECTION )
+	{
+		// »ìºÏÍ¼²ã
+		m_pRender = IRender::CreateRender( MIXSIMPLERENDER );
+		pcRender = dynamic_cast<Carto::CSimpleRender*>(m_pRender.get());
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_MARKER_SYMBOL);
+		pcRender->SetSymbol( pSymbol );
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
+		pcRender->SetSymbol( pSymbol );
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+		pcRender->SetSymbol( pSymbol );
+		return true;
+	}
+	pcRender->SetSymbol( pSymbol );
 
-	//SetSelectionSymbol(pSelSymbol);
+	SetSelectionSymbol(pSelSymbol);
 
 	return true; 
 }

@@ -193,19 +193,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ShapeFeatureClass.cpp"
+				RelativePath=".\ShapefileFeatureClass.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ShapeFeatureCursor.cpp"
+				RelativePath=".\ShapefileFeatureCursor.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ShapeWorkspace.cpp"
+				RelativePath=".\ShapefileWorkspace.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ShapeWorkspaceFactory.cpp"
+				RelativePath=".\ShapefileWorkspaceFactory.cpp"
 				>
 			</File>
 			<File
@@ -247,23 +247,23 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ShapeFeatureClass.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ShapeFeatureCursor.h"
-				>
-			</File>
-			<File
 				RelativePath=".\shapefil.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ShapeWorkspace.h"
+				RelativePath=".\ShapefileFeatureClass.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ShapeWorkspaceFactory.h"
+				RelativePath=".\ShapefileFeatureCursor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ShapefileWorkspace.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ShapefileWorkspaceFactory.h"
 				>
 			</File>
 			<File

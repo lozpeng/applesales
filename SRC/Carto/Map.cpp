@@ -522,7 +522,7 @@ namespace Carto
 		//			//m_lGeometryCount--;
 		//		}
 		//		break;
-		//	default:	//OT_FEATURE_UNKNOWN
+		//	default:	//FEATURE_UNKNOWN
 		//		break;
 		//	}
 
