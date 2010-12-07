@@ -131,7 +131,10 @@ public:
 	* 获得数据图层
 	* @return 若获取成功为数据图层，否则为NULL
 	*/
-	Geodatabase::IGeodataObjectPtr GetDataObject(void) { return m_pDataObject;}
+	Geodatabase::IGeodataObjectPtr GetDataObject(void) 
+	{ 
+		return m_pDataObject;
+	}
 
 	/**
 	* 获得透明值 

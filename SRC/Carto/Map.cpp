@@ -622,6 +622,9 @@ namespace Carto
 	BOOL CMap::UpdateMapProjection(ILayerPtr pLayer)
 	{
 		Geodatabase::IGeodataObjectPtr pDataObject = pLayer->GetDataObject();
+		
+		if(pDataObject == NULL)
+			return FALSE;
 
 		std::string tempWkt = "";
 

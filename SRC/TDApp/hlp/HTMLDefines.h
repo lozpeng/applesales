@@ -1,8 +1,9 @@
  
 // Commands (ID_* and IDM_*) 
 #define HID_CANCEL_EDIT_CNTR                    0x18000
-#define HID_VIEW_TOOLBARS                       0x18003
 #define HID_VIEW_CUSTOMIZE                      0x18002
+#define HID_VIEW_TOOLBARS                       0x18003
+#define HID_VIEW_WORKSPACE2                     0x18018
 #define HID_VIEW_USER_TOOLBAR1                  0x18019
 #define HID_VIEW_USER_TOOLBAR2                  0x1801A
 #define HID_VIEW_USER_TOOLBAR3                  0x1801B
@@ -14,7 +15,6 @@
 #define HID_VIEW_USER_TOOLBAR9                  0x18021
 #define HID_VIEW_USER_TOOLBAR10                 0x18022
 #define HID_VIEW_WORKSPACE                      0x18023
-#define HID_VIEW_WORKSPACE2                     0x18018
 #define HID_VIEW_OUTPUT                         0x18024
 #define HID_VIEW_APPLOOK_2000                   0x1803A
 #define HID_VIEW_APPLOOK_XP                     0x1803B
@@ -31,6 +31,10 @@
 #define HID_VIEW_APPLOOK_2010_2                 0x18046
 #define HID_VIEW_APPLOOK_2010_3                 0x18047
 #define HID_VIEW_APPLOOK_WIN7                   0x18048
+#define HID_OPEN_32850                          0x18052
+#define HID_OPEN_32851                          0x18053
+#define HID_OPEN_Vector                         0x18054
+#define HID_OPEN_IMG                            0x18055
 #define HID_MAPCTRL                             0x19C40
  
 // Prompts (IDP_*) 
