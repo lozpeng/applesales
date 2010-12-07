@@ -1,4 +1,4 @@
-//Microsoft Visual C++ generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -7,43 +7,50 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-
 #include "afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
-#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
 
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE  
+1 TEXTINCLUDE 
 BEGIN
-	"resource.h\0"
+    "resource.h\0"
 END
 
-2 TEXTINCLUDE  
+2 TEXTINCLUDE 
 BEGIN
-	"#include ""afxres.h""\r\n"
-	"\0"
+    "#include ""afxres.h""\r\n"
+    "\0"
 END
 
-3 TEXTINCLUDE  
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
-	"\r\n"
-	"#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
-	"LANGUAGE 4, 2\r\n"
-	"#pragma code_page(936)\r\n"
-	"#include ""res\\TDApp.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-	"#include ""afxres.rc""  	// Standard components\r\n"
-	"#include ""afxprint.rc""	// printing/print preview resources\r\n"
-	"#include ""afxolecl.rc""	// OLE container resources\r\n"
-	"#endif\r\n"
-	"\0"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\TDApp.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#include ""afxolecl.rc""       // OLE container resources\r\n"
+    "#endif\r\n"
+    "\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -56,145 +63,139 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\TDApp.ico"
+IDR_TDAppTYPE           ICON                    "res\\TDAppDoc.ico"
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
-LANGUAGE 4, 2
-#pragma code_page(936)
-IDR_MAINFRAME           ICON         "res\\TDApp.ico"
-IDR_TDAppTYPE         ICON         "res\\TDAppDoc.ico"
-#endif
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP      "res\\Toolbar.bmp"
-IDB_WORKSPACE					BITMAP       "res\\workspace.bmp"
-IDB_TOOLBAR256					BITMAP  MOVEABLE PURE   "res\\Toolbar256.bmp"
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_WORKSPACE           BITMAP                  "res\\workspace.bmp"
+IDB_TOOLBAR256          BITMAP                  "res\\Toolbar256.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR   16, 15
+IDR_MAINFRAME TOOLBAR  16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
-	SEPARATOR
+    SEPARATOR
     BUTTON      ID_EDIT_CUT
     BUTTON      ID_EDIT_COPY
     BUTTON      ID_EDIT_PASTE
-	SEPARATOR
+    SEPARATOR
     BUTTON      ID_FILE_PRINT
     BUTTON      ID_APP_ABOUT
     BUTTON      ID_CONTEXT_HELP
 END
 
 
-
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
-LANGUAGE 4, 2
-#pragma code_page(936)
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
 
-IDR_MAINFRAME MENU   
+IDR_MAINFRAME MENU 
 BEGIN
-	POPUP "&File"
-	BEGIN
-		MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-		MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-		MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
-		MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
-		MENUITEM SEPARATOR
-		MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
-		MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
-		MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
-		MENUITEM SEPARATOR
-		MENUITEM "Recent File",                 ID_FILE_MRU_FILE1,GRAYED
-		MENUITEM SEPARATOR
-		MENUITEM "E&xit",                       ID_APP_EXIT
-	END
-	POPUP "&Edit"
-	BEGIN
-		MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
-		MENUITEM SEPARATOR
-		MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-		MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-		MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        POPUP "&加载地理数据...\tCtrl+O"
+        BEGIN
+            MENUITEM "影像",                          ID_OPEN_IMG
+            MENUITEM "矢量",                          ID_OPEN_Vector
+        END
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "Paste &Special...",           ID_EDIT_PASTE_SPECIAL
         MENUITEM SEPARATOR
         MENUITEM "Insert &New Object...",       ID_OLE_INSERT_NEW
         MENUITEM "Lin&ks...",                   ID_OLE_EDIT_LINKS
         MENUITEM "<<OLE VERBS GO HERE>>",       ID_OLE_VERB_FIRST
-	END
-	POPUP "&View"
-	BEGIN
+    END
+    POPUP "&View"
+    BEGIN
         POPUP "&Toolbars"
         BEGIN
             MENUITEM "",                            ID_VIEW_TOOLBARS
         END
-		MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
-		MENUITEM "S&plit",                      ID_WINDOW_SPLIT
-		POPUP "&Application Look"
-		BEGIN
-			MENUITEM "Office &2000",            ID_VIEW_APPLOOK_2000
-			MENUITEM "Office &XP",				ID_VIEW_APPLOOK_XP
-			MENUITEM "Office 200&3",            ID_VIEW_APPLOOK_2003
-			MENUITEM "Visual Studio 200&5", ID_VIEW_APPLOOK_VS2005
-			MENUITEM "&Windows Native",             ID_VIEW_APPLOOK_WIN_XP
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "S&plit",                      ID_WINDOW_SPLIT
+        POPUP "&Application Look"
+        BEGIN
+            MENUITEM "Office &2000",                ID_VIEW_APPLOOK_2000
+            MENUITEM "Office &XP",                  ID_VIEW_APPLOOK_XP
+            MENUITEM "Office 200&3",                ID_VIEW_APPLOOK_2003
+            MENUITEM "Visual Studio 200&5",         ID_VIEW_APPLOOK_VS2005
+            MENUITEM "&Windows Native",             ID_VIEW_APPLOOK_WIN_XP
             POPUP "Office 200&7"
             BEGIN
-                MENUITEM "&Blue Style",         ID_VIEW_APPLOOK_2007
-                MENUITEM "B&lack Style",        ID_VIEW_APPLOOK_2007_1
-                MENUITEM "&Silver Style",       ID_VIEW_APPLOOK_2007_2
-                MENUITEM "&Aqua Style",         ID_VIEW_APPLOOK_2007_3
+                MENUITEM "&Blue Style",                 ID_VIEW_APPLOOK_2007
+                MENUITEM "B&lack Style",                ID_VIEW_APPLOOK_2007_1
+                MENUITEM "&Silver Style",               ID_VIEW_APPLOOK_2007_2
+                MENUITEM "&Aqua Style",                 ID_VIEW_APPLOOK_2007_3
             END
-			MENUITEM "Visual Studio 200&8",		ID_VIEW_APPLOOK_VS2008
-			MENUITEM "Visual Studio 20&10",		ID_VIEW_APPLOOK_VS2010
+            MENUITEM "Visual Studio 200&8",         ID_VIEW_APPLOOK_VS2008
+            MENUITEM "Visual Studio 20&10",         ID_VIEW_APPLOOK_VS2010
             POPUP "Office 201&0"
             BEGIN
-                MENUITEM "&Blue Style",         ID_VIEW_APPLOOK_2010_1
-                MENUITEM "B&lack Style",        ID_VIEW_APPLOOK_2010_2
-                MENUITEM "&Silver Style",       ID_VIEW_APPLOOK_2010_3
+                MENUITEM "&Blue Style",                 ID_VIEW_APPLOOK_2010_1
+                MENUITEM "B&lack Style",                ID_VIEW_APPLOOK_2010_2
+                MENUITEM "&Silver Style",               ID_VIEW_APPLOOK_2010_3
             END
-			MENUITEM "Window&s 7",				ID_VIEW_APPLOOK_WIN7
-		END
-	END
-	POPUP "&Help"
-	BEGIN
-		MENUITEM "&Help Topics",                ID_HELP_FINDER
-		MENUITEM SEPARATOR
-		MENUITEM "&About TDApp...",          ID_APP_ABOUT
-	END
+            MENUITEM "Window&s 7",                  ID_VIEW_APPLOOK_WIN7
+        END
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help Topics",                ID_HELP_FINDER
+        MENUITEM SEPARATOR
+        MENUITEM "&About TDApp...",             ID_APP_ABOUT
+    END
 END
 
-IDR_CNTR_INPLACE MENU   
+IDR_CNTR_INPLACE MENU 
 BEGIN
-	POPUP "&File"
-	BEGIN
-		MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-		MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-		MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
-		MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
-		MENUITEM SEPARATOR
-		MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
-		MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
-		MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
-		MENUITEM SEPARATOR
-		MENUITEM "Recent File",                 ID_FILE_MRU_FILE1,GRAYED
-		MENUITEM SEPARATOR
-		MENUITEM "E&xit",                       ID_APP_EXIT
-	END
-	MENUITEM SEPARATOR
-	MENUITEM SEPARATOR
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    MENUITEM SEPARATOR
+    MENUITEM SEPARATOR
 END
-
 
 IDR_CONTEXT_MENU MENU 
 BEGIN
@@ -211,9 +212,9 @@ BEGIN
     POPUP "DUMMY"
     BEGIN
         MENUITEM "Standard Toolbar",            ID_VIEW_TOOLBAR
-		MENUITEM "&Workspace",					ID_VIEW_WORKSPACE
-		MENUITEM "&Workspace 2",				ID_VIEW_WORKSPACE2
-		MENUITEM "&Output",						ID_VIEW_OUTPUT
+        MENUITEM "&Workspace",                  ID_VIEW_WORKSPACE
+        MENUITEM "&Workspace 2",                ID_VIEW_WORKSPACE2
+        MENUITEM "&Output",                     ID_VIEW_OUTPUT
         MENUITEM "<User Toolbar>",              ID_VIEW_USER_TOOLBAR1
         MENUITEM "<User Toolbar>",              ID_VIEW_USER_TOOLBAR2
         MENUITEM "<User Toolbar>",              ID_VIEW_USER_TOOLBAR3
@@ -224,47 +225,45 @@ BEGIN
         MENUITEM "<User Toolbar>",              ID_VIEW_USER_TOOLBAR8
         MENUITEM "<User Toolbar>",              ID_VIEW_USER_TOOLBAR9
         MENUITEM "<User Toolbar>",              ID_VIEW_USER_TOOLBAR10
-		MENUITEM SEPARATOR
+        MENUITEM SEPARATOR
         MENUITEM "&Customize...",               ID_VIEW_CUSTOMIZE
     END
 END
 
- // RIBBON_APP
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS   
+IDR_MAINFRAME ACCELERATORS 
 BEGIN
-	"C",            ID_EDIT_COPY,           VIRTKEY,CONTROL,NOINVERT
-	"V",            ID_EDIT_PASTE,          VIRTKEY,CONTROL,NOINVERT
-	VK_BACK,        ID_EDIT_UNDO,           VIRTKEY,ALT,NOINVERT
-	VK_DELETE,      ID_EDIT_CUT,            VIRTKEY,SHIFT,NOINVERT
-	VK_F6,          ID_NEXT_PANE,           VIRTKEY ,NOINVERT
-	VK_F6,          ID_PREV_PANE,           VIRTKEY,SHIFT,NOINVERT
-	VK_INSERT,      ID_EDIT_COPY,           VIRTKEY,CONTROL,NOINVERT
-	VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY,SHIFT,NOINVERT
-	"X",            ID_EDIT_CUT,            VIRTKEY,CONTROL,NOINVERT
-	"Z",            ID_EDIT_UNDO,           VIRTKEY,CONTROL,NOINVERT
-	VK_F1,          ID_CONTEXT_HELP,        VIRTKEY,SHIFT,NOINVERT
-	VK_F1,          ID_HELP,                VIRTKEY,NOINVERT
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT, NOINVERT
+    VK_F1,          ID_HELP,                VIRTKEY, NOINVERT
 END
 
-IDR_CNTR_INPLACE ACCELERATORS   
+IDR_CNTR_INPLACE ACCELERATORS 
 BEGIN
-	"N",            ID_FILE_NEW,            VIRTKEY,CONTROL
-	"O",            ID_FILE_OPEN,           VIRTKEY,CONTROL
-	"S",            ID_FILE_SAVE,           VIRTKEY,CONTROL
-	"P",            ID_FILE_PRINT,          VIRTKEY,CONTROL
-	VK_F6,          ID_NEXT_PANE,           VIRTKEY 
-	VK_F6,          ID_PREV_PANE,           VIRTKEY,SHIFT
-	VK_F1,          ID_CONTEXT_HELP,        VIRTKEY,SHIFT
-	VK_F1,          ID_HELP,                VIRTKEY
-    VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,   	VIRTKEY,NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT
+    VK_F1,          ID_HELP,                VIRTKEY 
+    VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,    VIRTKEY, NOINVERT
 END
-
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -272,19 +271,17 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX   0, 0, 235, 55
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About TDApp"
-STYLE DS_MODALFRAME | DS_SHELLFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU
-FONT 8, "MS Shell Dlg"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-	ICON            IDR_MAINFRAME,IDC_STATIC,7,7,21,20
-	LTEXT           "TDApp Version 1.0",IDC_STATIC,40,10,119,8,
-                    SS_NOPREFIX
-	LTEXT           "Copyright (C) 2010",IDC_STATIC,40,25,119,8
-	DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,21,20
+    LTEXT           "TDApp Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2010",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
     PUSHBUTTON      "http://www.<MyCompany>.com",IDC_COMPANY_URL,40,36,119,14
 END
-
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -292,9 +289,9 @@ END
 // Version
 //
 
-VS_VERSION_INFO     VERSIONINFO
-  FILEVERSION       1,0,0,1
-  PRODUCTVERSION    1,0,0,1
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -305,25 +302,26 @@ VS_VERSION_INFO     VERSIONINFO
  FILETYPE 0x1L
  FILESUBTYPE 0x0L
 BEGIN
-	BLOCK "StringFileInfo"
-	BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
         BLOCK "00409004e4"
-		BEGIN 
+        BEGIN
             VALUE "CompanyName", "TODO: <Company name>"
             VALUE "FileDescription", "TODO: <File description>"
-			VALUE "FileVersion",     "1.0.0.1"
-			VALUE "InternalName",    "TDApp.exe"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "TDApp.exe"
             VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
-			VALUE "OriginalFilename","TDApp.exe"
+            VALUE "OriginalFilename", "TDApp.exe"
             VALUE "ProductName", "TODO: <Product name>"
-			VALUE "ProductVersion",  "1.0.0.1"
-		END
-	END
-	BLOCK "VarFileInfo" 
-	BEGIN 
-		VALUE "Translation", 0x0409, 1252
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
     END
 END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -331,7 +329,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO  
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -343,124 +341,161 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE  
+STRINGTABLE 
 BEGIN
-	IDP_OLE_INIT_FAILED   	"OLE initialization failed.  Make sure that the OLE libraries are the correct version."
-	IDP_FAILED_TO_CREATE	"Failed to create object.  Make sure the object is entered in the system registry."
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+    IDS_MAIN_TOOLBAR        "Standard"
+    IDP_FAILED_TO_CREATE    "Failed to create object.  Make sure the object is entered in the system registry."
 END
-STRINGTABLE   
-BEGIN
-// Non-mac-targeting apps remove the two extra substrings
-	IDR_MAINFRAME           "TDApp\n\nTDApp\n\n\nTDApp.Document\nTDApp.Document"
 
-END
-STRINGTABLE   
+STRINGTABLE 
 BEGIN
-	AFX_IDS_APP_TITLE       "TDApp"
-	AFX_IDS_IDLEMESSAGE     "For Help, press F1"
-	AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
+    IDR_MAINFRAME           "TDApp\n\nTDApp\n\n\nTDApp.Document\nTDApp.Document"
 END
-STRINGTABLE  
+
+STRINGTABLE 
 BEGIN
-	ID_INDICATOR_EXT        "EXT"
-	ID_INDICATOR_CAPS       "CAP"
-	ID_INDICATOR_NUM        "NUM"
-	ID_INDICATOR_SCRL       "SCRL"
-	ID_INDICATOR_OVR        "OVR"
-	ID_INDICATOR_REC        "REC"
+    AFX_IDS_APP_TITLE       "TDApp"
+    AFX_IDS_IDLEMESSAGE     "For Help, press F1"
+    AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
 END
-STRINGTABLE  
+
+STRINGTABLE 
 BEGIN
-	ID_FILE_NEW             "Create a new document\nNew"
-	ID_FILE_OPEN            "Open an existing document\nOpen"
-	ID_FILE_CLOSE           "Close the active document\nClose"
-	ID_FILE_SAVE            "Save the active document\nSave"
-	ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
-	ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
-	ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
     ID_FILE_PRINT_DIRECT    "Send the document directly to the default printer without making changes\nQuick Print"
-	ID_FILE_PRINT           "Print the active document\nPrint"
-	ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
-	ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
-	ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
-	ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows\nHelp"
-	ID_HELP_INDEX           "Opens Help\nHelp Topics"
-	ID_HELP_FINDER			"List Help topics\nHelp Topics"
-	ID_HELP_USING           "Display instructions about how to use help\nHelp"
-	ID_HELP                 "Display help for current task or command\nHelp"
-	ID_FILE_MRU_FILE1       "Open this document"
-	ID_FILE_MRU_FILE2       "Open this document"
-	ID_FILE_MRU_FILE3       "Open this document"
-	ID_FILE_MRU_FILE4       "Open this document"
-	ID_FILE_MRU_FILE5       "Open this document"
-	ID_FILE_MRU_FILE6       "Open this document"
-	ID_FILE_MRU_FILE7       "Open this document"
-	ID_FILE_MRU_FILE8       "Open this document"
-	ID_FILE_MRU_FILE9       "Open this document"
-	ID_FILE_MRU_FILE10      "Open this document"
-	ID_FILE_MRU_FILE11      "Open this document"
-	ID_FILE_MRU_FILE12      "Open this document"
-	ID_FILE_MRU_FILE13      "Open this document"
-	ID_FILE_MRU_FILE14      "Open this document"
-	ID_FILE_MRU_FILE15      "Open this document"
-	ID_FILE_MRU_FILE16      "Open this document"
-	ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
-	ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
-	ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
-	ID_EDIT_CLEAR           "Erase the selection\nErase"
-	ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
-	ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
-	ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
-	ID_EDIT_FIND            "Find the specified text\nFind"
-	ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
-	ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
-	ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
-	ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
-	ID_EDIT_UNDO            "Undo the last action\nUndo"
-	ID_EDIT_REDO            "Redo the previously undone action\nRedo"
-	ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
-	ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
-	ID_EDIT_PASTE_LINK      "Insert Clipboard contents and a link to its source\nPaste Link"
-	ID_EDIT_PASTE_SPECIAL	"Insert Clipboard contents with options\nPaste Special"
-	ID_OLE_INSERT_NEW       "Insert new embedded object\nNew Object"
-	ID_OLE_EDIT_LINKS       "Edit linked objects\nEdit Links"
-	ID_OLE_VERB_FIRST       "Activate embedded or linked object"
-	57873					"Activate embedded or linked object"
-	57874					"Activate embedded or linked object"
-	57875					"Activate embedded or linked object"
-	ID_OLE_EDIT_CONVERT		"Convert object to different type\nConvert Object"
-END
-
-STRINGTABLE  
-BEGIN
-	AFX_IDS_SCSIZE          "Change the window size"
-	AFX_IDS_SCMOVE          "Change the window position"
-	AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
-	AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
-	AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
-	AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
-	AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
-	AFX_IDS_SCRESTORE       "Restore the window to normal size"
-	AFX_IDS_SCTASKLIST      "Activate Task List"
-	AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
-END
-
-#endif
-STRINGTABLE 
-BEGIN
-	ID_VIEW_CUSTOMIZE			"Customize toolbars and menus.\nCustomize"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
 END
 
 STRINGTABLE 
 BEGIN
-	IDS_MAIN_TOOLBAR			"Standard"
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+    ID_HELP_INDEX           "Opens Help\nHelp Topics"
+    ID_HELP_FINDER          "List Help topics\nHelp Topics"
+    ID_HELP_USING           "Display instructions about how to use help\nHelp"
+    ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows\nHelp"
+    ID_HELP                 "Display help for current task or command\nHelp"
 END
 
+STRINGTABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_PASTE_LINK      "Insert Clipboard contents and a link to its source\nPaste Link"
+    ID_EDIT_PASTE_SPECIAL   "Insert Clipboard contents with options\nPaste Special"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_OLE_INSERT_NEW       "Insert new embedded object\nNew Object"
+    ID_OLE_EDIT_LINKS       "Edit linked objects\nEdit Links"
+    ID_OLE_EDIT_CONVERT     "Convert object to different type\nConvert Object"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_OLE_VERB_FIRST       "Activate embedded or linked object"
+    57873                   "Activate embedded or linked object"
+    57874                   "Activate embedded or linked object"
+    57875                   "Activate embedded or linked object"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_CUSTOMIZE       "Customize toolbars and menus.\nCustomize"
+END
 
 STRINGTABLE 
 BEGIN
@@ -471,30 +506,41 @@ BEGIN
     ID_VIEW_USER_TOOLBAR5   "Show or hide the user toolbar\nToggle User ToolBar"
     ID_VIEW_USER_TOOLBAR6   "Show or hide the user toolbar\nToggle User ToolBar"
     ID_VIEW_USER_TOOLBAR7   "Show or hide the user toolbar\nToggle User ToolBar"
+END
+
+STRINGTABLE 
+BEGIN
     ID_VIEW_USER_TOOLBAR8   "Show or hide the user toolbar\nToggle User ToolBar"
     ID_VIEW_USER_TOOLBAR9   "Show or hide the user toolbar\nToggle User ToolBar"
     ID_VIEW_USER_TOOLBAR10  "Show or hide the user toolbar\nToggle User ToolBar"
 END
 
-
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
-	ID_VIEW_APPLOOK_2000	"Activate Office 2000 application look\nOffice 2000 Look"
-	ID_VIEW_APPLOOK_XP		"Activate Office XP application look\nOffice XP Look"
-	ID_VIEW_APPLOOK_2003	"Activate Office 2003 application look\nOffice 2003 Look"
-	ID_VIEW_APPLOOK_VS2005	"Activate Visual Studio 2005 application look\nVS 2005 Look"
-	ID_VIEW_APPLOOK_WIN_XP	"Activate Windows native application look\nWindows Native Look"
-	ID_VIEW_APPLOOK_2007	"Activate Office 2007 application look\nOffice 2007 Look (Blue)"
-	ID_VIEW_APPLOOK_2007_1	"Activate Office 2007 application look\nOffice 2007 Look (Black)"
-	ID_VIEW_APPLOOK_2007_2	"Activate Office 2007 application look\nOffice 2007 Look (Silver)"
-	ID_VIEW_APPLOOK_2007_3	"Activate Office 2007 application look\nOffice 2007 Look (Aqua)"
-	ID_VIEW_APPLOOK_VS2008	"Activate Visual Studio 2008 application look\nVS 2008 Look"
-	ID_VIEW_APPLOOK_VS2010	"Activate Visual Studio 2010 application look\nVS 2010 Look"
-	ID_VIEW_APPLOOK_WIN7	"Activate Windows 7 application look\nWindows 7 Look"
-	ID_VIEW_APPLOOK_2010_1	"Activate Office 2010 application look\nOffice 2010 Look (Blue)"
-	ID_VIEW_APPLOOK_2010_2	"Activate Office 2010 application look\nOffice 2010 Look (Black)"
-	ID_VIEW_APPLOOK_2010_3	"Activate Office 2010 application look\nOffice 2010 Look (Silver)"
+    ID_VIEW_APPLOOK_2000    "Activate Office 2000 application look\nOffice 2000 Look"
+    ID_VIEW_APPLOOK_XP      "Activate Office XP application look\nOffice XP Look"
+    ID_VIEW_APPLOOK_2003    "Activate Office 2003 application look\nOffice 2003 Look"
+    ID_VIEW_APPLOOK_WIN_XP  "Activate Windows native application look\nWindows Native Look"
+    ID_VIEW_APPLOOK_VS2005  "Activate Visual Studio 2005 application look\nVS 2005 Look"
+    ID_VIEW_APPLOOK_2007    "Activate Office 2007 application look\nOffice 2007 Look (Blue)"
 END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_APPLOOK_2007_1  "Activate Office 2007 application look\nOffice 2007 Look (Black)"
+    ID_VIEW_APPLOOK_2007_2  "Activate Office 2007 application look\nOffice 2007 Look (Silver)"
+    ID_VIEW_APPLOOK_2007_3  "Activate Office 2007 application look\nOffice 2007 Look (Aqua)"
+    ID_VIEW_APPLOOK_VS2008  "Activate Visual Studio 2008 application look\nVS 2008 Look"
+    ID_VIEW_APPLOOK_VS2010  "Activate Visual Studio 2010 application look\nVS 2010 Look"
+    ID_VIEW_APPLOOK_2010_1  "Activate Office 2010 application look\nOffice 2010 Look (Blue)"
+    ID_VIEW_APPLOOK_2010_2  "Activate Office 2010 application look\nOffice 2010 Look (Black)"
+    ID_VIEW_APPLOOK_2010_3  "Activate Office 2010 application look\nOffice 2010 Look (Silver)"
+    ID_VIEW_APPLOOK_WIN7    "Activate Windows 7 application look\nWindows 7 Look"
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
 
 
 #ifndef APSTUDIO_INVOKED
@@ -502,15 +548,17 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
 #define _AFX_NO_PROPERTY_RESOURCES
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE 4, 2
 #pragma code_page(936)
-#include "res\\TDApp.rc2"  // non-Microsoft Visual C++ edited resources
-#include "afxres.rc"  	// Standard components
-#include "afxprint.rc"  // printing/print preview resources
-#include "afxolecl.rc"  // OLE container resources
+#include "res\TDApp.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#include "afxolecl.rc"       // OLE container resources
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+

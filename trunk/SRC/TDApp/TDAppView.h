@@ -4,6 +4,8 @@
 
 #pragma once
 
+
+
 class CTDAppCntrItem;
 
 class CTDAppView : public CView
@@ -63,6 +65,8 @@ protected:
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnOpenVector();
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp

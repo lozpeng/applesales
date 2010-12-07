@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "IRender.h"
 #include "ICursor.h"
-//#include "SimpleRender.h"
+#include "SimpleRender.h"
 //#include "UniqueRender.h"
 //#include "RangeRender.h"
 
@@ -90,21 +90,20 @@ SYSTEM::CSmartPtr<IRender>  IRender::CreateRenderFromStream(SYSTEM::IArchive &ar
 
 SYSTEM::CSmartPtr<IRender>  IRender::CreateRender( RENDER_TYPE type , std::string RenderName )
 {
-	//switch(type)
-	//{
-	//case OT_SIMPLERENDER:
-	//	return IRenderPtr( new CSimpleRender() );
-	//case OT_UNIQUERENDER: 
-	//	return IRenderPtr( new CUniqueRender() );
-	//case OT_RANGERENDER:
-	//	return IRenderPtr( new CRangeRender() );
-	//case OT_MIXSIMPLERENDER:
-	//case OT_TRIANGLERENDER:
-	//case OT_CUSTOMRENDER:
-	//	return NULL;
-	//default:
+	switch(type)
+	{
+	case SIMPLERENDER:
+		return IRenderPtr( new CSimpleRender() );
+	case UNIQUERENDER: 
+		//return IRenderPtr( new CUniqueRender() );
+	case RANGERENDER:
+		//return IRenderPtr( new CRangeRender() );
+	case MIXSIMPLERENDER:
+	case TRIANGLERENDER:
 		return NULL;
-	//}
+	default:
+		return NULL;
+	}
 }
 
 void Carto::IRender::SetRenderFeatureType(long type)

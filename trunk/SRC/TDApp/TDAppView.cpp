@@ -8,6 +8,12 @@
 #include "CntrItem.h"
 #include "TDAppView.h"
 
+#include "ShapefileWorkspaceFactory.h"
+#include "ShapefileWorkspace.h"
+#include "ShapefileFeatureClass.h"
+#include "FeatureLayer.h"
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -28,6 +34,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_FILE_PRINT, OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
+	ON_COMMAND(ID_OPEN_Vector, &CTDAppView::OnOpenVector)
 END_MESSAGE_MAP()
 
 // CTDAppView construction/destruction
@@ -292,3 +299,23 @@ int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 // CTDAppView message handlers
+
+
+
+//打开矢量数据
+void CTDAppView::OnOpenVector()
+{
+	// TODO: 在此添加命令处理程序代码
+	CString fileName ="D:\\数据\\平台测试数据\\t119.shp";
+	CString featureName ="D:\\数据\\平台测试数据\\t119.shp";
+	
+	Geodatabase::IWorkspace* ipWorkspace = CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(fileName);
+	Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->OpenFeatureClass(featureName);
+
+	Carto::CMapPtr ipMap = Carto::CMapPtr(new Carto::CMap());
+	m_MapCtrl.SetMap(ipMap);
+
+	Carto::ILayerPtr ipLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
+	ipLayer->CreateLayer(ipFeatureCls);
+	ipMap->AddLayer(ipLayer);
+}

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "ILayer.h"
-//#include "FeatureLayer.h"
+#include "FeatureLayer.h"
 #include "RasterLayer.h"
 //#include "GraphicLayer.h"
 //#include "IDataObject.h"
@@ -83,6 +83,20 @@ void ILayer::serialization(SYSTEM::IArchive &ar)
 		if(type != GraphicLayer)
 		{
 			//m_pDataObject = CGeoDataDriverManager::GetDataObject(ar);
+
+			//std::string filename;
+			//ar&filename;
+
+			////通过相对路径计算绝对路径
+			////filename =otSystem::CRelativePath::FullPath(filename.c_str());
+
+			//Geodatabase::IWorkspace *pWorkspace =CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(filename.c_str());
+			//if(!pWorkspace)
+			//{
+			//	return NULL;
+			//}
+			//m_pDataObject =pWorkspace->OpenFeatureClass(filename.c_str());
+
 		}
 
 		long lAuxiLayerCnt;
@@ -111,8 +125,8 @@ ILayerPtr ILayer::CreateLayer(Geodatabase::IGeodataObjectPtr pDataObject)
 	ILayerPtr player;
 	switch ( pDataObject->GetType() )
 	{
-	//case Geodatabase::GDT_FEATUREDATASET:
-		//return CFeatureLayer::CreateFeatureLayer( pDataObject );
+	case Geodatabase::GDT_FEATURECLASS:
+		return CFeatureLayer::CreateFeatureLayer( pDataObject );
 	case Geodatabase::GDT_RASTERDATASET:
 		return CRasterLayer::CreateRasterLayer(pDataObject);
 	//case GDT_TINDATASET:
