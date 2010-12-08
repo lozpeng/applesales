@@ -4,6 +4,11 @@
 namespace Framework
 {
 
+std::string  CommonUIName::AppMapControl ="AppMapControl";
+
+std::string  CommonUIName::AppDocument ="AppDocument";
+
+
 static std::map<std::string,IUIObject*> uiobjects;
 static std::map<std::string,IUIObject*>::iterator find_item;
 
