@@ -121,6 +121,7 @@ BOOL CTDAppApp::InitInstance()
 		return FALSE;
 
 	
+
 	// The one and only window has been initialized, so show and update it
 	// The one and only window has been initialized, so show and update it
 	m_pMainWnd->SetWindowText(" 遥感基础平台（测试版）");
