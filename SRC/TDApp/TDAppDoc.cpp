@@ -48,8 +48,15 @@ BOOL CTDAppDoc::OnNewDocument()
 	if (!COleDocument::OnNewDocument())
 		return FALSE;
 
-	// TODO: add reinitialization code here
-	// (SDI documents will reuse this document)
+	//注册文档
+	CreateAss(Framework::CommonUIName::AppDocument);
+	SetAutoDetroy(true);
+
+	//新建一个地图
+	AddNewMap();
+
+	//设置为活动地图
+	SetActiveMap(GetMap(0));
 
 	return TRUE;
 }
