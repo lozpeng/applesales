@@ -13,6 +13,16 @@
 namespace Framework
 {
 
+//界面组件在注册时使用的名称
+class FRAMEWORK_DLL CommonUIName
+{
+public:
+	//主程序的地图控件
+	static std::string AppMapControl;
+
+	// 主程序文档
+	static std::string AppDocument;
+};
 
 class FRAMEWORK_DLL IUIObject : public SYSTEM::ISerialization
 {
