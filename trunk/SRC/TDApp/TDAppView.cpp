@@ -240,6 +240,8 @@ void CTDAppView::OnSize(UINT nType, int cx, int cy)
 	COleClientItem* pActiveItem = GetDocument()->GetInPlaceActiveItem(this);
 	if (pActiveItem != NULL)
 		pActiveItem->SetItemRects();
+
+
 }
 
 void CTDAppView::OnFilePrint()
@@ -265,9 +267,12 @@ int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_WndTab.Create (CBCGPTabWnd::STYLE_3D_VS2005, CRect(0,0,0,0), this, 1);
 
 
-	m_MapCtrl.CreateControl("MAPCONTROL", &m_WndTab, ID_MAPCTRL);
+	m_MapCtrl.CreateControl(Framework::CommonUIName::AppMapControl, &m_WndTab, ID_MAPCTRL);
 	m_WndTab.AddTab( &m_MapCtrl , "Map" );
 
+
+	CTDAppDoc* pDoc = GetDocument();
+	pDoc->SetLinkMapCtrl(&m_MapCtrl);
 
 	m_WndTab.SetActiveTab(0);
 	m_WndTab.SetFlatFrame ();
