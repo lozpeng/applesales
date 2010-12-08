@@ -258,7 +258,22 @@ void CTDAppView::OnFilePrint()
 
 }
 
+int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+	m_WndTab.Create (CBCGPTabWnd::STYLE_3D_VS2005, CRect(0,0,0,0), this, 1);
 
+
+	m_MapCtrl.CreateControl("MAPCONTROL", &m_WndTab, ID_MAPCTRL);
+	m_WndTab.AddTab( &m_MapCtrl , "Map" );
+
+
+	m_WndTab.SetActiveTab(0);
+	m_WndTab.SetFlatFrame ();
+	m_WndTab.SetTabBorderSize (0);
+	m_WndTab.AutoDestroyWindow (FALSE);
+}
 
 // CTDAppView diagnostics
 
@@ -279,22 +294,7 @@ CTDAppDoc* CTDAppView::GetDocument() const // non-debug version is inline
 	return (CTDAppDoc*)m_pDocument;
 }
 
-int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CView::OnCreate(lpCreateStruct) == -1)
-		return -1;
-	m_WndTab.Create (CBCGPTabWnd::STYLE_3D_VS2005, CRect(0,0,0,0), this, 1);
 
-
-	m_MapCtrl.CreateControl("MAPCONTROL", &m_WndTab, ID_MAPCTRL);
-	m_WndTab.AddTab( &m_MapCtrl , "Map" );
-
-
-	m_WndTab.SetActiveTab(0);
-	m_WndTab.SetFlatFrame ();
-	m_WndTab.SetTabBorderSize (0);
-	m_WndTab.AutoDestroyWindow (FALSE);
-}
 #endif //_DEBUG
 
 
