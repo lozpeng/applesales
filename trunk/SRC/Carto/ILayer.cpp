@@ -88,7 +88,7 @@ void ILayer::serialization(SYSTEM::IArchive &ar)
 			//ar&filename;
 
 			////通过相对路径计算绝对路径
-			////filename =otSystem::CRelativePath::FullPath(filename.c_str());
+			////filename =SYSTEM::CRelativePath::FullPath(filename.c_str());
 
 			//Geodatabase::IWorkspace *pWorkspace =CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(filename.c_str());
 			//if(!pWorkspace)

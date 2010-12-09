@@ -14,17 +14,17 @@
 
 // CTDAppDoc
 
-IMPLEMENT_DYNCREATE(CTDAppDoc, COleDocument)
+IMPLEMENT_DYNCREATE(CTDAppDoc, CDocument)
 
-BEGIN_MESSAGE_MAP(CTDAppDoc, COleDocument)
+BEGIN_MESSAGE_MAP(CTDAppDoc, CDocument)
 	// Enable default OLE container implementation
-	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, COleDocument::OnUpdatePasteMenu)
+	/*ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, COleDocument::OnUpdatePasteMenu)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE_LINK, COleDocument::OnUpdatePasteLinkMenu)
 	ON_UPDATE_COMMAND_UI(ID_OLE_EDIT_CONVERT, COleDocument::OnUpdateObjectVerbMenu)
 	ON_COMMAND(ID_OLE_EDIT_CONVERT, COleDocument::OnEditConvert)
 	ON_UPDATE_COMMAND_UI(ID_OLE_EDIT_LINKS, COleDocument::OnUpdateEditLinksMenu)
 	ON_COMMAND(ID_OLE_EDIT_LINKS, COleDocument::OnEditLinks)
-	ON_UPDATE_COMMAND_UI_RANGE(ID_OLE_VERB_FIRST, ID_OLE_VERB_LAST, COleDocument::OnUpdateObjectVerbMenu)
+	ON_UPDATE_COMMAND_UI_RANGE(ID_OLE_VERB_FIRST, ID_OLE_VERB_LAST, COleDocument::OnUpdateObjectVerbMenu)*/
 END_MESSAGE_MAP()
 
 
@@ -32,8 +32,6 @@ END_MESSAGE_MAP()
 
 CTDAppDoc::CTDAppDoc()
 {
-	// Use OLE compound files
-	EnableCompoundFile();
 
 	// TODO: add one-time construction code here
 
@@ -45,18 +43,18 @@ CTDAppDoc::~CTDAppDoc()
 
 BOOL CTDAppDoc::OnNewDocument()
 {
-	if (!COleDocument::OnNewDocument())
+	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	//注册文档
-	CreateAss(Framework::CommonUIName::AppDocument);
-	SetAutoDetroy(true);
+	////注册文档
+	//CreateAss(Framework::CommonUIName::AppDocument);
+	//SetAutoDetroy(true);
 
-	//新建一个地图
-	AddNewMap();
+	////新建一个地图
+	//AddNewMap();
 
-	//设置为活动地图
-	SetActiveMap(GetMap(0));
+	////设置为活动地图
+	//SetActiveMap(GetMap(0));
 
 	return TRUE;
 }
@@ -79,7 +77,7 @@ void CTDAppDoc::Serialize(CArchive& ar)
 
 	// Calling the base class COleDocument enables serialization
 	//  of the container document's COleClientItem objects.
-	COleDocument::Serialize(ar);
+	CDocument::Serialize(ar);
 }
 
 
@@ -88,12 +86,12 @@ void CTDAppDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void CTDAppDoc::AssertValid() const
 {
-	COleDocument::AssertValid();
+	CDocument::AssertValid();
 }
 
 void CTDAppDoc::Dump(CDumpContext& dc) const
 {
-	COleDocument::Dump(dc);
+	CDocument::Dump(dc);
 }
 #endif //_DEBUG
 

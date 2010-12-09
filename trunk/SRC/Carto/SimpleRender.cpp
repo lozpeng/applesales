@@ -29,7 +29,7 @@ void CSimpleRender::Draw( Display::IDisplayPtr pDisplay, Geodatabase::ICursorPtr
 	
 	if( pCursor == NULL )
 	{
-		//OTTRACE("pdatarecordset = NULL");
+		//TRACE("pdatarecordset = NULL");
 		return;
 	}
 
@@ -89,7 +89,7 @@ void CSimpleRender::HighLightDraw( Display::IDisplayPtr pDisplay, Geodatabase::I
 {
 	if( pCursor == NULL )
 	{
-		//OTTRACE("pdatarecordset = NULL");
+		//TRACE("pdatarecordset = NULL");
 		return;
 	}
 
