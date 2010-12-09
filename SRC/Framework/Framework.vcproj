@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IDocument.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IMapCtrl.cpp"
 				>
 			</File>
@@ -242,6 +246,10 @@
 			</File>
 			<File
 				RelativePath=".\FrameworkDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IDocument.h"
 				>
 			</File>
 			<File
