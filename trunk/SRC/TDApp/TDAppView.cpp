@@ -125,8 +125,8 @@ int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 	m_MapCtrl.CreateControl(Framework::CommonUIName::AppMapControl, &m_WndTab, ID_MAPCTRL);
-	ipMap = Carto::CMapPtr(new Carto::CMap());
-	m_MapCtrl.SetMap(ipMap);
+	//ipMap = Carto::CMapPtr(new Carto::CMap());
+	//m_MapCtrl.SetMap(ipMap);
 	m_WndTab.AddTab( &m_MapCtrl , "Map" );
 
 	m_wndButton.Create(_T("Test"),WS_CHILD|WS_VISIBLE,CRect(0,0,10,20),&m_WndTab,IDC_TEST);
