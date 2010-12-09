@@ -153,7 +153,7 @@ bool CFeatureLayer::SetData(Geodatabase::IGeodataObjectPtr pDataObject)
 
 void CFeatureLayer::Draw(Display::IDisplayPtr pDisplay,DRAW_CONTENT content)
 {
-	if (pDisplay == NULL)	////张维2007.10.23添加
+	if (pDisplay == NULL)	
 		return;
 
 	//可见性

@@ -50,7 +50,7 @@
 #define ID_OPEN_Vector                  32852
 #define ID_OPEN_IMG                     32853
 #define ID_MAPCTRL                      40000
-
+#define IDC_TEST						40001
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

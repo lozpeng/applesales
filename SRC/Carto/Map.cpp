@@ -51,7 +51,7 @@ namespace Carto
 		//CAoiManager* pManager = new CAoiManager();
 		//m_pAoiManager.reset(pManager);
 
-		//m_pElementOperStack.reset(new otElement::CElementOperationStack(m_pGraphicLayer));
+		//m_pElementOperStack.reset(new Element::CElementOperationStack(m_pGraphicLayer));
 	}
 
 	CMap::~CMap()
@@ -86,9 +86,9 @@ namespace Carto
 				IPE_ParseWkt2ST ( m_strWkt.c_str(), &stProjcs);
 
 				if(stProjcs.bProj)
-				m_unit = otSystem::UnitConverter::GetUnitByString(stProjcs.unit.name);
+				m_unit = SYSTEM::UnitConverter::GetUnitByString(stProjcs.unit.name);
 				else
-				m_unit = otSystem::UnitConverter::GetUnitByString(stProjcs.geogcs.unit.name);;	*/	
+				m_unit = SYSTEM::UnitConverter::GetUnitByString(stProjcs.geogcs.unit.name);;	*/	
 			}
 			m_pDisplay->GetDisplayTransformation().SetUnit(m_unit);
 
@@ -196,9 +196,9 @@ namespace Carto
 				IPE_ParseWkt2ST ( m_strWkt.c_str(), &stProjcs);
 
 				if(stProjcs.bProj)
-				m_unit = otSystem::UnitConverter::GetUnitByString(stProjcs.unit.name);
+				m_unit = SYSTEM::UnitConverter::GetUnitByString(stProjcs.unit.name);
 				else
-				m_unit = otSystem::UnitConverter::GetUnitByString(stProjcs.geogcs.unit.name);;	*/	
+				m_unit = SYSTEM::UnitConverter::GetUnitByString(stProjcs.geogcs.unit.name);;	*/	
 			}
 			m_pDisplay->GetDisplayTransformation().SetUnit(m_unit);
 
@@ -748,12 +748,12 @@ namespace Carto
 		//return m_activeLayer;
 	}
 
-	//CGraphicLayerPtr CGeoMap::GetGraphicLayer()
+	//CGraphicLayerPtr CMap::GetGraphicLayer()
 	//{
 	//	return m_pGraphicLayer;
 	//}
 
-	//void CGeoMap::InitGraphicLayer()
+	//void CMap::InitGraphicLayer()
 	//{
 	//	m_pGraphicLayer.reset(new Carto::CGraphicLayer(m_Envelope));
 	//}
@@ -898,7 +898,7 @@ namespace Carto
 		m_bFramed = bFramed;
 	}
 
-	//CGraphicLayerPtr CGeoMap::GetGraphicLayer()
+	//CGraphicLayerPtr CMap::GetGraphicLayer()
 	//{
 	//	return m_pGraphicLayer;
 	//}

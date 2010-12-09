@@ -26,7 +26,7 @@ namespace Carto
 	public:
 		/**
 		* 序列化操作
-		* @param otSystem::IArchive &ar 文档流
+		* @param SYSTEM::IArchive &ar 文档流
 		*/
 		virtual void serialization(SYSTEM::IArchive &ar);
 

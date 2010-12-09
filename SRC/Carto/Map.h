@@ -160,7 +160,7 @@ namespace Carto
 		void Clear();
 
 		// 浅copy，图层级对象为引用关系
-		//otSystem::CSmartPtr<CGeoMap> Clone();
+		//SYSTEM::CSmartPtr<CMap> Clone();
 
 		/**
 		* 更新地图投影
@@ -229,7 +229,7 @@ namespace Carto
 
 		//void InitGraphicLayer();
 
-		//otElement::CElementOperationStackPtr GetElementOperationStack(){return m_pElementOperStack;};
+		//Element::CElementOperationStackPtr GetElementOperationStack(){return m_pElementOperStack;};
 
 		/** 
 		* 获得AOI管理类
@@ -342,7 +342,7 @@ namespace Carto
 		double	m_dbReferenceScale;
 
 		//////////////////////////////////////////////////////////////////////////
-		//otElement::CElementOperationStackPtr m_pElementOperStack;	//图元操作回退栈
+		//Element::CElementOperationStackPtr m_pElementOperStack;	//图元操作回退栈
 
 
 		//////////////////////////////////////

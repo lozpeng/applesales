@@ -218,18 +218,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	OnAppLook (m_nAppLook);
 
+
+
 	// VISUAL_MANAGER
 	return 0;
 }
 
-BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT /*lpcs*/,
-	CCreateContext* pContext)
-{
-	return m_wndSplitter.Create(this,
-		2, 2,               // TODO: adjust the number of rows, columns
-		CSize(10, 10),      // TODO: adjust the minimum pane size
-		pContext);
-}
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -268,13 +262,20 @@ void CMainFrame::OnViewCustomize()
 	//------------------------------------
 	// Create a customize toolbars dialog:
 	//------------------------------------
+	//CBCGPToolbarCustomize* pDlgCust = new CBCGPToolbarCustomize (this,
+	//	TRUE /* Automatic menus scaning */,
+	//	BCGCUSTOMIZE_MENU_SHADOWS | BCGCUSTOMIZE_TEXT_LABELS | 
+	//	BCGCUSTOMIZE_LOOK_2000 | BCGCUSTOMIZE_MENU_ANIMATIONS | BCGCUSTOMIZE_CONTEXT_HELP);
+
+	//pDlgCust->EnableUserDefinedToolbars ();
+	//pDlgCust->Create ();
+
 	CBCGPToolbarCustomize* pDlgCust = new CBCGPToolbarCustomize (this,
-		TRUE /* Automatic menus scaning */,
-		BCGCUSTOMIZE_MENU_SHADOWS | BCGCUSTOMIZE_TEXT_LABELS | 
-		BCGCUSTOMIZE_LOOK_2000 | BCGCUSTOMIZE_MENU_ANIMATIONS | BCGCUSTOMIZE_CONTEXT_HELP);
+		TRUE /* Automatic menus scaning */);
 
 	pDlgCust->EnableUserDefinedToolbars ();
 	pDlgCust->Create ();
+
 }
 
 afx_msg LRESULT CMainFrame::OnToolbarReset(WPARAM /*wp*/,LPARAM)
@@ -428,4 +429,4 @@ void CMainFrame::OnUpdateAppLook(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetRadio (m_nAppLook == pCmdUI->m_nID);
 }
- // RIBBON_APP
+// RIBBON_APP
