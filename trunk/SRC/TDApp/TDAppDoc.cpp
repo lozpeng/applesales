@@ -5,7 +5,7 @@
 #include "TDApp.h"
 
 #include "TDAppDoc.h"
-#include "CntrItem.h"
+//#include "CntrItem.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -46,15 +46,15 @@ BOOL CTDAppDoc::OnNewDocument()
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	////注册文档
-	//CreateAss(Framework::CommonUIName::AppDocument);
-	//SetAutoDetroy(true);
+	//注册文档
+	CreateAss(Framework::CommonUIName::AppDocument);
+	SetAutoDetroy(true);
 
-	////新建一个地图
-	//AddNewMap();
+	//新建一个地图
+	AddNewMap();
 
-	////设置为活动地图
-	//SetActiveMap(GetMap(0));
+	//设置为活动地图
+	SetActiveMap(GetMap(0));
 
 	return TRUE;
 }

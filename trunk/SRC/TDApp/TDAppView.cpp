@@ -134,7 +134,7 @@ int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	
 	CTDAppDoc* pDoc = GetDocument();
-	//pDoc->SetLinkMapCtrl(&m_MapCtrl);
+	pDoc->SetLinkMapCtrl(&m_MapCtrl);
 
 	m_WndTab.SetActiveTab(0);
 	m_WndTab.SetFlatFrame ();

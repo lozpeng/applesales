@@ -4,9 +4,9 @@
 
 #pragma once
 
-//#include "IDocument.h"
+#include "IDocument.h"
 
-class CTDAppDoc : public CDocument//,public Framework::IDocument
+class CTDAppDoc : public CDocument,public Framework::IDocument
 {
 protected: // create from serialization only
 	CTDAppDoc();
