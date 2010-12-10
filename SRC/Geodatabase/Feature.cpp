@@ -66,6 +66,7 @@ void CFeature::SetEmpty()
 {
 	if(m_pGeometry)
 	{
+		m_pGeometry->SetEmpty();
 		delete m_pGeometry;
 		m_pGeometry =NULL;
 	}

@@ -173,6 +173,12 @@ CTDAppDoc* CTDAppView::GetDocument() const // non-debug version is inline
 //打开矢量数据
 void CTDAppView::OnOpenVector()
 {
+	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+
+	//_crtBreakAlloc = 9878;
+
+
+
 	// TODO: 在此添加命令处理程序代码
 	CString fileName ="D:\\数据\\平台测试数据\\t119.shp";
 
@@ -190,6 +196,6 @@ void CTDAppView::OnOpenVector()
 
 	Carto::ILayerPtr ipLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
 	ipLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
-	ipMap->AddLayer(ipLayer);
+	this->GetDocument()->GetActiveMap()->AddLayer(ipLayer);
 	m_MapCtrl.UpdateControl(drawAll);
 }

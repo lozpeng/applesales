@@ -28,7 +28,8 @@ CShapefileFeatureCursor::CShapefileFeatureCursor(CShapefileFeatureClass *pFeatur
 
 CShapefileFeatureCursor::~CShapefileFeatureCursor()
 {
-
+	if(m_pFeature)
+		m_pFeature->SetEmpty();
 }
 
 

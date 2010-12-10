@@ -41,7 +41,7 @@ protected:
 	CBCGPTabWnd	m_WndTab;
 	CBCGPButton m_wndButton;
 	Control::CMapControl m_MapCtrl;
-	Carto::CMapPtr ipMap;
+	//Carto::CMapPtr ipMap;
 // Generated message map functions
 protected:
 	afx_msg void OnDestroy();
