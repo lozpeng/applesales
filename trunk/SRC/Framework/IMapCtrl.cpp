@@ -64,7 +64,8 @@ void IMapCtrl::ControlResize(UINT nType, int cx, int cy)
 		rect.right = cx;
 		rect.bottom = cy;
 
-		
+		if(m_pGeoMap == NULL)
+			return;
 		//更新显示缓存的大小
 		m_pGeoMap->GetDisplay()->GetDrawDC()->CacheBitmap(cx,cy);
 
