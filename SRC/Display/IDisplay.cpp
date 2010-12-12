@@ -446,8 +446,7 @@ void IDisplay::Draw(const GEOMETRY::geom::Envelope* pEnvelope)
 	p = (void*)m_cDisplayTransformation.TransformToDisplay( pEnvelope);
 	if(m_pSymbol != NULL)
 		m_pSymbol->Draw( p);
-	else
-		//OTTRACE("Symbol is NULL in IDisplay Draw");
+	
 
 	FreeDisplayObj(p);
 }
