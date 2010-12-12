@@ -51,6 +51,14 @@ public:
 	//设置鼠标光标
 	void SetCursor(HCURSOR cursor);
 
+	//得到窗体句柄
+	HWND GetHWnd();
+
+	//设置当前工具
+	void SetCurTool(std::string toolname) {m_curToolname =toolname;}
+
+	std::string GetCurToolname() {return m_curToolname;}
+
 
 protected:
 	//将地理内容贴到屏幕上
@@ -70,9 +78,11 @@ protected:
 
 	COLORREF m_BgColor;
 
-	std::string m_curAction;
+	std::string m_curToolname;
 
 	HCURSOR m_cursor;
+
+	HWND m_hCtrlWnd; 
 
 	
 

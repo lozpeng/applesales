@@ -151,6 +151,9 @@ void ISegment::setFromPtr(GEOMETRY::geom::Coordinate *pPt)
         delete m_pFromPt;
 		m_pFromPt =NULL;
 
+		delete m_pToPt;
+		m_pToPt =NULL;
+
 	}
 	m_pFromPt =pPt;
 	m_bAutoDestroy =false;
@@ -160,6 +163,9 @@ void ISegment::setToPtr(Coordinate *pPt)
 {
 	if(m_pToPt && m_bAutoDestroy)
 	{
+		delete m_pFromPt;
+		m_pFromPt =NULL;
+
 		delete m_pToPt;
 		m_pToPt =NULL;
 	}
