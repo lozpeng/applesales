@@ -14,6 +14,8 @@ IMapCtrl::IMapCtrl()
 	m_lSizeY=0;
 
 	m_cursor =NULL;
+
+	m_hCtrlWnd =NULL;
 }
 
 IMapCtrl::~IMapCtrl()
@@ -136,6 +138,11 @@ void IMapCtrl::RefreshGeography()
 	{
 		BitBlt(m_hClientDC, 0, 0, m_lSizeX, m_lSizeY, m_hMemDC, 0, 0, SRCCOPY);
 	}
+}
+
+HWND IMapCtrl::GetHWnd()
+{
+	return m_hCtrlWnd;
 }
 
 }

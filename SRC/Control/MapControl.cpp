@@ -50,25 +50,45 @@ void CMapControl::OnLButtonDown(UINT nFlags, CPoint point)
 	
 	SetFocus();
 
+	Framework::ITool *pTool =Framework::ITool::FindTool(m_curToolname);
+	if (pTool != NULL)
+	{
+		pTool->LButtonDownEvent( nFlags, point);
+	}
+
+
 	__super::OnLButtonDown(nFlags, point);
 }
 
 void CMapControl::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	
+	Framework::ITool *pTool =Framework::ITool::FindTool(m_curToolname);
+	if (pTool != NULL)
+	{
+		pTool->LButtonUpEvent( nFlags, point);
+	}
 
 	__super::OnLButtonUp(nFlags, point);
 }
 
 void CMapControl::OnRButtonDown(UINT nFlags, CPoint point)
 {
+	Framework::ITool *pTool =Framework::ITool::FindTool(m_curToolname);
+	if (pTool != NULL)
+	{
+		pTool->RButtonDownEvent( nFlags, point);
+	}
 	
 	__super::OnRButtonDown(nFlags, point);
 }
 
 void CMapControl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	Framework::ITool *pTool =Framework::ITool::FindTool(m_curToolname);
+	if (pTool != NULL)
+	{
+		pTool->KeyDownEvent( nChar,nRepCnt,nFlags);
+	}
 
 	__super::OnKeyDown( nChar , nRepCnt, nFlags );
 }
@@ -76,13 +96,23 @@ void CMapControl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CMapControl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	
+	Framework::ITool *pTool =Framework::ITool::FindTool(m_curToolname);
+	if (pTool != NULL)
+	{
+		pTool->MouseMoveEvent( nFlags, point);
+	}
 
 	__super::OnMouseMove(nFlags, point);
 }
 
 void CMapControl::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
-	
+	Framework::ITool *pTool =Framework::ITool::FindTool(m_curToolname);
+	if (pTool != NULL)
+	{
+		pTool->LButtonDblClkEvent( nFlags, point);
+	}
+
 	return CWnd::OnLButtonDblClk(nFlags, point);
 }
 
@@ -94,6 +124,8 @@ int CMapControl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_hClientDC = ::GetDC(GetSafeHwnd());
 	m_hMemDC = ::CreateCompatibleDC(m_hClientDC);
+
+	m_hCtrlWnd = this->GetSafeHwnd();
 	
 	return 0;
 }
