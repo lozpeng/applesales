@@ -423,14 +423,13 @@ void CMapControl::OnTimer(UINT_PTR nIDEvent)
 	}
 	else
 	{
-		/*if(m_pGeoMap->GetExtentMode() == otCarto::EEM_AUTO)
-		{*/
-			m_pGeoMap->GetDisplay()->GetDisplayTransformation().ZoomToFixScale(m_dblScale);
+	
+		m_pGeoMap->GetDisplay()->GetDisplayTransformation().ZoomToFixScale(m_dblScale);
 
-			UpdateControl(drawAll);			
-		/*}	
+		UpdateControl(drawAll);			
+		
 		KillTimer(1);	
-		m_bTimer = false;*/
+		m_bTimer = false;
 	}
 
 }
