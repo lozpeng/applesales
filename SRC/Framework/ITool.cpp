@@ -8,6 +8,7 @@ std::map<std::string,ITool*> ITool::gTools;
 
 ITool::ITool(const char* name)
 {
+	m_pTarget =NULL;
     RegisterTool(name,this);
 }
 
@@ -20,9 +21,9 @@ std::string ITool::GetName()
 	return m_strName;
 }
 
-void ITool::Initialize()
+void ITool::Initialize(IUIObject *pTarget)
 {
-
+    m_pTarget =pTarget;
 }
 
 void ITool::LButtonDownEvent (UINT nFlags, CPoint point)

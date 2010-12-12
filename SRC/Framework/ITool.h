@@ -8,6 +8,7 @@
 #define  _ITOOL_H_
 
 #include <map>
+#include "IUIObject.h"
 
 namespace Framework
 {
@@ -23,7 +24,7 @@ public:
 	std::string GetName();
 
 	//工具初始化
-	virtual void Initialize();
+	virtual void Initialize(IUIObject *pTargetControl);
 
 	//消息响应
 	virtual void LButtonDownEvent (UINT nFlags, CPoint point);
@@ -45,6 +46,9 @@ public:
 protected:
 
 	std::string m_strName;
+
+	//工具所属控件
+	IUIObject *m_pTarget;
 
 
 protected:
