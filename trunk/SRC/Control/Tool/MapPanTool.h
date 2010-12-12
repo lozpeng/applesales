@@ -24,6 +24,8 @@ private:
 
 	Framework::IMapCtrl *m_pMapCtrl;
 
+	HCURSOR m_hCursor;
+
 
 };
 
