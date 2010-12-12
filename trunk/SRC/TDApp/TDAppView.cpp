@@ -11,6 +11,8 @@
 #include "ShapefileWorkspace.h"
 #include "ShapefileFeatureClass.h"
 #include "FeatureLayer.h"
+#include "RasterLayer.h"
+#include "RasterWSFactory.h"
 
 
 #ifdef _DEBUG
@@ -33,6 +35,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
 	ON_COMMAND(ID_OPEN_Vector, &CTDAppView::OnOpenVector)
+	ON_COMMAND(ID_OPEN_IMG, &CTDAppView::OnOpenImg)
 END_MESSAGE_MAP()
 
 // CTDAppView construction/destruction
@@ -197,5 +200,23 @@ void CTDAppView::OnOpenVector()
 	Carto::ILayerPtr ipLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
 	ipLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
 	this->GetDocument()->GetActiveMap()->AddLayer(ipLayer);
+	m_MapCtrl.UpdateControl(drawAll);
+}
+
+void CTDAppView::OnOpenImg()
+{
+	// TODO: 在此添加命令处理程序代码
+	CString fileName("");
+	CFileDialog dlg(true, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"ImageFile(*.jpg)|*.jpg|All file(*.*)|*.*|",this);
+	if(dlg.DoModal()==IDOK) 
+		fileName = dlg.GetPathName(); 
+	else
+		return;
+	Geodatabase::IWorkspace* pWorkspace = CRasterWSFactory::GetInstance()->OpenFromFile(fileName);
+	Geodatabase::IRasterDatasetPtr pRasterDataset = pWorkspace->OpenRasterDataset(fileName);
+
+	Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CRasterLayer());
+	pLayer = Carto::ILayer::CreateLayer(pRasterDataset);
+	this->GetDocument()->GetActiveMap()->AddLayer(pLayer);
 	m_MapCtrl.UpdateControl(drawAll);
 }
