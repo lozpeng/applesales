@@ -55,6 +55,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnOpenVector();
+	afx_msg void OnOpenImg();
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp
