@@ -43,6 +43,9 @@ protected:  // control bar embedded members
 	CWorkSpaceBar2			m_wndWorkSpace2;
 	COutputBar				m_wndOutput;
 
+	//‰Ø¿¿π§æﬂ
+	CBCGPToolBar            m_ExplorerToolBar;
+
 	CBCGPToolBarImages	m_UserImages;
 // Generated message map functions
 protected:
