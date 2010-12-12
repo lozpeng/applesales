@@ -211,6 +211,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ITool.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IUIObject.cpp"
 				>
 			</File>
@@ -254,6 +258,10 @@
 			</File>
 			<File
 				RelativePath=".\IMapCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ITool.h"
 				>
 			</File>
 			<File
