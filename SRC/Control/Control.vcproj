@@ -266,6 +266,10 @@
 				RelativePath=".\res\Control.rc2"
 				>
 			</File>
+			<File
+				RelativePath=".\res\Hand.cur"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Tool"

@@ -1,15 +1,20 @@
 #include "stdafx.h"
 #include "MapPanTool.h"
+#include "Control.h"
 
 
+extern CControlApp theApp;
 namespace Control
 {
+
 
 static CToolMapPan gActionPan;
 
 CToolMapPan::CToolMapPan() : Framework::ITool("MapPan")
 {
 	m_pMapCtrl =NULL;
+
+	m_hCursor =NULL;
 }
 
 CToolMapPan::~CToolMapPan()
@@ -21,13 +26,20 @@ void CToolMapPan::Initialize(Framework::IUIObject *pTargetControl)
 {
 	ITool::Initialize(pTargetControl);
 
+	//初始化光标
+	if(m_hCursor==NULL)
+	{
+		m_hCursor =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_PAN) );
+	}
+
+
 	//获取活动地图控件
 	m_pMapCtrl = dynamic_cast<Framework::IMapCtrl*>(pTargetControl);
 	if(!m_pMapCtrl)
 		return;
 
 	//设置光标类型
-	//pMapCtrl->SetCursorType(cursorPan);
+	m_pMapCtrl->SetCursor(m_hCursor);
 
 	
 }
