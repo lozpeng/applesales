@@ -145,4 +145,9 @@ HWND IMapCtrl::GetHWnd()
 	return m_hCtrlWnd;
 }
 
+void IMapCtrl::SetCursor(HCURSOR cursor)
+{
+	m_cursor =cursor;
+}
+
 }
