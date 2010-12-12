@@ -12,6 +12,8 @@ IMapCtrl::IMapCtrl()
 	m_hMemDC = 0;
 	m_lSizeX=0;
 	m_lSizeY=0;
+
+	m_cursor =NULL;
 }
 
 IMapCtrl::~IMapCtrl()

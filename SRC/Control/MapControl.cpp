@@ -127,17 +127,22 @@ void CMapControl::OnPaint()
 	}	
 }
 
-void CMapControl::SetCursor()
-{
 
-}
 
 BOOL CMapControl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	//SetCursor();
+	if(m_cursor)
+	{
+		::SetCursor(m_cursor);
+	}
+	else
+	{
+		//设置默认光标
+		::SetCursor(LoadCursor(NULL,IDC_ARROW));
+	}
 
-	return __super::OnSetCursor(pWnd,nHitTest,message);
+	return TRUE;
+	
 	
 }
 

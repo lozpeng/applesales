@@ -4,7 +4,7 @@
 #include "IUIObject.h"
 #include "Map.h"
 #include "IDisplay.h"
-
+#include "ITool.h"
 
 namespace Framework
 {
@@ -48,6 +48,9 @@ public:
 	long GetSizeX() { return m_lSizeX;}
 	long GetSizeY() {return m_lSizeY;}
 
+	//设置鼠标光标
+	void SetCursor(HCURSOR cursor);
+
 
 protected:
 	//将地理内容贴到屏幕上
@@ -66,8 +69,10 @@ protected:
 	long m_lSizeX,m_lSizeY;
 
 	COLORREF m_BgColor;
-	long m_lCursorType;
+
 	std::string m_curAction;
+
+	HCURSOR m_cursor;
 
 	
 
