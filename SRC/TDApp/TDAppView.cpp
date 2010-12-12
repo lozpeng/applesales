@@ -36,6 +36,11 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
 	ON_COMMAND(ID_OPEN_Vector, &CTDAppView::OnOpenVector)
 	ON_COMMAND(ID_OPEN_IMG, &CTDAppView::OnOpenImg)
+
+	//ä¯ÀÀ¹¤¾ß
+	ON_COMMAND(ID_MAP_PAN, OnMapPan)
+	ON_UPDATE_COMMAND_UI(ID_MAP_PAN, OnUpdateMapPan)
+
 END_MESSAGE_MAP()
 
 // CTDAppView construction/destruction
@@ -219,4 +224,23 @@ void CTDAppView::OnOpenImg()
 	pLayer = Carto::ILayer::CreateLayer(pRasterDataset);
 	this->GetDocument()->GetActiveMap()->AddLayer(pLayer);
 	m_MapCtrl.UpdateControl(drawAll);
+}
+
+
+void CTDAppView::OnMapPan()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("MapPan");
+
+	pTool=Framework::ITool::FindTool("MapPan");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+
+void CTDAppView::OnUpdateMapPan(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "MapPan");
+
 }

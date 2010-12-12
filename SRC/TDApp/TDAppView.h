@@ -56,6 +56,9 @@ protected:
 public:
 	afx_msg void OnOpenVector();
 	afx_msg void OnOpenImg();
+
+	afx_msg void OnMapPan();
+	afx_msg void OnUpdateMapPan(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp
