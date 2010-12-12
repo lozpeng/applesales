@@ -419,11 +419,9 @@ void IDisplay::Draw(const GEOMETRY::geom::Geometry* pGeometry)
 	//绘制
 	if(m_pSymbol != NULL && p)
 		m_pSymbol->Draw( p );
-	else
-		//OTTRACE("Symbol is NULL in IDisplay Draw");
 
 	////释放绘制对象
-	if(p)
+	if(NULL != p)
 	{
         FreeDisplayObj(p);
 	}
