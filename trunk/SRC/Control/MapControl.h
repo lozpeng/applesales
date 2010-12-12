@@ -23,7 +23,6 @@ protected:
 
 public:
 	virtual BOOL CreateControl( std::string Name, void *pParent , long nID );
-	virtual void SetCursor();
 
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
