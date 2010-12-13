@@ -270,6 +270,14 @@
 				RelativePath=".\res\Hand.cur"
 				>
 			</File>
+			<File
+				RelativePath=".\res\ZoomIn.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\ZoomOut.CUR"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Tool"
@@ -296,6 +304,22 @@
 			</File>
 			<File
 				RelativePath=".\Tool\MapPanTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\MapZoominTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\MapZoominTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\MapZoomoutTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\MapZoomoutTool.h"
 				>
 			</File>
 			<File

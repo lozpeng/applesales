@@ -19,7 +19,10 @@ CToolMapPan::CToolMapPan() : Framework::ITool("MapPan")
 
 CToolMapPan::~CToolMapPan()
 {
-
+    if(m_hCursor)
+	{
+		DeleteObject( m_hCursor );
+	}
 }
 
 void CToolMapPan::Initialize(Framework::IUIObject *pTargetControl)
