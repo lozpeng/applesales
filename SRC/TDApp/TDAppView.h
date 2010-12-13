@@ -60,6 +60,14 @@ public:
 	afx_msg void OnMapPan();
 	afx_msg void OnUpdateMapPan(CCmdUI* pCmdUI);
 
+	afx_msg void OnMapZoomin();
+	afx_msg void OnUpdateMapZoomin(CCmdUI* pCmdUI);
+
+	afx_msg void OnMapZoomout();
+	afx_msg void OnUpdateMapZoomout(CCmdUI* pCmdUI);
+
+
+
 	afx_msg void OnDrawSelect();
 	afx_msg void OnUpdateDrawSelect(CCmdUI* pCmdUI);
 

@@ -40,6 +40,10 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	//浏览工具
 	ON_COMMAND(ID_MAP_PAN, OnMapPan)
 	ON_UPDATE_COMMAND_UI(ID_MAP_PAN, OnUpdateMapPan)
+	ON_COMMAND(ID_MAP_ZOOM_IN, OnMapZoomin)
+	ON_UPDATE_COMMAND_UI(ID_MAP_ZOOM_IN, OnUpdateMapZoomin)
+	ON_COMMAND(ID_ZOOM_OUT, OnMapZoomout)
+	ON_UPDATE_COMMAND_UI(ID_ZOOM_OUT, OnUpdateMapZoomout)
 
 	//标绘工具
 
@@ -252,6 +256,44 @@ void CTDAppView::OnUpdateMapPan(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "MapPan");
 
 }
+
+void CTDAppView::OnMapZoomin()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("MapZoomin");
+
+	pTool=Framework::ITool::FindTool("MapZoomin");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+
+void CTDAppView::OnUpdateMapZoomin(CCmdUI* pCmdUI)
+{
+    pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "MapZoomin");
+}
+
+void CTDAppView::OnMapZoomout()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("MapZoomout");
+
+	pTool=Framework::ITool::FindTool("MapZoomout");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+
+void CTDAppView::OnUpdateMapZoomout(CCmdUI* pCmdUI)
+{
+    pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "MapZoomout");
+}
+
+
+
+
 void CTDAppView::OnDrawRect()
 {
 	Framework::ITool* pTool = NULL;
