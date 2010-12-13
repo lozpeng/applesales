@@ -76,6 +76,8 @@ IDB_WORKSPACE           BITMAP                  "res\\workspace.bmp"
 IDB_TOOLBAR256          BITMAP                  "res\\Toolbar256.bmp"
 IDR_TOOLBAR_EXPLORER    BITMAP                  "res\\toolbar1.bmp"
 IDB_EXPLORER            BITMAP                  "res\\liulan.bmp"
+IDR_TOOLBAR_Drawing     BITMAP                  "res\\bmpDrawing.bmp"
+IDB_Drawing             BITMAP                  "res\\drawing.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -102,6 +104,12 @@ BEGIN
     BUTTON      ID_MAP_PAN
     BUTTON      ID_MAP_ZOOM_IN
     BUTTON      ID_ZOOM_OUT
+END
+
+IDR_TOOLBAR_Drawing TOOLBAR  16, 15
+BEGIN
+    BUTTON      ID_DRAW_SELECT
+    BUTTON      ID_DRAW_RECT
 END
 
 

@@ -7,7 +7,7 @@
 #include "LayerArray.h"
 //#include "IEditor.h"
 //#include "IEagleEyeView.h"
-//#include "GraphicLayer.h"
+#include "GraphicLayer.h"
 #include <boost/signal.hpp>
 #include <boost/signals/connection.hpp>
 #include "ISerialization.h"
@@ -186,11 +186,6 @@ namespace Carto
 		*/
 		CLayerArray& GetLayers();
 
-		/**
-		* 获得IElemnt图层
-		* @return 图层组
-		*/
-		//CGraphicLayerPtr GetGraphicLayer();
 
 		/**设置当前激活图层
 		*
@@ -225,9 +220,9 @@ namespace Carto
 		*/
 		//void SetEagleViewDrawer(IEagleEyeViewPtr pView) {m_pEagleEyeViewPtr = pView;};
 
-		//CGraphicLayerPtr GetGraphicLayer();
+		CGraphicLayerPtr GetGraphicLayer();
 
-		//void InitGraphicLayer();
+		void ResetGraphicLayer();
 
 		//Element::CElementOperationStackPtr GetElementOperationStack(){return m_pElementOperStack;};
 
@@ -331,7 +326,7 @@ namespace Carto
 		CLayerArray	m_Layers;	
 
 		//element图层
-		//CGraphicLayerPtr	m_pGraphicLayer;
+		CGraphicLayerPtr	m_pGraphicLayer;
 
 		MAP_EXTENT_MODE m_ExtentMode;			//范围模式
 

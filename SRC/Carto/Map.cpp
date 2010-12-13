@@ -31,7 +31,7 @@ namespace Carto
 		m_bSetPrj = FALSE;
 		//m_activeLayer = NULL;
 		//m_pEagleEyeViewPtr = NULL;
-		//m_pGraphicLayer.reset(new Carto::CGraphicLayer(GEOMETRY::geom::Envelope(0,0,1,1)));
+		m_pGraphicLayer.reset(new Carto::CGraphicLayer(GEOMETRY::geom::Envelope(0,0,1,1)));
 
 
 		m_viewEnvelope.init(0,0,0,0);
@@ -340,8 +340,8 @@ namespace Carto
 				m_pDisplay->DrawBackgroud();
 
 
-			//if(m_pGraphicLayer)
-			//	m_pGraphicLayer->Draw( m_pDisplay,drawElement);
+			if(m_pGraphicLayer)
+				m_pGraphicLayer->Draw( m_pDisplay,drawElement);
 
 			//绘制AOI要素
 			//if (m_pAoiManager)
@@ -373,8 +373,8 @@ namespace Carto
 			//	}
 			//}
 
-			//if(m_pGraphicLayer)
-			//	m_pGraphicLayer->Draw( m_pDisplay,drawEdit);
+			if(m_pGraphicLayer)
+				m_pGraphicLayer->Draw( m_pDisplay,drawEdit);
 
 			////绘制AOI要素
 			//if (m_pAoiManager)
@@ -748,15 +748,15 @@ namespace Carto
 		//return m_activeLayer;
 	}
 
-	//CGraphicLayerPtr CMap::GetGraphicLayer()
-	//{
-	//	return m_pGraphicLayer;
-	//}
+	CGraphicLayerPtr CMap::GetGraphicLayer()
+	{
+		return m_pGraphicLayer;
+	}
 
-	//void CMap::InitGraphicLayer()
-	//{
-	//	m_pGraphicLayer.reset(new Carto::CGraphicLayer(m_Envelope));
-	//}
+	void CMap::ResetGraphicLayer()
+	{
+		m_pGraphicLayer.reset(new Carto::CGraphicLayer(m_Envelope));
+	}
 
 	boost::signals::connection  CMap::RegisterDeleteLayer(boost::function<void (ILayerPtr)> fun)
 	{

@@ -35,6 +35,13 @@
 #define HID_OPEN_32851                          0x18053
 #define HID_OPEN_Vector                         0x18054
 #define HID_OPEN_IMG                            0x18055
+#define HID_MAP_PAN                             0x18056
+#define HID_MAP_ZOOM_IN                         0x18057
+#define HID_ZOOM_OUT                            0x18058
+#define HID_VIEW_EXPLORER                       0x18059
+#define HID_DRAW_RECT                           0x1805A
+#define HID_BUTTON32859                         0x1805B
+#define HID_DRAW_SELECT                         0x1805B
 #define HID_MAPCTRL                             0x19C40
  
 // Prompts (IDP_*) 
@@ -47,6 +54,8 @@
 #define HIDR_TDAppTYPE                          0x20081
 #define HIDR_CONTEXT_MENU                       0x20082
 #define HIDR_POPUP_TOOLBAR                      0x20083
+#define HIDR_TOOLBAR_EXPLORER                   0x200A0
+#define HIDR_TOOLBAR_Drawing                    0x200A3
  
 // Dialogs (IDD_*) 
 #define HIDD_ABOUTBOX                           0x20064

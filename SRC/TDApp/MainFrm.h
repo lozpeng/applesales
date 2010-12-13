@@ -46,6 +46,9 @@ protected:  // control bar embedded members
 	//浏览工具
 	CBCGPToolBar            m_ExplorerToolBar;
 
+	//标绘工具
+	CBCGPToolBar            m_DrawingToolBar;
+
 	CBCGPToolBarImages	m_UserImages;
 // Generated message map functions
 protected:

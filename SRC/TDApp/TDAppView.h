@@ -59,6 +59,12 @@ public:
 
 	afx_msg void OnMapPan();
 	afx_msg void OnUpdateMapPan(CCmdUI* pCmdUI);
+
+	afx_msg void OnDrawSelect();
+	afx_msg void OnUpdateDrawSelect(CCmdUI* pCmdUI);
+
+	afx_msg void OnDrawRect();
+	afx_msg void OnUpdateDrawRect(CCmdUI* pCmdUI);
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp

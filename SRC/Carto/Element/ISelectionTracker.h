@@ -12,6 +12,7 @@
 #include "SimpleFillSymbol.h"
 #include "ElementDefine.h"
 #include "SimpleMarkerSymbol.h"
+#include "IDisplay.h"
 
 namespace Element{
 class CARTO_DLL ISelectionTracker
