@@ -41,6 +41,14 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_MAP_PAN, OnMapPan)
 	ON_UPDATE_COMMAND_UI(ID_MAP_PAN, OnUpdateMapPan)
 
+	//标绘工具
+
+	ON_COMMAND(ID_DRAW_SELECT, OnDrawSelect)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_SELECT, OnUpdateDrawSelect)
+
+	ON_COMMAND(ID_DRAW_RECT, OnDrawRect)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_RECT, OnUpdateDrawRect)
+
 END_MESSAGE_MAP()
 
 // CTDAppView construction/destruction
@@ -188,7 +196,7 @@ void CTDAppView::OnOpenVector()
 
 
 	// TODO: 在此添加命令处理程序代码
-	CString fileName ="D:\\数据\\平台测试数据\\t119.shp";
+	CString fileName ="";
 
 	CFileDialog dlg(true, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"shapefile(*.shp)|*.shp|All file(*.*)|*.*|",this);
 	if(dlg.DoModal()==IDOK) 
@@ -242,5 +250,40 @@ void CTDAppView::OnMapPan()
 void CTDAppView::OnUpdateMapPan(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "MapPan");
+
+}
+void CTDAppView::OnDrawRect()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawRectElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawRectElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+
+void CTDAppView::OnUpdateDrawRect(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawRectElementTool");
+
+}
+
+void CTDAppView::OnDrawSelect()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("SelectElementTool");
+
+	pTool=Framework::ITool::FindTool("SelectElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+
+void CTDAppView::OnUpdateDrawSelect(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "SelectElementTool");
 
 }

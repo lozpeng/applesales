@@ -16,6 +16,8 @@
 #define IDR_TOOLBAR_EXPLORER            160
 #define IDB_BITMAP1                     162
 #define IDB_EXPLORER                    162
+#define IDR_TOOLBAR_Drawing             163
+#define IDB_Drawing                     168
 #define IDC_COMPANY_URL                 1041
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
@@ -56,6 +58,9 @@
 #define ID_MAP_ZOOM_IN                  32855
 #define ID_ZOOM_OUT                     32856
 #define ID_VIEW_EXPLORER                32857
+#define ID_DRAW_RECT                    32858
+#define ID_BUTTON32859                  32859
+#define ID_DRAW_SELECT                  32859
 #define ID_MAPCTRL                      40000
 #define IDC_TEST                        40001
 
@@ -63,8 +68,8 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        163
-#define _APS_NEXT_COMMAND_VALUE         32858
+#define _APS_NEXT_RESOURCE_VALUE        169
+#define _APS_NEXT_COMMAND_VALUE         32860
 #define _APS_NEXT_CONTROL_VALUE         1053
 #define _APS_NEXT_SYMED_VALUE           108
 #endif

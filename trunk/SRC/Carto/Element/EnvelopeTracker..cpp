@@ -40,7 +40,7 @@ CEnvelopeTracker::CEnvelopeTracker(const GEOMETRY::geom::Envelope& envelope,HAND
 	pLineSymbol->SetLineStyle(DOT);
 	m_pFillSymbol->SetDrawFill(FALSE);
 	m_pFillSymbol->SetOutLineColor(RGB(0,255,255));
-
+	m_pFillSymbol->SetFillColor(RGB(0,255,255));
 
 	m_pMarkerSymbol->SetOutLineColor(RGB(0,0,0));
 	m_pMarkerSymbol->SetMarkerColor(RGB(0,255,255));

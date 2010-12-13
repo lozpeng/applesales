@@ -151,6 +151,19 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_ExplorerToolBar.SetWindowText(_T("浏览工具"));
 
 
+	//标绘工具栏
+	if (!m_DrawingToolBar.Create(this,
+		WS_CHILD|WS_VISIBLE|CBRS_TOP|CBRS_TOOLTIPS|CBRS_FLYBY|CBRS_HIDE_INPLACE|CBRS_SIZE_DYNAMIC|
+		CBRS_GRIPPER | CBRS_BORDER_3D,
+		ID_VIEW_EXPLORER) ||
+		!m_DrawingToolBar.LoadToolBar (IDR_TOOLBAR_Drawing,0, 0, TRUE, 0, 0, IDB_Drawing))
+	{
+		TRACE0("Failed to create build toolbar\n");
+		return -1;      // fail to create
+	}
+	m_DrawingToolBar.SetWindowText(_T("标绘工具"));
+
+
 	if (!m_wndStatusBar.Create(this) ||
 		!m_wndStatusBar.SetIndicators(indicators,
 		  sizeof(indicators)/sizeof(UINT)))
@@ -206,17 +219,23 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndWorkSpace2.EnableDocking(CBRS_ALIGN_ANY);
 	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);
 	m_ExplorerToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_DrawingToolBar.EnableDocking(CBRS_ALIGN_ANY);
+
 	EnableDocking(CBRS_ALIGN_ANY);
 	EnableAutoHideBars(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndMenuBar);
 	DockControlBar(&m_wndToolBar);
 	DockControlBar(&m_wndWorkSpace);
 	DockControlBar(&m_ExplorerToolBar);
+	DockControlBar(&m_DrawingToolBar);
+
 	m_wndWorkSpace2.AttachToTabWnd (&m_wndWorkSpace, BCGP_DM_STANDARD, FALSE, NULL);
 	DockControlBar(&m_wndOutput);
 
 
+	
 	DockControlBarLeftOf(&m_wndToolBar,&m_ExplorerToolBar);
+	DockControlBarLeftOf(&m_ExplorerToolBar,&m_DrawingToolBar);
 
 	m_wndToolBar.EnableCustomizeButton (TRUE, ID_VIEW_CUSTOMIZE, _T("Customize..."));
 
