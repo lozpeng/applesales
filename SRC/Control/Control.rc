@@ -102,6 +102,8 @@ END
 //
 
 IDC_PAN                 CURSOR                  "res\\Hand.cur"
+IDC_ZOOMIN              CURSOR                  "res\\ZoomIn.cur"
+IDC_ZOOMOUT             CURSOR                  "res\\ZoomOut.CUR"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
