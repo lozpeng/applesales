@@ -53,6 +53,20 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_DRAW_RECT, OnDrawRect)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_RECT, OnUpdateDrawRect)
 
+	ON_COMMAND(ID_DRAW_MARKER, OnDrawMarker)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_MARKER, OnUpdateDrawMarker)
+
+	ON_COMMAND(ID_DRAW_CIRCLE, OnDrawCircle)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_CIRCLE, OnUpdateDrawCircle)
+	ON_COMMAND(ID_DRAW_POLYGON, OnDrawPolygon)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_POLYGON, OnUpdateDrawPolygon)
+	ON_COMMAND(ID_DRAW_POLYLINE, OnDrawPolyline)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_POLYLINE, OnUpdateDrawPolyline)
+	ON_COMMAND(ID_DRAW_CURVE, OnDrawCurve)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_CURVE, OnUpdateDrawCurve)
+	ON_COMMAND(ID_DRAW_TEXT, OnDrawText)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_TEXT, OnUpdateDrawtext)
+
 END_MESSAGE_MAP()
 
 // CTDAppView construction/destruction
@@ -328,4 +342,95 @@ void CTDAppView::OnUpdateDrawSelect(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "SelectElementTool");
 
+}
+
+afx_msg void CTDAppView::OnDrawMarker()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawSimpleMarkerElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawSimpleMarkerElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawMarker(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawSimpleMarkerElementTool");
+}
+afx_msg void CTDAppView::OnDrawCircle()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawCircleElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawCircleElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawCircle(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawCircleElementTool");
+}
+afx_msg void CTDAppView::OnDrawPolygon()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawPolygonElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawPolygonElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawPolygon(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawPolygonElementTool");
+}
+afx_msg void CTDAppView::OnDrawPolyline()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawPolylineElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawPolylineElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawPolyline(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawPolylineElementTool");
+}
+afx_msg void CTDAppView::OnDrawCurve()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawBezierCurveElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawBezierCurveElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawCurve(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawBezierCurveElementTool");
+}
+afx_msg void CTDAppView::OnDrawText()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawTextElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawTextElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawtext(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawTextElementTool");
 }

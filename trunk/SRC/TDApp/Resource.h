@@ -59,8 +59,21 @@
 #define ID_ZOOM_OUT                     32856
 #define ID_VIEW_EXPLORER                32857
 #define ID_DRAW_RECT                    32858
-#define ID_BUTTON32859                  32859
 #define ID_DRAW_SELECT                  32859
+#define ID_DRAW_MARKER                  32860
+#define ID_DRAW_CIRCLE                  32861
+#define ID_DRAW_POLYGON                 32862
+#define ID_DRAW_POLYLINE                32863
+#define ID_DRAW_CURVE                   32864
+#define ID_DRAW_TEXT                    32865
+#define ID_BUTTON32866                  32866
+#define ID_BUTTON32867                  32867
+#define ID_BUTTON32868                  32868
+#define ID_BUTTON32869                  32869
+#define ID_BUTTON32870                  32870
+#define ID_BUTTON32871                  32871
+#define ID_BUTTON32872                  32872
+#define ID_BUTTON32873                  32873
 #define ID_MAPCTRL                      40000
 #define IDC_TEST                        40001
 
@@ -68,8 +81,8 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        169
-#define _APS_NEXT_COMMAND_VALUE         32860
+#define _APS_NEXT_RESOURCE_VALUE        170
+#define _APS_NEXT_COMMAND_VALUE         32874
 #define _APS_NEXT_CONTROL_VALUE         1053
 #define _APS_NEXT_SYMED_VALUE           108
 #endif

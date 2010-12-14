@@ -40,8 +40,21 @@
 #define HID_ZOOM_OUT                            0x18058
 #define HID_VIEW_EXPLORER                       0x18059
 #define HID_DRAW_RECT                           0x1805A
-#define HID_BUTTON32859                         0x1805B
 #define HID_DRAW_SELECT                         0x1805B
+#define HID_DRAW_MARKER                         0x1805C
+#define HID_DRAW_CIRCLE                         0x1805D
+#define HID_DRAW_POLYGON                        0x1805E
+#define HID_DRAW_POLYLINE                       0x1805F
+#define HID_DRAW_CURVE                          0x18060
+#define HID_DRAW_TEXT                           0x18061
+#define HID_BUTTON32866                         0x18062
+#define HID_BUTTON32867                         0x18063
+#define HID_BUTTON32868                         0x18064
+#define HID_BUTTON32869                         0x18065
+#define HID_BUTTON32870                         0x18066
+#define HID_BUTTON32871                         0x18067
+#define HID_BUTTON32872                         0x18068
+#define HID_BUTTON32873                         0x18069
 #define HID_MAPCTRL                             0x19C40
  
 // Prompts (IDP_*) 

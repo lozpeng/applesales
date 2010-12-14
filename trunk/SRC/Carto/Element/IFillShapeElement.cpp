@@ -76,10 +76,12 @@ void IFillShapeElement::InitFillShape()
 	m_pOnDrawSymbol.reset(new Display::CSimpleFillSymbol);
 	m_pOnDrawSymbol->SetDrawFill(FALSE);
 	m_pOnDrawSymbol->SetOutLineColor(RGB(0,0,0));
+	
 
 	m_pMoveSymbol.reset(new Display::CSimpleFillSymbol);
 	m_pMoveSymbol->SetDrawFill(FALSE);
 	m_pMoveSymbol->SetOutLineColor(RGB(0,0,0));
+	
 
 	m_pFillDraftSymbol.reset(new Display::CSimpleFillSymbol);
 	m_pFillDraftSymbol->SetFillColor(RGB(255,255,255));

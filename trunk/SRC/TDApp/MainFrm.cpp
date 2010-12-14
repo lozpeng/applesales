@@ -139,7 +139,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	//常用工具栏
-	if (!m_ExplorerToolBar.Create(this,
+	if (!m_ExplorerToolBar.CreateEx(this,
 		WS_CHILD|WS_VISIBLE|CBRS_TOP|CBRS_TOOLTIPS|CBRS_FLYBY|CBRS_HIDE_INPLACE|CBRS_SIZE_DYNAMIC|
 		CBRS_GRIPPER | CBRS_BORDER_3D,
 		ID_VIEW_EXPLORER) ||
@@ -152,7 +152,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 	//标绘工具栏
-	if (!m_DrawingToolBar.Create(this,
+	if (!m_DrawingToolBar.CreateEx(this,
 		WS_CHILD|WS_VISIBLE|CBRS_TOP|CBRS_TOOLTIPS|CBRS_FLYBY|CBRS_HIDE_INPLACE|CBRS_SIZE_DYNAMIC|
 		CBRS_GRIPPER | CBRS_BORDER_3D,
 		ID_VIEW_EXPLORER) ||

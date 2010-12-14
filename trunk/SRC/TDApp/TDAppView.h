@@ -73,6 +73,20 @@ public:
 
 	afx_msg void OnDrawRect();
 	afx_msg void OnUpdateDrawRect(CCmdUI* pCmdUI);
+
+	afx_msg void OnDrawMarker();
+	afx_msg void OnUpdateDrawMarker(CCmdUI* pCmdUI);
+	afx_msg void OnDrawCircle();
+	afx_msg void OnUpdateDrawCircle(CCmdUI* pCmdUI);
+	afx_msg void OnDrawPolygon();
+	afx_msg void OnUpdateDrawPolygon(CCmdUI* pCmdUI);
+	afx_msg void OnDrawPolyline();
+	afx_msg void OnUpdateDrawPolyline(CCmdUI* pCmdUI);
+	afx_msg void OnDrawCurve();
+	afx_msg void OnUpdateDrawCurve(CCmdUI* pCmdUI);
+	afx_msg void OnDrawText();
+	afx_msg void OnUpdateDrawtext(CCmdUI* pCmdUI);
+
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp

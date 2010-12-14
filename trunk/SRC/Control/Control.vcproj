@@ -283,11 +283,59 @@
 			Name="Tool"
 			>
 			<File
+				RelativePath=".\Tool\DrawBezierCurveElementTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawBezierCurveElementTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawFreehandLineTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawFreehandLineTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawPolygonElementTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawPolygonElementTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawPolylineElementTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawPolylineElementTool.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Tool\DrawRectangleElementTool.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Tool\DrawRectangleElementTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawSimpleMarkerElementTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawSimpleMarkerElementTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawSimpleTextElementTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\DrawSimpleTextElementTool.h"
 				>
 			</File>
 			<File
