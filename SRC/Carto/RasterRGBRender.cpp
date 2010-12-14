@@ -96,6 +96,38 @@ namespace Carto
 	}
 	CRasterRGBRender::~CRasterRGBRender(void)
 	{
+		if (NULL != mp_pucBufSrc[0])
+		{
+			delete[] mp_pucBufSrc[0];
+			mp_pucBufSrc[0] = NULL;
+		}
+		if (NULL != mp_pucBufSrc[1])
+		{
+			delete[] mp_pucBufSrc[1];
+			mp_pucBufSrc[1] = NULL;
+		}
+		if (NULL != mp_pucBufSrc[2])
+		{
+			delete[] mp_pucBufSrc[2];
+			mp_pucBufSrc[2] = NULL;
+		}
+
+
+		if (NULL != mp_pucBufPro[0])
+		{
+			delete[] mp_pucBufPro[0];
+			mp_pucBufPro[0] = NULL;
+		}
+		if (NULL != mp_pucBufPro[1])
+		{
+			delete[] mp_pucBufPro[1];
+			mp_pucBufPro[1] = NULL;
+		}
+		if (NULL != mp_pucBufPro[2])
+		{
+			delete[] mp_pucBufPro[2];
+			mp_pucBufPro[2] = NULL;
+		}
 	}
 	void CRasterRGBRender::Draw(Display::IDisplayPtr pDisplay, Geodatabase::IRasterDataset *pRaster)
 	{
