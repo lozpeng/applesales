@@ -82,5 +82,15 @@ void IDrawElementTool::LButtonDblClkEvent (UINT nFlags, CPoint point)
 	m_pMapCtrl->UpdateControl((DrawContent)(drawElement));
 
 	ReleaseCapture();
+
+	//工具设为选择
+	Framework::ITool* pTool = NULL;
+	m_pMapCtrl->SetCurTool("SelectElementTool");
+
+	pTool=Framework::ITool::FindTool("SelectElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(m_pMapCtrl));
+	}
 }
 

@@ -106,10 +106,28 @@ BEGIN
     BUTTON      ID_ZOOM_OUT
 END
 
-IDR_TOOLBAR_Drawing TOOLBAR  16, 15
+IDR_TOOLBAR_Drawing TOOLBAR  16, 16
 BEGIN
     BUTTON      ID_DRAW_SELECT
+    BUTTON      ID_DRAW_MARKER
     BUTTON      ID_DRAW_RECT
+    BUTTON      ID_DRAW_CIRCLE
+    BUTTON      ID_DRAW_POLYLINE
+    BUTTON      ID_DRAW_POLYGON
+    BUTTON      ID_DRAW_CURVE
+    BUTTON      ID_DRAW_TEXT
+END
+
+IDB_Drawing TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_BUTTON32866
+    BUTTON      ID_BUTTON32867
+    BUTTON      ID_BUTTON32868
+    BUTTON      ID_BUTTON32869
+    BUTTON      ID_BUTTON32870
+    BUTTON      ID_BUTTON32871
+    BUTTON      ID_BUTTON32872
+    BUTTON      ID_BUTTON32873
 END
 
 
@@ -553,6 +571,21 @@ BEGIN
     ID_VIEW_APPLOOK_2010_2  "Activate Office 2010 application look\nOffice 2010 Look (Black)"
     ID_VIEW_APPLOOK_2010_3  "Activate Office 2010 application look\nOffice 2010 Look (Silver)"
     ID_VIEW_APPLOOK_WIN7    "Activate Windows 7 application look\nWindows 7 Look"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_DRAW_CURVE           "绘制曲线"
+    ID_DRAW_TEXT            "绘制文字"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_DRAW_RECT            "绘制矩形"
+    ID_DRAW_SELECT          "要素选择"
+    ID_DRAW_MARKER          "绘制点"
+    ID_DRAW_POLYGON         "绘制多边形"
+    ID_DRAW_POLYLINE        "绘制折线"
 END
 
 #endif    // 中文(中华人民共和国) resources

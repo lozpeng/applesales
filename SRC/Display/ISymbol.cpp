@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "ISymbol.h"
 #include "CDC.h"
+#include "ILineSymbol.h"
+#include "IMarkerSymbol.h"
+#include "IFillSymbol.h"
+#include "TextSymbol.h"
 
 namespace Display
 {
@@ -82,6 +86,36 @@ COLORREF ISymbol::GetColor()
 */
 void ISymbol::SetColor( COLORREF color )
 {
+	if (color == SetNoColor)
+	{
+		color = m_lColor | 0xff000000;
+	}
+	else if (color == SetHasColor)
+	{
+		color = m_lColor & 0x00ffffff; 
+	}
+	if (this->GetType() & EXT_SYMBOL)
+	{
+		m_lColor = color;
+		return;
+	}
+
+	if ( this->GetType() & MARKER_SYMBOL || ((this->GetType() & COMPLEX_SYMBOL) == COMPLEX_MARKER_SYMBOL) )//当是点符号
+	{
+		(dynamic_cast<IMarkerSymbol*>(this))->SetMarkerColor(color);
+	}
+	else if ( this->GetType() & LINE_SYMBOL || ((this->GetType() & COMPLEX_SYMBOL) == COMPLEX_LINE_SYMBOL) )//当是线符号
+	{
+		(dynamic_cast<ILineSymbol*>(this))->SetLineColor(color);
+	}
+	else if ( this->GetType() & FILL_SYMBOL || ((this->GetType() & COMPLEX_SYMBOL) == COMPLEX_FILL_SYMBOL) )//当是面符号
+	{
+		(dynamic_cast<IFillSymbol*>(this))->SetFillColor(color);
+	}
+	else if ( this->GetType() & TEXT_SYMBOL)//当是文字符号
+	{
+		(dynamic_cast<CTextSymbol*>(this))->SetTextColor(color);
+	}
 }
 
 /**

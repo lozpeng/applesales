@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "DrawRectangleElementTool.h"
-#include "MapControl.h"
+
 
 namespace Control
 {

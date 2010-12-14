@@ -11,7 +11,7 @@
 //{
 //	if(m_pMapControl)
 //	{
-//        m_pMapControl->UpdateContent((otDrawContent)(DrawElement | DrawEdit));
+//        m_pMapControl->UpdateControl((otDrawContent)(DrawElement | DrawEdit));
 //	}
 //}
 namespace Control
@@ -439,7 +439,7 @@ namespace Control
 		////ÏÔÊ¾Í¼ÔªÊôÐÔ
 		//if(IDOK==otComUI::CotElementProp::ShowElementProp(pElement,m_pMap,&callback))
 		//{
-		//	m_pMapCtrl->UpdateContent((otDrawContent)(otDrawElement | otDrawEdit));
+		//	m_pMapCtrl->UpdateControl((otDrawContent)(otDrawElement | otDrawEdit));
 		//}
 
 	}
