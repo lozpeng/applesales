@@ -40,7 +40,7 @@ void CRectangleElement::serialization(SYSTEM::IArchive &ar)
 {
 	IFillShapeElement::serialization(ar);
 }
-//
+
 //IElementPtr CRectangleElement::Clone()
 //{
 //	CRectangleElement* pElement = new CRectangleElement();

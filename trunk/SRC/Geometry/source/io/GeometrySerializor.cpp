@@ -32,7 +32,7 @@ using namespace std;
 using namespace GEOMETRY::geom;
 
 namespace GEOMETRY { // Namepspace GEOMETRY
-	namespace io {		// NameSpace  TT_GEOMETRY_IO
+	namespace io {		// NameSpace  GEOMETRY_IO
 
 GeometySerializor::GeometySerializor()
 {
@@ -49,7 +49,7 @@ GeometySerializor::~GeometySerializor()
 	//have nothing needed to do 
 }
 
-Geometry* GeometySerializor::serialization( otSystem::IArchive &ar )
+Geometry* GeometySerializor::serialization( SYSTEM::IArchive &ar )
 {
 	GeometryTypeId typeID;
 	if ( ar.IsRead() )
@@ -98,7 +98,7 @@ void GeometySerializor::SetGeometry( Geometry *pGeometry )
 	m_pGeometry = pGeometry;
 }
 
-void GeometySerializor::RWPoint( otSystem::IArchive &ar )
+void GeometySerializor::RWPoint( SYSTEM::IArchive &ar )
 {
 	if( ar.IsRead() )
 	{
@@ -120,22 +120,22 @@ void GeometySerializor::RWPoint( otSystem::IArchive &ar )
 	}
 }
 
-void GeometySerializor::RWLineString( otSystem::IArchive &ar )
+void GeometySerializor::RWLineString( SYSTEM::IArchive &ar )
 {
 	m_pGeometry = RWLineString( ar, dynamic_cast<LineString *>( m_pGeometry ) );
 }
 
-void GeometySerializor::RWLinearRing( otSystem::IArchive &ar )
+void GeometySerializor::RWLinearRing( SYSTEM::IArchive &ar )
 {
 	m_pGeometry = RWLinearRing( ar, dynamic_cast<LinearRing *>( m_pGeometry ) );
 }
 
-void GeometySerializor::RWPolygon( otSystem::IArchive &ar )
+void GeometySerializor::RWPolygon( SYSTEM::IArchive &ar )
 {
 	m_pGeometry = RWPolygon( ar, dynamic_cast<Polygon *>( m_pGeometry ) );
 }
 
-void GeometySerializor::RWMultiPoint( otSystem::IArchive &ar )
+void GeometySerializor::RWMultiPoint( SYSTEM::IArchive &ar )
 {
 	if( ar.IsRead() )
 	{
@@ -159,7 +159,7 @@ void GeometySerializor::RWMultiPoint( otSystem::IArchive &ar )
 
 }
 
-void GeometySerializor::RWMultiLineString( otSystem::IArchive &ar )
+void GeometySerializor::RWMultiLineString( SYSTEM::IArchive &ar )
 {
 	if( ar.IsRead() )
 	{
@@ -197,7 +197,7 @@ void GeometySerializor::RWMultiLineString( otSystem::IArchive &ar )
 	}
 }
 
-void GeometySerializor::RWMultiPolygon( otSystem::IArchive &ar )
+void GeometySerializor::RWMultiPolygon( SYSTEM::IArchive &ar )
 {
 	if( ar.IsRead() )
 	{
@@ -235,7 +235,7 @@ void GeometySerializor::RWMultiPolygon( otSystem::IArchive &ar )
 	}
 }
 
-void GeometySerializor::RWGeometryCollection( otSystem::IArchive &ar )
+void GeometySerializor::RWGeometryCollection( SYSTEM::IArchive &ar )
 {
 	if( ar.IsRead() )
 	{
@@ -301,7 +301,7 @@ void GeometySerializor::RWGeometryCollection( otSystem::IArchive &ar )
 	}
 }
 
-void GeometySerializor::RWCircle( otSystem::IArchive &ar )
+void GeometySerializor::RWCircle( SYSTEM::IArchive &ar )
 {
 	if( ar.IsRead() )
 	{
@@ -330,7 +330,7 @@ void GeometySerializor::RWCircle( otSystem::IArchive &ar )
 	}
 }
 
-void GeometySerializor::RWEllipse( otSystem::IArchive &ar )
+void GeometySerializor::RWEllipse( SYSTEM::IArchive &ar )
 {
 	if( ar.IsRead() )
 	{
@@ -366,7 +366,7 @@ void GeometySerializor::RWEllipse( otSystem::IArchive &ar )
 	}
 }
 
-void GeometySerializor::RWBezierSpline( otSystem::IArchive &ar)
+void GeometySerializor::RWBezierSpline( SYSTEM::IArchive &ar)
 {
 	if( ar.IsRead() )
 	{
@@ -404,7 +404,7 @@ void GeometySerializor::RWBezierSpline( otSystem::IArchive &ar)
 	}
 }
 
-Coordinate * GeometySerializor::RWCoordinate(otSystem::IArchive &ar, Coordinate *pCoord )
+Coordinate * GeometySerializor::RWCoordinate(SYSTEM::IArchive &ar, Coordinate *pCoord )
 {
 	if ( ar.IsRead() )
 	{
@@ -426,7 +426,7 @@ Coordinate * GeometySerializor::RWCoordinate(otSystem::IArchive &ar, Coordinate 
 	return pCoord;
 }
 
-void GeometySerializor::RWCoordinate(otSystem::IArchive &ar, Coordinate &pCoord )
+void GeometySerializor::RWCoordinate(SYSTEM::IArchive &ar, Coordinate &pCoord )
 {
 	ar & pCoord.x;
 	ar & pCoord.y;
@@ -434,7 +434,7 @@ void GeometySerializor::RWCoordinate(otSystem::IArchive &ar, Coordinate &pCoord 
 	ar & pCoord.m;
 }
 
-CoordinateSequence * GeometySerializor::RWCoordinateSequence( otSystem::IArchive &ar, CoordinateSequence *pCoordSeq )
+CoordinateSequence * GeometySerializor::RWCoordinateSequence( SYSTEM::IArchive &ar, CoordinateSequence *pCoordSeq )
 {
 	if ( ar.IsRead() )
 	{
@@ -471,7 +471,7 @@ CoordinateSequence * GeometySerializor::RWCoordinateSequence( otSystem::IArchive
 	return pCoordSeq;
 }
 
-void GeometySerializor::RWCoordinateSequence( otSystem::IArchive &ar, CoordinateSequence &CoordSeq )
+void GeometySerializor::RWCoordinateSequence( SYSTEM::IArchive &ar, CoordinateSequence &CoordSeq )
 {
 	if ( ar.IsRead() )
 	{
@@ -499,7 +499,7 @@ void GeometySerializor::RWCoordinateSequence( otSystem::IArchive &ar, Coordinate
 	}
 }
 
-LinearRing *  GeometySerializor::RWLinearRing( otSystem::IArchive &ar, LinearRing *pLr )
+LinearRing *  GeometySerializor::RWLinearRing( SYSTEM::IArchive &ar, LinearRing *pLr )
 {
 	if( ar.IsRead() )
 	{
@@ -561,7 +561,7 @@ LinearRing *  GeometySerializor::RWLinearRing( otSystem::IArchive &ar, LinearRin
 	return pLr;
 }
 
-void  GeometySerializor::RWLinearRing( otSystem::IArchive &ar, LinearRing &lr )
+void  GeometySerializor::RWLinearRing( SYSTEM::IArchive &ar, LinearRing &lr )
 {
 	if( ar.IsRead() )
 	{
@@ -618,7 +618,7 @@ void  GeometySerializor::RWLinearRing( otSystem::IArchive &ar, LinearRing &lr )
 	}
 }
 
-LineString * GeometySerializor::RWLineString( otSystem::IArchive &ar, LineString *pLs )
+LineString * GeometySerializor::RWLineString( SYSTEM::IArchive &ar, LineString *pLs )
 {
 	if( ar.IsRead() )
 	{
@@ -680,7 +680,7 @@ LineString * GeometySerializor::RWLineString( otSystem::IArchive &ar, LineString
 	return pLs;
 }
 
-void  GeometySerializor::RWLineString( otSystem::IArchive &ar, LineString &ls )
+void  GeometySerializor::RWLineString( SYSTEM::IArchive &ar, LineString &ls )
 {
 	if( ar.IsRead() )
 	{
@@ -738,7 +738,7 @@ void  GeometySerializor::RWLineString( otSystem::IArchive &ar, LineString &ls )
 	}
 }
 
-GEOMETRY::geom::Polygon *  GeometySerializor::RWPolygon( otSystem::IArchive &ar, GEOMETRY::geom::Polygon *pPolygon )
+GEOMETRY::geom::Polygon *  GeometySerializor::RWPolygon( SYSTEM::IArchive &ar, GEOMETRY::geom::Polygon *pPolygon )
 {
 	if( ar.IsRead() )
 	{		
@@ -782,7 +782,7 @@ GEOMETRY::geom::Polygon *  GeometySerializor::RWPolygon( otSystem::IArchive &ar,
 	return pPolygon;
 }
 
-void GeometySerializor::RWPolygon( otSystem::IArchive &ar, GEOMETRY::geom::Polygon &polygon )
+void GeometySerializor::RWPolygon( SYSTEM::IArchive &ar, GEOMETRY::geom::Polygon &polygon )
 {
 	if( ar.IsRead() )
 	{		
@@ -819,7 +819,7 @@ void GeometySerializor::RWPolygon( otSystem::IArchive &ar, GEOMETRY::geom::Polyg
 	}
 }
 
-ISegment * GeometySerializor::RWSegment( otSystem::IArchive &ar, GEOMETRY::geom::ISegment *pSegment )
+ISegment * GeometySerializor::RWSegment( SYSTEM::IArchive &ar, GEOMETRY::geom::ISegment *pSegment )
 {
 	if ( ar.IsRead() )
 	{

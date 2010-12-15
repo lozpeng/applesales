@@ -28,10 +28,7 @@
 #include "DistrictRelationTable.h"
 
 #include "EnvelopeTracker.h"
-
-
-
-
+#include "GeometrySerializor.h"
 
 
 
@@ -151,14 +148,9 @@ void IElement::serialization(SYSTEM::IArchive &ar)
 		m_pControlPtMarkerSymbol  = Display::CSymbolFactory::CreateSymbolFromStream(ar);
 		m_pTrakerLineSymbol = Display::CSymbolFactory::CreateSymbolFromStream(ar);
 
-		//GEOMETRY::io::WKTReader GeoReader;
-		//std::string strGeo;
-		//ar & strGeo-
 
-		//m_pGeometry = GeoReader.read(strGeo);
-
-		//GEOMETRY::io::GeometySerializor geoSerializor( m_pGeometry );
-		//m_pGeometry = geoSerializor.serialization( ar );
+		GEOMETRY::io::GeometySerializor geoSerializor(m_pGeometry );
+		m_pGeometry = geoSerializor.serialization( ar );
 
 		GeometryChangedEvents();
 	}
@@ -178,13 +170,9 @@ void IElement::serialization(SYSTEM::IArchive &ar)
 		m_pVertixMarkerSymbol->serialization( ar );
 		m_pControlPtMarkerSymbol->serialization( ar );
 		m_pTrakerLineSymbol->serialization( ar );
-
-		//GEOMETRY::io::WKTWriter GeoWriter;
-		//std::string strGeo= GeoWriter.write(m_pGeometry); 
-		//ar & strGeo;
 		
-		//GEOMETRY::io::GeometySerializor geoSerializor( m_pGeometry );
-		//geoSerializor.serialization( ar );
+		GEOMETRY::io::GeometySerializor geoSerializor( m_pGeometry );
+		geoSerializor.serialization( ar );
 
 	}
 }

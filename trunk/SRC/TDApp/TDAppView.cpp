@@ -267,7 +267,7 @@ void CTDAppView::OnMapPan()
 
 void CTDAppView::OnUpdateMapPan(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "MapPan");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapPan");
 
 }
 
@@ -285,7 +285,7 @@ void CTDAppView::OnMapZoomin()
 
 void CTDAppView::OnUpdateMapZoomin(CCmdUI* pCmdUI)
 {
-    pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "MapZoomin");
+    pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomin");
 }
 
 void CTDAppView::OnMapZoomout()
@@ -302,7 +302,7 @@ void CTDAppView::OnMapZoomout()
 
 void CTDAppView::OnUpdateMapZoomout(CCmdUI* pCmdUI)
 {
-    pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "MapZoomout");
+    pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomout");
 }
 
 
@@ -322,7 +322,7 @@ void CTDAppView::OnDrawRect()
 
 void CTDAppView::OnUpdateDrawRect(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawRectElementTool");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawRectElementTool");
 
 }
 
@@ -340,7 +340,7 @@ void CTDAppView::OnDrawSelect()
 
 void CTDAppView::OnUpdateDrawSelect(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "SelectElementTool");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectElementTool");
 
 }
 
@@ -357,22 +357,32 @@ afx_msg void CTDAppView::OnDrawMarker()
 }
 afx_msg void CTDAppView::OnUpdateDrawMarker(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawSimpleMarkerElementTool");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawSimpleMarkerElementTool");
 }
 afx_msg void CTDAppView::OnDrawCircle()
 {
-	Framework::ITool* pTool = NULL;
-	m_MapCtrl.SetCurTool("DrawCircleElementTool");
+	//Framework::ITool* pTool = NULL;
+	//m_MapCtrl.SetCurTool("DrawCircleElementTool");
 
-	pTool=Framework::ITool::FindTool("DrawCircleElementTool");
-	if(pTool)
+	//pTool=Framework::ITool::FindTool("DrawCircleElementTool");
+	//if(pTool)
+	//{
+	//	pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	//}
+	Framework::ICommand* pCommand = NULL;
+	m_MapCtrl.SetCurTool("UndoOperationCmd");
+
+	pCommand=Framework::ICommand::FindCommand("UndoOperationCmd");
+	if(pCommand)
 	{
-		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+		pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+		pCommand->Click();
 	}
+	
 }
 afx_msg void CTDAppView::OnUpdateDrawCircle(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawCircleElementTool");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawCircleElementTool");
 }
 afx_msg void CTDAppView::OnDrawPolygon()
 {
@@ -387,7 +397,7 @@ afx_msg void CTDAppView::OnDrawPolygon()
 }
 afx_msg void CTDAppView::OnUpdateDrawPolygon(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawPolygonElementTool");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawPolygonElementTool");
 }
 afx_msg void CTDAppView::OnDrawPolyline()
 {
@@ -402,7 +412,7 @@ afx_msg void CTDAppView::OnDrawPolyline()
 }
 afx_msg void CTDAppView::OnUpdateDrawPolyline(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawPolylineElementTool");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawPolylineElementTool");
 }
 afx_msg void CTDAppView::OnDrawCurve()
 {
@@ -417,7 +427,7 @@ afx_msg void CTDAppView::OnDrawCurve()
 }
 afx_msg void CTDAppView::OnUpdateDrawCurve(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawBezierCurveElementTool");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawBezierCurveElementTool");
 }
 afx_msg void CTDAppView::OnDrawText()
 {
@@ -432,5 +442,7 @@ afx_msg void CTDAppView::OnDrawText()
 }
 afx_msg void CTDAppView::OnUpdateDrawtext(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolname() == "DrawTextElementTool");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawTextElementTool");
 }
+
+
