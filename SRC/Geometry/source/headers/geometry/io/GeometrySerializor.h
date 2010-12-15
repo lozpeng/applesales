@@ -1,7 +1,7 @@
 /************************************************************************/
 /*       描述：序列化Geometry
 /*	     创建日期:2010-9-19
-/*		 创建者:zhm
+/*		 创建者:hhzhao
 /************************************************************************/
 
 #ifndef GEOS_IO_GEOMETRYSERIALIZOR_H
@@ -9,7 +9,7 @@
 
 #include <string>
 #include <vector>
-#include "Preprocess.h"
+#include "SystemDefine.h"
 #include "ISerialization.h"
 
 
@@ -46,48 +46,48 @@ public:
 	GeometySerializor( Geometry *pGeometry );
 	~GeometySerializor();
 
-	 Geometry* serialization( otSystem::IArchive &ar );
+	 Geometry* serialization( SYSTEM::IArchive &ar );
 
 	void SetGeometry( Geometry *pGeometry );
 protected:
-	void RWPoint( otSystem::IArchive &ar );
+	void RWPoint( SYSTEM::IArchive &ar );
 
-	void RWLineString( otSystem::IArchive &ar );
+	void RWLineString( SYSTEM::IArchive &ar );
 
-	void RWLinearRing( otSystem::IArchive &ar );
+	void RWLinearRing( SYSTEM::IArchive &ar );
 
-	void RWPolygon( otSystem::IArchive &ar );
+	void RWPolygon( SYSTEM::IArchive &ar );
 
-	void RWMultiPoint( otSystem::IArchive &ar );
+	void RWMultiPoint( SYSTEM::IArchive &ar );
 
-	void RWMultiLineString( otSystem::IArchive &ar );
+	void RWMultiLineString( SYSTEM::IArchive &ar );
 
-	void RWMultiPolygon( otSystem::IArchive &ar );
+	void RWMultiPolygon( SYSTEM::IArchive &ar );
 
-	void RWGeometryCollection( otSystem::IArchive &ar );
+	void RWGeometryCollection( SYSTEM::IArchive &ar );
 
-	void RWCircle( otSystem::IArchive &ar );
+	void RWCircle( SYSTEM::IArchive &ar );
 
-	void RWEllipse( otSystem::IArchive &ar );
+	void RWEllipse( SYSTEM::IArchive &ar );
 
-	void RWBezierSpline( otSystem::IArchive &ar );
+	void RWBezierSpline( SYSTEM::IArchive &ar );
 
-	Coordinate * RWCoordinate( otSystem::IArchive &ar, Coordinate *pCoord );
-	void RWCoordinate( otSystem::IArchive &ar, Coordinate &Coord );
+	Coordinate * RWCoordinate( SYSTEM::IArchive &ar, Coordinate *pCoord );
+	void RWCoordinate( SYSTEM::IArchive &ar, Coordinate &Coord );
 
-	CoordinateSequence * RWCoordinateSequence( otSystem::IArchive &ar, CoordinateSequence *pCoordSeq );
-	void RWCoordinateSequence( otSystem::IArchive &ar, CoordinateSequence &CoordSeq );
+	CoordinateSequence * RWCoordinateSequence( SYSTEM::IArchive &ar, CoordinateSequence *pCoordSeq );
+	void RWCoordinateSequence( SYSTEM::IArchive &ar, CoordinateSequence &CoordSeq );
 
-	LinearRing * RWLinearRing( otSystem::IArchive &ar, LinearRing *pLr );
-	void RWLinearRing( otSystem::IArchive &ar, LinearRing &lr );
+	LinearRing * RWLinearRing( SYSTEM::IArchive &ar, LinearRing *pLr );
+	void RWLinearRing( SYSTEM::IArchive &ar, LinearRing &lr );
 
-	LineString * RWLineString( otSystem::IArchive &ar, LineString *pLs );
-	void RWLineString( otSystem::IArchive &ar, LineString &ls );
+	LineString * RWLineString( SYSTEM::IArchive &ar, LineString *pLs );
+	void RWLineString( SYSTEM::IArchive &ar, LineString &ls );
 
-	GEOMETRY::geom::Polygon * RWPolygon( otSystem::IArchive &ar, GEOMETRY::geom::Polygon *pPolygon );
-	void RWPolygon( otSystem::IArchive &ar, GEOMETRY::geom::Polygon &polygon );
+	GEOMETRY::geom::Polygon * RWPolygon( SYSTEM::IArchive &ar, GEOMETRY::geom::Polygon *pPolygon );
+	void RWPolygon( SYSTEM::IArchive &ar, GEOMETRY::geom::Polygon &polygon );
 	
-	GEOMETRY::geom::ISegment * RWSegment( otSystem::IArchive &ar, GEOMETRY::geom::ISegment *pSegment );
+	GEOMETRY::geom::ISegment * RWSegment( SYSTEM::IArchive &ar, GEOMETRY::geom::ISegment *pSegment );
 		
 private:
 	Geometry *m_pGeometry;

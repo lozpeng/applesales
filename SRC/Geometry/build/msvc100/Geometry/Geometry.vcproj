@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\capi;..\..\..\source\headers;..\..\..\..\System"
+				AdditionalIncludeDirectories="..\..\..\capi;..\..\..\source\headers;..\..\..\..\System;..\..\..\..\..\thirdPartyLib\Boost"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;WIN32_LEAN_AND_MEAN;NOMINMAX;NOGDI"
 				IgnoreStandardIncludePath="false"
 				MinimalRebuild="true"
@@ -107,7 +107,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\source\headers;..\..\..\..\System"
+				AdditionalIncludeDirectories="..\..\..\source\headers;..\..\..\..\System;..\..\..\..\..\thirdPartyLib\Boost"
 				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;WIN32_LEAN_AND_MEAN;NOMINMAX;NOGDI"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -900,6 +900,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\source\io\CLocalizer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\source\io\GeometrySerializor.cpp"
 					>
 				</File>
 				<File
@@ -2692,6 +2696,10 @@
 						</File>
 						<File
 							RelativePath="..\..\..\source\headers\Geometry\io\CLocalizer.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\source\headers\geometry\io\GeometrySerializor.h"
 							>
 						</File>
 						<File

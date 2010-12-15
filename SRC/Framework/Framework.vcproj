@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ICommand.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IDocument.cpp"
 				>
 			</File>
@@ -250,6 +254,10 @@
 			</File>
 			<File
 				RelativePath=".\FrameworkDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ICommand.h"
 				>
 			</File>
 			<File

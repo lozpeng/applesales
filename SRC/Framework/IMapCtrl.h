@@ -5,88 +5,93 @@
 #include "Map.h"
 #include "IDisplay.h"
 #include "ITool.h"
+#include "ICommand.h"
+using namespace Element;
 
 namespace Framework
 {
+	class FRAMEWORK_DLL IMapCtrl : public IUIObject
+	{
+	public:
+		IMapCtrl();
+		virtual ~IMapCtrl();
+
+	public:
+
+		virtual void ReDraw(long content);
+
+		//控件客户区大小改变事件
+		virtual void ControlResize(UINT nType, int cx, int cy);
+
+		//设置地图对象
+		virtual void SetMap(Carto::CMapPtr pGeoMap);
+
+		//得到地图对象
+		virtual Carto::CMapPtr GetMap();
+
+		//更新地图内容
+		virtual void UpdateControl(long content);
+
+		//刷新地图内容
+		virtual void RefreshScreen();
+
+		//移动地图内容
+		virtual void OffsetClient(long offset_x, long offset_y);
+
+		COLORREF GetBgColor(){return m_BgColor;};
+
+		HDC GetClientDC() {return m_hClientDC;}
+
+		HDC GetMemDC() {return m_hMemDC;}
+
+		//得到控件的大小
+		long GetSizeX() { return m_lSizeX;}
+		long GetSizeY() {return m_lSizeY;}
+
+		//设置鼠标光标
+		void SetCursor(HCURSOR cursor);
+
+		//得到窗体句柄
+		HWND GetHWnd();
+
+		//设置当前工具
+		void SetCurTool(std::string toolname) {m_curToolname =toolname;}
+
+		std::string GetCurToolName() {return m_curToolname;}
 
 
-class FRAMEWORK_DLL IMapCtrl : public IUIObject
-{
-public:
-	IMapCtrl();
-	virtual ~IMapCtrl();
 
-public:
-
-	virtual void ReDraw(long content);
-
-	//控件客户区大小改变事件
-	virtual void ControlResize(UINT nType, int cx, int cy);
-
-	//设置地图对象
-	virtual void SetMap(Carto::CMapPtr pGeoMap);
-
-	//得到地图对象
-	virtual Carto::CMapPtr GetMap();
-
-	//更新地图内容
-	virtual void UpdateControl(long content);
-
-	//刷新地图内容
-	virtual void RefreshScreen();
-
-	//移动地图内容
-	virtual void OffsetClient(long offset_x, long offset_y);
-
-	COLORREF GetBgColor(){return m_BgColor;};
-
-	HDC GetClientDC() {return m_hClientDC;}
-
-	HDC GetMemDC() {return m_hMemDC;}
-
-	//得到控件的大小
-	long GetSizeX() { return m_lSizeX;}
-	long GetSizeY() {return m_lSizeY;}
-
-	//设置鼠标光标
-	void SetCursor(HCURSOR cursor);
-
-	//得到窗体句柄
-	HWND GetHWnd();
-
-	//设置当前工具
-	void SetCurTool(std::string toolname) {m_curToolname =toolname;}
-
-	std::string GetCurToolname() {return m_curToolname;}
+		Element::CElementCollection* GetElementCopyContainer(){return &m_ElementCopyContainer;};
 
 
-protected:
-	//将地理内容贴到屏幕上
-	void RefreshGeography();
+	protected:
+		//将地理内容贴到屏幕上
+		void RefreshGeography();
 
-protected:
+	protected:
 
-	
-	Carto::CMapPtr m_pGeoMap;
 
-	
-	BOOL m_bInitialized;
+		Carto::CMapPtr m_pGeoMap;
 
-	HDC m_hClientDC,m_hMemDC;
 
-	long m_lSizeX,m_lSizeY;
+		BOOL m_bInitialized;
 
-	COLORREF m_BgColor;
+		HDC m_hClientDC,m_hMemDC;
 
-	std::string m_curToolname;
+		long m_lSizeX,m_lSizeY;
 
-	HCURSOR m_cursor;
+		COLORREF m_BgColor;
 
-	HWND m_hCtrlWnd; 
+		std::string m_curToolname;
 
-	
+		HCURSOR m_cursor;
 
-};
+		HWND m_hCtrlWnd; 
+
+		CElementCollection  m_ElementCopyContainer;//存放需要copy的对象
+
+
+	};
 
 }
 #endif

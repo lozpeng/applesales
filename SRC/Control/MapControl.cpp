@@ -436,3 +436,48 @@ void CMapControl::OnTimer(UINT_PTR nIDEvent)
 
 
 }
+
+BOOL Control::CMapControl::PreTranslateMessage(MSG* pMsg)
+{
+	
+	//用PreTranslateMessage的方法，判断Ctrl+C是否按下，按下就执行快捷键对应的操作
+	if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'X')
+	{
+		//AfxMessageBox("Ctrl + X被按下");
+		Framework::ICommand* pCommand = NULL;
+		this->SetCurTool("CutElementCmd");
+		pCommand=Framework::ICommand::FindCommand("CutElementCmd");
+		if(pCommand)
+		{
+			pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(this));
+			pCommand->Click();
+		}
+
+		return TRUE;
+	} 
+	else if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'C')
+	{
+		Framework::ICommand* pCommand = NULL;
+		this->SetCurTool("CopyElementCmd");
+		pCommand=Framework::ICommand::FindCommand("CopyElementCmd");
+		if(pCommand)
+		{
+			pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(this));
+			pCommand->Click();
+		}
+		return TRUE;
+	} 
+	else if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'V')
+	{
+		Framework::ICommand* pCommand = NULL;
+		this->SetCurTool("PasteElementCmd");
+		pCommand=Framework::ICommand::FindCommand("PasteElementCmd");
+		if(pCommand)
+		{
+			pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(this));
+			pCommand->Click();
+		}
+		return TRUE;
+	} 
+	return __super::PreTranslateMessage(pMsg);
+}

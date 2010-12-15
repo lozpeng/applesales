@@ -87,6 +87,8 @@ public:
 	afx_msg void OnDrawText();
 	afx_msg void OnUpdateDrawtext(CCmdUI* pCmdUI);
 
+
+
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp

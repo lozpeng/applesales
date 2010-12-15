@@ -23,7 +23,7 @@ public:
 
 	virtual void serialization(SYSTEM::IArchive &ar);   
 
-//	IElementPtr Clone();
+	//IElementPtr Clone();
 
 	void Update(double xStart,double yStart, double xEnd,double yEnd);
 
