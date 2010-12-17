@@ -1,27 +1,28 @@
-#ifndef _ACTION_DRAW_SIMPLE_TEXT_ELEMENT_H
-#define _ACTION_DRAW_SIMPLE_TEXT_ELEMENT_H
+#ifndef _DRAW_SIMPLE_TEXT_ELEMENT_TOOL_H
+#define _DRAW_SIMPLE_TEXT_ELEMENT_TOOL_H
 
 #include "IDrawElementTool.h"
 #include "SimpleTextElement.h"
 
-
-class  CDrawSimpleTextElementTool : public IDrawElementTool
+namespace Control
 {
-public:
-	CDrawSimpleTextElementTool();
-	~CDrawSimpleTextElementTool();
+	class  CDrawSimpleTextElementTool : public IDrawElementTool
+	{
+	public:
+		CDrawSimpleTextElementTool();
+		~CDrawSimpleTextElementTool();
 
-public:
-	void Initialize(Framework::IUIObject *pTargetControl);
-	void LButtonDownEvent (UINT nFlags, CPoint point);
-	void LButtonUpEvent (UINT nFlags, CPoint point);
-	void MouseMoveEvent (UINT nFlags, CPoint point);
+	public:
+		void Initialize(Framework::IUIObject *pTargetControl);
+		void LButtonDownEvent (UINT nFlags, CPoint point);
+		void LButtonUpEvent (UINT nFlags, CPoint point);
+		void MouseMoveEvent (UINT nFlags, CPoint point);
 
-private:
-	Element::CSimpleTextElementPtr m_pText;
-};
+	private:
+		Element::CSimpleTextElementPtr m_pText;
+	};
 
 
-
+}
 
 #endif

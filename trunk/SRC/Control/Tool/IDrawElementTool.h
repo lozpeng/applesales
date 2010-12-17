@@ -11,29 +11,30 @@
 #include "ITool.h"
 #include "IMapCtrl.h"
 
-
-class IDrawElementTool :public Framework::ITool
+namespace Control
 {
-public:
-	IDrawElementTool(const char* name);
-	~IDrawElementTool(void);
+	class IDrawElementTool :public Framework::ITool
+	{
+	public:
+		IDrawElementTool(const char* name);
+		~IDrawElementTool(void);
 
-public:
-	virtual void Initialize(Framework::IUIObject *pTargetControl);
+	public:
+		virtual void Initialize(Framework::IUIObject *pTargetControl);
 
-	virtual void LButtonDownEvent (UINT nFlags, CPoint point);
-	virtual void MouseMoveEvent (UINT nFlags, CPoint point);
-	virtual void LButtonUpEvent (UINT nFlags, CPoint point);
-	virtual void LButtonDblClkEvent (UINT nFlags, CPoint point);
+		virtual void LButtonDownEvent (UINT nFlags, CPoint point);
+		virtual void MouseMoveEvent (UINT nFlags, CPoint point);
+		virtual void LButtonUpEvent (UINT nFlags, CPoint point);
+		virtual void LButtonDblClkEvent (UINT nFlags, CPoint point);
 
-protected:
-	CPoint cPtStart,cPtEnd;
+	protected:
+		CPoint cPtStart,cPtEnd;
 
-	Framework::IMapCtrl *m_pMapCtrl;
-	Carto::CMapPtr m_pMap;
+		Framework::IMapCtrl *m_pMapCtrl;
+		Carto::CMapPtr m_pMap;
 
-	HCURSOR m_hCursor;
-};
+		HCURSOR m_hCursor;
+	};
 
-
+}
 #endif

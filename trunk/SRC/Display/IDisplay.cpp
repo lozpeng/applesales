@@ -2,7 +2,7 @@
 #include "IDisplay.h"
 #include "ISymbol.h"
 #include "CDC.h"
-//#include "TextSymbol.h"
+#include "TextSymbol.h"
 
 namespace Display
 {
@@ -142,14 +142,12 @@ void IDisplay::DrawBackgroud()
 
 void IDisplay::SetDC(long hDC, long lWidth, long lHeight )
 {
-	//OTBEGIN
 		if(hDC == NULL)
 			m_pDC->CreateExDC( lWidth , lHeight );
 		else
 			m_pDC->SetDC( hDC , lWidth , lHeight );
 	m_cDisplayTransformation.SetViewBound(0, lWidth, 0, lHeight);
 
-	////OTEND_NORET
 }
 
 /**
@@ -165,13 +163,11 @@ Display::CDC* IDisplay::GetDrawDC()
 
 BOOL IDisplay::SetSymbol(Display::ISymbol* pSymbol)
 {
-	//OTBEGIN
-		if( bDraw )
-			//OTFALSERETURN(FALSE,"违反了调用规则：不允许在BEGINE-END的范围中调用");
 
+	if( bDraw )
+		return FALSE;
 	if(pSymbol == NULL || m_pDC->GetSafeHdc() == NULL )
-		//OTFALSERETURN2(FALSE,"Symbol == %ld || m_pDC.hDC == %ld", pSymbol, m_pDC->GetSafeHdc() );
-
+		return FALSE;
 
 	//对符号进行缩放
 	if(m_bLayoutDis)
@@ -181,7 +177,7 @@ BOOL IDisplay::SetSymbol(Display::ISymbol* pSymbol)
 		{
 			if( pSymbol != NULL )
 				pSymbol->Zoom( fScale );		
-			//刘振中2008.1.25为打印缩放比例，为唯一值专题正确显示进行修改
+			//为打印缩放比例，为唯一值专题正确显示进行修改
 		}
 	}
 	else if(m_cDisplayTransformation.GetReferenceScale() != 0)
@@ -197,18 +193,16 @@ BOOL IDisplay::SetSymbol(Display::ISymbol* pSymbol)
 	m_pSymbol = pSymbol;
 	m_pSymbol->SelectDC( m_pDC );
 
-
 	m_stackpSymbol.push_back(m_pSymbol);
 
-	//OTEND(TRUE,FALSE)
-		return TRUE;
+	return TRUE;
 }
 
 
 int IDisplay::SetSymbolInStack(ISymbol* pSymbol)
 {
 	if(pSymbol == NULL || m_pDC->GetSafeHdc() == NULL )
-		//OTFALSERETURN(FALSE,"Symbol or DC is Null" );
+		return FALSE;
 
 	//对符号进行缩放
 	if(m_bLayoutDis)
@@ -218,7 +212,7 @@ int IDisplay::SetSymbolInStack(ISymbol* pSymbol)
 		{
 			if( pSymbol != NULL )
 				pSymbol->Zoom( fScale );		
-			//刘振中2008.1.25为打印缩放比例，为唯一值专题正确显示进行修改
+			//为打印缩放比例，为唯一值专题正确显示进行修改
 		}
 	}
 	else if(m_cDisplayTransformation.GetReferenceScale() != 0)
@@ -240,11 +234,9 @@ int IDisplay::SetSymbolInStack(ISymbol* pSymbol)
 
 BOOL IDisplay::Begin()
 {
-	//OTBEGIN
-		if( m_pDC->GetSafeHdc() == NULL )
-			//OTFALSERETURN1(FALSE,"NOTREADY: m_pDC.hDC == %ld", m_pDC->GetSafeHdc() );
+	if( m_pDC->GetSafeHdc() == NULL )
+		return FALSE;
 
-	////////////////////
 	OnBeginDraw( m_pDC->GetSafeHdc() );
 
 	m_pDC->BeginDisplay();
@@ -259,7 +251,7 @@ BOOL IDisplay::Begin()
 	//if( pRsSym != NULL )
 	//	pRsSym->BeginDrawRaster();
 
-	//OTEND(TRUE,FALSE)
+	
 }
 
 void IDisplay::End()
@@ -275,7 +267,7 @@ void IDisplay::End()
 		{
 			/*if( m_pSymbol != NULL )
 				m_pSymbol->Zoom( fScale );	*/	
-			//刘振中2008.1.25为打印缩放比例，为唯一值专题正确显示进行修改
+			//为打印缩放比例，为唯一值专题正确显示进行修改
 			for( int i = 0 ;i < m_stackpSymbol.size();i++ )
 			{
 				if(m_stackpSymbol[i] != NULL )
@@ -290,7 +282,7 @@ void IDisplay::End()
 		{
 			/*if( m_pSymbol != NULL )
 				m_pSymbol->Zoom( fScale );		*/
-			//刘振中2008.1.25为打印缩放比例，为唯一值专题正确显示进行修改
+			//为打印缩放比例，为唯一值专题正确显示进行修改
 			for( int i = 0 ;i < m_stackpSymbol.size();i++ )
 			{
 				if(m_stackpSymbol[i] != NULL )
@@ -452,61 +444,51 @@ void IDisplay::Draw(const GEOMETRY::geom::Envelope* pEnvelope)
 }
 DIS_RECT IDisplay::Draw(const GEOMETRY::geom::Envelope* pEnvelope,  const std::string strText, BOOL bScaleWithMap, unsigned int dwDTFormat)
 {
-	//DIS_TEXT* pTextObj = m_cDisplayTransformation.TransformToDisplay( pEnvelope, strText );
-	//CTextSymbol* pTextSymbol = (CTextSymbol*)m_pSymbol; 
+	DIS_TEXT* pTextObj = m_cDisplayTransformation.TransformToDisplay( pEnvelope, strText );
+	CTextSymbol* pTextSymbol = (CTextSymbol*)m_pSymbol; 
 
-	//
-	//if(pTextSymbol != NULL)
-	//{
-	//	pTextSymbol->SetDrawFormat(dwDTFormat);
-	//	pTextSymbol->Draw( pTextObj);
-	//
-	//	DIS_RECT rect = pTextObj->textPos;
-	//	FreeDisplayObj(pTextObj);
+	if(pTextSymbol != NULL)
+	{
+		pTextSymbol->SetDrawFormat(dwDTFormat);
+		pTextSymbol->Draw( pTextObj);
+	
+		DIS_RECT rect = pTextObj->textPos;
+		FreeDisplayObj(pTextObj);
 
-	//	return rect;
-	//}
-	//else
-	//{
-	//	//OTTRACE("Symbol is NULL in IDisplay Draw");
-	//}
+		return rect;
+	}
 
-
-	//if(pTextObj)
-	//{
-	//	FreeDisplayObj(pTextObj);
-	//}
+	if(pTextObj)
+	{
+		FreeDisplayObj(pTextObj);
+	}
 	DIS_RECT rectDis;
 	return rectDis;
 }
 
 DIS_RECT IDisplay::Draw(const DIS_RECT* rect,  const std::string strText, BOOL bScaleWithMap, unsigned int dwDTFormat)
 {
-	//CTextSymbol* pTextSymbol = (CTextSymbol*)m_pSymbol; 
+	CTextSymbol* pTextSymbol = (CTextSymbol*)m_pSymbol; 
 
-	//DIS_TEXT* pTextObj = NULL;
-	//CreateDisplayText(pTextObj, strText.size());
-	//pTextObj->textPos = *rect;
-	//strcpy(pTextObj->cText, strText.c_str());
+	DIS_TEXT* pTextObj = NULL;
+	CreateDisplayText(pTextObj, strText.size());
+	pTextObj->textPos = *rect;
+	strcpy(pTextObj->cText, strText.c_str());
 
-	//if(pTextSymbol != NULL)
-	//{
-	//	pTextSymbol->SetDrawFormat(dwDTFormat);
-	//	pTextSymbol->Draw( pTextObj);
+	if(pTextSymbol != NULL)
+	{
+		pTextSymbol->SetDrawFormat(dwDTFormat);
+		pTextSymbol->Draw( pTextObj);
 
-	//	DIS_RECT rect = pTextObj->textPos;
-	//	FreeDisplayObj(pTextObj);
-	//	return rect;
-	//}
-	//else
-	//{
-	//	//OTTRACE("Symbol is NULL in IDisplay Draw");
-	//}
+		DIS_RECT rect = pTextObj->textPos;
+		FreeDisplayObj(pTextObj);
+		return rect;
+	}
 
-	//if(pTextObj)
-	//{
-	//	FreeDisplayObj(pTextObj);
-	//}
+	if(pTextObj)
+	{
+		FreeDisplayObj(pTextObj);
+	}
 	DIS_RECT rectDis;
 	return rectDis;
 }
@@ -521,8 +503,7 @@ void IDisplay::Draw(void* pObject)
 
 BOOL IDisplay::SelectStackSymbol(int index)
 {
-	if( index > m_stackpSymbol.size() - 1 )
-		//OTFALSERETURN(FALSE,"index is out of range");
+	//if( index > m_stackpSymbol.size() - 1 )
 
 	m_pSymbol = m_stackpSymbol[index];
 

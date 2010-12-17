@@ -282,6 +282,10 @@
 		<Filter
 			Name="Tool"
 			>
+			<File
+				RelativePath=".\Tool\ToolDefine.h"
+				>
+			</File>
 			<Filter
 				Name="Map"
 				>
@@ -346,11 +350,43 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Tool\DrawCalloutTextElementTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawCalloutTextElementTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawCircleElementTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawCircleElementTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawEllipseElementTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawEllipseElementTool.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Tool\DrawFreehandLineTool.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Tool\DrawFreehandLineTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawPictureElementCmd.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawPictureElementCmd.h"
 					>
 				</File>
 				<File
@@ -391,6 +427,14 @@
 				</File>
 				<File
 					RelativePath=".\Tool\DrawSimpleTextElementTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\EditElementVertixTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\EditElementVertixTool.h"
 					>
 				</File>
 				<File

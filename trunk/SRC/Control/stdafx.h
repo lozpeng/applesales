@@ -63,3 +63,5 @@
 #include "FrameworkDefine.h"
 #include "Geometry.h"
 #include "ControlDefine.h"
+
+#include "ToolDefine.h"

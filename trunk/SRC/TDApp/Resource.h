@@ -74,6 +74,14 @@
 #define ID_BUTTON32871                  32871
 #define ID_BUTTON32872                  32872
 #define ID_BUTTON32873                  32873
+#define ID_EDITOR                       32874
+#define ID_Ellipse                      32875
+#define ID_CalloutText                  32876
+#define ID_BUTTON32877                  32877
+#define ID_BUTTON32878                  32878
+#define ID_BUTTON32879                  32879
+#define ID_DRAW_HANDLINE                32880
+#define ID_BUTTON32881                  32881
 #define ID_MAPCTRL                      40000
 #define IDC_TEST                        40001
 
@@ -82,7 +90,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        170
-#define _APS_NEXT_COMMAND_VALUE         32874
+#define _APS_NEXT_COMMAND_VALUE         32882
 #define _APS_NEXT_CONTROL_VALUE         1053
 #define _APS_NEXT_SYMED_VALUE           108
 #endif

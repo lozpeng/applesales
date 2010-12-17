@@ -55,7 +55,7 @@ namespace Control
 			return;
 
 		//设置光标类型
-		//pMapCtrl->SetCursorType(cursorNormal);
+		//m_pMapCtrl->SetCursorType(cursorNormal);
 
 		ITool::Initialize(pTargetControl);
 	}
