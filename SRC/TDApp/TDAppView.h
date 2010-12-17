@@ -88,6 +88,16 @@ public:
 	afx_msg void OnUpdateDrawtext(CCmdUI* pCmdUI);
 
 
+	afx_msg void OnEditElement();
+	afx_msg void OnUpdateEditElement(CCmdUI* pCmdUI);
+
+	afx_msg void OnDrawEllipse();
+	afx_msg void OnUpdateDrawEllipse(CCmdUI* pCmdUI);
+	afx_msg void OnDrawCalloutText();
+	afx_msg void OnUpdateDrawCalloutText(CCmdUI* pCmdUI);
+
+	afx_msg void OnDrawFreeHandline();
+	afx_msg void OnUpdateDrawFreeHandline(CCmdUI* pCmdUI);
 
 };
 

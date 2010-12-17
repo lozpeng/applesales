@@ -65,7 +65,7 @@ void CPasteElementCmd::Click()
 	}
 
 	//¼ÓÈë»ØÍË¶ÑÕ»
-	//pMap->GetElementOperationStack()->AddOperation(otElement::OPT_EDIT_PROPERTY, pLayer->GetSelectedElements());
+	//pMap->GetElementOperationStack()->AddOperation(Element::OPT_EDIT_PROPERTY, pLayer->GetSelectedElements());
 
 	m_pMapCtrl->UpdateControl(drawElement | drawEdit);
 

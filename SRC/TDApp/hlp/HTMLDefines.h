@@ -55,6 +55,14 @@
 #define HID_BUTTON32871                         0x18067
 #define HID_BUTTON32872                         0x18068
 #define HID_BUTTON32873                         0x18069
+#define HID_EDITOR                              0x1806A
+#define HID_Ellipse                             0x1806B
+#define HID_CalloutText                         0x1806C
+#define HID_BUTTON32877                         0x1806D
+#define HID_BUTTON32878                         0x1806E
+#define HID_BUTTON32879                         0x1806F
+#define HID_DRAW_HANDLINE                       0x18070
+#define HID_BUTTON32881                         0x18071
 #define HID_MAPCTRL                             0x19C40
  
 // Prompts (IDP_*) 

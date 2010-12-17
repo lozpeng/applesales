@@ -67,6 +67,15 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_DRAW_TEXT, OnDrawText)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_TEXT, OnUpdateDrawtext)
 
+	ON_COMMAND(ID_EDITOR, OnEditElement)
+	ON_UPDATE_COMMAND_UI(ID_EDITOR, OnUpdateEditElement)
+	ON_COMMAND(ID_Ellipse, OnDrawEllipse)
+	ON_UPDATE_COMMAND_UI(ID_Ellipse, OnUpdateDrawEllipse)
+	ON_COMMAND(ID_CalloutText, OnDrawCalloutText)
+	ON_UPDATE_COMMAND_UI(ID_CalloutText, OnUpdateDrawCalloutText)
+	ON_COMMAND(ID_DRAW_HANDLINE, OnDrawFreeHandline)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_HANDLINE, OnUpdateDrawFreeHandline)
+	
 END_MESSAGE_MAP()
 
 // CTDAppView construction/destruction
@@ -361,23 +370,23 @@ afx_msg void CTDAppView::OnUpdateDrawMarker(CCmdUI* pCmdUI)
 }
 afx_msg void CTDAppView::OnDrawCircle()
 {
-	//Framework::ITool* pTool = NULL;
-	//m_MapCtrl.SetCurTool("DrawCircleElementTool");
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawCircleElementTool");
 
-	//pTool=Framework::ITool::FindTool("DrawCircleElementTool");
-	//if(pTool)
-	//{
-	//	pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
-	//}
-	Framework::ICommand* pCommand = NULL;
-	m_MapCtrl.SetCurTool("UndoOperationCmd");
-
-	pCommand=Framework::ICommand::FindCommand("UndoOperationCmd");
-	if(pCommand)
+	pTool=Framework::ITool::FindTool("DrawCircleElementTool");
+	if(pTool)
 	{
-		pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
-		pCommand->Click();
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	}
+	//Framework::ICommand* pCommand = NULL;
+	//m_MapCtrl.SetCurTool("UndoOperationCmd");
+
+	//pCommand=Framework::ICommand::FindCommand("UndoOperationCmd");
+	//if(pCommand)
+	//{
+	//	pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	//	pCommand->Click();
+	//}
 	
 }
 afx_msg void CTDAppView::OnUpdateDrawCircle(CCmdUI* pCmdUI)
@@ -446,3 +455,66 @@ afx_msg void CTDAppView::OnUpdateDrawtext(CCmdUI* pCmdUI)
 }
 
 
+afx_msg void CTDAppView::OnEditElement()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("EditElementVertixTool");
+
+	pTool=Framework::ITool::FindTool("EditElementVertixTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateEditElement(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "EditElementVertixTool");
+}
+
+afx_msg void CTDAppView::OnDrawEllipse()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawEllipseElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawEllipseElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawEllipse(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawEllipseElementTool");
+}
+afx_msg void CTDAppView::OnDrawCalloutText()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawCalloutTextElementTool");
+
+	pTool=Framework::ITool::FindTool("DrawCalloutTextElementTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawCalloutText(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawCalloutTextElementTool");
+}
+
+
+afx_msg void CTDAppView::OnDrawFreeHandline()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("DrawFreehandLineElement");
+
+	pTool=Framework::ITool::FindTool("DrawFreehandLineElement");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateDrawFreeHandline(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawFreehandLineElement");
+}
