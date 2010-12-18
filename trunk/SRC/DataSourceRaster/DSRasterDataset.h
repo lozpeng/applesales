@@ -69,7 +69,7 @@ public:
 	* @参数pvMinValue：返回的最小值
 	* @return 波段数据类型
 	*/
-	virtual	bool GetBandMinMaxValue(long lChannelIndex, void *pvMaxValue, void *pvMinValue);
+	virtual	bool GetBandMinMaxValue(long lChannelIndex, double *pvMaxValue, double *pvMinValue);
 
 
 	/**
@@ -179,7 +179,8 @@ private:
 	template<class T>
 	bool PyramidNormal(T dummyTemp,long lLevel,long lBandIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, BYTE *pbBuffer,double dminValue,double dmaxValue);
 
-
+	template<class T>
+	bool ComputeMinMax(long lBandIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, void *pbBuffer,double *pMin,double *pMax);
 
 private:
 	GDALDataset	*m_pDataset;
@@ -187,6 +188,9 @@ private:
 	bool m_bReadOnly;
 
 	long m_lBand;
+
+	double *m_pdMins;
+	double *m_pdMaxs;
 
 
 

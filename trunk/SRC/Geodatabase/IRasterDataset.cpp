@@ -47,7 +47,7 @@ BANDDATATYPE IRasterDataset::GetBandDataType(long lChannelIndex)
 }
 
 
-bool IRasterDataset::GetBandMinMaxValue(long lChannelIndex, void *pvMaxValue, void *pvMinValue)
+bool IRasterDataset::GetBandMinMaxValue(long lChannelIndex, double *pvMaxValue, double *pvMinValue)
 {
 	return false;
 }
