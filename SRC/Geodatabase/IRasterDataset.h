@@ -80,7 +80,7 @@ public:
 	* @参数pvMinValue：返回的最小值
 	* @return 波段数据类型
 	*/
-	virtual	bool GetBandMinMaxValue(long lChannelIndex, void *pvMaxValue, void *pvMinValue);
+	virtual	bool GetBandMinMaxValue(long lChannelIndex, double *pvMaxValue, double *pvMinValue);
 
 
 	/**
@@ -179,6 +179,7 @@ public:
 
 	bool ReadPyramidNormal(long lLevel,long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer);
 
+	
 
 protected:
 

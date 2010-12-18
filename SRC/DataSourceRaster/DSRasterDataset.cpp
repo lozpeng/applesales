@@ -14,6 +14,8 @@ CDSRasterDataset::CDSRasterDataset(CRasterWorkspace *pWorkspace,GDALDataset *pDa
 
    m_name =name;
 
+   m_pdMins =m_pdMaxs =NULL;
+
    Init();
 }
 
@@ -29,6 +31,116 @@ CDSRasterDataset::~CDSRasterDataset()
 void CDSRasterDataset::Init()
 {
 	m_lBand =GetBandCount();
+
+    m_pdMins =new double[m_lBand];
+	m_pdMaxs =new double[m_lBand];
+
+	GDALRasterBand *pBand = m_pDataset->GetRasterBand(1);
+
+	GDALDataType datatype= pBand->GetRasterDataType();
+
+	double dMin,dMax;
+
+	long lwidth=m_pDataset->GetRasterXSize();
+	long lheight=m_pDataset->GetRasterYSize();
+	long lReadwidth =lwidth,lReadheight =lheight;
+	if(MAX(lwidth,lheight)>512)
+	{
+		//计算需要读数据的大小
+		while(true)
+		{
+			lReadwidth/=2;
+			lReadheight/=2;
+			if(MAX(lReadwidth,lReadheight)<=512)
+			{
+				break;
+			}
+		}
+
+
+	}
+	void *buffer =NULL;
+	switch(datatype)
+	{
+	case GDT_Byte:
+		buffer =malloc(lReadwidth*lReadheight);
+		
+		break;
+	case GDT_UInt16:
+		buffer =malloc(lReadwidth*lReadheight*sizeof(unsigned short));
+		break;
+	case GDT_Int16:
+	case GDT_CInt16:
+		buffer =malloc(lReadwidth*lReadheight*sizeof(short));
+		break;
+	case GDT_UInt32:
+		buffer =malloc(lReadwidth*lReadheight*sizeof(unsigned int));
+		break;
+	case GDT_Int32:
+	case GDT_CInt32:
+		buffer =malloc(lReadwidth*lReadheight*sizeof(int));
+		break;
+	case GDT_Float32:
+	case GDT_CFloat32:
+		buffer =malloc(lReadwidth*lReadheight*sizeof(float));
+		break;
+	case GDT_Float64:
+	case GDT_CFloat64:
+		buffer =malloc(lReadwidth*lReadheight*sizeof(double));
+		break;
+	default:
+		return;
+		break;
+	}
+	//统计各个波段的最大最小值
+	for(long lband =0;lband<m_lBand;lband++)
+	{
+		switch(datatype)
+		{
+		case GDT_Byte:
+			
+			ComputeMinMax<BYTE>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			
+			break;
+		case GDT_UInt16:
+			
+			ComputeMinMax<unsigned short>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			break;
+		case GDT_Int16:
+		case GDT_CInt16:
+			ComputeMinMax<short>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			break;
+		case GDT_UInt32:
+			
+			ComputeMinMax<unsigned int>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			break;
+		case GDT_Int32:
+		case GDT_CInt32:
+			ComputeMinMax< int>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			break;
+		case GDT_Float32:
+		case GDT_CFloat32:
+			ComputeMinMax< float>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			break;
+		case GDT_Float64:
+		case GDT_CFloat64:
+			ComputeMinMax< double>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			break;
+		default:
+			return;
+			break;
+		}
+
+        m_pdMins[lband] =dMin;
+		m_pdMaxs[lband] =dMax;
+
+	}
+
+	if(buffer)
+	{
+		free(buffer);
+	}
+
 }
 
 bool CDSRasterDataset::IsWritable()
@@ -163,31 +275,24 @@ BANDDATATYPE CDSRasterDataset::GetBandDataType(long lChannelIndex)
 }
 
 
-bool CDSRasterDataset::GetBandMinMaxValue(long lChannelIndex, void *pvMaxValue, void *pvMinValue)
+bool CDSRasterDataset::GetBandMinMaxValue(long lChannelIndex, double *pvMaxValue, double *pvMinValue)
 {
 	if(!m_pDataset)
 	{
 		return false;
 	}
-	int nBand;
-	nBand = lChannelIndex;
-	int dblMinTemp, dblMaxTemp;
-	double dblMin,dblMax;
-	GDALRasterBand *poBand = NULL;
-	poBand = m_pDataset->GetRasterBand( nBand );
-	if ( NULL == poBand )
+	if(lChannelIndex<1 || lChannelIndex>m_lBand)
 	{
-
 		return false;
 	}
-	dblMin = poBand->GetMinimum( &dblMinTemp );
-	dblMax = poBand->GetMaximum( &dblMaxTemp );   
-	if( (dblMin && dblMax) )
-	{
-		*((double *)pvMinValue) = dblMin;
-		*((double *)pvMaxValue) = dblMax;
-	}
 
+	int nBand;
+	nBand = lChannelIndex;
+    
+	*pvMinValue =m_pdMins[lChannelIndex-1];
+	*pvMaxValue =m_pdMaxs[lChannelIndex-1];
+
+	
 	return true;
 }
 
@@ -674,5 +779,36 @@ bool CDSRasterDataset::ReadNormal(T dummyTemp, long lBandIndex, long lCol, long 
 	}
         
 	free(tempBuffer);
+	return true;
+}
+
+template<class T>
+bool CDSRasterDataset::ComputeMinMax(long lBandIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, void *pbBuffer, double *pMin, double *pMax)
+{
+	if(false==DataReadBand(lBandIndex,lCol,lRow,lWidth,lHeight,lBuffSizeX,lBuffSizeY,pbBuffer))
+	{
+		
+		return false;
+	}
+
+	double dblValue;
+    double dMin =1e30;
+	double dMax =-1e30;
+	T* temp=(T*)pbBuffer;
+	for (long i=0;i<lBuffSizeX*lBuffSizeY;i++)
+	{
+		dblValue = double(*temp);
+
+		if(dblValue<dMin)
+			dMin =dblValue;
+		if(dblValue>dMax)
+			dMax =dblValue;
+
+		++temp;
+	}
+	*pMin =dMin;
+	*pMax =dMax;
+
+	
 	return true;
 }
