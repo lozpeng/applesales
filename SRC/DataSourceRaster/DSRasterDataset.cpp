@@ -99,7 +99,7 @@ void CDSRasterDataset::Init()
 		{
 		case GDT_Byte:
 			
-			ComputeMinMax<BYTE>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			ComputeMinMax<BYTE>(lband+1,1,1,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
 			
 			break;
 		case GDT_UInt16:
