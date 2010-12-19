@@ -269,7 +269,7 @@ namespace Carto
 			{
 				unsigned char* pucTempBuf = new unsigned char[readWidth*readHeight];
 
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],top,left,readWidth,readHeight,1,readWidth * readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],left,top,readWidth,readHeight,1,readWidth * readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
 
 				Resample(dataDrawExtent,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[0],dataReadExtent,readWidth,readHeight,pucTempBuf);
 
@@ -277,7 +277,7 @@ namespace Carto
 
 			}
 			else
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],top,left,readWidth,readHeight,mp_dblResampleRatio,mp_lResampleWidth * mp_lResampleHeight,mp_pucBufSrc[0],m_PixelInfo[0].Min,m_PixelInfo[0].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],left,top,readWidth,readHeight,mp_dblResampleRatio,mp_lResampleWidth * mp_lResampleHeight,mp_pucBufSrc[0],m_PixelInfo[0].Min,m_PixelInfo[0].Max);
 		}
 		else
 		{
@@ -336,7 +336,7 @@ namespace Carto
 			{
 				unsigned char* pucTempBuf = new unsigned char[readWidth*readHeight];
 
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],top,left,readWidth,readHeight,readWidth,readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],left,top,readWidth,readHeight,readWidth,readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
 
 				Resample(dataDrawExtent,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[0],dataReadExtent,readWidth,readHeight,pucTempBuf);
 
@@ -344,14 +344,14 @@ namespace Carto
 
 			}
 			else
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],top,left,readWidth,readHeight,mp_lResampleWidth, mp_lResampleHeight,mp_pucBufSrc[0],m_PixelInfo[0].Min,m_PixelInfo[0].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],left,top,readWidth,readHeight,mp_lResampleWidth, mp_lResampleHeight,mp_pucBufSrc[0],m_PixelInfo[0].Min,m_PixelInfo[0].Max);
 
 			m_pRasterDataset->GetBandMinMaxValue(m_ShowBandIndex[1], &m_PixelInfo[1].Max, &m_PixelInfo[1].Min);
 			if (mp_dblResampleRatio > 1)
 			{
 				unsigned char* pucTempBuf = new unsigned char[readWidth*readHeight];
 
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[1],top,left,readWidth,readHeight,readWidth, readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[1],left,top,readWidth,readHeight,readWidth, readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
 
 				Resample(dataDrawExtent,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[1],dataReadExtent,readWidth,readHeight,pucTempBuf);
 
@@ -359,14 +359,14 @@ namespace Carto
 
 			}
 			else
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[1],top,left,readWidth,readHeight,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[1],m_PixelInfo[1].Min,m_PixelInfo[1].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[1],left,top,readWidth,readHeight,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[1],m_PixelInfo[1].Min,m_PixelInfo[1].Max);
 
 			m_pRasterDataset->GetBandMinMaxValue(m_ShowBandIndex[2], &m_PixelInfo[2].Max, &m_PixelInfo[2].Min);
 			if (mp_dblResampleRatio > 1)
 			{
 				unsigned char* pucTempBuf = new unsigned char[readWidth*readHeight];
 
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[2],top,left,readWidth,readHeight,readWidth, readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[2],left,top,readWidth,readHeight,readWidth, readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
 
 				Resample(dataDrawExtent,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[2],dataReadExtent,readWidth,readHeight,pucTempBuf);
 
@@ -374,7 +374,7 @@ namespace Carto
 
 			}
 			else
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[2],top,left,readWidth,readHeight,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[2],m_PixelInfo[2].Min,m_PixelInfo[2].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[2],left,top,readWidth,readHeight,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[2],m_PixelInfo[2].Min,m_PixelInfo[2].Max);
 			/*m_pRasterDataset->DataReadBand(m_ShowBandIndex[0],top,left,readWidth,readHeight,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[0]);
 			m_pRasterDataset->DataReadBand(m_ShowBandIndex[1],top,left,readWidth,readHeight,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[1]);
 			m_pRasterDataset->DataReadBand(m_ShowBandIndex[2],top,left,readWidth,readHeight,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[2]);*/
