@@ -13,7 +13,7 @@ IDisplay::IDisplay()
 {
 	m_BgColor = RGB(255,255,255);
 
-	m_pDC = new CDC;
+	m_pDC = new CDC();
 	m_pSymbol = NULL;
 	bDraw = FALSE;
 
