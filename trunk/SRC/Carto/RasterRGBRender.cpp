@@ -269,7 +269,7 @@ namespace Carto
 			{
 				unsigned char* pucTempBuf = new unsigned char[readWidth*readHeight];
 
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],left,top,readWidth,readHeight,1,readWidth * readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],left,top,readWidth,readHeight,readWidth,readHeight,pucTempBuf,m_PixelInfo[0].Min,m_PixelInfo[0].Max);
 
 				Resample(dataDrawExtent,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[0],dataReadExtent,readWidth,readHeight,pucTempBuf);
 
@@ -277,7 +277,7 @@ namespace Carto
 
 			}
 			else
-				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],left,top,readWidth,readHeight,mp_dblResampleRatio,mp_lResampleWidth * mp_lResampleHeight,mp_pucBufSrc[0],m_PixelInfo[0].Min,m_PixelInfo[0].Max);
+				m_pRasterDataset->DataReadBandNormalize(m_ShowBandIndex[0],left,top,readWidth,readHeight,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[0],m_PixelInfo[0].Min,m_PixelInfo[0].Max);
 		}
 		else
 		{
