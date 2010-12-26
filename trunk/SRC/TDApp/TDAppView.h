@@ -66,6 +66,9 @@ public:
 	afx_msg void OnMapZoomout();
 	afx_msg void OnUpdateMapZoomout(CCmdUI* pCmdUI);
 
+	afx_msg void OnSelectFeatureByPoint();
+	afx_msg void OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI);
+
 
 
 	afx_msg void OnDrawSelect();

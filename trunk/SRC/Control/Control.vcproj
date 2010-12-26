@@ -478,6 +478,26 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="SelectFeature"
+				>
+				<File
+					RelativePath=".\Tool\ISelectFeatureTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\ISelectFeatureTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\SelectbyPointTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\SelectbyPointTool.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
