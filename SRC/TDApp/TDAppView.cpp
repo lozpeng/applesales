@@ -45,6 +45,9 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_ZOOM_OUT, OnMapZoomout)
 	ON_UPDATE_COMMAND_UI(ID_ZOOM_OUT, OnUpdateMapZoomout)
 
+	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
+	ON_UPDATE_COMMAND_UI(ID_POINT_SELECTFEATURE, OnUpdateSelectFeatureByPoint)
+
 	//±ê»æ¹¤¾ß
 
 	ON_COMMAND(ID_DRAW_SELECT, OnDrawSelect)
@@ -517,4 +520,23 @@ afx_msg void CTDAppView::OnDrawFreeHandline()
 afx_msg void CTDAppView::OnUpdateDrawFreeHandline(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawFreehandLineElement");
+}
+
+
+
+void CTDAppView::OnSelectFeatureByPoint()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("SelectbyPoint");
+
+	pTool=Framework::ITool::FindTool("SelectbyPoint");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+
+void CTDAppView::OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectbyPoint");
 }
