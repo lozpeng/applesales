@@ -61,17 +61,16 @@ namespace Carto{
 
 		CLayerArray& operator =(const CLayerArray& la);
 
-		inline ILayerPtr GetAt(int nIndex) const {
+		inline ILayerPtr GetAt(int nIndex) const 
+		{
 			_ASSERT(nIndex < (int)size());
 			return (*this)[nIndex];
 		};
-
-
-		inline void RemoveAll() {
+		inline void RemoveAll() 
+		{
 			clear();
 		};
-	public:
-		inline int GetSize() const { return (int)size(); };
+		int GetSize();
 	};
 
 }

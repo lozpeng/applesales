@@ -86,4 +86,8 @@ namespace Carto{
 		insert(end(), la.begin(), la.end());
 		return *this;
 	}
+	int Carto::CLayerArray::GetSize()
+	{
+		return (int)(this->size());
+	}
 }

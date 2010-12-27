@@ -15,7 +15,7 @@
 namespace Geodatabase
 {
 
-class  CSimpleQuery
+class  GEODATABASE_DLL CSimpleQuery
 {
 public:
 	CSimpleQuery( ) {m_strFields ="*";};

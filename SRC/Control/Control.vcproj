@@ -489,14 +489,6 @@
 					RelativePath=".\Tool\ISelectFeatureTool.h"
 					>
 				</File>
-				<File
-					RelativePath=".\Tool\SelectbyPointTool.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Tool\SelectbyPointTool.h"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<File
