@@ -277,6 +277,42 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<Filter
+			Name="ogrdriver"
+			>
+			<File
+				RelativePath=".\OGRFeatureClass.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OGRFeatureClass.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OGRFeatureCursor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OGRFeatureCursor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OGRWorkspace.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OGRWorkspace.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OGRWorkspaceFactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OGRWorkspaceFactory.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
 			>

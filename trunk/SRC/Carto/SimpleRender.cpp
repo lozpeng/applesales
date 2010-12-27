@@ -67,9 +67,10 @@ void CSimpleRender::Draw( Display::IDisplayPtr pDisplay, Geodatabase::ICursorPtr
 		while(!pCursor->IsEOF())
 		{
 			pFeature = pCursor->NextRow();
-
+			if(pFeature == NULL)
+				return;
 			nshape++;
-
+	
 			GEOMETRY::geom::Geometry* pShape = pFeature->GetShape();
 			if( pShape )
 				pDisplay->Draw( pShape );
