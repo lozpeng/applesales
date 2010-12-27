@@ -63,6 +63,7 @@
 #define HID_BUTTON32879                         0x1806F
 #define HID_DRAW_HANDLINE                       0x18070
 #define HID_BUTTON32881                         0x18071
+#define HID_POINT_SELECTFEATURE                 0x18072
 #define HID_MAPCTRL                             0x19C40
  
 // Prompts (IDP_*) 
