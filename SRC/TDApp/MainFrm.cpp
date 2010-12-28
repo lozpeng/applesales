@@ -128,7 +128,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CClientDC dc (this);
 	BOOL bIsHighColor = dc.GetDeviceCaps (BITSPIXEL) > 8;
 
-	UINT uiToolbarHotID = bIsHighColor ? IDB_TOOLBAR256 : 0;
+	UINT uiToolbarHotID = 0;//bIsHighColor ? IDB_TOOLBAR256 : 0;
 
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
 		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||

@@ -15,9 +15,9 @@
 #define IDB_TOOLBAR256                  151
 #define IDR_TOOLBAR_EXPLORER            160
 #define IDB_BITMAP1                     162
-#define IDB_EXPLORER                    162
 #define IDR_TOOLBAR_Drawing             163
-#define IDB_Drawing                     168
+#define IDB_Drawing                     172
+#define IDB_EXPLORER                    173
 #define IDC_COMPANY_URL                 1041
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
@@ -66,23 +66,14 @@
 #define ID_DRAW_POLYLINE                32863
 #define ID_DRAW_CURVE                   32864
 #define ID_DRAW_TEXT                    32865
-#define ID_BUTTON32866                  32866
-#define ID_BUTTON32867                  32867
-#define ID_BUTTON32868                  32868
-#define ID_BUTTON32869                  32869
-#define ID_BUTTON32870                  32870
-#define ID_BUTTON32871                  32871
-#define ID_BUTTON32872                  32872
-#define ID_BUTTON32873                  32873
 #define ID_EDITOR                       32874
 #define ID_Ellipse                      32875
 #define ID_CalloutText                  32876
-#define ID_BUTTON32877                  32877
-#define ID_BUTTON32878                  32878
-#define ID_BUTTON32879                  32879
 #define ID_DRAW_HANDLINE                32880
-#define ID_BUTTON32881                  32881
 #define ID_POINT_SELECTFEATURE          32882
+#define ID_ELEMENT_SEL                  32883
+#define ID_MAP_FULLVIEW                 32884
+#define ID_MAP_SRCVIEW                  32885
 #define ID_MAPCTRL                      40000
 #define IDC_TEST                        40001
 
@@ -90,8 +81,8 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        170
-#define _APS_NEXT_COMMAND_VALUE         32883
+#define _APS_NEXT_RESOURCE_VALUE        174
+#define _APS_NEXT_COMMAND_VALUE         32886
 #define _APS_NEXT_CONTROL_VALUE         1053
 #define _APS_NEXT_SYMED_VALUE           108
 #endif

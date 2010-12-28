@@ -75,16 +75,16 @@ IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 IDB_WORKSPACE           BITMAP                  "res\\workspace.bmp"
 IDB_TOOLBAR256          BITMAP                  "res\\Toolbar256.bmp"
 IDR_TOOLBAR_EXPLORER    BITMAP                  "res\\toolbar1.bmp"
-IDB_EXPLORER            BITMAP                  "res\\liulan.bmp"
 IDR_TOOLBAR_Drawing     BITMAP                  "res\\bmpDrawing.bmp"
-IDB_Drawing             BITMAP                  "res\\drawing.bmp"
+IDB_Drawing             BITMAP                  "res\\bitmap2.bmp"
+IDB_EXPLORER            BITMAP                  "res\\bmp00001.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR  16, 15
+IDR_MAINFRAME TOOLBAR  20, 20
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -99,44 +99,33 @@ BEGIN
     BUTTON      ID_CONTEXT_HELP
 END
 
-IDR_TOOLBAR_EXPLORER TOOLBAR  16, 16
+IDR_TOOLBAR_EXPLORER TOOLBAR  20, 20
 BEGIN
-    BUTTON      ID_MAP_PAN
+    BUTTON      ID_DRAW_SELECT
     BUTTON      ID_MAP_ZOOM_IN
     BUTTON      ID_ZOOM_OUT
+    BUTTON      ID_MAP_PAN
+    BUTTON      ID_MAP_FULLVIEW
+    BUTTON      ID_MAP_SRCVIEW
     BUTTON      ID_POINT_SELECTFEATURE
 END
 
-IDR_TOOLBAR_Drawing TOOLBAR  16, 16
+IDR_TOOLBAR_Drawing TOOLBAR  20, 20
 BEGIN
     BUTTON      ID_DRAW_SELECT
-    BUTTON      ID_DRAW_MARKER
     BUTTON      ID_DRAW_RECT
-    BUTTON      ID_DRAW_CIRCLE
-    BUTTON      ID_DRAW_POLYLINE
     BUTTON      ID_DRAW_POLYGON
-    BUTTON      ID_DRAW_CURVE
-    BUTTON      ID_DRAW_TEXT
+    BUTTON      ID_DRAW_CIRCLE
     BUTTON      ID_Ellipse
-    BUTTON      ID_CalloutText
+    BUTTON      ID_DRAW_POLYLINE
+    BUTTON      ID_DRAW_CURVE
     BUTTON      ID_DRAW_HANDLINE
+    BUTTON      ID_DRAW_MARKER
+    SEPARATOR
+    BUTTON      ID_DRAW_TEXT
+    BUTTON      ID_CalloutText
+    SEPARATOR
     BUTTON      ID_EDITOR
-END
-
-IDB_Drawing TOOLBAR  16, 16
-BEGIN
-    BUTTON      ID_BUTTON32866
-    BUTTON      ID_BUTTON32867
-    BUTTON      ID_BUTTON32868
-    BUTTON      ID_BUTTON32869
-    BUTTON      ID_BUTTON32870
-    BUTTON      ID_BUTTON32871
-    BUTTON      ID_BUTTON32872
-    BUTTON      ID_BUTTON32873
-    BUTTON      ID_BUTTON32878
-    BUTTON      ID_BUTTON32877
-    BUTTON      ID_BUTTON32881
-    BUTTON      ID_BUTTON32879
 END
 
 

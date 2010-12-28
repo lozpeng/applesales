@@ -65,10 +65,10 @@ public:
 	///////以下为查询的操作方法///////////////////////////////////////////////////
 
 	//通过查询条件进行查询，返回一个选择集
-	virtual ISelctionSetPtr Select(CSimpleQuery* query) =0;
+	virtual ISelctionSetPtr Select(Geodatabase::CSimpleQuery* query) =0;
 
 	//通过查询条件查询，返回一个指针
-	virtual ICursorPtr Query(CSimpleQuery* query,bool bReadOnly =true) =0;
+	virtual ICursorPtr Query(Geodatabase::CSimpleQuery* query,bool bReadOnly =true) =0;
 
 };
 

@@ -15,7 +15,7 @@
 namespace Geodatabase
 {
 
-class  CSpatialQuery: public CSimpleQuery
+class  CSpatialQuery: public Geodatabase::CSimpleQuery
 {
 public:
 	CSpatialQuery( ) 
