@@ -47,23 +47,14 @@
 #define HID_DRAW_POLYLINE                       0x1805F
 #define HID_DRAW_CURVE                          0x18060
 #define HID_DRAW_TEXT                           0x18061
-#define HID_BUTTON32866                         0x18062
-#define HID_BUTTON32867                         0x18063
-#define HID_BUTTON32868                         0x18064
-#define HID_BUTTON32869                         0x18065
-#define HID_BUTTON32870                         0x18066
-#define HID_BUTTON32871                         0x18067
-#define HID_BUTTON32872                         0x18068
-#define HID_BUTTON32873                         0x18069
 #define HID_EDITOR                              0x1806A
 #define HID_Ellipse                             0x1806B
 #define HID_CalloutText                         0x1806C
-#define HID_BUTTON32877                         0x1806D
-#define HID_BUTTON32878                         0x1806E
-#define HID_BUTTON32879                         0x1806F
 #define HID_DRAW_HANDLINE                       0x18070
-#define HID_BUTTON32881                         0x18071
 #define HID_POINT_SELECTFEATURE                 0x18072
+#define HID_ELEMENT_SEL                         0x18073
+#define HID_MAP_FULLVIEW                        0x18074
+#define HID_MAP_SRCVIEW                         0x18075
 #define HID_MAPCTRL                             0x19C40
  
 // Prompts (IDP_*) 

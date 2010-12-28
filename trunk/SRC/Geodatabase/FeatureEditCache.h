@@ -14,6 +14,7 @@
 #include <map>
 #include <vector>
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
+using namespace Geodatabase;
 
 namespace Geodatabase
 {

@@ -312,6 +312,14 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath=".\res\bitmap2.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\bmp00001.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\bmpDrawing.bmp"
 				>
 			</File>
@@ -352,11 +360,27 @@
 				>
 			</File>
 			<File
+				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\toolbar2.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\toolbar2.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\Toolbar256.bmp"
 				>
 			</File>
 			<File
 				RelativePath=".\UserImages.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\viewToolbar.bmp"
+				>
+			</File>
+			<File
+				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
 				>
 			</File>
 			<File
