@@ -259,11 +259,47 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath=".\res\arrow.cur"
+				>
+			</File>
+			<File
 				RelativePath=".\Control.rc"
 				>
 			</File>
 			<File
 				RelativePath=".\res\Control.rc2"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cur00001.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cur00002.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cur00003.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cur00004.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cur00005.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cursor1.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cursor3.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\CursorMapCross.cur"
 				>
 			</File>
 			<File

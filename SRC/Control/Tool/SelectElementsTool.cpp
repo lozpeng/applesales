@@ -3,6 +3,10 @@
 #include "MapControl.h"
 
 #include "IElement.h"
+
+#include "Control.h"
+extern CControlApp theApp;
+
 //#include "CotElementProp.h"
 
 
@@ -31,11 +35,41 @@ namespace Control
 
 		m_nCurHandle = Element::HH_HIT_NONE;
 
+
+		cursorNormal = NULL;
+		cursorSizeAll = NULL;
+		cursorRightTop = NULL;
+		cursorTopBottom = NULL;
+		cursorleftTop = NULL;
+		cursorLeftRight = NULL;
 	}
 
 	CSelectElementsTool::~CSelectElementsTool()
 	{
-
+		if(cursorNormal)
+		{
+			DeleteObject( cursorNormal );
+		}
+		if(cursorSizeAll)
+		{
+			DeleteObject( cursorSizeAll );
+		}
+		if(cursorRightTop)
+		{
+			DeleteObject( cursorRightTop );
+		}
+		if(cursorTopBottom)
+		{
+			DeleteObject( cursorTopBottom );
+		}
+		if(cursorleftTop)
+		{
+			DeleteObject( cursorleftTop );
+		}
+		if(cursorLeftRight)
+		{
+			DeleteObject( cursorLeftRight );
+		}
 	}
 
 
@@ -43,6 +77,20 @@ namespace Control
 	{
 
 		ITool::Initialize(pTargetControl);
+
+		//初始化光标
+		if(cursorNormal == NULL)
+			cursorNormal =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_Arrow));
+		if(cursorSizeAll == NULL)
+			cursorSizeAll =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_ALL));
+		if(cursorRightTop == NULL)
+			cursorRightTop =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_RIGHTTOP));
+		if(cursorTopBottom == NULL)
+			cursorTopBottom =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_TOPBOTTOM));
+		if(cursorleftTop == NULL)
+			cursorleftTop =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_LEFTTOP));
+		if(cursorLeftRight == NULL)
+			cursorLeftRight =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_LEFTRIGHT));
 
 		//获取活动地图控件
 		m_pMapCtrl = dynamic_cast<Framework::IMapCtrl*>(pTargetControl);
@@ -55,7 +103,7 @@ namespace Control
 			return;
 
 		//设置光标类型
-		//m_pMapCtrl->SetCursorType(cursorNormal);
+		//m_pMapCtrl->SetCursor(m_hCursor);
 
 		ITool::Initialize(pTargetControl);
 	}
@@ -139,17 +187,17 @@ namespace Control
 				if( m_nCurHandle== Element::HH_HIT_NONE)//未击中
 				{
 					m_nCanMoveContent = CMC_CANMOVE_NONE;//设置当前可移动内容为：无
-					//m_pMapCtrl->SetCursorType(GetHandleCursor(m_nCurHandle));
+					m_pMapCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
 				}
 				else if(m_nCurHandle == Element::HH_HIT_INTERIOR)//击中图元内部
 				{
 					m_nCanMoveContent = CMC_CANMOVE_ELEMENT;//设置当前可移动内容为：element可以平移
-					//m_pMapCtrl->SetCursorType(GetHandleCursor(m_nCurHandle));
+					m_pMapCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
 				}
 				else //击中图元handle
 				{
 					m_nCanMoveContent = CMC_CANMOVE_HANDLE;//设置当前可移动内容为：handle可以移动
-					//m_pMapCtrl->SetCursorType(GetHandleCursor(m_nCurHandle));
+					m_pMapCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
 				}
 			}
 			break;
@@ -386,10 +434,10 @@ namespace Control
 		pDisplay->GetDisplayTransformation().ConvertDisplayToGeo(m_cPtEnd.x, m_cPtEnd.y, m_endCoord);
 	}
 
-	long CSelectElementsTool::GetHandleCursor(Element::HIT_HANDLE nHandle)
+	HCURSOR CSelectElementsTool::GetHandleCursor(Element::HIT_HANDLE nHandle)
 	{
 
-		/*switch(nHandle)
+		switch(nHandle)
 		{
 		case Element::HH_HIT_NONE:
 			return cursorNormal;
@@ -415,8 +463,8 @@ namespace Control
 			return cursorSizeAll;
 		default:
 			return cursorNormal;
-		}*/
-		return 1;
+		}
+		return cursorNormal;
 	}
 
 	void CSelectElementsTool::OnEditElementProp()

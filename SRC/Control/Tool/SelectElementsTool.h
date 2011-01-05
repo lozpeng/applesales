@@ -53,7 +53,7 @@ namespace Control
 	protected:
 		void UpdateStartPoint(CPoint pt);
 		void UpdateEndPoint(CPoint pt);
-		long GetHandleCursor(Element::HIT_HANDLE nHandle);
+		HCURSOR GetHandleCursor(Element::HIT_HANDLE nHandle);
 
 		void OnEditElementProp();
 
@@ -72,6 +72,14 @@ namespace Control
 
 		Framework::IMapCtrl *m_pMapCtrl;
 		Carto::CMapPtr m_pMap;
+		
+		HCURSOR cursorNormal;
+		HCURSOR cursorSizeAll;
+		HCURSOR cursorRightTop;
+		HCURSOR cursorTopBottom;
+		HCURSOR cursorleftTop;
+		HCURSOR cursorLeftRight;
+
 	};
 
 }
