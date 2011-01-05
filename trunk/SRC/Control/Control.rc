@@ -104,6 +104,15 @@ END
 IDC_PAN                 CURSOR                  "res\\Hand.cur"
 IDC_ZOOMIN              CURSOR                  "res\\ZoomIn.cur"
 IDC_ZOOMOUT             CURSOR                  "res\\ZoomOut.CUR"
+IDC_Cross               CURSOR                  "res\\CursorMapCross.cur"
+IDC_Arrow               CURSOR                  "res\\arrow.cur"
+IDC_SIZE_ALL            CURSOR                  "res\\cursor1.cur"
+IDC_SIZE_LEFTRIGHT      CURSOR                  "res\\cursor3.cur"
+IDC_SIZE_LEFTTOP        CURSOR                  "res\\cur00001.cur"
+IDC_SIZE_RIGHTTOP       CURSOR                  "res\\cur00002.cur"
+IDC_SIZE_TOPBOTTOM      CURSOR                  "res\\cur00003.cur"
+IDC_ON_VERTIX           CURSOR                  "res\\cur00004.cur"
+IDC_VERTIX_MOVE         CURSOR                  "res\\cur00005.cur"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 

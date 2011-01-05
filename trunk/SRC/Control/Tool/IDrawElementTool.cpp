@@ -4,6 +4,8 @@
 #include "GraphicLayer.h"
 #include "Control.h"
 
+extern CControlApp theApp;
+
 namespace Control
 {
 
@@ -16,6 +18,10 @@ namespace Control
 
 	IDrawElementTool::~IDrawElementTool(void)
 	{
+		if(m_hCursor)
+		{
+			DeleteObject( m_hCursor );
+		}
 	}
 
 	void IDrawElementTool::Initialize(Framework::IUIObject *pTargetControl)
@@ -26,7 +32,7 @@ namespace Control
 		//初始化光标
 		if(m_hCursor==NULL)
 		{
-			//m_hCursor =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_PAN) );
+			m_hCursor =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_Cross));
 		}
 
 
@@ -49,7 +55,7 @@ namespace Control
 		pGraphicLayer->UnselectAllElements();
 
 		//设置光标类型
-		//m_pMapCtrl->SetCursorType(cursorCross);
+		m_pMapCtrl->SetCursor(m_hCursor);
 	}
 
 	void IDrawElementTool::LButtonDownEvent (UINT nFlags, CPoint point)

@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "EditElementVertixTool.h"
 #include "IElement.h"
-
+#include "Control.h"
+extern CControlApp theApp;
 
 namespace Control
 {
@@ -16,6 +17,11 @@ namespace Control
 		m_nBufferDis = 3;
 
 		m_pCurElement.reset();
+		
+		cursorNormal = NULL;
+		cursorSizeAll = NULL;
+		cursorVertixMove = NULL;
+		cursorOnVertix = NULL;
 	}
 
 	CEditElementVertixTool::~CEditElementVertixTool()
@@ -29,6 +35,17 @@ namespace Control
 		m_pMapCtrl = dynamic_cast<Framework::IMapCtrl*>(pTargetControl);
 		if(!m_pMapCtrl)
 			return;
+
+		//初始化光标
+		if(cursorNormal == NULL)
+			cursorNormal =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_Arrow));
+		if(cursorSizeAll == NULL)
+			cursorSizeAll =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_ALL));
+		if(cursorVertixMove == NULL)
+			cursorVertixMove =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_VERTIX_MOVE));
+		if(cursorOnVertix == NULL)
+			cursorOnVertix =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_ON_VERTIX));
+
 
 		m_pCurElement = m_pMapCtrl->GetMap()->GetGraphicLayer()->GetSelectedElement(0);
 
@@ -106,19 +123,19 @@ namespace Control
 				if(hitRes.lHitLocation == Element::HH_HIT_INTERIOR)
 				{
 					m_nCanMoveContent = CMC_CANMOVE_ELEMENT;
-					//m_pMapCtrl->SetCursorType(cursorSizeAll);
+					m_pMapCtrl->SetCursor(cursorSizeAll);
 				}
 				else
 				{
 					m_nCanMoveContent = CMC_CANMOVE_NONE;
-					//m_pMapCtrl->SetCursorType(cursorVertixMove);
+					m_pMapCtrl->SetCursor(cursorNormal);
 				}
 
 				hitRes = m_pCurElement->HitTest(curCoord, bufferDis, Element::HH_HIT_VERTIX);
 				if(hitRes.lHitLocation > -1)
 				{
 					m_nCanMoveContent = CMC_CANMOVE_VERTIX;
-					//m_pMapCtrl->SetCursorType(cursorOnVertix);
+					m_pMapCtrl->SetCursor(cursorOnVertix);
 					m_hitTestRes = hitRes;
 				}
 			}
@@ -134,8 +151,9 @@ namespace Control
 		case VERTIX_MOVING:
 			{
 				m_pCurElement->SetEditMode(Element::EEM_ONDRAW);
+				m_pMapCtrl->SetCursor(cursorVertixMove);
 				m_pCurElement->MoveVertixTo(m_hitTestRes.lHitLocation,curCoord);
-
+				
 				m_pMapCtrl->UpdateControl(drawEdit);
 			}
 			break;
@@ -161,7 +179,7 @@ namespace Control
 		m_nMoveStatus = NO_MOVING;
 		m_nCanMoveContent = CMC_CANMOVE_NONE;
 
-		//m_pMapCtrl->SetCursorType(cursorNormal);
+		m_pMapCtrl->SetCursor(cursorNormal);
 		m_pMapCtrl->UpdateControl(drawElement | drawEdit);
 
 		ReleaseCapture();
