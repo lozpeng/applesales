@@ -203,11 +203,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DllResource.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LayoutControl.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\MapControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MaptreeCtrl.cpp"
 				>
 			</File>
 			<File
@@ -245,11 +253,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DllResource.h"
+				>
+			</File>
+			<File
 				RelativePath=".\LayoutControl.h"
 				>
 			</File>
 			<File
 				RelativePath=".\MapControl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MaptreeCtrl.h"
 				>
 			</File>
 			<File
