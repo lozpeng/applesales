@@ -151,4 +151,10 @@ void IMapCtrl::SetCursor(HCURSOR cursor)
 	m_cursor =cursor;
 }
 
+IMapCtrl* IMapCtrl::GetActiveMapCtrl()
+{
+	IMapCtrl* pMapCtrl = (IMapCtrl*)IUIObject::GetUIObjectByName(CommonUIName::AppMapControl);
+	return pMapCtrl;
+}
+
 }
