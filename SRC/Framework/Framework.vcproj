@@ -219,6 +219,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IMaptreeCtrl.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ITool.cpp"
 				>
 			</File>
@@ -274,6 +278,10 @@
 			</File>
 			<File
 				RelativePath=".\IMapCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IMaptreeCtrl.h"
 				>
 			</File>
 			<File
