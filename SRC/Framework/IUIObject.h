@@ -19,7 +19,7 @@ class FRAMEWORK_DLL CommonUIName
 public:
 	//主程序的地图控件
 	static std::string AppMapControl;
-
+	static std::string AppLayoutControl;
 	// 主程序文档
 	static std::string AppDocument;
 };

@@ -10,12 +10,13 @@
 #include "IUIObject.h"
 #include "Map.h"
 #include "IDisplay.h"
-
+#include "PageLayout.h"
 
 namespace Framework
 {
 
 class IMapCtrl;
+class ILayoutCtrl;
 
 class FRAMEWORK_DLL IDocument : public IUIObject
 {
@@ -50,6 +51,11 @@ public:
 
 	IMapCtrl *GetLinkMapCtrl();
 
+	//Ìí¼Ólayout
+	
+	void SetLinkLayoutCtrl(ILayoutCtrl *pLayoutCtrl);
+	ILayoutCtrl *GetLinkLayoutCtrl();
+
 protected:
     
 	std::vector<Carto::CMapPtr> m_pMaps;
@@ -62,8 +68,8 @@ protected:
 	int m_index;
 
 
-
-
+	//pagelayout
+	ILayoutCtrl * m_linkLayoutCtrl;
 
 };
 

@@ -19,6 +19,9 @@
 #define IDB_Drawing                     172
 #define IDB_EXPLORER                    173
 #define IDC_COMPANY_URL                 1041
+#define IDC_TAB1                        1053
+#define ID_TABCONTROL                   1054
+
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
 #define ID_VIEW_TOOLBARS                32771
@@ -75,7 +78,8 @@
 #define ID_MAP_FULLVIEW                 32884
 #define ID_MAP_SRCVIEW                  32885
 #define ID_MAPCTRL                      40000
-#define IDC_TEST                        40001
+#define ID_LAYOUTCTRL                   40001
+
 
 // Next default values for new objects
 // 
@@ -83,7 +87,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        174
 #define _APS_NEXT_COMMAND_VALUE         32886
-#define _APS_NEXT_CONTROL_VALUE         1053
+#define _APS_NEXT_CONTROL_VALUE         1054
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

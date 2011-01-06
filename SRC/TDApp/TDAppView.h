@@ -1,7 +1,7 @@
 // TDAppView.h : interface of the CTDAppView class
 //
 #include "MapControl.h"
-
+#include "LayoutControl.h"
 #pragma once
 
 class CTDAppView : public CView
@@ -41,6 +41,7 @@ protected:
 	CBCGPTabWnd	m_WndTab;
 	CBCGPButton m_wndButton;
 	Control::CMapControl m_MapCtrl;
+	Control::CLayoutControl m_LayoutCtrl;
 	//Carto::CMapPtr ipMap;
 // Generated message map functions
 protected:
@@ -102,6 +103,7 @@ public:
 	afx_msg void OnDrawFreeHandline();
 	afx_msg void OnUpdateDrawFreeHandline(CCmdUI* pCmdUI);
 
+	void OnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp
