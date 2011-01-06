@@ -63,6 +63,8 @@ namespace Framework
 
 		Element::CElementCollection* GetElementCopyContainer(){return &m_ElementCopyContainer;};
 
+		static IMapCtrl* GetActiveMapCtrl();
+
 
 	protected:
 		//将地理内容贴到屏幕上
