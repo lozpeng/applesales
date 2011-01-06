@@ -79,6 +79,9 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_DRAW_HANDLINE, OnDrawFreeHandline)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_HANDLINE, OnUpdateDrawFreeHandline)
 	
+
+	ON_NOTIFY(TCN_SELCHANGE, ID_TABCONTROL,&CTDAppView::OnSelchangeTab)
+
 END_MESSAGE_MAP()
 
 // CTDAppView construction/destruction
@@ -167,20 +170,23 @@ int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	m_WndTab.Create (CBCGPTabWnd::STYLE_3D_VS2005, CRect(0,0,0,0), this, 1);
+	m_WndTab.Create (CBCGPTabWnd::STYLE_3D_VS2005, CRect(0,0,0,0), this, ID_TABCONTROL);
 
 
 	m_MapCtrl.CreateControl(Framework::CommonUIName::AppMapControl, &m_WndTab, ID_MAPCTRL);
-	//ipMap = Carto::CMapPtr(new Carto::CMap());
-	//m_MapCtrl.SetMap(ipMap);
 	m_WndTab.AddTab( &m_MapCtrl , "Map" );
 
-	m_wndButton.Create(_T("Test"),WS_CHILD|WS_VISIBLE,CRect(0,0,10,20),&m_WndTab,IDC_TEST);
-	m_WndTab.AddTab(&m_wndButton,_T("Layout"));
+	m_LayoutCtrl.CreateControl(Framework::CommonUIName::AppLayoutControl, &m_WndTab,ID_LAYOUTCTRL);
+	//m_wndButton.Create(_T("Test"),WS_CHILD|WS_VISIBLE,CRect(0,0,10,20),&m_WndTab,IDC_TEST);
+	m_WndTab.AddTab(&m_LayoutCtrl,_T("Layout"));
 
+	//z暂时在此初始化
+	if(!m_LayoutCtrl.Initialized())
+		m_LayoutCtrl.Initialize();
 	
 	CTDAppDoc* pDoc = GetDocument();
 	pDoc->SetLinkMapCtrl(&m_MapCtrl);
+	pDoc->SetLinkLayoutCtrl(&m_LayoutCtrl);
 
 	m_WndTab.SetActiveTab(0);
 	m_WndTab.SetFlatFrame ();
@@ -223,6 +229,7 @@ void CTDAppView::OnOpenVector()
 
 	//_crtBreakAlloc = 9878;
 
+	
 
 
 	// TODO: 在此添加命令处理程序代码
@@ -539,4 +546,10 @@ void CTDAppView::OnSelectFeatureByPoint()
 void CTDAppView::OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectbyPoint");
+}
+
+void CTDAppView::OnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	*pResult = 0;
 }

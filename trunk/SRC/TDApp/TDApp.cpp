@@ -7,6 +7,7 @@
 
 #include "TDAppDoc.h"
 #include "TDAppView.h"
+#include "afxcmn.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -140,6 +141,9 @@ protected:
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	CTabCtrl m_TabCtrl;
+	afx_msg void OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
@@ -150,9 +154,11 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_COMPANY_URL, m_btnURL);
+	DDX_Control(pDX, IDC_TAB1, m_TabCtrl);
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CAboutDlg::OnTcnSelchangeTab1)
 END_MESSAGE_MAP()
 
 // App command to run the dialog
@@ -174,3 +180,9 @@ void CTDAppApp::PreLoadState ()
 	// TODO: add another context menus here
 }
 
+
+void CAboutDlg::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	*pResult = 0;
+}

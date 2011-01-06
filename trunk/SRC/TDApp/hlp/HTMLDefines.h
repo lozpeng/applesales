@@ -1,5 +1,6 @@
  
 // Commands (ID_* and IDM_*) 
+#define HID_TABCONTROL                          0x1041E
 #define HID_CANCEL_EDIT_CNTR                    0x18000
 #define HID_VIEW_CUSTOMIZE                      0x18002
 #define HID_VIEW_TOOLBARS                       0x18003
@@ -56,6 +57,7 @@
 #define HID_MAP_FULLVIEW                        0x18074
 #define HID_MAP_SRCVIEW                         0x18075
 #define HID_MAPCTRL                             0x19C40
+#define HID_LAYOUTCTRL                          0x19C41
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064

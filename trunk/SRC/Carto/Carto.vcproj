@@ -229,6 +229,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PageLayout.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RasterLayer.cpp"
 				>
 			</File>
@@ -312,6 +316,10 @@
 			</File>
 			<File
 				RelativePath=".\Map.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PageLayout.h"
 				>
 			</File>
 			<File

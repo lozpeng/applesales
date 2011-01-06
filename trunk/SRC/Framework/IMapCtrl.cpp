@@ -80,6 +80,7 @@ void IMapCtrl::ControlResize(UINT nType, int cx, int cy)
 		UpdateControl(drawAll);
 
 	}
+
 }
 
 void IMapCtrl::UpdateControl(long content)

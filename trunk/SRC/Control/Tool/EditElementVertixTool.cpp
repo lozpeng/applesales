@@ -38,13 +38,13 @@ namespace Control
 
 		//初始化光标
 		if(cursorNormal == NULL)
-			cursorNormal =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_Arrow));
+			cursorNormal =::LoadCursor( theApp.m_hInstance , ATL_MAKEINTRESOURCE( IDC_Arrow));
 		if(cursorSizeAll == NULL)
-			cursorSizeAll =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_ALL));
+			cursorSizeAll =::LoadCursor( theApp.m_hInstance , ATL_MAKEINTRESOURCE( IDC_SIZE_ALL));
 		if(cursorVertixMove == NULL)
-			cursorVertixMove =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_VERTIX_MOVE));
+			cursorVertixMove =::LoadCursor( theApp.m_hInstance , ATL_MAKEINTRESOURCE( IDC_VERTIX_MOVE));
 		if(cursorOnVertix == NULL)
-			cursorOnVertix =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_ON_VERTIX));
+			cursorOnVertix =::LoadCursor( theApp.m_hInstance , ATL_MAKEINTRESOURCE( IDC_ON_VERTIX));
 
 
 		m_pCurElement = m_pMapCtrl->GetMap()->GetGraphicLayer()->GetSelectedElement(0);

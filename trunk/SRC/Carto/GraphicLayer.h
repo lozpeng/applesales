@@ -13,6 +13,7 @@
 #include "SpatialQuery.h"
 #include <boost/signal.hpp>
 #include <boost/signals/connection.hpp>
+#include "ILayer.h"
 
 namespace Carto
 {
@@ -27,7 +28,7 @@ public:
 
 	/**
 	* 序列化操作
-	* @param otSystem::IArchive &ar 文档流
+	* @param SYSTEM::IArchive &ar 文档流
 	*/
 	virtual void serialization(SYSTEM::IArchive &ar);
 

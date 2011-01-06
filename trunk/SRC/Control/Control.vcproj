@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LayoutControl.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MapControl.cpp"
 				>
 			</File>
@@ -238,6 +242,10 @@
 			</File>
 			<File
 				RelativePath=".\ControlDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LayoutControl.h"
 				>
 			</File>
 			<File

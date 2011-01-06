@@ -211,6 +211,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ILayoutCtrl.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IMapCtrl.cpp"
 				>
 			</File>
@@ -262,6 +266,10 @@
 			</File>
 			<File
 				RelativePath=".\IDocument.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ILayoutCtrl.h"
 				>
 			</File>
 			<File
