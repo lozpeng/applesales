@@ -327,7 +327,7 @@ namespace Control
 		m_nCanMoveContent = CMC_CANMOVE_NONE;
 
 		m_pMapCtrl->UpdateControl((DrawContent)(drawElement | drawEdit));
-		//m_pMapCtrl->SetCursorType(::LoadCursor(NULL,IDC_ARROW));
+		//m_pMapCtrl->SetCursor(::LoadCursor(NULL,IDC_ARROW));
 
 		ReleaseCapture();
 

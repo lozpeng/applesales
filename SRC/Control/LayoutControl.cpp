@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "LayoutControl.h"
+#include "MapFrame.h"
 
 namespace Control
 {
@@ -195,25 +196,25 @@ namespace Control
 	}
 
 
-	/*void CLayoutControl::LoadTemplate(IGeoMap* map, BSTR templatefile)
+	void CLayoutControl::LoadTemplate(Carto::CMapPtr map, BSTR templatefile)
 	{
-		AFX_MANAGE_STATE(AfxGetStaticModuleState());
-
 		CRect rect;
 		GetClientRect(rect);
 		m_pPageLayout.reset(new Carto::CPageLayout());
 		m_pPageLayout->Initialize((long)m_hMemDC,rect.Width(),rect.Height());
 
+		USES_CONVERSION; 
+		
+		LPCTSTR pFileName = OLE2T(templatefile);
+		
 		CFile file;
-		if(!file.Open(templatefile,CFile::modeRead))
+		if(!file.Open(pFileName,CFile::modeRead))
 		{
 			return;
 		}
 
-		CString PrjPath =templatefile;
+		CString PrjPath =pFileName;
 		CString basePath =PrjPath.Left(PrjPath.ReverseFind(_T('\\'))+1);
-
-		_bstr_t strPath =basePath;
 
 		CArchive ar(&file,CArchive::load);
 
@@ -231,10 +232,9 @@ namespace Control
 		BOOL bLayoutExist ;
 		bin & bLayoutExist;
 
-		serialization(bin);
+		//serialization(bin);
 
 		Carto::CGraphicLayerPtr pLayer = m_pPageLayout->GetGraphicLayer();
-
 
 		Element::IElementPtr pElement = pLayer->Reset();
 		while(pElement)
@@ -242,19 +242,7 @@ namespace Control
 			if(pElement->GetType() == Element::ET_MAP_FRAME_ELEMENT)
 			{
 				Element::CMapFrame* pMapFrame = dynamic_cast<Element::CMapFrame*>(pElement.get());
-
-				IOriginDataPtr pData;
-
-
-				map->QueryInterface(__uuidof(IOriginData),(void**)&pData);
-
-				long ldata;
-				pData->get_OriginData(&ldata);
-
-				Carto::CMapPtr pMap =*((Carto::CMapPtr*)(ldata));
-
-
-				pMapFrame->SetMap(pMap);
+				pMapFrame->SetMap(map);
 
 				break;
 			}
@@ -264,9 +252,9 @@ namespace Control
 
 		delete[] pStart;
 
-		Refresh();
+		UpdateControl(drawAll);
 	}
-*/
+
 
 
 }

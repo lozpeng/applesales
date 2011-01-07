@@ -3,6 +3,7 @@
 #define _LAYOUTCONTROL_H_
 
 #include  "ILayoutCtrl.h"
+#include "Map.h"
 
 namespace Control
 {
@@ -39,6 +40,7 @@ namespace Control
 		afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 		afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
 
+		void LoadTemplate(Carto::CMapPtr map, BSTR templatefile);
 
 	};
 

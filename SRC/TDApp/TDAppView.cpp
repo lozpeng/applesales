@@ -79,10 +79,43 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_DRAW_HANDLINE, OnDrawFreeHandline)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_HANDLINE, OnUpdateDrawFreeHandline)
 	
+	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
-	ON_NOTIFY(TCN_SELCHANGE, ID_TABCONTROL,&CTDAppView::OnSelchangeTab)
 
 END_MESSAGE_MAP()
+
+//得到程序启动的路径
+CString  GetAppPathName()
+{
+	TCHAR	szProgPath[MAX_PATH*2];
+	::GetModuleFileName(NULL, szProgPath, sizeof(szProgPath)/sizeof(TCHAR));    
+	CString PathName =szProgPath;
+	CString  FileName= PathName;
+	int     SplashPos=PathName.ReverseFind('\\');
+	if(SplashPos>=2 && SplashPos<=PathName.GetLength()-4)
+		FileName=PathName.Left(SplashPos);
+	return FileName;
+}
+
+//map与layout之间切换
+LRESULT CTDAppView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
+{
+	int iTabIndex=(int)wp;//激活哪个tab的索引
+	if(iTabIndex== 1)
+	{
+		//在此初始化layout
+		if(!m_LayoutCtrl.Initialized())
+		{
+			m_LayoutCtrl.Initialize();
+			//load temp
+			CString strTempFile =GetAppPathName()+"\\china.TMP";
+			m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),strTempFile.AllocSysString());
+		}
+	}
+	return 0;
+}
+
+
 
 // CTDAppView construction/destruction
 
@@ -180,9 +213,6 @@ int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//m_wndButton.Create(_T("Test"),WS_CHILD|WS_VISIBLE,CRect(0,0,10,20),&m_WndTab,IDC_TEST);
 	m_WndTab.AddTab(&m_LayoutCtrl,_T("Layout"));
 
-	//z暂时在此初始化
-	if(!m_LayoutCtrl.Initialized())
-		m_LayoutCtrl.Initialize();
 	
 	CTDAppDoc* pDoc = GetDocument();
 	pDoc->SetLinkMapCtrl(&m_MapCtrl);
@@ -275,13 +305,21 @@ void CTDAppView::OnOpenImg()
 void CTDAppView::OnMapPan()
 {
 	Framework::ITool* pTool = NULL;
-	m_MapCtrl.SetCurTool("MapPan");
+	m_LayoutCtrl.SetCurTool("LayoutPanTool");
 
-	pTool=Framework::ITool::FindTool("MapPan");
+	pTool=Framework::ITool::FindTool("LayoutPanTool");
 	if(pTool)
 	{
-		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
 	}
+	//Framework::ITool* pTool = NULL;
+	//m_MapCtrl.SetCurTool("MapPan");
+
+	//pTool=Framework::ITool::FindTool("MapPan");
+	//if(pTool)
+	//{
+	//	pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	//}
 }
 
 void CTDAppView::OnUpdateMapPan(CCmdUI* pCmdUI)
@@ -548,8 +586,3 @@ void CTDAppView::OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectbyPoint");
 }
 
-void CTDAppView::OnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	// TODO: 在此添加控件通知处理程序代码
-	*pResult = 0;
-}

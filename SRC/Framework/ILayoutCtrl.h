@@ -61,6 +61,13 @@ namespace Framework
 
 		void ControlResize(UINT nType, int cx, int cy);
 
+		void SetCursor(HCURSOR cursor);
+
+		//设置当前工具
+		void SetCurTool(std::string toolname) {m_curToolname =toolname;}
+
+		HWND GetHWnd();
+
 	protected:
 		Carto::CPageLayoutPtr	m_pPageLayout;	
 		BOOL m_bInitialized;
