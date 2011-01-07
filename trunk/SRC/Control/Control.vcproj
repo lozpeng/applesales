@@ -558,6 +558,42 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Layout"
+				>
+				<File
+					RelativePath=".\Tool\LayoutPanTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutPanTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutZoomInTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutZoomInTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutZoomOutTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutZoomOutTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\SelectFrameElementsTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\SelectFrameElementsTool.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

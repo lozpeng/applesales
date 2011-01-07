@@ -47,7 +47,7 @@ namespace Framework
 		}
 
 		m_pPageLayout = pPageLayout;
-		//pPageLayout->Initialize((long)GetMemDC(),m_lSizeX, m_lSizeY);
+		
 		pPageLayout->GetDisplay()->SetDC((long)GetMemDC(),m_lSizeX, m_lSizeY);
 		UpdateControl(drawAll);
 	}
@@ -268,4 +268,13 @@ namespace Framework
 
 	}
 
+	void ILayoutCtrl::SetCursor(HCURSOR cursor)
+	{
+		m_cursor =cursor;
+	}
+
+	HWND ILayoutCtrl::GetHWnd()
+	{
+		return m_hCtrlWnd;
+	}
 }

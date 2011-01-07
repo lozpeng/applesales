@@ -101,7 +101,7 @@ void CDrawCalloutTextElementTool::LButtonUpEvent (UINT nFlags, CPoint point)
 		return;
 
 	m_pMapCtrl->UpdateControl(drawElement | drawEdit);
-	//m_pMapCtrl->SetCursorType(cursorNormal);
+	//m_pMapCtrl->SetCursor(cursorNormal);
 
 	ReleaseCapture();
 

@@ -17,7 +17,7 @@ namespace Carto
 {
 
 /*
-* CGeoLayout是制图对象
+* CPageLayout是制图对象
 */
 class CARTO_DLL CPageLayout : public SYSTEM::ISerialization 
 {

@@ -2,6 +2,7 @@
 //
 #include "MapControl.h"
 #include "LayoutControl.h"
+
 #pragma once
 
 class CTDAppView : public CView
@@ -103,7 +104,7 @@ public:
 	afx_msg void OnDrawFreeHandline();
 	afx_msg void OnUpdateDrawFreeHandline(CCmdUI* pCmdUI);
 
-	void OnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult);
+	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp
