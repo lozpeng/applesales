@@ -68,6 +68,8 @@ namespace Framework
 
 		HWND GetHWnd();
 
+		std::string GetCurToolName() {return m_curToolname;}
+
 	protected:
 		Carto::CPageLayoutPtr	m_pPageLayout;	
 		BOOL m_bInitialized;

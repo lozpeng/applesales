@@ -97,25 +97,6 @@ CString  GetAppPathName()
 	return FileName;
 }
 
-//map与layout之间切换
-LRESULT CTDAppView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
-{
-	int iTabIndex=(int)wp;//激活哪个tab的索引
-	if(iTabIndex== 1)
-	{
-		//在此初始化layout
-		if(!m_LayoutCtrl.Initialized())
-		{
-			m_LayoutCtrl.Initialize();
-			//load temp
-			CString strTempFile =GetAppPathName()+"\\china.TMP";
-			m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),strTempFile.AllocSysString());
-		}
-	}
-	return 0;
-}
-
-
 
 // CTDAppView construction/destruction
 
@@ -586,3 +567,60 @@ void CTDAppView::OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectbyPoint");
 }
 
+
+//map与layout之间切换
+LRESULT CTDAppView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
+{
+	int iTabIndex=(int)wp;//激活哪个tab的索引
+	if(iTabIndex== 1)
+	{
+		//在此初始化layout
+		if(!m_LayoutCtrl.Initialized())
+		{
+			m_LayoutCtrl.Initialize();
+			OnDrawMapFrameElement();
+			//load temp
+			CString strTempFile =GetAppPathName()+"\\china.TMP";
+			//m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),strTempFile.AllocSysString());
+		}
+	}
+	return 0;
+}
+void CTDAppView::OnSelectFrameElement()
+{
+	Framework::ITool* pTool = NULL;
+	m_LayoutCtrl.SetCurTool("SelectFrameElementsTool");
+
+	pTool=Framework::ITool::FindTool("SelectFrameElementsTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+	}
+}
+void CTDAppView::OnUpdateSelectFrameElement(CCmdUI* pCmdUI)
+{
+
+	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "SelectFrameElementsTool");
+	//pCmdUI->Enable(m_bLayout);
+}
+
+
+void CTDAppView::OnDrawMapFrameElement()
+{
+
+	Framework::ICommand* pCommand = NULL;
+	m_LayoutCtrl.SetCurTool("DrawMapFrameElementCmd");
+
+	pCommand=Framework::ICommand::FindCommand("DrawMapFrameElementCmd");
+	if(pCommand)
+	{
+		pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		pCommand->Click();
+	}
+	OnSelectFrameElement();
+}
+void CTDAppView::OnUpdateDrawMapFrameElement(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawMapFrameElementCmd");
+	//pCmdUI->Enable(m_bLayout);
+}
