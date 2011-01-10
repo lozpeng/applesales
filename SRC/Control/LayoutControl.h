@@ -39,9 +39,26 @@ namespace Control
 		afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 		afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 		afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
+		afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+		void OnTimer(UINT_PTR nIDEvent);
+
+		//计算要贴的图在memDC上的位置
+		void CalSrcRect(GEOMETRY::geom::Envelope extent,CRect &rect);
+		//计算贴图在view中的位置
+		void CalDestRect(GEOMETRY::geom::Envelope srcExtent,GEOMETRY::geom::Envelope destExtent,CRect &rect);
 
 		void LoadTemplate(Carto::CMapPtr map, BSTR templatefile);
+	private:
 
+		bool m_bMouseWheel;
+
+		bool m_bTimer;
+
+		double m_dblScale;
+
+		double   m_srcScale;
+		
+		GEOMETRY::geom::Envelope m_srcEnvelop;
 	};
 
 }

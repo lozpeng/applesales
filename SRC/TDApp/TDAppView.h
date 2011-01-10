@@ -73,6 +73,7 @@ public:
 
 
 
+	//±ÍªÊ
 	afx_msg void OnDrawSelect();
 	afx_msg void OnUpdateDrawSelect(CCmdUI* pCmdUI);
 
@@ -103,6 +104,13 @@ public:
 
 	afx_msg void OnDrawFreeHandline();
 	afx_msg void OnUpdateDrawFreeHandline(CCmdUI* pCmdUI);
+
+
+	//µÿÕº’˚ Œ
+	afx_msg void OnSelectFrameElement();
+	afx_msg void OnUpdateSelectFrameElement(CCmdUI* pCmdUI);
+	afx_msg void OnDrawMapFrameElement();
+	afx_msg void OnUpdateDrawMapFrameElement(CCmdUI* pCmdUI);
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 };

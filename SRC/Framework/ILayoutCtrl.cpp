@@ -31,7 +31,7 @@ namespace Framework
 
 	ILayoutCtrl* ILayoutCtrl::GetActiveLayoutCtrl()
 	{
-		ILayoutCtrl* pLayoutCtrl = (ILayoutCtrl*)IUIObject::GetUIObjectByName("LAYOUTCTRL");
+		ILayoutCtrl* pLayoutCtrl = (ILayoutCtrl*)IUIObject::GetUIObjectByName(CommonUIName::AppLayoutControl);
 		return pLayoutCtrl;
 	}
 
@@ -95,12 +95,14 @@ namespace Framework
 	void ILayoutCtrl::RefreshScreen()
 	{
 		//
-		m_pPageLayout->GetDisplay()->SetDrawBuffer(drawAll);
-		m_pPageLayout->GetDisplay()->DrawBackgroud();
-		m_pPageLayout->GetDisplay()->RefreshDisplay(drawElement | drawEdit);
+		if(m_pPageLayout)
+		{
+			m_pPageLayout->GetDisplay()->SetDrawBuffer(drawAll);
+			m_pPageLayout->GetDisplay()->DrawBackgroud();
+			m_pPageLayout->GetDisplay()->RefreshDisplay(drawElement | drawEdit);
 
-		
-		BitBlt(m_hClientDC, 0, 0, m_lSizeX, m_lSizeY, m_hMemDC, 0, 0, SRCCOPY);
+			BitBlt(m_hClientDC, 0, 0, m_lSizeX, m_lSizeY, m_hMemDC, 0, 0, SRCCOPY);
+		}	
 	}
 
 	void ILayoutCtrl::OffsetClient(long offset_x, long offset_y)

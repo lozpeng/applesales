@@ -562,6 +562,14 @@
 				Name="Layout"
 				>
 				<File
+					RelativePath=".\Tool\DrawMapFrameElementCmd.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawMapFrameElementCmd.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Tool\LayoutPanTool.cpp"
 					>
 				</File>

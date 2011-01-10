@@ -563,7 +563,7 @@ long CSelectFrameElementsTool::GetHandleCursor(Element::HIT_HANDLE nHandle)
 
 void CSelectFrameElementsTool::OnEditElementProp()
 {
-	//otFramework::ILayoutCtrl* pLayoutCtrl = otFramework::ILayoutCtrl::GetActiveLayoutCtrl();
+	//Framework::ILayoutCtrl* pLayoutCtrl = Framework::ILayoutCtrl::GetActiveLayoutCtrl();
 	//if(!pLayoutCtrl)
 	//	return;
 

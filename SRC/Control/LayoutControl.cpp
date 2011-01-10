@@ -10,6 +10,8 @@ namespace Control
 
 	CLayoutControl::CLayoutControl(void)
 	{
+		m_bTimer = false;
+		m_bMouseWheel = false;
 	}
 
 	CLayoutControl::~CLayoutControl(void)
@@ -28,7 +30,7 @@ namespace Control
 		ON_WM_PAINT()
 		ON_WM_MOUSEWHEEL()
 		ON_WM_SETCURSOR()
-		//ON_WM_TIMER()
+		ON_WM_TIMER()
 
 	END_MESSAGE_MAP()
 	// CLayoutControl 消息处理程序
@@ -85,8 +87,8 @@ namespace Control
 	void CLayoutControl::OnSize(UINT nType, int cx, int cy)
 	{
 		__super::OnSize(nType, cx, cy);
-
-		ControlResize(nType,cx,cy);
+		//if(IsWindowVisible())
+			ControlResize(nType,cx,cy);
 
 	}
 
@@ -195,6 +197,258 @@ namespace Control
 		__super::OnKeyUp(nChar, nRepCnt, nFlags);
 	}
 
+	void CLayoutControl::CalSrcRect(GEOMETRY::geom::Envelope extent,CRect &rect)
+	{
+		//如果目标范围比原始范围大，则取整块memDC
+		double xmin,xmax,ymin,ymax;
+		if(extent.getMaxX()>=m_srcEnvelop.getMaxX() && extent.getMinX()<=m_srcEnvelop.getMinX() && extent.getMaxY()>=m_srcEnvelop.getMaxY() && extent.getMinY()<=m_srcEnvelop.getMinY())
+		{
+			rect =  m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetViewBound().GetRect();
+			return;
+		}
+		else
+		{
+
+			GEOMETRY::geom::Coordinate		 cp;
+			GEOMETRY::geom::Coordinate	    cPoint, cCp;
+			GEOMETRY::geom::Envelope	       cWrdExt;
+
+			rect =  m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetViewBound().GetRect();
+			//
+			cp.x = rect.CenterPoint().x;
+			cp.y = rect.CenterPoint().y;
+
+			cWrdExt = m_srcEnvelop;
+			cWrdExt.centre(cCp);
+
+			cPoint.x = extent.getMinX();
+			cPoint.y = extent.getMinY();
+
+			cPoint.x -= cCp.x;
+			cPoint.y -= cCp.y;
+			xmin = cp.x + cPoint.x / (m_srcScale);
+			ymax = cp.y - cPoint.y / (m_srcScale);
+
+			cPoint.x = extent.getMaxX();
+			cPoint.y = extent.getMaxY();
+			cPoint.x -= cCp.x;
+			cPoint.y -= cCp.y;
+			xmax = cp.x + cPoint.x / (m_srcScale);
+			ymin = cp.y - cPoint.y / (m_srcScale);
+
+			rect.left = (long)(xmin+0.5);
+			rect.top = (long)(ymin+0.5);
+			rect.right = (long)(xmax+0.5);
+			rect.bottom = (long)(ymax+0.5);	
+
+		}
+
+
+	}
+
+	void CLayoutControl::CalDestRect(GEOMETRY::geom::Envelope srcExtent,GEOMETRY::geom::Envelope destExtent,CRect &rect)
+	{
+
+		GEOMETRY::geom::Coordinate	  cp;
+		GEOMETRY::geom::Coordinate	  cPoint, cCp;
+		GEOMETRY::geom::Envelope	     cWrdExt;
+		double xmin,xmax,ymin,ymax;
+
+		rect = m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetViewBound().GetRect();
+		//
+		cp.x = rect.CenterPoint().x;
+		cp.y = rect.CenterPoint().y;
+
+		cWrdExt = destExtent;
+		cWrdExt.centre(cCp);
+
+		cPoint.x = srcExtent.getMinX();
+		cPoint.y = srcExtent.getMinY();
+		cPoint.x -= cCp.x;
+		cPoint.y -= cCp.y;
+
+		xmin = cp.x + cPoint.x / (m_dblScale);
+		ymax = cp.y - cPoint.y / (m_dblScale);
+
+		cPoint.x = srcExtent.getMaxX();
+		cPoint.y = srcExtent.getMaxY();
+		cPoint.x -= cCp.x;
+		cPoint.y -= cCp.y;
+		xmax = cp.x + cPoint.x / (m_dblScale);
+		ymin = cp.y - cPoint.y / (m_dblScale);
+
+		rect.left = (long)(xmin+0.5);
+		rect.top = (long)(ymin+0.5);
+		rect.right = (long)(xmax+0.5);
+		rect.bottom = (long)(ymax+0.5);	
+
+
+	}
+
+	BOOL CLayoutControl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+	{
+		if(!m_pPageLayout)
+			return false;
+		double dblRatio = 1;
+		long lSceenWidth,lSceenHeight;
+		GEOMETRY::geom::Coordinate point;
+		CRect rect;
+		GetClientRect(&rect);
+		lSceenWidth = rect.Width();
+		lSceenHeight = rect.Height();
+
+		Display::IDisplayPtr pDispaly = m_pPageLayout->GetDisplay();
+
+		if (!m_bTimer)
+		{
+			m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetGeoBound(m_srcEnvelop);
+			SetTimer(2,300,NULL);
+			m_dblScale = pDispaly->GetDisplayTransformation().GetScale();
+
+			m_srcScale = m_dblScale;
+
+			m_bTimer = true;
+		}
+
+		m_bMouseWheel = true;
+
+		HDC hMemDC = ::CreateCompatibleDC(m_hClientDC);
+
+		HBITMAP hOldBitmap,hBitmap = ::CreateCompatibleBitmap(m_hClientDC,m_lSizeX,m_lSizeY);
+
+		hOldBitmap = (HBITMAP)::SelectObject(hMemDC,hBitmap);
+
+		//绘制背景
+		HBRUSH hbrush = ::CreateSolidBrush( RGB(255,255,255));
+
+		::FillRect(hMemDC , &rect , hbrush );
+
+		::DeleteObject( hbrush );
+
+		double xmin,xmax,ymin,ymax;
+
+		if (zDelta > 0) //放大
+		{
+			dblRatio = 0.8;
+
+			m_dblScale *= dblRatio;
+
+			double centerX = m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetGeoCenterX();
+			double centerY = m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetGeoCenterY();
+
+			xmin = centerX - lSceenWidth/2.0*m_dblScale;
+			xmax = centerX + lSceenWidth/2.0*m_dblScale;
+			ymin = centerY - lSceenHeight/2.0*m_dblScale;
+			ymax = centerY + lSceenHeight/2.0*m_dblScale;
+
+			GEOMETRY::geom::Envelope newExt(xmin,xmax,ymin,ymax);
+
+			//改变地图的显示范围
+			m_pPageLayout->GetDisplay()->GetDisplayTransformation().FitViewBound(newExt);
+
+			CRect srcRect,destRect;
+
+			CalSrcRect(newExt,srcRect);
+
+			//如果目标范围比原始范围小，则目标矩形是整个View的客户区
+			if(newExt.getMaxX()<=m_srcEnvelop.getMaxX() 
+				&& newExt.getMinX()>=m_srcEnvelop.getMinX() 
+				&& newExt.getMaxY()<=m_srcEnvelop.getMaxY()
+				&& newExt.getMinY()>=m_srcEnvelop.getMinY())
+			{
+				destRect = rect;
+			}
+			else
+			{
+				GEOMETRY::geom::Envelope srcExtent =m_srcEnvelop;
+				CalDestRect(srcExtent,newExt,destRect);
+
+			}
+
+			::SetStretchBltMode(hMemDC,COLORONCOLOR);
+
+			::StretchBlt(hMemDC,destRect.left,destRect.top,destRect.Width(),destRect.Height(),(HDC)pDispaly->GetDrawDC()->GetSafeHdc(),srcRect.left,srcRect.top,srcRect.Width(),srcRect.Height(),SRCCOPY);
+
+			::BitBlt(m_hClientDC,0,0,m_lSizeX,m_lSizeY,hMemDC,0,0,SRCCOPY);
+
+		}
+		else if (zDelta < 0) //缩小
+		{
+			dblRatio = 1.2;
+
+			m_dblScale *= dblRatio;
+
+			double centerX = m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetGeoCenterX();
+			double centerY = m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetGeoCenterY();
+
+			xmin = centerX - lSceenWidth/2.0*m_dblScale;
+			xmax = centerX + lSceenWidth/2.0*m_dblScale;
+			ymin = centerY - lSceenHeight/2.0*m_dblScale;
+			ymax = centerY + lSceenHeight/2.0*m_dblScale;
+
+			GEOMETRY::geom::Envelope newExt(xmin,xmax,ymin,ymax);
+
+			//改变地图的显示范围
+			m_pPageLayout->GetDisplay()->GetDisplayTransformation().FitViewBound(newExt);
+
+
+			m_pPageLayout->GetDisplay()->GetDisplayTransformation().GetGeoBound(newExt);
+
+			CRect srcRect,destRect;
+
+			CalSrcRect(newExt,srcRect);
+
+			//如果目标范围比原始范围小，则目标矩形是整个View的客户区
+			if(newExt.getMaxX()<=m_srcEnvelop.getMaxX() 
+				&& newExt.getMinX()>=m_srcEnvelop.getMinX() 
+				&& newExt.getMaxY()<=m_srcEnvelop.getMaxY()
+				&&newExt.getMinY()>=m_srcEnvelop.getMinY())
+			{
+				destRect = rect;
+			}
+			else
+			{
+				GEOMETRY::geom::Envelope srcExtent =m_srcEnvelop;
+				CalDestRect(srcExtent,newExt,destRect);
+
+			}
+
+			::SetStretchBltMode(hMemDC,COLORONCOLOR);
+
+			::StretchBlt(hMemDC,destRect.left,destRect.top,destRect.Width(),destRect.Height(),(HDC)pDispaly->GetDrawDC()->GetSafeHdc(),srcRect.left,srcRect.top,srcRect.Width(),srcRect.Height(),SRCCOPY);
+
+			::BitBlt(m_hClientDC,0,0,m_lSizeX,m_lSizeY,hMemDC,0,0,SRCCOPY);
+
+		}
+
+		::SelectObject(hMemDC,hOldBitmap);
+		::DeleteObject(hBitmap);
+		::DeleteDC(hMemDC);
+
+
+		return TRUE;
+
+	}
+
+	void CLayoutControl::OnTimer(UINT_PTR nIDEvent)
+	{
+		//如果在上个时间段，鼠标滚轮滑动,则将标记设为false
+		if(m_bMouseWheel)
+		{
+			m_bMouseWheel =false;
+		}
+		else
+		{
+
+			m_pPageLayout->GetDisplay()->GetDisplayTransformation().ZoomToFixScale(m_dblScale);
+
+			UpdateControl(drawAll);			
+
+			KillTimer(2);	
+			m_bTimer = false;
+		}
+
+	}
 
 	void CLayoutControl::LoadTemplate(Carto::CMapPtr map, BSTR templatefile)
 	{
@@ -232,7 +486,7 @@ namespace Control
 		BOOL bLayoutExist ;
 		bin & bLayoutExist;
 
-		//serialization(bin);
+		serialization(bin);
 
 		Carto::CGraphicLayerPtr pLayer = m_pPageLayout->GetGraphicLayer();
 

@@ -11,8 +11,8 @@ CPage::CPage(void)
 
 	m_pageInfo.bStandardPage = TRUE;
 	m_pageInfo.name = "A4 Rotate";
-	m_pageInfo.width = m_dbOnePrintPageWidth = 297;
-	m_pageInfo.height = m_dbOnePrintPageHeight = 210;
+	m_pageInfo.width = m_dbOnePrintPageWidth = 210;
+	m_pageInfo.height = m_dbOnePrintPageHeight = 297;
 
 	m_PageEnvelope = GEOMETRY::geom::Envelope(0,m_dbOnePrintPageWidth*m_nPrintPageNumX, 0,m_dbOnePrintPageHeight*m_nPrintPageNumY);//mm
 	
