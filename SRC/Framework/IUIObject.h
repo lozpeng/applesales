@@ -22,6 +22,9 @@ public:
 	static std::string AppLayoutControl;
 	// 主程序文档
 	static std::string AppDocument;
+
+	//TOC控件
+	static std::string AppTOCControl;
 };
 
 class FRAMEWORK_DLL IUIObject : public SYSTEM::ISerialization

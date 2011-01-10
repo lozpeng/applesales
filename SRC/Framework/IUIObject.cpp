@@ -10,6 +10,8 @@ std::string  CommonUIName::AppDocument ="AppDocument";
 
 std::string  CommonUIName::AppLayoutControl ="AppLayoutControl";
 
+std::string  CommonUIName::AppTOCControl ="AppTOCControl";
+
 static std::map<std::string,IUIObject*> uiobjects;
 static std::map<std::string,IUIObject*>::iterator find_item;
 

@@ -36,6 +36,9 @@ public:
 
 public:
 
+	//从Document中更新Toc内容
+	virtual void RefreshFromDoc()=0;
+
 	//添加图层
 	virtual void AddLayer(Carto::ILayerPtr player, BOOL bExpand = TRUE) = 0;
 
