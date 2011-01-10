@@ -26,11 +26,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPFrameWnd)
 	ON_COMMAND(ID_HELP, CBCGPFrameWnd::OnHelp)
 	ON_COMMAND(ID_CONTEXT_HELP, CBCGPFrameWnd::OnContextHelp)
 	ON_COMMAND(ID_DEFAULT_HELP, CBCGPFrameWnd::OnHelpFinder)
-	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
-	ON_REGISTERED_MESSAGE(BCGM_RESETTOOLBAR, OnToolbarReset)
-	ON_REGISTERED_MESSAGE(BCGM_CUSTOMIZEHELP, OnHelpCustomizeToolbars)
-	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_2000, ID_VIEW_APPLOOK_WIN7, OnAppLook)
-	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_2000, ID_VIEW_APPLOOK_WIN7, OnUpdateAppLook)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -58,208 +53,295 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CBCGPFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
-	if (CBCGPToolBar::GetUserImages () == NULL)
+
+	CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManager2007));
+	CBCGPVisualManager2007::SetStyle (CBCGPVisualManager2007::VS2007_LunaBlue);
+
+	if (!CreateRibbonBar ())
 	{
-		// Load toolbar user images:
-		if (!m_UserImages.Load (_T(".\\UserImages.bmp")))
-		{
-			TRACE(_T("Failed to load user images\n"));
-		}
-		else
-		{
-			CBCGPToolBar::SetUserImages (&m_UserImages);
-		}
-	}
-
-	CBCGPToolBar::EnableQuickCustomization ();
-
-
-	// TODO: Define your own basic commands. Be sure, that each pulldown 
-	// menu have at least one basic command.
-
-	CList<UINT, UINT>	lstBasicCommands;
-
-	lstBasicCommands.AddTail (ID_VIEW_TOOLBARS);
-	lstBasicCommands.AddTail (ID_FILE_NEW);
-	lstBasicCommands.AddTail (ID_FILE_OPEN);
-	lstBasicCommands.AddTail (ID_FILE_SAVE);
-	lstBasicCommands.AddTail (ID_FILE_PRINT);
-	lstBasicCommands.AddTail (ID_APP_EXIT);
-	lstBasicCommands.AddTail (ID_EDIT_CUT);
-	lstBasicCommands.AddTail (ID_EDIT_PASTE);
-	lstBasicCommands.AddTail (ID_EDIT_UNDO);
-	lstBasicCommands.AddTail (ID_RECORD_NEXT);
-	lstBasicCommands.AddTail (ID_RECORD_LAST);
-	lstBasicCommands.AddTail (ID_APP_ABOUT);
-	lstBasicCommands.AddTail (ID_VIEW_TOOLBAR);
-	lstBasicCommands.AddTail (ID_VIEW_CUSTOMIZE);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2000);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_XP);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2003);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2007);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_VS2005);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_WIN_XP);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2007_1);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2007_2);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2007_3);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_VS2008);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_VS2010);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2010_1);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2010_2);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_2010_3);
-	lstBasicCommands.AddTail (ID_VIEW_APPLOOK_WIN7);
-
-	//CBCGPToolBar::SetBasicCommands (lstBasicCommands);
-
-	// Menu will not take the focus on activation:
-	CBCGPPopupMenu::SetForceMenuFocus (FALSE);
-
-	if (!m_wndMenuBar.Create (this))
-	{
-		TRACE0("Failed to create menubar\n");
+		TRACE0("创建工具条错误\n");
 		return -1;      // fail to create
-	}
-
-	m_wndMenuBar.SetBarStyle(m_wndMenuBar.GetBarStyle() | CBRS_SIZE_DYNAMIC);
-
-	// Detect color depth. 256 color toolbars can be used in the
-	// high or true color modes only (bits per pixel is > 8):
-	CClientDC dc (this);
-	BOOL bIsHighColor = dc.GetDeviceCaps (BITSPIXEL) > 8;
-
-	UINT uiToolbarHotID = 0;//bIsHighColor ? IDB_TOOLBAR256 : 0;
-
-	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
-		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME, 0, 0, FALSE, 0, 0, uiToolbarHotID))
-	{
-		TRACE0("Failed to create toolbar\n");
-		return -1;      // fail to create
-	}
-
-	//常用工具栏
-	if (!m_ExplorerToolBar.CreateEx(this,
-		WS_CHILD|WS_VISIBLE|CBRS_TOP|CBRS_TOOLTIPS|CBRS_FLYBY|CBRS_HIDE_INPLACE|CBRS_SIZE_DYNAMIC|
-		CBRS_GRIPPER | CBRS_BORDER_3D,
-		ID_VIEW_EXPLORER) ||
-		!m_ExplorerToolBar.LoadToolBar (IDR_TOOLBAR_EXPLORER,0, 0, TRUE, 0, 0, IDB_EXPLORER))
-	{
-		TRACE0("Failed to create build toolbar\n");
-		return -1;      // fail to create
-	}
-	m_ExplorerToolBar.SetWindowText(_T("浏览工具"));
-
-
-	//标绘工具栏
-	if (!m_DrawingToolBar.CreateEx(this,
-		WS_CHILD|WS_VISIBLE|CBRS_TOP|CBRS_TOOLTIPS|CBRS_FLYBY|CBRS_HIDE_INPLACE|CBRS_SIZE_DYNAMIC|
-		CBRS_GRIPPER | CBRS_BORDER_3D,
-		ID_VIEW_EXPLORER) ||
-		!m_DrawingToolBar.LoadToolBar (IDR_TOOLBAR_Drawing,0, 0, TRUE, 0, 0, IDB_Drawing))
-	{
-		TRACE0("Failed to create build toolbar\n");
-		return -1;      // fail to create
-	}
-	m_DrawingToolBar.SetWindowText(_T("标绘工具"));
-
-
-	if (!m_wndStatusBar.Create(this) ||
-		!m_wndStatusBar.SetIndicators(indicators,
-		  sizeof(indicators)/sizeof(UINT)))
-	{
-		TRACE0("Failed to create status bar\n");
-		return -1;      // fail to create
-	}
-
-	// Load control bar icons:
-	CBCGPToolBarImages imagesWorkspace;
-	imagesWorkspace.SetImageSize (CSize (16, 16));
-	imagesWorkspace.SetTransparentColor (RGB (255, 0, 255));
-	imagesWorkspace.Load (IDB_WORKSPACE);
-	imagesWorkspace.SmoothResize(globalData.GetRibbonImageScale());
-	
-	if (!m_wndWorkSpace.Create (_T("View  1"), this, CRect (0, 0, 200, 200),
-		TRUE, ID_VIEW_WORKSPACE,
-		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
-	{
-		TRACE0("Failed to create Workspace bar\n");
-		return -1;      // fail to create
-	}
-
-	m_wndWorkSpace.SetIcon (imagesWorkspace.ExtractIcon (0), FALSE);
-
-	if (!m_wndWorkSpace2.Create (_T("View 2"), this, CRect (0, 0, 200, 200),
-		TRUE, ID_VIEW_WORKSPACE2,
-		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
-	{
-		TRACE0("Failed to create Workspace bar 2\n");
-		return -1;      // fail to create
-	}
-
-	m_wndWorkSpace2.SetIcon (imagesWorkspace.ExtractIcon (1), FALSE);
-
-
-	if (!m_wndOutput.Create (_T("Output"), this, CSize (150, 150),
-		TRUE /* Has gripper */, ID_VIEW_OUTPUT,
-		WS_CHILD | WS_VISIBLE | CBRS_BOTTOM))
-	{
-		TRACE0("Failed to create output bar\n");
-		return -1;      // fail to create
-	}
-
-	CString strMainToolbarTitle;
-	strMainToolbarTitle.LoadString (IDS_MAIN_TOOLBAR);
-	m_wndToolBar.SetWindowText (strMainToolbarTitle);
-
-	// TODO: Delete these three lines if you don't want the toolbar to be dockable
-	m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndWorkSpace.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndWorkSpace2.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);
-	m_ExplorerToolBar.EnableDocking(CBRS_ALIGN_ANY);
-	m_DrawingToolBar.EnableDocking(CBRS_ALIGN_ANY);
-
-	EnableDocking(CBRS_ALIGN_ANY);
-	EnableAutoHideBars(CBRS_ALIGN_ANY);
-	DockControlBar(&m_wndMenuBar);
-	DockControlBar(&m_wndToolBar);
-	DockControlBar(&m_wndWorkSpace);
-	DockControlBar(&m_ExplorerToolBar);
-	DockControlBar(&m_DrawingToolBar);
-
-	m_wndWorkSpace2.AttachToTabWnd (&m_wndWorkSpace, BCGP_DM_STANDARD, FALSE, NULL);
-	DockControlBar(&m_wndOutput);
-
-
-	
-	DockControlBarLeftOf(&m_wndToolBar,&m_ExplorerToolBar);
-	DockControlBarLeftOf(&m_ExplorerToolBar,&m_DrawingToolBar);
-
-	m_wndToolBar.EnableCustomizeButton (TRUE, ID_VIEW_CUSTOMIZE, _T("Customize..."));
-
-	// Allow user-defined toolbars operations:
-	InitUserToobars (NULL,
-					uiFirstUserToolBarId,
-					uiLastUserToolBarId);
-
-	// Enable control bar context menu (list of bars + customize command):
-	EnableControlBarMenu (	
-		TRUE,				// Enable
-		ID_VIEW_CUSTOMIZE, 	// Customize command ID
-		_T("Customize..."),	// Customize command text
-		ID_VIEW_TOOLBARS);	// Menu items with this ID will be replaced by
-							// toolbars menu
-
-	OnAppLook (m_nAppLook);
-
-
+	};
 
 	// VISUAL_MANAGER
 	return 0;
 }
+BOOL CMainFrame::CreateRibbonBar()
+{
+	if (!m_wndRibbonBar.Create (this))
+	{
+		return -1;      // fail to create
+	}
+	//-------------------
+	// Load panel images:
+	//-------------------
+	m_PanelImages.SetImageSize (CSize (24, 24));
+	if (!m_PanelImages.Load (IDB_ZOOMBAR))
+	{
+		TRACE0("Failed to load panel images\n");
+		return -1;
+	}
+	//主菜单
+	AddMainCategory();
+	//地图浏览
+	AddTab_MapControl();
+	//影像分析
+	AddTab_ImageAnalyse();
+	//-----------------------------------
+	// Add quick access toolbar commands:
+	//-----------------------------------
+	CBCGPRibbonQATDefaultState qatState;
+	qatState.AddCommand (ID_MAP_ZOOM_IN);
+	qatState.AddCommand (ID_ZOOM_OUT);
+	qatState.AddCommand (ID_FIXEDZOOM_IN);
+	qatState.AddCommand (ID_FIXEDZOOM_OUT);
+	qatState.AddCommand (ID_MAP_PAN);
+	qatState.AddCommand (ID_MAP_FULLVIEW);
+	qatState.AddCommand (ID_PRE_EXTENT);
+	qatState.AddCommand (ID_NEXT_EXTENT);
+	m_wndRibbonBar.SetQuickAccessDefaultState (qatState);
 
+	return TRUE;
+}
+
+void CMainFrame::AddMainCategory()
+{
+	m_MainButton.SetImage (IDB_MIAN);
+	m_MainButton.SetToolTipText (_T("文件"));
+	m_MainButton.SetDescription (_T("单击此处打开、保存地图文件"));
+	m_MainButton.SetID (ID_MAIN_BUTTON);
+
+	m_wndRibbonBar.SetMainButton (&m_MainButton, CSize (45, 45));
+
+	CBCGPRibbonMainPanel* pMainPanel = m_wndRibbonBar.AddMainCategory (
+		_T("文件"), IDB_FILESMALL, IDB_FILELARGE);
+	
+	pMainPanel->Add (new CBCGPRibbonButton (ID_NEWMAPCLASS, _T("新建地图"), 0, 0));
+	pMainPanel->Add (new CBCGPRibbonButton (ID_OPENMAPCLASS, _T("打开地图"), 1, 1));
+	pMainPanel->Add (new CBCGPRibbonButton (ID_SAVEMAPCLASS, _T("保存地图"), 2, 2));
+	pMainPanel->Add (new CBCGPRibbonButton (ID_SAVEASMAPCLASS, _T("地图另存为..."), 3, 3));
+}
+
+//添加地图显示菜单
+void CMainFrame::AddTab_MapControl()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("开始"),
+		IDB_ZOOMBARSMALL,
+		IDB_ZOOMBAR);
+	
+	//创建工程管理
+	CBCGPRibbonPanel* pPanelProject = pCategory->AddPanel (
+		_T("工程"));
+	CBCGPRibbonButton* pBtnNewXTD = new CBCGPRibbonButton (ID_NEWMAPCLASS, _T("新建"), 11, 11);
+	pPanelProject->Add (pBtnNewXTD);
+	CBCGPRibbonButton* pBtnOpenXTD = new CBCGPRibbonButton (ID_OPENMAPCLASS, _T("打开"), 12,12);
+	pPanelProject->Add (pBtnOpenXTD);
+	CBCGPRibbonButton* pBtnSaveXTD = new CBCGPRibbonButton (ID_SAVEMAPCLASS, _T("保存"), 13,13);
+	pPanelProject->Add (pBtnSaveXTD);
+	CBCGPRibbonButton* pBtnSaveAsXTD = new CBCGPRibbonButton (ID_SAVEASMAPCLASS, _T("另存为"), 14,14);
+	pPanelProject->Add (pBtnSaveAsXTD);
+	//图层
+	CBCGPRibbonPanel* pPanelFile = pCategory->AddPanel (_T("文件"));
+	CBCGPRibbonComboBox* pDisplayCombo = new CBCGPRibbonComboBox (ID_DUMMY_COMBO, FALSE, 100, "比例尺:");
+	pDisplayCombo->EnableDropDownListResize (FALSE);
+	pDisplayCombo->AddItem(_T("1:1000"));
+	pDisplayCombo->AddItem(_T("1:10000"));
+	pDisplayCombo->AddItem(_T("1:50000"));
+	pDisplayCombo->AddItem(_T("1:100000"));
+	pDisplayCombo->AddItem(_T("1:250000"));
+	pDisplayCombo->AddItem(_T("1:500000"));
+	pDisplayCombo->AddItem(_T("1:1000000"));
+	pPanelFile->Add (pDisplayCombo);
+	//加载数据
+	CBCGPRibbonButton* pPanelRaster = new CBCGPRibbonButton (ID_OPEN_IMG, _T("栅格数据加载"), 20);
+	pPanelFile->Add (pPanelRaster);
+	CBCGPRibbonButton* pPanelFeature = new CBCGPRibbonButton (ID_OPEN_Vector, _T("矢量数据加载"), 21);
+	pPanelFile->Add (pPanelFeature);
+
+	//创建视图基本操作
+	CBCGPRibbonPanel* pPanelMap = pCategory->AddPanel (_T("工具"));
+	//--------------------------
+	// 放大:
+	//--------------------------
+	CBCGPRibbonButton* pBtnZoomIn = new CBCGPRibbonButton (ID_MAP_ZOOM_IN, _T("放大"), 0, 0);
+	pPanelMap->Add (pBtnZoomIn);
+	//--------------------------
+	// 缩小:
+	//--------------------------
+	CBCGPRibbonButton* pBtnZoomOut = new CBCGPRibbonButton (ID_ZOOM_OUT,_T("缩小"), 1, 1);
+	pPanelMap->Add (pBtnZoomOut);
+	//--------------------------
+	// 点放大:
+	//--------------------------
+	CBCGPRibbonButton* pBtnPZoomIn = new CBCGPRibbonButton (ID_FIXEDZOOM_IN, _T("点放大"), 2, 2);
+	pPanelMap->Add (pBtnPZoomIn);
+	//--------------------------
+	// 点缩小:
+	//--------------------------
+	CBCGPRibbonButton* pBtnPZoomOut = new CBCGPRibbonButton (ID_FIXEDZOOM_OUT, _T("点缩小"), 3, 3);
+	pPanelMap->Add (pBtnPZoomOut);
+	//--------------------------
+	// 漫游:
+	//--------------------------
+
+	CBCGPRibbonButton* pBtnPan = new CBCGPRibbonButton (ID_MAP_PAN, _T("漫游"), 4, 4);
+	pPanelMap->Add (pBtnPan);
+	//--------------------------
+	// 全图:
+	//--------------------------
+	CBCGPRibbonButton* pBtnOvewView = new CBCGPRibbonButton (ID_MAP_FULLVIEW,_T("全图"), 5, 5);
+	pPanelMap->Add (pBtnOvewView);
+
+	//--------------------------
+	// 前一视图:
+	//--------------------------
+	CBCGPRibbonButton* pBtnPreView = new CBCGPRibbonButton (ID_PRE_EXTENT, _T("前视图"), 7, 7);
+	pPanelMap->Add (pBtnPreView);
+
+
+	//--------------------------
+	// 后一视图:
+	//--------------------------
+	CBCGPRibbonButton* pBtnNextView = new CBCGPRibbonButton (ID_NEXT_EXTENT, _T("后视图"), 8, 8);
+	pPanelMap->Add (pBtnNextView);
+
+	
+
+	CBCGPRibbonPanel* pPanelLabel = pCategory->AddPanel (_T("工具"));
+	//--------------------------
+	// 选择:
+	//--------------------------
+	CBCGPRibbonButton* pBtnSelected = new CBCGPRibbonButton(ID_DRAW_SELECT, _T("选择"), -1, 0);
+	pPanelLabel->Add (pBtnSelected);
+	//--------------------------
+	// 矢量要素:
+	//--------------------------
+	CBCGPRibbonButton* pBtnRect = new CBCGPRibbonButton (ID_DRAW_RECT, _T("矩形"), -1, 1);
+	pPanelLabel->Add (pBtnRect);
+	//--------------------------
+	// 矢量要素:
+	//--------------------------
+	CBCGPRibbonButton* pBtnPolygon = new CBCGPRibbonButton(ID_DRAW_POLYGON, _T("多边形"), -1, 4);
+	pPanelLabel->Add (pBtnPolygon);		
+	//--------------------------
+	//添加标绘线工具
+	//--------------------------
+	CBCGPRibbonButton* pBtnPolyline = new CBCGPRibbonButton(ID_DRAW_POLYLINE, _T("多段线"), -1, 5);
+	pPanelLabel->Add (pBtnPolyline);	
+	// 点标绘:
+	//--------------------------
+	CBCGPRibbonButton* pBtnPoint = new CBCGPRibbonButton(ID_DRAW_MARKER, _T("点"), -1, 8);
+	pPanelLabel->Add (pBtnPoint);
+
+	//--------------------------
+	// 文本标绘:
+	//--------------------------
+	CBCGPRibbonButton* pBtnText = new CBCGPRibbonButton(ID_DRAW_TEXT, _T("文本"), -1, 9);
+	pPanelLabel->Add (pBtnText);
+
+	////--------------------------
+	//// 插入图片:
+	////--------------------------
+	CBCGPRibbonButton* pBtnPic = new CBCGPRibbonButton(ID_DRAW_CURVE, _T("曲线"), -1, 11);
+	pPanelLabel->Add (pBtnPic); 
+
+	//--------------------------
+	//添加旋转选择要素工具
+	//--------------------------
+	CBCGPRibbonButton* pBtnRotationElement = new CBCGPRibbonButton(ID_DRAW_HANDLINE, _T("手绘"), -1, 5);
+	pPanelLabel->Add (pBtnRotationElement);
+	
+	//--------------------------
+	//添加编辑选择要素工具要素工具
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditNodeElement = new CBCGPRibbonButton(ID_EDITOR, _T("编辑结点"), -1, 5);
+	pPanelLabel->Add (pBtnEditNodeElement);
+
+
+	CBCGPRibbonPanel* pPanelSystem = pCategory->AddPanel (_T("系统"));
+	CBCGPRibbonButton* pBtnSetting = new CBCGPRibbonButton (ID_SETTING,_T("设置"), 3, 22);
+	pPanelSystem->Add(pBtnSetting);
+	CBCGPRibbonButton* pBtnHelp = new CBCGPRibbonButton (ID_FOR_HELP,_T("帮助"), 1, 22);
+	pPanelSystem->Add(pBtnHelp);
+	CBCGPRibbonButton* pBtnClose = new CBCGPRibbonButton (ID_FOR_EXIT,_T("退出"), 2, 25);
+	pPanelSystem->Add(pBtnClose);
+}
+void CMainFrame::AddTab_ImageAnalyse()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("影像分析"),
+		IDB_FILESMALL,
+		IDB_FILELARGE);
+
+	//添加当前图层
+	CBCGPRibbonPanel* pPanelTargetLayer = pCategory->AddPanel (_T("显示"));
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,100,"图  层:");
+	pPanelTargetLayer->Add(pBtnCurrLayer);
+	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 7);
+	pPanelTargetLayer->Add (pBtnShowOverView);
+	CBCGPRibbonButton* pBtnHideOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYRRESOLUTION, _T("1:1显示"), 8);
+	pPanelTargetLayer->Add (pBtnHideOverView);
+	pPanelTargetLayer->AddSeparator();
+
+	
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T("   调  整:")));
+	CBCGPRibbonButton* pBtnBright = new CBCGPRibbonButton (ID_BRIGHT_RESTORE, _T("亮  度:"),0);
+	pPanelTargetLayer->Add (pBtnBright);
+	CBCGPRibbonButton* pBtnContrast = new CBCGPRibbonButton (ID_CONTRAST_RESTORE, _T("对比度:"), 1);
+	pPanelTargetLayer->Add ( pBtnContrast);
+
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonSlider* pSliderBright = new CBCGPRibbonSlider(ID_BRIGHT_SLIDER);
+	pSliderBright->SetRange (0, 100);
+	pSliderBright->SetPos (50);
+	pPanelTargetLayer->Add(pSliderBright);
+
+	pPanelTargetLayer->SetCenterColumnVert(TRUE);	
+	CBCGPRibbonSlider* pSliderContrast = new CBCGPRibbonSlider (ID_CONTRAST_SLIDER);
+	pSliderContrast->SetRange (0, 100);
+	pSliderContrast->SetPos (50);
+	pPanelTargetLayer->Add ( pSliderContrast);
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonEdit* pBtnLE = new CBCGPRibbonEdit (ID_BRIGHT_TEXT, 30, _T(""));
+	pBtnLE->EnableSpinButtons (0, 99);
+	pBtnLE->SetEditText (_T("50"));
+	pPanelTargetLayer->Add (pBtnLE);
+
+	CBCGPRibbonEdit* pBtnDE = new CBCGPRibbonEdit (ID_CONTRAST_TEXT, 30, _T(""));
+	pBtnDE->EnableSpinButtons (0, 99);
+	pBtnDE->SetEditText (_T("50"));
+	pPanelTargetLayer->Add (pBtnDE);
+
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonButton* pBtnTrans = new CBCGPRibbonButton (ID_TRANSPARENT_RESTORE, _T("透明度:"), 2);
+	pPanelTargetLayer->Add ( pBtnTrans);
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonSlider* pSliderTrans = new CBCGPRibbonSlider (ID_TRANSPARENT_SLIDER);
+
+	pSliderTrans->SetRange (0, 100);
+	pSliderTrans->SetPos (0);
+	pPanelTargetLayer->Add ( pSliderTrans);
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonEdit* pBtnTE = new CBCGPRibbonEdit (ID_TRANSPARENT_TEXT, 30, _T(""));
+	pBtnTE->EnableSpinButtons (0, 99);
+	pBtnTE->SetEditText (_T("0"));
+	pPanelTargetLayer->Add (pBtnTE);
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+
+	pPanelTargetLayer->AddSeparator();
+	CBCGPRibbonButton* pBtnSwipView = new CBCGPRibbonButton (ID_SWIPE, _T("卷帘"),5,5);
+	pPanelTargetLayer->Add ( pBtnSwipView);
+	CBCGPRibbonButton* pBtnStretch = new CBCGPRibbonButton (ID_RASLUT_EDIT, _T("手动增强"),6,6);
+	pPanelTargetLayer->Add ( pBtnStretch);
+}
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -292,177 +374,4 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 
 
-
-void CMainFrame::OnViewCustomize()
-{
-	//------------------------------------
-	// Create a customize toolbars dialog:
-	//------------------------------------
-	//CBCGPToolbarCustomize* pDlgCust = new CBCGPToolbarCustomize (this,
-	//	TRUE /* Automatic menus scaning */,
-	//	BCGCUSTOMIZE_MENU_SHADOWS | BCGCUSTOMIZE_TEXT_LABELS | 
-	//	BCGCUSTOMIZE_LOOK_2000 | BCGCUSTOMIZE_MENU_ANIMATIONS | BCGCUSTOMIZE_CONTEXT_HELP);
-
-	//pDlgCust->EnableUserDefinedToolbars ();
-	//pDlgCust->Create ();
-
-	CBCGPToolbarCustomize* pDlgCust = new CBCGPToolbarCustomize (this,
-		TRUE /* Automatic menus scaning */);
-
-	pDlgCust->EnableUserDefinedToolbars ();
-	pDlgCust->Create ();
-
-}
-
-afx_msg LRESULT CMainFrame::OnToolbarReset(WPARAM /*wp*/,LPARAM)
-{
-	// TODO: reset toolbar with id = (UINT) wp to its initial state:
-	//
-	// UINT uiToolBarId = (UINT) wp;
-	// if (uiToolBarId == IDR_MAINFRAME)
-	// {
-	//		do something with m_wndToolBar
-	// }
-
-	return 0;
-}
-
-LRESULT CMainFrame::OnHelpCustomizeToolbars(WPARAM wp, LPARAM lp)
-{
-	int iPageNum = (int) wp;
-
-	CBCGPToolbarCustomize* pDlg = (CBCGPToolbarCustomize*) lp;
-	ASSERT_VALID (pDlg);
-
-	// TODO: show help about page number iPageNum
-
-	return 0;
-}
-
-void CMainFrame::OnAppLook(UINT id)
-{
-	CBCGPDockManager::SetDockMode (BCGP_DT_SMART);
-
-	m_nAppLook = id;
-
-	CBCGPTabbedControlBar::m_StyleTabWnd = CBCGPTabWnd::STYLE_3D;
-
-	switch (m_nAppLook)
-	{
-	case ID_VIEW_APPLOOK_2000:
-		// enable Office 2000 look:
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManager));
-		break;
-
-	case ID_VIEW_APPLOOK_XP:
-		// enable Office XP look:
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManagerXP));
-		break;
-
-	case ID_VIEW_APPLOOK_WIN_XP:
-		// enable Windows XP look (in other OS Office XP look will be used):
-		CBCGPWinXPVisualManager::m_b3DTabsXPTheme = TRUE;
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPWinXPVisualManager));
-		break;
-
-	case ID_VIEW_APPLOOK_2003:
-		// enable Office 2003 look:
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManager2003));
-		CBCGPDockManager::SetDockMode (BCGP_DT_SMART);
-		break;
-
-	case ID_VIEW_APPLOOK_2007:
-	case ID_VIEW_APPLOOK_2007_1:
-	case ID_VIEW_APPLOOK_2007_2:
-	case ID_VIEW_APPLOOK_2007_3:
-		// enable Office 2007 look:
-		switch (m_nAppLook)
-		{
-		case ID_VIEW_APPLOOK_2007:
-			CBCGPVisualManager2007::SetStyle (CBCGPVisualManager2007::VS2007_LunaBlue);
-			break;
-
-		case ID_VIEW_APPLOOK_2007_1:
-			CBCGPVisualManager2007::SetStyle (CBCGPVisualManager2007::VS2007_ObsidianBlack);
-			break;
-
-		case ID_VIEW_APPLOOK_2007_2:
-			CBCGPVisualManager2007::SetStyle (CBCGPVisualManager2007::VS2007_Silver);
-			break;
-
-		case ID_VIEW_APPLOOK_2007_3:
-			CBCGPVisualManager2007::SetStyle (CBCGPVisualManager2007::VS2007_Aqua);
-			break;
-		}
-
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManager2007));
-		CBCGPDockManager::SetDockMode (BCGP_DT_SMART);
-		break;
-
-	case ID_VIEW_APPLOOK_2010_1:
-	case ID_VIEW_APPLOOK_2010_2:
-	case ID_VIEW_APPLOOK_2010_3:
-		// enable Office 2010 look:
-		switch (m_nAppLook)
-		{
-		case ID_VIEW_APPLOOK_2010_1:
-			CBCGPVisualManager2010::SetStyle (CBCGPVisualManager2010::VS2010_Blue);
-			break;
-
-		case ID_VIEW_APPLOOK_2010_2:
-			CBCGPVisualManager2010::SetStyle (CBCGPVisualManager2010::VS2010_Black);
-			break;
-
-		case ID_VIEW_APPLOOK_2010_3:
-			CBCGPVisualManager2010::SetStyle (CBCGPVisualManager2010::VS2010_Silver);
-			break;
-		}
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManager2010));
-		CBCGPDockManager::SetDockMode (BCGP_DT_SMART);
-		break;
-
-	case ID_VIEW_APPLOOK_WIN7:
-		// enable Windows look:
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManagerScenic));
-		CBCGPDockManager::SetDockMode (BCGP_DT_SMART);
-		break;
-
-	case ID_VIEW_APPLOOK_VS2005:
-		// enable VS 2005 look:
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManagerVS2005));
-		CBCGPDockManager::SetDockMode (BCGP_DT_SMART);
-		break;
-
-	case ID_VIEW_APPLOOK_VS2008:
-		// enable VS 2008 look:
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManagerVS2008));
-		CBCGPDockManager::SetDockMode (BCGP_DT_SMART);
-		break;
-
-	case ID_VIEW_APPLOOK_VS2010:
-		// enable VS 2010 look:
-		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManagerVS2010));
-		CBCGPDockManager::SetDockMode (BCGP_DT_SMART);
-		break;
-	}
-
-	CBCGPDockManager* pDockManager = GetDockManager ();
-	if (pDockManager != NULL)
-	{
-		ASSERT_VALID (pDockManager);
-		pDockManager->AdjustBarFrames ();
-	}
-
-	CBCGPTabbedControlBar::ResetTabs ();
-
-	RecalcLayout ();
-	RedrawWindow (NULL, NULL, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_FRAME | RDW_ERASE);
-
-	theApp.WriteInt (_T("ApplicationLook"), m_nAppLook);
-}
-
-void CMainFrame::OnUpdateAppLook(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetRadio (m_nAppLook == pCmdUI->m_nID);
-}
 // RIBBON_APP

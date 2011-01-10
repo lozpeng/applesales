@@ -51,15 +51,16 @@ protected:  // control bar embedded members
 
 	CBCGPToolBarImages	m_UserImages;
 // Generated message map functions
+public:
+	BOOL		CreateRibbonBar();
+	void		AddMainCategory();
+	void		AddTab_MapControl();
+	void		AddTab_ImageAnalyse();
+	CBCGPRibbonBar						m_wndRibbonBar;	// Ribbon control bar
+	CBCGPRibbonMainButton				m_MainButton;	// Ribbon main button
+	CBCGPToolBarImages					m_PanelImages;	// Ribbon panel images
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnViewCustomize();
-	afx_msg LRESULT OnToolbarReset(WPARAM,LPARAM);
-	void OnToolsViewUserToolbar (UINT id);
-	void OnUpdateToolsViewUserToolbar (CCmdUI* pCmdUI);
-	afx_msg LRESULT OnHelpCustomizeToolbars(WPARAM wp, LPARAM lp);
-	afx_msg void OnAppLook(UINT id);
-	afx_msg void OnUpdateAppLook(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 
 
