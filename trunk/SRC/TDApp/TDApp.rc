@@ -78,6 +78,12 @@ IDR_TOOLBAR_EXPLORER    BITMAP                  "res\\toolbar1.bmp"
 IDR_TOOLBAR_Drawing     BITMAP                  "res\\bmpDrawing.bmp"
 IDB_Drawing             BITMAP                  "res\\bitmap2.bmp"
 IDB_EXPLORER            BITMAP                  "res\\bmp00001.bmp"
+IDB_ZOOMBAR             BITMAP                  "res\\bitmap1.bmp"
+IDB_MIAN                BITMAP                  "res\\bmp00002.bmp"
+IDB_FILESMALL           BITMAP                  "res\\bitmap3.bmp"
+IDB_FILELARGE           BITMAP                  "res\\filelarg.bmp"
+IDB_ZOOMBAR1            BITMAP                  "res\\zoombar1.bmp"
+IDB_ZOOMBARSMALL        BITMAP                  "res\\bmp00005.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -395,7 +401,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    AFX_IDS_APP_TITLE       "TDApp"
+    AFX_IDS_APP_TITLE       "遥感基础平台"
     AFX_IDS_IDLEMESSAGE     "For Help, press F1"
     AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
 END

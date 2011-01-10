@@ -11,17 +11,22 @@
 #define IDR_TDAppTYPE                   129
 #define IDR_CONTEXT_MENU                130
 #define IDR_POPUP_TOOLBAR               131
+#define IDB_ZOOMBAR                     132
 #define IDB_WORKSPACE                   147
 #define IDB_TOOLBAR256                  151
+#define IDB_MIAN                        152
+#define IDB_FILELARGE                   153
+#define IDB_FILESMALL                   154
 #define IDR_TOOLBAR_EXPLORER            160
 #define IDB_BITMAP1                     162
 #define IDR_TOOLBAR_Drawing             163
+#define IDB_ZOOMBARSMALL                164
 #define IDB_Drawing                     172
 #define IDB_EXPLORER                    173
+#define IDB_ZOOMBAR1                    174
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
-
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
 #define ID_VIEW_TOOLBARS                32771
@@ -79,8 +84,35 @@
 #define ID_MAP_SRCVIEW                  32885
 #define ID_MAPCTRL                      40000
 #define ID_LAYOUTCTRL                   40001
-
-
+#define ID_MAIN_BUTTON                  40002
+#define ID_NEWMAPCLASS                  40003
+#define ID_OPENMAPCLASS                 40004
+#define ID_SAVEMAPCLASS                 40005
+#define ID_SAVEASMAPCLASS               40006
+#define ID_FIXEDZOOM_IN					40007
+#define ID_FIXEDZOOM_OUT				40008
+#define ID_DUMMY_COMBO					40009
+#define ID_PRE_EXTENT					40010
+#define ID_NEXT_EXTENT					40011
+#define ID_SETTING						40012
+#define ID_FOR_HELP						40013
+#define ID_FOR_EXIT						40014
+#define ID_CURRLAYER_COMBO				40015
+#define ID_ZOOMTO_LYREXTENT				40016
+#define ID_ZOOMTO_LYRRESOLUTION			40017
+#define ID_BRIGHT_RESTORE				40018
+#define ID_CONTRAST_RESTORE				40019
+#define ID_BRIGHT_SLIDER				40020
+#define ID_CONTRAST_SLIDER				40021
+#define ID_BRIGHT_TEXT					40022
+#define ID_CONTRAST_TEXT				40023
+#define ID_TRANSPARENT_RESTORE			40024
+#define ID_TRANSPARENT_SLIDER			40025
+#define ID_TRANSPARENT_TEXT				40026
+#define ID_SWIPE						40027
+#define ID_RASLUT_EDIT					40028
+#define ID_ROTATION_ELEMENT				40029
+#define ID_EDITNODE_ELEMENT				30030
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
