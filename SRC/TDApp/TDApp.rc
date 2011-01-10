@@ -211,7 +211,7 @@ BEGIN
     BEGIN
         MENUITEM "&Help Topics",                ID_HELP_FINDER
         MENUITEM SEPARATOR
-        MENUITEM "&About TDApp...",             ID_APP_ABOUT
+        MENUITEM "&About 遥感基础平台...",             ID_APP_ABOUT
     END
 END
 
@@ -312,7 +312,7 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About TDApp"
+CAPTION "About 遥感基础平台"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20
@@ -349,9 +349,9 @@ BEGIN
             VALUE "CompanyName", "TODO: <Company name>"
             VALUE "FileDescription", "TODO: <File description>"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "TDApp.exe"
+            VALUE "InternalName", "遥感基础平台.exe"
             VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
-            VALUE "OriginalFilename", "TDApp.exe"
+            VALUE "OriginalFilename", "遥感基础平台.exe"
             VALUE "ProductName", "TODO: <Product name>"
             VALUE "ProductVersion", "1.0.0.1"
         END
@@ -396,7 +396,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "TDApp\n\nTDApp\n\n\nTDApp.Document\nTDApp.Document"
+    IDR_MAINFRAME           "遥感基础平台\n\遥感基础平台\n\n\nTDApp.Document\nTDApp.Document"
 END
 
 STRINGTABLE 
