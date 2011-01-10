@@ -62,3 +62,5 @@
 #include "CartoHeader.h"
 #include "FrameworkDefine.h"
 #include "Geometry.h"
+#include "DSFileDefine.h"
+#include "DSRasterDefine.h"

@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "IDisplay.h"
 #include "PageLayout.h"
+#include "IMaptreeCtrl.h"
 
 namespace Framework
 {
@@ -47,6 +48,13 @@ public:
 	//通过ID号得到地图对象
 	Carto::CMapPtr GetMap(long index);
 
+	//加载栅格文件
+    void LoadImageFile(const char *file);
+
+	//加载shp文件
+	void LoadShpFile(const char *file);
+
+
 	void SetLinkMapCtrl(IMapCtrl *pMapCtrl);
 
 	IMapCtrl *GetLinkMapCtrl();
@@ -55,6 +63,10 @@ public:
 	
 	void SetLinkLayoutCtrl(ILayoutCtrl *pLayoutCtrl);
 	ILayoutCtrl *GetLinkLayoutCtrl();
+
+	//设置关联的TOC控件
+	void SetLinkMapTree(IMaptreeCtrl* pMapTree);
+	IMaptreeCtrl *GetLinkMapTree();
 
 protected:
     
@@ -70,6 +82,8 @@ protected:
 
 	//pagelayout
 	ILayoutCtrl * m_linkLayoutCtrl;
+
+	IMaptreeCtrl *m_pLinkMapTree;
 
 };
 

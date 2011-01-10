@@ -2,6 +2,12 @@
 #include "IDocument.h"
 #include "IMapCtrl.h"
 #include "ILayoutCtrl.h"
+#include "ShapefileWorkspaceFactory.h"
+#include "ShapefileWorkspace.h"
+#include "ShapefileFeatureClass.h"
+#include "FeatureLayer.h"
+#include "RasterLayer.h"
+#include "RasterWSFactory.h"
 #include <boost/function.hpp>
 
 namespace Framework
@@ -11,6 +17,8 @@ namespace Framework
 	IDocument::IDocument()
 	{
 		m_linkMapCtrl =NULL;
+
+		m_pLinkMapTree =NULL;
 
 		m_index =0;
 	}
@@ -96,5 +104,63 @@ namespace Framework
 	{
 		return m_linkLayoutCtrl;
 	}
+
+	void IDocument::SetLinkMapTree(IMaptreeCtrl* pMapTree)
+	{
+		m_pLinkMapTree =pMapTree;
+	}
+    
+	IMaptreeCtrl* IDocument::GetLinkMapTree()
+	{
+		return m_pLinkMapTree;
+	}
+
+	void IDocument::LoadImageFile(const char *fileName)
+	{
+		CString csDataSourceTmp=fileName;
+
+		CString csThemeName = csDataSourceTmp.Mid (csDataSourceTmp.ReverseFind ('\\') + 1);
+		csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
+		
+
+		Geodatabase::IWorkspace* pWorkspace = CRasterWSFactory::GetInstance()->OpenFromFile(fileName);
+		Geodatabase::IRasterDatasetPtr pRasterDataset = pWorkspace->OpenRasterDataset(fileName);
+
+		Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CRasterLayer());
+		pLayer = Carto::ILayer::CreateLayer(pRasterDataset);
+
+		//设置图层名
+		pLayer->SetName(std::string(csThemeName));
+		m_pActiveMap->AddLayer(pLayer);
+
+		if(m_pLinkMapTree)
+		{
+			m_pLinkMapTree->AddLayer(pLayer);
+		}
+	}
+
+	void IDocument::LoadShpFile(const char *fileName)
+	{
+		CString csDataSourceTmp=fileName;
+
+		CString csThemeName = csDataSourceTmp.Mid (csDataSourceTmp.ReverseFind ('\\') + 1);
+		csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
+
+		Geodatabase::IWorkspace* ipWorkspace = CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(fileName);
+		Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->OpenFeatureClass(fileName);
+
+
+		Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
+		pLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
+		//设置图层名
+		pLayer->SetName(std::string(csThemeName));
+		m_pActiveMap->AddLayer(pLayer);
+
+		if(m_pLinkMapTree)
+		{
+			m_pLinkMapTree->AddLayer(pLayer);
+		}
+	}
+
 
 }
