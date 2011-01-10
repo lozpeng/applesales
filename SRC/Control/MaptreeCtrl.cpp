@@ -68,13 +68,13 @@ int CMaptreeCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//需要指定imagelist的颜色为真彩色
 	m_imageList.Create(16,16,ILC_COLOR24|ILC_MASK,1,1);
 	CBitmap bmp;
-	//bmp.LoadBitmap(IDB_MAP_TREE);
+	bmp.LoadBitmap(IDB_MAP_TREE);
 	m_imageList.Add(&bmp,RGB(255,255,255));
 
-	//m_imageList.Create ( IDB_MAP_TREE, 16, 1, RGB(255,255,255) );
+	
 	SetImageList (&m_imageList, TVSIL_NORMAL);
 
-	//m_imgState.Create ( IDB_MAPTREE_STATE, 16, 1, RGB(255,255,255) );
+	m_imgState.Create ( IDB_MAPTREE_STATE, 16, 1, RGB(255,255,255) );
 	SetImageList (&m_imgState,TVSIL_STATE);
 	return 0;
 } 
@@ -2147,7 +2147,62 @@ void CMaptreeCtrl::OnZoomToCurrentLayer()
 }
 
 
+void CMaptreeCtrl::RefreshFromDoc()
+{
+	DeleteAllItems();
+	Framework::IDocument* pDoc =(Framework::IDocument*)Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppDocument);
 
+	if(!pDoc)
+	{
+		return;
+	}
+    
+	long nCount =pDoc->GetMapCount();
+	for(long lIndex=0;lIndex<nCount;lIndex++)
+	{
+		Carto::CMapPtr pMap = pDoc->GetMap(lIndex);
+
+		if(!pMap)
+		{
+			continue;
+		}
+		std::string csName = pMap->GetName();
+		HTREEITEM hMapItem = InsertItem(csName.c_str(), 0, 0 );
+
+		m_itemToMapPtr.insert(std::map<HTREEITEM,Carto::CMapPtr>::value_type(hMapItem,pMap));
+
+		SelectItem(hMapItem);
+		m_iSelectedItemType = Framework::eMapItem;
+
+		//添加Layer
+		Carto::CLayerArray layerArray = pMap->GetLayers();
+		HTREEITEM hBefore;
+
+		for(int i=0; i<layerArray.GetSize(); i++)
+		{
+			Carto::ILayerPtr ptrLayer = NULL, ptrLayerBefore = NULL;
+			ptrLayer  = layerArray[i];
+
+			if(i==0)
+			{
+				hBefore = TVI_FIRST;
+			}
+			else
+			{
+				ptrLayerBefore = layerArray[i-1];
+				hBefore = SearchItemByLayer(ptrLayerBefore);
+			}
+
+			//为RasterLayer和VectorLayer添加layer
+			AddLayerNode( ptrLayer, hMapItem, hBefore,FALSE);		
+		}
+	}
+
+	//设置活动地图
+	ActivateMap(pDoc->GetActiveMap());
+	
+
+}
 
 
 
