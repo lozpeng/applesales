@@ -56,6 +56,9 @@ public:
 	void		AddMainCategory();
 	void		AddTab_MapControl();
 	void		AddTab_ImageAnalyse();
+
+	Framework::IMaptreeCtrl* GetTOC();
+
 	CBCGPRibbonBar						m_wndRibbonBar;	// Ribbon control bar
 	CBCGPRibbonMainButton				m_MainButton;	// Ribbon main button
 	CBCGPToolBarImages					m_PanelImages;	// Ribbon panel images

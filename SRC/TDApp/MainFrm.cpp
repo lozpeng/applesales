@@ -63,6 +63,17 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	};
 
+	if (!m_wndWorkSpace.Create (_T("Õº≤„π‹¿Ì"), this, CRect (0, 0, 200, 200),
+		TRUE, ID_VIEW_WORKSPACE,
+		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("Failed to create Workspace bar\n");
+		return -1;      // fail to create
+	}
+
+	m_wndWorkSpace.EnableDocking(CBRS_ALIGN_ANY);
+	DockControlBar(&m_wndWorkSpace);
+
 	// VISUAL_MANAGER
 	return 0;
 }
@@ -353,6 +364,11 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
+
+Framework::IMaptreeCtrl* CMainFrame::GetTOC()
+{
+	return &m_wndWorkSpace.m_wndTree;
+}
 
 // CMainFrame diagnostics
 

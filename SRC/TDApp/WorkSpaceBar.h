@@ -8,14 +8,16 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "MaptreeCtrl.h"
+
 class CWorkSpaceBar : public CBCGPDockingControlBar
 {
 public:
 	CWorkSpaceBar();
 
 // Attributes
-protected:
-	CTreeCtrl	m_wndTree;
+public:
+	Control::CMaptreeCtrl	m_wndTree;
 
 // Operations
 public:

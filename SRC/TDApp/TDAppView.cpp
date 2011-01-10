@@ -252,15 +252,8 @@ void CTDAppView::OnOpenVector()
 	else
 		return;
 
-	Geodatabase::IWorkspace* ipWorkspace = CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(fileName);
-	Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->OpenFeatureClass(fileName);
-
-	//Carto::CMapPtr ipMap = Carto::CMapPtr(new Carto::CMap());
-	//m_MapCtrl.SetMap(ipMap);
-
-	Carto::ILayerPtr ipLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
-	ipLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
-	this->GetDocument()->GetActiveMap()->AddLayer(ipLayer);
+	
+	this->GetDocument()->LoadShpFile(fileName);
 	m_MapCtrl.UpdateControl(drawAll);
 }
 
@@ -273,12 +266,7 @@ void CTDAppView::OnOpenImg()
 		fileName = dlg.GetPathName(); 
 	else
 		return;
-	Geodatabase::IWorkspace* pWorkspace = CRasterWSFactory::GetInstance()->OpenFromFile(fileName);
-	Geodatabase::IRasterDatasetPtr pRasterDataset = pWorkspace->OpenRasterDataset(fileName);
-
-	Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CRasterLayer());
-	pLayer = Carto::ILayer::CreateLayer(pRasterDataset);
-	this->GetDocument()->GetActiveMap()->AddLayer(pLayer);
+	this->GetDocument()->LoadImageFile(fileName);
 	m_MapCtrl.UpdateControl(drawAll);
 }
 
