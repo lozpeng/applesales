@@ -104,8 +104,15 @@ BOOL CTDAppApp::InitInstance()
 
 	
 
-	// The one and only window has been initialized, so show and update it
-	// The one and only window has been initialized, so show and update it
+	
+
+	//设置文档连接地图管理控件
+	CMainFrame *pMainFrame = (CMainFrame *)AfxGetMainWnd();
+
+	CTDAppDoc *pDoc =dynamic_cast<CTDAppDoc*>(pMainFrame->GetActiveDocument());
+	pDoc->SetLinkMapTree(pMainFrame->GetTOC());
+	pMainFrame->GetTOC()->RefreshFromDoc();
+
 	m_pMainWnd->SetWindowText(" 遥感基础平台（测试版）");
 	m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
 	m_pMainWnd->UpdateWindow();

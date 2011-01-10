@@ -52,16 +52,14 @@ int CWorkSpaceBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	const DWORD dwViewStyle =	WS_CHILD | WS_VISIBLE | TVS_HASLINES | 
 								TVS_LINESATROOT | TVS_HASBUTTONS;
 	
-	if (!m_wndTree.Create (dwViewStyle, rectDummy, this, 1))
+	//创建地图管理树形控件
+	if (!m_wndTree.CreateControl(Framework::CommonUIName::AppTOCControl,this,1))
 	{
 		TRACE0("Failed to create workspace view\n");
 		return -1;      // fail to create
 	}
 
-	// Setup trees content:
-	HTREEITEM hRoot1 = m_wndTree.InsertItem (_T("Root 1"));
-	m_wndTree.InsertItem (_T("Item 1"), hRoot1);
-	m_wndTree.InsertItem (_T("Item 2"), hRoot1);
+	m_wndTree.SetAutoDetroy(true);
 
 	return 0;
 }
