@@ -113,6 +113,14 @@ IDC_SIZE_RIGHTTOP       CURSOR                  "res\\cur00002.cur"
 IDC_SIZE_TOPBOTTOM      CURSOR                  "res\\cur00003.cur"
 IDC_ON_VERTIX           CURSOR                  "res\\cur00004.cur"
 IDC_VERTIX_MOVE         CURSOR                  "res\\cur00005.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_MAP_TREE            BITMAP                  "res\\maptree.bmp"
+IDB_MAPTREE_STATE       BITMAP                  "res\\treestate.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 

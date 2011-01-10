@@ -331,6 +331,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\maptree.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\treestate.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\ZoomIn.cur"
 				>
 			</File>

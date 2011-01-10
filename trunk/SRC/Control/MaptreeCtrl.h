@@ -22,6 +22,9 @@ public:
 	virtual ~CMaptreeCtrl();
 
 public:
+
+	virtual void RefreshFromDoc();
+
 	// 更新界面
 	virtual void UpdateInterface();
 
