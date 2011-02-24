@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IProgress.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ISerialization.cpp"
 				>
 			</File>
@@ -236,6 +240,10 @@
 			</File>
 			<File
 				RelativePath=".\IArchive.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IProgress.h"
 				>
 			</File>
 			<File

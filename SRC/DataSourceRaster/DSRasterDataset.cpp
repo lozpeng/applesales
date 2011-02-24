@@ -586,8 +586,20 @@ bool	CDSRasterDataset::HasPyramid()
 	return true;
 }
 
+static SYSTEM::IProgress* gpProgress=NULL;
+
+int WINAPI PyramidProgress(double dfComplete,const char* ss,void *s)
+{
+	if(gpProgress)
+	{
+       gpProgress->UpdateProgress(NULL,dfComplete);
+	}
+	
+	return TRUE;
+}
+
 //建立金字塔
-bool CDSRasterDataset::BuildPyramid(double dResample)
+bool CDSRasterDataset::BuildPyramid(double dResample,SYSTEM::IProgress* pProgress)
 {
 	if(m_pDataset==NULL)
 	{
@@ -616,9 +628,22 @@ bool CDSRasterDataset::BuildPyramid(double dResample)
 		panBandList[i]=pow(double(rate),double(i+1));
 	}
 	
-	//
+	GDALProgressFunc pFunc =NULL;
+
+	if(pProgress)
+	{
+		pProgress->Create("建立金字塔",SYSTEM::IProgress::Percent,100);
+		gpProgress =pProgress;
+		pFunc =PyramidProgress;
+	}
 
 	CPLErr error=m_pDataset->BuildOverviews("AVERAGE",lLevel,panBandList,0,NULL,NULL,NULL);
+
+	if(pProgress)
+	{
+		pProgress->Close();
+		gpProgress =NULL;
+	}
 
 	//重新打开建过金字塔的文件
 	delete []panBandList;

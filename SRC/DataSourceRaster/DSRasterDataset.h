@@ -155,7 +155,7 @@ public:
 	virtual	bool	HasPyramid();
 	
 	//½¨Á¢½ð×ÖËþ
-	bool BuildPyramid(double dResample);
+	bool BuildPyramid(double dResample,SYSTEM::IProgress* pProgress);
 
 	bool DataReadPyramidBand(long lLevel, long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight,long lBuffSizeX, long lBuffSizeY, void *pvBuffer);
 
