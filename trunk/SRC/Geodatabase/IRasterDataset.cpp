@@ -126,7 +126,7 @@ bool	IRasterDataset::HasPyramid()
 }
 
 //½¨Á¢½ð×ÖËþ
-bool IRasterDataset::BuildPyramid(double dResample)
+bool IRasterDataset::BuildPyramid(double dResample,SYSTEM::IProgress*)
 {
 	return false;
 }
