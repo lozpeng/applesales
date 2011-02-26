@@ -115,7 +115,7 @@ namespace Framework
 		return m_pLinkMapTree;
 	}
 
-	void IDocument::LoadImageFile(const char *fileName)
+	void IDocument::LoadImageFile(const char *fileName,bool buildPyd,SYSTEM::IProgress *pProgress)
 	{
 		CString csDataSourceTmp=fileName;
 
@@ -125,6 +125,12 @@ namespace Framework
 
 		Geodatabase::IWorkspace* pWorkspace = CRasterWSFactory::GetInstance()->OpenFromFile(fileName);
 		Geodatabase::IRasterDatasetPtr pRasterDataset = pWorkspace->OpenRasterDataset(fileName);
+
+		if(buildPyd)
+		{
+			//½¨½ð×ÖËþ
+			pRasterDataset->BuildPyramid(0.5,pProgress);
+		}
 
 		Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CRasterLayer());
 		pLayer = Carto::ILayer::CreateLayer(pRasterDataset);

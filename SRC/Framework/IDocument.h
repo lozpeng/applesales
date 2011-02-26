@@ -12,7 +12,7 @@
 #include "IDisplay.h"
 #include "PageLayout.h"
 #include "IMaptreeCtrl.h"
-
+#include "IProgress.h"
 namespace Framework
 {
 
@@ -49,7 +49,7 @@ public:
 	Carto::CMapPtr GetMap(long index);
 
 	//加载栅格文件
-    void LoadImageFile(const char *file);
+	void LoadImageFile(const char *file,bool buildPyd=false,SYSTEM::IProgress *pProgress =NULL);
 
 	//加载shp文件
 	void LoadShpFile(const char *file);
