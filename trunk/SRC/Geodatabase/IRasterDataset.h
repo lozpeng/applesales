@@ -167,18 +167,18 @@ public:
 	virtual	bool	HasPyramid();
 	
 	//½¨Á¢½ð×ÖËþ
-	bool BuildPyramid(double dResample,SYSTEM::IProgress* pProgress);
+	virtual bool BuildPyramid(double dResample,SYSTEM::IProgress* pProgress);
 
-	bool DataReadPyramidBand(long lLevel, long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight,long lBuffSizeX, long lBuffSizeY, void *pvBuffer);
+	 virtual bool DataReadPyramidBand(long lLevel, long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight,long lBuffSizeX, long lBuffSizeY, void *pvBuffer);
 
 
-	bool GetPyramidSize( long lLevel, long *lWidth, long *lHeight);
+	virtual bool GetPyramidSize( long lLevel, long *lWidth, long *lHeight);
 
-	bool GetPyramidCellSize(long lLevel, double *pdCellX, double *pdCellY);
+	virtual bool GetPyramidCellSize(long lLevel, double *pdCellX, double *pdCellY);
 
-	bool GetPyramidLevelNum(long *lLevelNum);
+	virtual bool GetPyramidLevelNum(long *lLevelNum);
 
-	bool ReadPyramidNormal(long lLevel,long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer);
+	virtual bool ReadPyramidNormal(long lLevel,long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer);
 
 	
 

@@ -637,7 +637,7 @@ bool CDSRasterDataset::BuildPyramid(double dResample,SYSTEM::IProgress* pProgres
 		pFunc =PyramidProgress;
 	}
 
-	CPLErr error=m_pDataset->BuildOverviews("AVERAGE",lLevel,panBandList,0,NULL,NULL,NULL);
+	CPLErr error=m_pDataset->BuildOverviews("AVERAGE",lLevel,panBandList,0,NULL,pFunc,NULL);
 
 	if(pProgress)
 	{
