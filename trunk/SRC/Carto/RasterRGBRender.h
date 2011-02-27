@@ -123,6 +123,9 @@ namespace Carto
 		*/
 		virtual	bool	SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount = 0, GEOMETRY::geom::Coordinate* pstPts = NULL);
 		void			ApplyImageProFunction(long lBufLen,unsigned char* pChannel1, unsigned char* pChannel2, unsigned char* pChannel3);
+	private:
+		BYTE**			m_ppLut;
+		long			m_nodecount;
 	protected:
 
 		Display::IDisplayPtr m_pDisplay;
@@ -186,13 +189,13 @@ namespace Carto
 		long			mp_lResampleHeight;
 
 		//采样数据尺寸
-		long          mp_lResampleBufferSize;
+		long			mp_lResampleBufferSize;
 
 		//屏幕绘制范围
-		RECT m_destRect;
+		RECT			m_destRect;
 
 
-		bool m_bLocked;
+		bool			m_bLocked;
 	};
 	typedef SYSTEM::CSmartPtr<CRasterRGBRender> CRasterRGBRenderPtr;
 }
