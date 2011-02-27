@@ -205,6 +205,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ImgProFunction.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IRasterRender.cpp"
 				>
 			</File>
@@ -291,7 +295,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IGPI_Types.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ILayer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ImgProFunction.h"
 				>
 			</File>
 			<File
@@ -312,6 +324,10 @@
 			</File>
 			<File
 				RelativePath=".\LegendInfo.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Macros.h"
 				>
 			</File>
 			<File

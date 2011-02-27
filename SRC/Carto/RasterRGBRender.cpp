@@ -435,6 +435,54 @@ namespace Carto
 
 		m_PixelInfo[RGBType] = pi;
 	}
+	BOOL CRasterRGBRender::GetBandLUT (long lChannelIndex, BYTE *pbLUT, long *plNumNodes,GEOMETRY::geom::Coordinate* pstNodes)
+{
+
+	if(NULL == m_pRasterDataset)
+		return FALSE;
+
+	if (!m_bRGB)
+	{
+		if ((1 != lChannelIndex))
+			return FALSE;
+	}
+	else
+	{
+		if ((0 >= lChannelIndex) || (3 < lChannelIndex))
+			return FALSE;
+	}
+
+	lChannelIndex --;
+
+	return m_pRasterDataset->GetChannelLUT(m_ShowBandIndex[lChannelIndex], pbLUT, plNumNodes,pstNodes);
+}
+
+BOOL CRasterRGBRender::SetBandLUT (long lChannelIndex, BYTE *pbLUT, long lNumNodes,GEOMETRY::geom::Coordinate* pstNodes)
+{
+
+	if(NULL == m_pRasterDataset)
+		return FALSE;
+
+	if (!m_bRGB)
+	{
+		if ((1 != lChannelIndex))
+			return FALSE;
+	}
+	else
+	{
+		if ((0 >= lChannelIndex) || (3 < lChannelIndex))
+			return FALSE;
+	}
+
+	lChannelIndex --;
+
+   if(m_pRasterDataset->SetChannelLUT(m_ShowBandIndex[lChannelIndex],pbLUT,lNumNodes,pstNodes))
+   {
+	   return TRUE;
+   }
+   else
+	   return FALSE;
+}
 
 }
 

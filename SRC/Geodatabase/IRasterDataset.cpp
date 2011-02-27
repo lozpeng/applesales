@@ -116,7 +116,29 @@ bool IRasterDataset::DataWriteBand(long lBandlIndex, long lCol, long lRow, long 
 }
 
 
+/*@*****************************获得调色板、LUT等信息的接口*********************************@*/
 
+bool    IRasterDataset::GetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue)
+{
+	return false;
+}
+
+bool	IRasterDataset::SetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue)
+{
+	return false;
+}
+
+bool	IRasterDataset::GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount , GEOMETRY::geom::Coordinate* pstPts )
+{
+	for(int i=0; i<256; ++i)
+		pbLUT[i] = BYTE(i);
+	return true;
+}
+
+bool	IRasterDataset::SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount , GEOMETRY::geom::Coordinate* pstPts )
+{
+	return false;
+}
 
 /*@*****************************金字塔操作相关接口********************************************@*/
 

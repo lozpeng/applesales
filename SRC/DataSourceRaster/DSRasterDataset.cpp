@@ -565,7 +565,28 @@ bool CDSRasterDataset::DataWriteBand(long lBandIndex, long lCol, long lRow, long
 	return true;
 }
 
+/*@*****************************获得调色板、LUT等信息的接口*********************************@*/
 
+bool    CDSRasterDataset::GetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue)
+{
+	return true;
+}
+
+bool	CDSRasterDataset::SetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue)
+{
+	return true;
+}
+
+bool CDSRasterDataset::GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount , GEOMETRY::geom::Coordinate* pstPts )
+{
+	GDALRasterBand* pBand = m_pDataset->GetRasterBand(lChannelIndex);
+	return true;
+}
+
+bool	CDSRasterDataset::SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount , GEOMETRY::geom::Coordinate* pstPts )
+{
+	return true;
+}
 
 
 /*@*****************************金字塔操作相关接口********************************************@*/
