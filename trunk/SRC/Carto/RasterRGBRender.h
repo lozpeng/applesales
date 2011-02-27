@@ -13,6 +13,8 @@ enum COLORTYPE {COLNONE,FULL,RED,GREEN,BLUE,YELLOW,CYAN,MAGENTA};
 
 namespace Carto
 {
+	class CImageProFunction;
+
 	class CARTO_DLL CRasterRGBRender : public IRasterRender
 	{
 	public:
@@ -102,6 +104,25 @@ namespace Carto
 		* 设置当前render的栅格数据源指定波段的LUT表
 		*/
 		BOOL SetBandLUT (long lChannelIndex, BYTE *pbLUT,long lNumNodes = 0,GEOMETRY::geom::Coordinate* pstNodes = NULL);
+	private:
+		/**
+		* 获取打开的图像一个通道的 LUT 信息
+		* @参数lChannelIndex: 波段号
+		* @参数pbLUT:   LUT值
+		* @参数plNodesCount: 节点的数目
+		* @参数pstPts:  节点的坐标
+		* @return 成功返回true,失败返回false
+		*/
+		virtual	bool	GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount = NULL, GEOMETRY::geom::Coordinate* pstPts = NULL);
+		/* 设置打开的图像一个通道的 LUT 信息
+		* @参数lChannelIndex: 波段号
+		* @参数pbLUT:   LUT值
+		* @参数plNodesCount: 节点的数目
+		* @参数pstPts:  节点的坐标
+		* @return 成功返回true,失败返回false
+		*/
+		virtual	bool	SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount = 0, GEOMETRY::geom::Coordinate* pstPts = NULL);
+		void			ApplyImageProFunction(long lBufLen,unsigned char* pChannel1, unsigned char* pChannel2, unsigned char* pChannel3);
 	protected:
 
 		Display::IDisplayPtr m_pDisplay;
@@ -138,6 +159,8 @@ namespace Carto
 
 		unsigned short				m_usBrightness;		//亮度调整值0~100
 		unsigned short				m_usContrastness;	//对比度调整值0~100
+
+		list<CImageProFunction*> mg_lstProFun;
 
 		//直方图调整时的尺度
 		float m_fStandardDeviationScale;
