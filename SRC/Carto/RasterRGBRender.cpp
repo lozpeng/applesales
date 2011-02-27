@@ -63,6 +63,17 @@ namespace Carto
 
 		memset(m_ShowBandIndex,1,sizeof(long)*3);
 
+		m_ppLut = new BYTE*[3];
+		m_nodecount = 256;
+		for (int j=0; j<3; j++)
+		{
+			m_ppLut[j] =new BYTE[256];
+			for (int i=0; i<256; ++i)
+			{
+				m_ppLut[j][i] = i;
+			}
+		}
+
 		m_bRGB = FALSE;
 
 		m_bBackTrans = FALSE;
@@ -103,6 +114,12 @@ namespace Carto
 	}
 	CRasterRGBRender::~CRasterRGBRender(void)
 	{
+		for (int i=0; i<3; ++i)
+		{
+			delete[] m_ppLut[i];
+		}
+		delete []m_ppLut;
+		m_ppLut = NULL;
 		if (NULL != mp_pucBufSrc[0])
 		{
 			delete[] mp_pucBufSrc[0];
@@ -486,7 +503,7 @@ namespace Carto
 
 	lChannelIndex --;
 
-	return m_pRasterDataset->GetChannelLUT(m_ShowBandIndex[lChannelIndex], pbLUT, plNumNodes,pstNodes);
+	return GetChannelLUT(m_ShowBandIndex[lChannelIndex], pbLUT, plNumNodes,pstNodes);
 }
 
 BOOL CRasterRGBRender::SetBandLUT (long lChannelIndex, BYTE *pbLUT, long lNumNodes,GEOMETRY::geom::Coordinate* pstNodes)
@@ -508,7 +525,7 @@ BOOL CRasterRGBRender::SetBandLUT (long lChannelIndex, BYTE *pbLUT, long lNumNod
 
 	lChannelIndex --;
 
-   if(m_pRasterDataset->SetChannelLUT(m_ShowBandIndex[lChannelIndex],pbLUT,lNumNodes,pstNodes))
+   if(SetChannelLUT(m_ShowBandIndex[lChannelIndex],pbLUT,lNumNodes,pstNodes))
    {
 	   return TRUE;
    }
@@ -518,61 +535,38 @@ BOOL CRasterRGBRender::SetBandLUT (long lChannelIndex, BYTE *pbLUT, long lNumNod
 
 bool	CRasterRGBRender::GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount , GEOMETRY::geom::Coordinate* pstPts )
 {
-	//if(!m_pIfe)
-	//{
-	//	return false;
-	//}
-	//
-	//long nodecount;
-	////获取节点数目
-	//if(!m_pIfe->GetChannelLUT(lChannelIndex,pbLUT,&nodecount,NULL))
-	//{
- //      return false;
-	//}
-	//if(plNodesCount)
-	//{
-	//	*plNodesCount =nodecount;
-	//}
+	if(plNodesCount)
+	{
+		*plNodesCount = m_nodecount;
+	}
 
-	//if(pstPts && nodecount>0)
-	//{
+	if(pstPts && m_nodecount>0)
+	{
 
- //       //获取节点坐标
- //       STPoint *points =new STPoint[nodecount];
-	//	if(!m_pIfe->GetChannelLUT(lChannelIndex,pbLUT,&nodecount,points))
-	//	{
-	//		delete []points;
-	//		return false;
-	//	}
-	//	for(long i=0;i<nodecount;i++)
-	//	{
-	//		pstPts[i].x =points[i].x;
-	//		pstPts[i].y =points[i].y;
-	//	}
-
-	//}
-
+        //获取节点坐标
+		for(long i=0;i<m_nodecount;i++)
+		{
+			pstPts[i].x = i;
+			pstPts[i].y = m_ppLut[lChannelIndex][i];
+		}
+	}
 	return true;
 }
 
 bool	CRasterRGBRender::SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount , GEOMETRY::geom::Coordinate* pstPts )
 {
-	/*if(!m_pIfe)
-	{
-	return false;
-	}
-	STPoint *points =NULL;
+	//STPoint *points =NULL;
 	if(lNodesCount>0 && pstPts)
 	{
-	points =new STPoint[lNodesCount];
-	for(long i=0;i<lNodesCount;i++)
-	{
-	points[i].x =pstPts[i].x;
-	points[i].y =pstPts[i].y;
+		for(long i=0;i<lNodesCount;i++)
+		{
+			m_ppLut[lChannelIndex][(int)pstPts[i].x] = pstPts[i].y;
+			/*points[i].x =pstPts[i].x;
+			points[i].y =pstPts[i].y;*/
+		}
+	}
+	/*return m_pIfe->SetChannelLUT(lChannelIndex,pbLUT,lNodesCount,points) ? true:false;*/
 
-	}
-	}
-	return m_pIfe->SetChannelLUT(lChannelIndex,pbLUT,lNodesCount,points) ? true:false;*/
 	return true;
 }
 void CRasterRGBRender::ApplyImageProFunction(long lBufLen,unsigned char* pChannel1, unsigned char* pChannel2, unsigned char* pChannel3)
