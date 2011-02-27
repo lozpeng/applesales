@@ -343,6 +343,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RasterLUTAlgorithm.h"
+				>
+			</File>
+			<File
 				RelativePath=".\RasterRGBRender.h"
 				>
 			</File>

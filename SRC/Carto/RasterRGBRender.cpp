@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "RasterRGBRender.h"
 #include "IRasterDataset.h"
+#include "ImgProFunction.h"
+#include "RasterLUTAlgorithm.h"
 #include "DIB.h"
 
 namespace Carto
@@ -388,6 +390,16 @@ namespace Carto
 
 		if(!m_pDisplay)
 			return FALSE;
+
+		if(mg_lstProFun.size()==0)
+		{
+			CImagePro_LutRollback* m_LutRec=new CImagePro_LutRollback;
+			m_LutRec->m_pRasRender =this;
+			m_LutRec->AddLUTHistroy();
+			m_LutRec->m_AdjustCount = 0;
+			mg_lstProFun.push_back(m_LutRec);	//必须增加到后面，为了支持回退
+		}
+
 		long lcolors =(m_bRGB)?0 :256;
 
 		Display::CDIB dib;
@@ -398,11 +410,31 @@ namespace Carto
 
 			dib.SetPalette(mg_byRed, mg_byGreen, mg_byBlue);
 
+			unsigned char pLut[256];
+			GetChannelLUT(m_ShowBandIndex[0], pLut);
+			ApplyLut(pLut,mp_pucBufSrc[0],mp_pucBufPro[0],mp_lResampleBufferSize);
+
 			dib.SetImgDataBW(1,1,1,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[0]);
 		}
 		else
 		{
 			dib.Create(mp_lResampleWidth,mp_lResampleHeight,lcolors);
+
+			unsigned char pLut[3][256];
+
+			{
+				GetChannelLUT(m_ShowBandIndex[0], pLut[0]);
+				ApplyLut( pLut[0], mp_pucBufSrc[0], mp_pucBufPro[0],mp_lResampleBufferSize);
+
+				GetChannelLUT(m_ShowBandIndex[1], pLut[1]);
+				ApplyLut( pLut[1], mp_pucBufSrc[1], mp_pucBufPro[1],mp_lResampleBufferSize);
+
+				GetChannelLUT(m_ShowBandIndex[2], pLut[2]);
+				ApplyLut( pLut[2], mp_pucBufSrc[2], mp_pucBufPro[2],mp_lResampleBufferSize);
+
+			}
+
+			ApplyImageProFunction(mp_lResampleBufferSize,mp_pucBufPro[0], mp_pucBufPro[1],mp_pucBufPro[2]);
 
 			dib.SetImgDataBW(1,1,1,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[0]);
 
@@ -484,5 +516,76 @@ BOOL CRasterRGBRender::SetBandLUT (long lChannelIndex, BYTE *pbLUT, long lNumNod
 	   return FALSE;
 }
 
+bool	CRasterRGBRender::GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount , GEOMETRY::geom::Coordinate* pstPts )
+{
+	//if(!m_pIfe)
+	//{
+	//	return false;
+	//}
+	//
+	//long nodecount;
+	////获取节点数目
+	//if(!m_pIfe->GetChannelLUT(lChannelIndex,pbLUT,&nodecount,NULL))
+	//{
+ //      return false;
+	//}
+	//if(plNodesCount)
+	//{
+	//	*plNodesCount =nodecount;
+	//}
+
+	//if(pstPts && nodecount>0)
+	//{
+
+ //       //获取节点坐标
+ //       STPoint *points =new STPoint[nodecount];
+	//	if(!m_pIfe->GetChannelLUT(lChannelIndex,pbLUT,&nodecount,points))
+	//	{
+	//		delete []points;
+	//		return false;
+	//	}
+	//	for(long i=0;i<nodecount;i++)
+	//	{
+	//		pstPts[i].x =points[i].x;
+	//		pstPts[i].y =points[i].y;
+	//	}
+
+	//}
+
+	return true;
+}
+
+bool	CRasterRGBRender::SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount , GEOMETRY::geom::Coordinate* pstPts )
+{
+	/*if(!m_pIfe)
+	{
+	return false;
+	}
+	STPoint *points =NULL;
+	if(lNodesCount>0 && pstPts)
+	{
+	points =new STPoint[lNodesCount];
+	for(long i=0;i<lNodesCount;i++)
+	{
+	points[i].x =pstPts[i].x;
+	points[i].y =pstPts[i].y;
+
+	}
+	}
+	return m_pIfe->SetChannelLUT(lChannelIndex,pbLUT,lNodesCount,points) ? true:false;*/
+	return true;
+}
+void CRasterRGBRender::ApplyImageProFunction(long lBufLen,unsigned char* pChannel1, unsigned char* pChannel2, unsigned char* pChannel3)
+{
+	list<CImageProFunction*>::iterator it = mg_lstProFun.begin();
+
+
+	while(it != mg_lstProFun.end())
+	{
+		(*(*it))(lBufLen,pChannel1, pChannel2, pChannel3);
+
+		it++;
+	}
+}
 }
 
