@@ -9,6 +9,8 @@
 #include <list>
 using std::list;
 
+enum COLORTYPE {COLNONE,FULL,RED,GREEN,BLUE,YELLOW,CYAN,MAGENTA};
+
 namespace Carto
 {
 	class CARTO_DLL CRasterRGBRender : public IRasterRender
@@ -90,6 +92,16 @@ namespace Carto
 		* @param RGBType 指定R G B
 		*/
 		void SetPixelInfo(const PIXEL_INFO &pi, unsigned short RGBType/*R - 1 , G - 2 , B - 3 */ );
+	public:
+		/** 
+		* 获得当前render的栅格数据源指定波段的LUT表
+		*/
+		BOOL GetBandLUT (long lChannelIndex, BYTE *pbLUT,long *plNumNodes = NULL,GEOMETRY::geom::Coordinate* pstNodes = NULL);
+
+		/** 
+		* 设置当前render的栅格数据源指定波段的LUT表
+		*/
+		BOOL SetBandLUT (long lChannelIndex, BYTE *pbLUT,long lNumNodes = 0,GEOMETRY::geom::Coordinate* pstNodes = NULL);
 	protected:
 
 		Display::IDisplayPtr m_pDisplay;

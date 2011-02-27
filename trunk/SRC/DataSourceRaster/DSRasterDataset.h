@@ -144,6 +144,47 @@ public:
 	bool DataWriteBand(long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, void *pvBuffer);
 
 
+	/*@*****************************获得调色板、LUT等信息的接口*********************************@*/
+
+	/**
+	* 获取打开的图像一个通道的调色板信息
+	* @参数lChannelIndex: 波段号
+	* @参数pbRed:   调色板红波段的值
+	* @参数pbGreen: 调色板绿波段的值
+	* @参数pbBlue:  调色板蓝波段的值
+	* @return 成功返回true,失败返回false
+	*/
+	virtual	bool    GetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue);
+
+	/**
+	* 设置打开的图像一个通道的调色板信息
+	* @参数lChannelIndex: 波段号
+	* @参数pbRed:   调色板红波段的值
+	* @参数pbGreen: 调色板绿波段的值
+	* @参数pbBlue:  调色板蓝波段的值
+	* @return 成功返回true,失败返回false
+	*/
+	virtual	bool	SetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue);
+
+	/**
+	* 获取打开的图像一个通道的 LUT 信息
+	* @参数lChannelIndex: 波段号
+	* @参数pbLUT:   LUT值
+	* @参数plNodesCount: 节点的数目
+	* @参数pstPts:  节点的坐标
+	* @return 成功返回true,失败返回false
+	*/
+	virtual	bool	GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount = NULL, GEOMETRY::geom::Coordinate* pstPts = NULL);
+
+	/**
+	* 设置打开的图像一个通道的 LUT 信息
+	* @参数lChannelIndex: 波段号
+	* @参数pbLUT:   LUT值
+	* @参数plNodesCount: 节点的数目
+	* @参数pstPts:  节点的坐标
+	* @return 成功返回true,失败返回false
+	*/
+	virtual	bool	SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount = 0, GEOMETRY::geom::Coordinate* pstPts = NULL);
 
 	/*@*****************************金字塔操作相关接口********************************************@*/
 
