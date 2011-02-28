@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -380,11 +380,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\res\toolbar2.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\桌面\toolbar2.bmp"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\桌面\toolbar2.bmp"
+				RelativePath=".\res\toolbar2.bmp"
 				>
 			</File>
 			<File
@@ -396,11 +396,11 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\桌面\viewToolbar.bmp"
+				RelativePath=".\res\viewToolbar.bmp"
 				>
 			</File>
 			<File
-				RelativePath=".\res\viewToolbar.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\桌面\viewToolbar.bmp"
 				>
 			</File>
 			<File
