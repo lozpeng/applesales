@@ -19,13 +19,21 @@
 #define IDB_MAP_TREE                    2012
 #define IDB_MAPTREE_STATE               2013
 #define IDD_PROGRESS_BAR                2014
+#define IDR_MENU1                       2015
+#define IDR_LAYER_MENU                  2015
+#define ID_32771                        32771
+#define ID_ZOOMTO_LAYER                 32772
+#define ID_32773                        32773
+#define ID_32774                        32774
+#define ID_REMOVE_LAYER                 32775
+#define ID_LAYER_PROP                   32776
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2015
-#define _APS_NEXT_COMMAND_VALUE         32771
+#define _APS_NEXT_RESOURCE_VALUE        2016
+#define _APS_NEXT_COMMAND_VALUE         32777
 #define _APS_NEXT_CONTROL_VALUE         2002
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif

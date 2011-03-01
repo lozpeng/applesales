@@ -56,6 +56,10 @@ BEGIN_MESSAGE_MAP(CMaptreeCtrl, CTreeCtrl)
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(TVN_SELCHANGED, &CMaptreeCtrl::OnTvnSelchanged)
 
+	ON_COMMAND(ID_REMOVE_LAYER, &CMaptreeCtrl::OnRemoveLayer)
+	ON_COMMAND(ID_LAYER_PROP, &CMaptreeCtrl::OnLayerProp)
+	ON_COMMAND(ID_ZOOMTO_LAYER, &CMaptreeCtrl::OnZoomToLayer)
+
 END_MESSAGE_MAP()
 
 int CMaptreeCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -93,27 +97,34 @@ void CMaptreeCtrl:: OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 }
 void CMaptreeCtrl:: OnRButtonDown(UINT nFlags, CPoint point)
 {
-
+    CDllResource hdll;
 	SetFocus();
 
-	/*HTREEITEM hHit = NULL;
+	HTREEITEM hHit = NULL;
 	UINT flag;
 
 	hHit = HitTest(point, &flag);
 	if(hHit && (flag & TVHT_ONITEM))
 		SelectItem(hHit);
 
-	CMenu menu;
-	if(!menu.LoadMenu(IDR_MAPTREE_CONTENT_MEMU))
-		return;
-
-	CMenu* pPopup = menu.GetSubMenu(0);
-
-	UpdateMenuStatus(pPopup);
 	
-	CPoint srnPoint = point;
-	ClientToScreen(&srnPoint);
-	pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, srnPoint.x, srnPoint.y, dynamic_cast<CWnd*>(this));*/
+	CMenu menu;
+	if(m_iSelectedItemType==Framework::eLayerItem)
+	{
+		if(!menu.LoadMenu(IDR_LAYER_MENU))
+			return;
+
+		CMenu* pPopup = menu.GetSubMenu(0);
+
+		//UpdateMenuStatus(pPopup);
+
+		CPoint srnPoint = point;
+		ClientToScreen(&srnPoint);
+		pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, srnPoint.x, srnPoint.y, dynamic_cast<CWnd*>(this));
+	}
+
+	
+	
 }
 
 //更新菜单项的状态
@@ -748,7 +759,7 @@ void CMaptreeCtrl:: OnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult)
 }
 void CMaptreeCtrl:: OnContextMenu(CWnd* pWnd, CPoint point)
 {
-	CTreeCtrl::OnContextMenu(pWnd,point);
+	//CTreeCtrl::OnContextMenu(pWnd,point);
 }
 
 //当选择的节点发生改变时
@@ -2094,7 +2105,7 @@ void CMaptreeCtrl::OnMapProp()
 
 }
 
-void CMaptreeCtrl::OnZoomToCurrentLayer()
+void CMaptreeCtrl::OnZoomToLayer()
 {
 	HTREEITEM item =CTreeCtrl::GetSelectedItem();
 	if(!item)
