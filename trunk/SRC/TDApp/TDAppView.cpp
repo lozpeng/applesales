@@ -273,22 +273,22 @@ void CTDAppView::OnOpenImg()
 
 void CTDAppView::OnMapPan()
 {
-	Framework::ITool* pTool = NULL;
-	m_LayoutCtrl.SetCurTool("LayoutPanTool");
-
-	pTool=Framework::ITool::FindTool("LayoutPanTool");
-	if(pTool)
-	{
-		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
-	}
 	//Framework::ITool* pTool = NULL;
-	//m_MapCtrl.SetCurTool("MapPan");
+	//m_LayoutCtrl.SetCurTool("LayoutPanTool");
 
-	//pTool=Framework::ITool::FindTool("MapPan");
+	//pTool=Framework::ITool::FindTool("LayoutPanTool");
 	//if(pTool)
 	//{
-	//	pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	//	pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
 	//}
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("MapPan");
+
+	pTool=Framework::ITool::FindTool("MapPan");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
 }
 
 void CTDAppView::OnUpdateMapPan(CCmdUI* pCmdUI)
