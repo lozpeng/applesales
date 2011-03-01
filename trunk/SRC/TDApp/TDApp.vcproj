@@ -68,7 +68,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="BCGCBPRO1200d80.lib"
+				AdditionalDependencies="BCGCBPRO1200d80.lib Geometryd.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
@@ -152,7 +152,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="BCGCBPRO120080.lib"
+				AdditionalDependencies="BCGCBPRO120080.lib Geometry.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
@@ -380,11 +380,11 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\桌面\toolbar2.bmp"
+				RelativePath=".\res\toolbar2.bmp"
 				>
 			</File>
 			<File
-				RelativePath=".\res\toolbar2.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\桌面\toolbar2.bmp"
 				>
 			</File>
 			<File
@@ -396,11 +396,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\res\viewToolbar.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\桌面\viewToolbar.bmp"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\桌面\viewToolbar.bmp"
+				RelativePath=".\res\viewToolbar.bmp"
 				>
 			</File>
 			<File
