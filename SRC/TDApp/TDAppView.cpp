@@ -13,7 +13,7 @@
 #include "FeatureLayer.h"
 #include "RasterLayer.h"
 #include "RasterWSFactory.h"
-
+#include "ProgressBar.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -44,6 +44,9 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_MAP_ZOOM_IN, OnUpdateMapZoomin)
 	ON_COMMAND(ID_ZOOM_OUT, OnMapZoomout)
 	ON_UPDATE_COMMAND_UI(ID_ZOOM_OUT, OnUpdateMapZoomout)
+	ON_COMMAND(ID_MAP_FULLVIEW, OnMapFullView)
+	
+
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
 	ON_UPDATE_COMMAND_UI(ID_POINT_SELECTFEATURE, OnUpdateSelectFeatureByPoint)
@@ -266,6 +269,7 @@ void CTDAppView::OnOpenImg()
 		fileName = dlg.GetPathName(); 
 	else
 		return;
+	//Control::CProgressBar *pbar =new Control::CProgressBar();
 	this->GetDocument()->LoadImageFile(fileName);
 	m_MapCtrl.UpdateControl(drawAll);
 }
@@ -329,6 +333,21 @@ void CTDAppView::OnMapZoomout()
 void CTDAppView::OnUpdateMapZoomout(CCmdUI* pCmdUI)
 {
     pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomout");
+}
+
+//È«Í¼ÏÔÊ¾
+void CTDAppView::OnMapFullView()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		return;
+	}
+	GEOMETRY::geom::Envelope env = pMap->GetExtent();
+
+	pMap->GetDisplay()->GetDisplayTransformation().FitViewBound(env);
+
+	m_MapCtrl.UpdateControl(drawAll);
 }
 
 
