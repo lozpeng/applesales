@@ -104,9 +104,11 @@ public:
 
 	afx_msg void OnMapProp();
 
-	afx_msg void OnZoomToCurrentLayer();
+	afx_msg void OnZoomToLayer();
 
 	BOOL SetItemState( HTREEITEM hItem, UINT nState, UINT nStateMask, BOOL bSearch=TRUE);
+
+
 
 
 private:

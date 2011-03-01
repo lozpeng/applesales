@@ -153,6 +153,22 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_LAYER_MENU MENU 
+BEGIN
+    POPUP "图层"
+    BEGIN
+        MENUITEM "缩放到图层",                       ID_ZOOMTO_LAYER
+        MENUITEM "删除图层",                        ID_REMOVE_LAYER
+        MENUITEM "图层属性",                        ID_LAYER_PROP
+    END
+END
+
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
