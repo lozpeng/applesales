@@ -2,38 +2,30 @@
 #include "SketchTool.h"
 #include "IMapCtrl.h"
 
-#include "EditorRes.h"
 #include "resource.h"
 
 namespace Editor
 {
 
-static CActionSketch gActionSketch;
+static CSketchTool gSketchTool;
 
-CActionSketch::CActionSketch() : ITool("ActionSketch")
+CSketchTool::CSketchTool() : ITool("ActionSketch")
 {
-	RegisterAction("ActionSketch",this);
+	
 }
 
-CActionSketch::~CActionSketch()
+CSketchTool::~CSketchTool()
 {
 
 } 
 
-void CActionSketch::Triger()
+	//初始化
+void CSketchTool::Initialize(Framework::IUIObject *pTargetControl)
 {
-	//获取活动地图控件
-	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
-	if(!pMapCtrl)
-		return;
-
-	//设置光标类型
-	pMapCtrl->SetCursorType(cursorNormal);
-
-	IAction::Initialize();
+	ITool::Initialize(pTargetControl);
 }
 
-void CActionSketch::LButtonDownEvent (UINT nFlags, CPoint point)
+void CSketchTool::LButtonDownEvent (UINT nFlags, CPoint point)
 {
 	//获取活动地图控件
 	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -41,27 +33,27 @@ void CActionSketch::LButtonDownEvent (UINT nFlags, CPoint point)
 		return;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return;
 
-	Editor::CEditorPtr pEdit =pMap->GetEditor();
-	if(!pEdit)
-	{
-		return;
-	}
+	//Editor::CEditorPtr pEdit =pMap->GetEditor();
+	//if(!pEdit)
+	//{
+	//	return;
+	//}
 
 	//设置编辑空间的状态
-	pEdit->SetbSketch(true);
+	//pEdit->SetbSketch(true);
 
-	pEdit->SetbEditFeature(false);
+	//pEdit->SetbEditFeature(false);
 
-	pEdit->SetbEditVertex(true);
+	//pEdit->SetbEditVertex(true);
 
-	TT_GEOMETRY::geom::Coordinate inPt,outPt;
+	GEOMETRY::geom::Coordinate inPt,outPt;
 	pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x,point.y,inPt);
 
-	pEdit->Snap(inPt,outPt);
+	//pEdit->Snap(inPt,outPt);
 
     CPoint  cpt;
 	pMap->GetDisplay()->GetDisplayTransformation().ConvertGeoToDisplay(outPt.x,outPt.y,cpt.x,cpt.y);
@@ -70,7 +62,7 @@ void CActionSketch::LButtonDownEvent (UINT nFlags, CPoint point)
 
 	if(cpt!=m_clickPt)
 	{
-		pEdit->AddSketchPoint(outPt);
+		//pEdit->AddSketchPoint(outPt);
 
 		pMapCtrl->UpdateControl(drawEdit);
 
@@ -79,7 +71,7 @@ void CActionSketch::LButtonDownEvent (UINT nFlags, CPoint point)
 
 }
 
-void CActionSketch::MouseMoveEvent (UINT nFlags, CPoint point)
+void CSketchTool::MouseMoveEvent (UINT nFlags, CPoint point)
 {
 
 	//获取活动地图控件
@@ -88,32 +80,32 @@ void CActionSketch::MouseMoveEvent (UINT nFlags, CPoint point)
 		return;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return;
 
-	Editor::CEditorPtr pEdit =pMap->GetEditor();
-	if(!pEdit)
-	{
-		return;
-	}
-	TT_GEOMETRY::geom::Coordinate inPt,outPt;
+	//Editor::CEditorPtr pEdit =pMap->GetEditor();
+	//if(!pEdit)
+	//{
+	//	return;
+	//}
+	GEOMETRY::geom::Coordinate inPt,outPt;
 	pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x,point.y,inPt);
 
-	pEdit->Snap(inPt,outPt);
+	//pEdit->Snap(inPt,outPt);
 
 	pMapCtrl->UpdateControl(drawEdit);
 
 
 }
 
-void CActionSketch::LButtonUpEvent (UINT nFlags, CPoint point)
+void CSketchTool::LButtonUpEvent (UINT nFlags, CPoint point)
 {
 
 
 }
 
-void CActionSketch::LButtonDblClkEvent(UINT nFlags, CPoint point)
+void CSketchTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 {
 	//获取活动地图控件
 	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -121,31 +113,31 @@ void CActionSketch::LButtonDblClkEvent(UINT nFlags, CPoint point)
 		return;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return;
 
-	Editor::CEditorPtr pEdit =pMap->GetEditor();
-	if(!pEdit)
-	{
-		return;
-	}
+	//Editor::CEditorPtr pEdit =pMap->GetEditor();
+	//if(!pEdit)
+	//{
+	//	return;
+	//}
 
 	//结束绘制
-	pEdit->FinishSketch();
+	//pEdit->FinishSketch();
 
     m_clickPt.x =-1;
 	m_clickPt.y =-1;
 }
 
-void CActionSketch::RButtonDownEvent(UINT nFlags, CPoint point)
+void CSketchTool::RButtonDownEvent(UINT nFlags, CPoint point)
 {
 	//获取活动地图控件
 	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
 	if(!pMapCtrl)
 		return;
 
-	CWnd* pWnd =dynamic_cast<CWnd*>(pMapCtrl);
+	/*CWnd* pWnd =dynamic_cast<CWnd*>(pMapCtrl);
 	if(!pWnd)
 	{
 		return;
@@ -164,7 +156,7 @@ void CActionSketch::RButtonDownEvent(UINT nFlags, CPoint point)
 			pWnd->ClientToScreen(&srnPoint);
 			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON,srnPoint.x,srnPoint.y,pWnd);
 		}
-	}
+	}*/
 }
 
 }

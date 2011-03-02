@@ -8,11 +8,11 @@
 namespace Editor
 {
 
-	class CActionEditDrawCircle: public Framework::ITool
+	class CEditDrawCircleTool: public Framework::ITool
 	{
 	public:
-		CActionEditDrawCircle(void);
-		virtual ~CActionEditDrawCircle(void);
+		CEditDrawCircleTool(void);
+		virtual ~CEditDrawCircleTool(void);
 
 	public:
 		//≥ı ºªØ

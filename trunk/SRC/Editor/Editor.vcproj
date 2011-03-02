@@ -267,6 +267,14 @@
 				RelativePath=".\Tool\EditDrawCircleTool.h"
 				>
 			</File>
+			<File
+				RelativePath=".\Tool\SketchTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\SketchTool.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

@@ -10,7 +10,6 @@
 #include "ILayer.h"
 #include "IGeoDataObject.h"
 #include "IWorkspace.h"
-//#include "TT_Shape.hxx"
 #include <Geometry/geom/GeometryFactory.h>
 #include <Geometry/geom/Geometry.h>
 #include <Geometry/geom/Coordinate.h>
@@ -20,24 +19,24 @@
 namespace Editor
 {
 
-	static CActionEditDrawCircle gActionEditDrawCircle;
+	static CEditDrawCircleTool gEditDrawCircleTool;
 
-	CActionEditDrawCircle::CActionEditDrawCircle(void) : ITool("ActionEditDrawCircle")
+	CEditDrawCircleTool::CEditDrawCircleTool(void) : ITool("ActionEditDrawCircle")
 	{
 		
 	}
 
-	CActionEditDrawCircle::~CActionEditDrawCircle(void)
+	CEditDrawCircleTool::~CEditDrawCircleTool(void)
 	{
 
 	}
 
 	//初始化
-	void CActionEditDrawCircle::Initialize(Framework::IUIObject *pTargetControl)
+	void CEditDrawCircleTool::Initialize(Framework::IUIObject *pTargetControl)
 	{
 		ITool::Initialize(pTargetControl);
 	}
-	void CActionEditDrawCircle::LButtonDownEvent(UINT nFlags, CPoint point)
+	void CEditDrawCircleTool::LButtonDownEvent(UINT nFlags, CPoint point)
 	{
 		if (!m_bStartDraw)
 		{
@@ -57,7 +56,7 @@ namespace Editor
 		}
 	}
 
-	void CActionEditDrawCircle::MouseMoveEvent(UINT nFlags, CPoint point)
+	void CEditDrawCircleTool::MouseMoveEvent(UINT nFlags, CPoint point)
 	{	
 		if (m_bStartDraw)
 		{
@@ -68,7 +67,7 @@ namespace Editor
 	}
 
 	/*--------------------将绘制的矩形添加到目标图层中---------------------*/
-	void CActionEditDrawCircle::AddCircle(void)
+	void CEditDrawCircleTool::AddCircle(void)
 	{
 		//获取活动地图控件
 		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -176,7 +175,7 @@ namespace Editor
 	}
 
 	/*--------------------在空间上绘制临时图形---------------------*/
-	void CActionEditDrawCircle::ActionDraw()
+	void CEditDrawCircleTool::ActionDraw()
 	{
 		//获取活动地图控件
 		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -230,7 +229,7 @@ namespace Editor
 	}
 
 	/*--------------------------将圆形打断----------------------------*/
-	void CActionEditDrawCircle::SplitCircle(GEOMETRY::geom::Geometry *pGeometry)
+	void CEditDrawCircleTool::SplitCircle(GEOMETRY::geom::Geometry *pGeometry)
 	{
 		//CttShape cShape;
 		//cShape.Create();
