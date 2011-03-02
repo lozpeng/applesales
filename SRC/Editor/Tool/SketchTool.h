@@ -1,26 +1,26 @@
-#ifndef _ACTION_SKETCH_H_
-#define _ACTION_SKETCH_H_
+#ifndef _SKETCH_H_TOOL_
+#define _SKETCH_H_TOOL_
 
 #include "ITool.h"
 
 namespace Editor
 {
 
-class  CActionSketch : public Framework::ITool
+class  CSketchTool : public Framework::ITool
 {
 public:
-	CActionSketch();
-	~CActionSketch();
+	CSketchTool();
+	~CSketchTool();
 
 
 public:
-	void Triger();
+	//≥ı ºªØ
+		
+	void Initialize(Framework::IUIObject *pTargetControl);
 	void LButtonDownEvent (UINT nFlags, CPoint point);
 	void MouseMoveEvent (UINT nFlags, CPoint point);
 	void LButtonUpEvent (UINT nFlags, CPoint point);
-
 	void LButtonDblClkEvent (UINT nFlags, CPoint point);
-
 	void RButtonDownEvent (UINT nFlags, CPoint point);
 
 private:
