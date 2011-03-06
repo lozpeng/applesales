@@ -48,6 +48,8 @@ public:
 
 	DIS_BOUND GetViewBound(){return m_displayBound;};
 
+	GEOMETRY::geom::Envelope GetViewExtent();
+
 private:
 	double	m_dScale;/** 像素比例尺（不考虑单位：地理范围数量/像素数量,一个像素对应一个地图单位）*/
 	double  m_dMapScale;/** 地图比例尺（考虑单位：（地理范围数量*mm/mapUnit）/（像素数量*mm/pixelUnit））*/
@@ -312,6 +314,18 @@ public:
 	*/
 	void GetGeoWideOfCurrentView( double &minX , double &minY , double &maxX , double &maxY );
 
+	//前视图
+	void SetPreExtent();
+
+	//后视图
+	void SetNextExtent();
+
+	bool HasPreExtent();
+
+	bool HasNextExtent();
+
+
+    void RecordCurExtent(GEOMETRY::geom::Envelope& extent);
 
 protected:
 
@@ -323,12 +337,21 @@ protected:
 
 	void ConvertGeoToDisplay( const std::vector<GEOMETRY::geom::Coordinate> &cs , INT_POINT *pts , unsigned long &UseCount);
 
+	//将堆栈中位于游标之后的记录清除
+	void RemoveStack();
+
+	
+
 protected:
 	//世界坐标的单位
 	SYSTEM::SYS_UNIT_TYPE m_unit;
 	//参考比例尺
 	double	  m_referenceScale;
 	VIEW_POSITION m_viewPositon;
+
+	//视图范围的堆栈，默认保存20个范围
+	std::vector<GEOMETRY::geom::Envelope> m_ViewStack;
+	int m_curpos;
 };
 
 }
