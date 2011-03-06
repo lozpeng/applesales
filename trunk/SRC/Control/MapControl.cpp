@@ -426,7 +426,12 @@ void CMapControl::OnTimer(UINT_PTR nIDEvent)
 	
 		m_pGeoMap->GetDisplay()->GetDisplayTransformation().ZoomToFixScale(m_dblScale);
 
-		UpdateControl(drawAll);			
+		UpdateControl(drawAll);
+
+		//¼ÇÂ¼ÊÓÍ¼·¶Î§
+		GEOMETRY::geom::Envelope curExtent;
+		m_pGeoMap->GetDisplay()->GetDisplayTransformation().GetGeoBound(curExtent);
+		m_pGeoMap->GetDisplay()->GetDisplayTransformation().RecordCurExtent(curExtent);
 		
 		KillTimer(1);	
 		m_bTimer = false;
