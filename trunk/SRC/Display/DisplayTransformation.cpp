@@ -29,12 +29,31 @@ VIEW_POSITION* VIEW_POSITION::operator =(const VIEW_POSITION& pos)
 	return this;
 }
 
+GEOMETRY::geom::Envelope VIEW_POSITION::GetViewExtent()
+{
+    GEOMETRY::geom::Envelope extent;
+
+	double lHeight = m_displayBound.bottom-m_displayBound.top;
+	double lWidth = m_displayBound.right-m_displayBound.left;
+	
+	double minx,miny,maxx,maxy;
+	minx =m_dGeoCenterX-lWidth/2*m_dScale;
+	maxx =m_dGeoCenterX+lWidth/2*m_dScale;
+	miny =m_dGeoCenterY-lHeight/2*m_dScale;
+	maxy =m_dGeoCenterY+lHeight/2*m_dScale;
+
+	extent.init(minx,maxx,miny,maxy);
+
+	return extent;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 CDisplayTransformation::CDisplayTransformation()
 {
 	m_referenceScale = 0;
 	m_unit = SYSTEM::SYS_UNIT_METER;
+	m_curpos =-1;
 }
 
 
@@ -1327,6 +1346,80 @@ void CDisplayTransformation::UpdateViewPosScale(double dblScale)
 	m_viewPositon.m_dScale = dblScale;
 
 	gCallbackChangeViewPos(m_viewPositon);
+}
+
+bool CDisplayTransformation::HasPreExtent()
+{
+   if(m_ViewStack.empty())
+   {
+	   return false;
+   }
+   if(m_curpos<=0)
+   {
+	   return false;
+   }
+   return true;
+
+}
+
+bool CDisplayTransformation::HasNextExtent()
+{
+	if(m_ViewStack.empty())
+	{
+		return false;
+	}
+	long num =m_ViewStack.size();
+
+	return (m_curpos<(num-1));
+}
+
+void CDisplayTransformation::RemoveStack()
+{
+	if(m_curpos!=(m_ViewStack.size()-1))
+	{
+		int lstart =(m_curpos>=-1) ?(m_curpos+1) :0;
+
+		m_ViewStack.erase(m_ViewStack.begin()+lstart,m_ViewStack.end());
+	}
+}
+
+void CDisplayTransformation::SetPreExtent()
+{
+    if(!HasPreExtent())
+	{
+		return;
+	}
+	m_curpos--;
+	FitViewBound(m_ViewStack[m_curpos]);
+	
+}
+
+void CDisplayTransformation::SetNextExtent()
+{
+	if(!HasNextExtent())
+	{
+		return;
+	}
+	m_curpos++;
+	FitViewBound(m_ViewStack[m_curpos]);
+
+}
+
+void CDisplayTransformation::RecordCurExtent(GEOMETRY::geom::Envelope& extent)
+{
+    RemoveStack();
+	if(m_ViewStack.size()>19)
+	{
+		while(m_ViewStack.size()>19)
+		{
+            m_ViewStack.erase(m_ViewStack.begin());
+		}
+		m_curpos =m_ViewStack.size()-1;
+	}
+
+	//如果是第一条记录，则将之前的范围加入
+    m_ViewStack.push_back(extent);
+    m_curpos =m_ViewStack.size()-1;
 }
 
 

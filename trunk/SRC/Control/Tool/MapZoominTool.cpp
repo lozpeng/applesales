@@ -98,6 +98,11 @@ void CToolMapZoomin::LButtonDownEvent (UINT nFlags, CPoint point)
 	}
 	m_pMapCtrl->UpdateControl(drawAll);
 
+	//¼ÇÂ¼·¶Î§
+    GEOMETRY::geom::Envelope curExtent;
+    pMap->GetDisplay()->GetDisplayTransformation().GetGeoBound(curExtent);
+    pMap->GetDisplay()->GetDisplayTransformation().RecordCurExtent(curExtent);
+
 }
 
 }

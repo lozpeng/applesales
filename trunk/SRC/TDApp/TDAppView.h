@@ -70,6 +70,13 @@ public:
 
 	afx_msg void OnMapFullView();
 
+	//前视图，后视图
+	afx_msg void OnMapPreExtent();
+	afx_msg void OnUpdateMapPreExtent(CCmdUI* pCmdUI);
+
+	afx_msg void OnMapNextExtent();
+	afx_msg void OnUpdateMapNextExtent(CCmdUI* pCmdUI);
+
 	afx_msg void OnSelectFeatureByPoint();
 	afx_msg void OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI);
 

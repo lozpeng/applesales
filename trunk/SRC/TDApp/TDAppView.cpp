@@ -45,6 +45,11 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_ZOOM_OUT, OnMapZoomout)
 	ON_UPDATE_COMMAND_UI(ID_ZOOM_OUT, OnUpdateMapZoomout)
 	ON_COMMAND(ID_MAP_FULLVIEW, OnMapFullView)
+
+	ON_COMMAND(ID_PRE_EXTENT, OnMapPreExtent)
+	ON_UPDATE_COMMAND_UI(ID_PRE_EXTENT, OnUpdateMapPreExtent)
+	ON_COMMAND(ID_NEXT_EXTENT, OnMapNextExtent)
+	ON_UPDATE_COMMAND_UI(ID_NEXT_EXTENT, OnUpdateMapNextExtent)
 	
 
 
@@ -333,6 +338,48 @@ void CTDAppView::OnMapZoomout()
 void CTDAppView::OnUpdateMapZoomout(CCmdUI* pCmdUI)
 {
     pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomout");
+}
+
+void CTDAppView::OnMapPreExtent()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		return;
+	}
+	pMap->GetDisplay()->GetDisplayTransformation().SetPreExtent();
+	m_MapCtrl.UpdateControl(drawAll);
+}
+
+void CTDAppView::OnUpdateMapPreExtent(CCmdUI* pCmdUI)
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	pCmdUI->Enable(pMap->GetDisplay()->GetDisplayTransformation().HasPreExtent());
+}
+
+void CTDAppView::OnMapNextExtent()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		return;
+	}
+	pMap->GetDisplay()->GetDisplayTransformation().SetNextExtent();
+	m_MapCtrl.UpdateControl(drawAll);
+}
+
+void CTDAppView::OnUpdateMapNextExtent(CCmdUI* pCmdUI)
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	pCmdUI->Enable(pMap->GetDisplay()->GetDisplayTransformation().HasNextExtent());
 }
 
 //È«Í¼ÏÔÊ¾
