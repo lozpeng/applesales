@@ -14,6 +14,7 @@
 #include "RasterLayer.h"
 #include "RasterWSFactory.h"
 #include "ProgressBar.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -55,6 +56,16 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
 	ON_UPDATE_COMMAND_UI(ID_POINT_SELECTFEATURE, OnUpdateSelectFeatureByPoint)
+
+	ON_COMMAND(ID_CURRLAYER_COMBO, OnCurrLayerCombo)
+
+	//调整
+	ON_COMMAND(ID_BRIGHT_RESTORE, OnBrightRestore)
+	ON_COMMAND(ID_BRIGHT_SLIDER, OnBrightSlider)
+	ON_COMMAND(ID_CONTRAST_RESTORE, OnContrastRestore)
+	ON_COMMAND(ID_CONTRAST_SLIDER, OnContrastSlider)
+	ON_COMMAND(ID_TRANSPARENT_RESTORE, OnTransparentRestore)
+	ON_COMMAND(ID_TRANSPARENT_SLIDER, OnTransparentSlider)
 
 	//标绘工具
 
@@ -236,6 +247,12 @@ CTDAppDoc* CTDAppView::GetDocument() const // non-debug version is inline
 
 #endif //_DEBUG
 
+CBCGPRibbonComboBox* CTDAppView::GetCurLyrCombox()
+{
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonComboBox* pCombox = (CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID(ID_CURRLAYER_COMBO);
+	return pCombox;
+}
 
 // CTDAppView message handlers
 
@@ -263,6 +280,7 @@ void CTDAppView::OnOpenVector()
 	
 	this->GetDocument()->LoadShpFile(fileName);
 	m_MapCtrl.UpdateControl(drawAll);
+	RefreshLayerCombo();
 }
 
 void CTDAppView::OnOpenImg()
@@ -277,6 +295,7 @@ void CTDAppView::OnOpenImg()
 	//Control::CProgressBar *pbar =new Control::CProgressBar();
 	this->GetDocument()->LoadImageFile(fileName);
 	m_MapCtrl.UpdateControl(drawAll);
+	RefreshLayerCombo();
 }
 
 
@@ -613,6 +632,39 @@ void CTDAppView::OnSelectFeatureByPoint()
 	if(pTool)
 	{
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+
+void CTDAppView::OnCurrLayerCombo()
+{
+}
+void CTDAppView::OnBrightRestore()
+{
+}
+void CTDAppView::OnContrastRestore()
+{
+}
+void CTDAppView::OnTransparentRestore()
+{
+}
+void CTDAppView::OnBrightSlider()
+{
+}
+void CTDAppView::OnContrastSlider()
+{
+}
+void CTDAppView::OnTransparentSlider()
+{
+}
+void CTDAppView::RefreshLayerCombo()
+{
+	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
+	GetCurLyrCombox()->RemoveAllItems();
+	for (int i=0; i<nSize; ++i)
+	{
+		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(i);
+		std::string strName = pLayer->GetName();
+		GetCurLyrCombox()->AddItem(strName.c_str());
 	}
 }
 
