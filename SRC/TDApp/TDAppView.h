@@ -17,7 +17,8 @@ public:
 
 // Operations
 public:
-
+	//获得当前图层下拉列表按钮
+	CBCGPRibbonComboBox* GetCurLyrCombox();
 // Overrides
 	public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
@@ -80,8 +81,16 @@ public:
 	afx_msg void OnSelectFeatureByPoint();
 	afx_msg void OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI);
 
-
-
+	//
+	afx_msg void OnCurrLayerCombo();
+	void		RefreshLayerCombo();
+	afx_msg void OnBrightRestore();
+	afx_msg void OnContrastRestore();
+	afx_msg void OnTransparentRestore();
+	afx_msg void OnBrightSlider();
+	afx_msg void OnContrastSlider();
+	afx_msg void OnTransparentSlider();
+	
 	//标绘
 	afx_msg void OnDrawSelect();
 	afx_msg void OnUpdateDrawSelect(CCmdUI* pCmdUI);
