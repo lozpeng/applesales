@@ -13,6 +13,7 @@
 #include "FeatureLayer.h"
 #include "RasterLayer.h"
 #include "RasterWSFactory.h"
+#include "RasterRGBRender.h"
 #include "ProgressBar.h"
 #include "MainFrm.h"
 
@@ -642,7 +643,15 @@ void CTDAppView::OnSelectFeatureByPoint()
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	}
 }
-
+Carto::ILayerPtr CTDAppView::GetComboLayer()
+{
+	int nSel = GetCurLyrCombox()->GetCurSel();
+	if (nSel >=0)
+	{
+		return m_MapCtrl.GetMap()->GetLayers().GetAt(nSel);
+	}
+	return NULL;
+}
 void CTDAppView::OnCurrLayerCombo()
 {
 }
@@ -657,11 +666,61 @@ void CTDAppView::OnTransparentRestore()
 }
 void CTDAppView::OnBrightSlider()
 {
-}
-void CTDAppView::OnContrastSlider()
-{
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonSlider* pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_BRIGHT_SLIDER));
+	ASSERT_VALID (pSlider);
+	int nBrightPos = pSlider->GetPos();
+
+	pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_CONTRAST_SLIDER));
+	ASSERT_VALID (pSlider);
+	int nPos = pSlider->GetPos();
+
+	Carto::CRasterLayerPtr layer = Carto::CRasterLayerPtr(GetComboLayer());
+	Carto::IRasterRenderPtr pRender = layer->GetRender();
+	if(!pRender)
+		return;
+	Carto::CRasterRGBRender* pRGBRender =  dynamic_cast<Carto::CRasterRGBRender*>(pRender.get());
+	long RChannel=pRGBRender->GetRedBandIndex();
+	long GChannel=pRGBRender->GetGreenBandIndex();
+	long BChannel=pRGBRender->GetBlueBandIndex();
+	BYTE *srcRLUT = new BYTE[256];
+	BYTE *srcGLUT = new BYTE[256];
+	BYTE *srcBLUT = new BYTE[256];
+	pRGBRender->GetBandLUT(RChannel, srcRLUT);
+	pRGBRender->GetBandLUT(GChannel, srcGLUT);
+	pRGBRender->GetBandLUT(BChannel, srcBLUT);
+	if (pRGBRender->GetRGBMode())
+	{
+		pRGBRender->SetBrightAndContrast(srcRLUT,srcGLUT,srcBLUT,nBrightPos,nPos);
+	}
+	else
+	{
+		pRGBRender->SetBrightAndContrast(srcRLUT,nBrightPos,nPos);
+	}
+	if(srcRLUT != NULL)
+	{
+		delete []srcRLUT;
+		srcRLUT = NULL;
+
+	}
+	if(srcGLUT != NULL)
+	{
+		delete []srcGLUT;
+		srcGLUT = NULL;
+
+	}
+	if(srcBLUT != NULL)
+	{
+		delete []srcBLUT;
+		srcBLUT = NULL;
+	}
+	m_MapCtrl.UpdateControl(drawAll);
+	UpdateData(FALSE);
 }
 void CTDAppView::OnTransparentSlider()
+{
+}
+void CTDAppView::OnContrastSlider()
 {
 }
 void CTDAppView::OnUpdateBrightRestore(CCmdUI* pCmdUI)

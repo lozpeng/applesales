@@ -123,6 +123,22 @@ namespace Carto
 		*/
 		virtual	bool	SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount = 0, GEOMETRY::geom::Coordinate* pstPts = NULL);
 		void			ApplyImageProFunction(long lBufLen,unsigned char* pChannel1, unsigned char* pChannel2, unsigned char* pChannel3);
+	public:
+		/** 
+		* 真彩色影像调整亮度和对比度（该算法需要同时传递当前的亮度、对比度调整幅度值）
+		*  @param brightVal     亮度调整幅度值
+		*  @param contrastVal   对比度调整幅度值
+		*  @param srcRLUT,srcGLUT,srcBLUT 影像原始LUT
+		*/
+		void SetBrightAndContrast(BYTE *srcRLUT,BYTE *srcGLUT,BYTE *srcBLUT,int brightVal,int contrastVal);
+
+		/** 
+		* 全色影像调整亮度和对比度（该算法需要同时传递当前的亮度、对比度调整幅度值）
+		*  @param brightVal     亮度调整幅度值
+		*  @param contrastVal   对比度调整幅度值
+		*  @param srcLUT 影像原始LUT
+		*/
+		void SetBrightAndContrast(BYTE *srcLUT,int brightVal,int contrastVal);
 	private:
 		BYTE**			m_ppLut;
 		long			m_nodecount;

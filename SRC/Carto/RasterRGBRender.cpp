@@ -581,5 +581,108 @@ void CRasterRGBRender::ApplyImageProFunction(long lBufLen,unsigned char* pChanne
 		it++;
 	}
 }
+void CRasterRGBRender::SetBrightAndContrast(BYTE *srcRLUT,BYTE *srcGLUT,BYTE *srcBLUT,int brightVal,int contrastVal)
+{
+	if (brightVal == 50 && contrastVal ==50)
+		return;
+	
+	long rChannel,gChannel,bChannel;
+
+	rChannel=GetRedBandIndex();
+	gChannel=GetGreenBandIndex();
+	bChannel=GetBlueBandIndex();
+	
+	//计算调整后的LUT
+
+	brightVal -= 50;
+	contrastVal -=50;
+
+	double realConVal;  //实际用于调整的对比度幅度值
+
+	if(contrastVal < 0)
+		realConVal = 1.0 + contrastVal/200.0;
+	else
+		realConVal = 1.0 + contrastVal/100.0;
+
+	int pMidBriCon = int(brightVal-127*realConVal + 127);
+
+	int iValue;
+	BYTE dispRLUT[256],dispGLUT[256],dispBLUT[256];
+
+	for( int i = 0; i< 256; i++)
+	{	
+		iValue = int(srcRLUT[i]*realConVal + pMidBriCon); 
+
+		if(iValue > 255)
+			dispRLUT[i] = 255;
+		else if(iValue < 0)
+			dispRLUT[i] = 0;
+		else
+			dispRLUT[i] = iValue;			
+
+		iValue = int(srcGLUT[i]*realConVal + pMidBriCon); 
+
+		if(iValue > 255)
+			dispGLUT[i] = 255;
+		else if(iValue < 0)
+			dispGLUT[i] = 0;
+		else
+			dispGLUT[i] = iValue;	
+
+		iValue = int(srcBLUT[i]*realConVal + pMidBriCon); 
+
+		if(iValue > 255)
+			dispBLUT[i] = 255;
+		else if(iValue < 0)
+			dispBLUT[i] = 0;
+		else
+			dispBLUT[i] = iValue;
+
+	}
+
+	SetBandLUT(rChannel,dispRLUT);
+	SetBandLUT(gChannel,dispGLUT);
+	SetBandLUT(bChannel,dispBLUT);
+
+}
+
+void CRasterRGBRender::SetBrightAndContrast(BYTE *srcLUT,int brightVal,int contrastVal)
+{
+	if (brightVal == 50 && contrastVal ==50)
+		return;	
+
+	//计算调整后的LUT
+
+	brightVal -= 50;
+	contrastVal -=50;
+
+	double realConVal;  //实际用于调整的对比度幅度值
+
+	if(contrastVal < 0)
+		realConVal = 1.0 + contrastVal/200.0;
+	else
+		realConVal = 1.0 + contrastVal/100.0;
+
+	int pMidBriCon = int(brightVal-127*realConVal + 127);
+
+	int iValue;
+	BYTE dispLUT[256];
+
+	for( int i = 0; i< 256; i++)
+	{	
+		iValue = int(srcLUT[i]*realConVal + pMidBriCon); 
+
+		if(iValue > 255)
+			dispLUT[i] = 255;
+		else if(iValue < 0)
+			dispLUT[i] = 0;
+		else
+			dispLUT[i] = iValue;
+	}
+
+	SetBandLUT(1,dispLUT);
+
+}
+
 }
 
