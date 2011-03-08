@@ -185,7 +185,7 @@ public:
 	* @参数pstPts:  节点的坐标
 	* @return 成功返回true,失败返回false
 	*/
-	virtual	bool	GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount = NULL, GEOMETRY::geom::Coordinate* pstPts = NULL);
+	virtual	bool	GetChannelLUT(long lChannelIndex, BYTE *&pbLUT, long *plNodesCount = NULL, GEOMETRY::geom::Coordinate* pstPts = NULL);
 
 	/**
 	* 设置打开的图像一个通道的 LUT 信息

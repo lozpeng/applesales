@@ -98,7 +98,7 @@ namespace Carto
 		/** 
 		* 获得当前render的栅格数据源指定波段的LUT表
 		*/
-		BOOL GetBandLUT (long lChannelIndex, BYTE *pbLUT,long *plNumNodes = NULL,GEOMETRY::geom::Coordinate* pstNodes = NULL);
+		BOOL GetBandLUT (long lChannelIndex, BYTE *&pbLUT,long *plNumNodes = NULL,GEOMETRY::geom::Coordinate* pstNodes = NULL);
 
 		/** 
 		* 设置当前render的栅格数据源指定波段的LUT表
@@ -113,7 +113,7 @@ namespace Carto
 		* @参数pstPts:  节点的坐标
 		* @return 成功返回true,失败返回false
 		*/
-		virtual	bool	GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount = NULL, GEOMETRY::geom::Coordinate* pstPts = NULL);
+		virtual	bool	GetChannelLUT(long lChannelIndex, BYTE *&pbLUT, long *plNodesCount = NULL, GEOMETRY::geom::Coordinate* pstPts = NULL);
 		/* 设置打开的图像一个通道的 LUT 信息
 		* @参数lChannelIndex: 波段号
 		* @参数pbLUT:   LUT值

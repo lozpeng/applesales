@@ -128,7 +128,7 @@ bool	IRasterDataset::SetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pb
 	return false;
 }
 
-bool	IRasterDataset::GetChannelLUT(long lChannelIndex, BYTE *pbLUT, long *plNodesCount , GEOMETRY::geom::Coordinate* pstPts )
+bool	IRasterDataset::GetChannelLUT(long lChannelIndex, BYTE *&pbLUT, long *plNodesCount , GEOMETRY::geom::Coordinate* pstPts )
 {
 	for(int i=0; i<256; ++i)
 		pbLUT[i] = BYTE(i);
