@@ -665,6 +665,15 @@ void CTDAppView::OnTransparentRestore()
 void CTDAppView::OnBrightSlider()
 {
 	BrightContrast();
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonSlider* pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_BRIGHT_SLIDER));
+	ASSERT_VALID (pSlider);
+	int nPos = pSlider->GetPos();
+	CString str;
+	str.Format("%d", nPos);
+	CBCGPRibbonEdit* pZoom = DYNAMIC_DOWNCAST (CBCGPRibbonEdit,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_BRIGHT_TEXT));
+	ASSERT_VALID (pZoom);
+	pZoom->SetEditText(str);
 }
 void CTDAppView::OnTransparentSlider()
 {
@@ -672,6 +681,15 @@ void CTDAppView::OnTransparentSlider()
 void CTDAppView::OnContrastSlider()
 {
 	BrightContrast();
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonSlider* pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_CONTRAST_SLIDER));
+	ASSERT_VALID (pSlider);
+	int nPos = pSlider->GetPos();
+	CString str;
+	str.Format("%d", nPos);
+	CBCGPRibbonEdit* pZoom = DYNAMIC_DOWNCAST (CBCGPRibbonEdit,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_CONTRAST_TEXT));
+	ASSERT_VALID (pZoom);
+	pZoom->SetEditText(str);
 }
 void CTDAppView::OnUpdateBrightRestore(CCmdUI* pCmdUI)
 {
