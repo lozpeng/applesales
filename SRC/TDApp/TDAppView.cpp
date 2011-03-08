@@ -130,8 +130,6 @@ CString  GetAppPathName()
 
 CTDAppView::CTDAppView()
 {
-	
-
 }
 
 CTDAppView::~CTDAppView()
@@ -666,62 +664,14 @@ void CTDAppView::OnTransparentRestore()
 }
 void CTDAppView::OnBrightSlider()
 {
-	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
-	CBCGPRibbonSlider* pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_BRIGHT_SLIDER));
-	ASSERT_VALID (pSlider);
-	int nBrightPos = pSlider->GetPos();
-
-	pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_CONTRAST_SLIDER));
-	ASSERT_VALID (pSlider);
-	int nPos = pSlider->GetPos();
-
-	Carto::CRasterLayerPtr layer = Carto::CRasterLayerPtr(GetComboLayer());
-	Carto::IRasterRenderPtr pRender = layer->GetRender();
-	if(!pRender)
-		return;
-	Carto::CRasterRGBRender* pRGBRender =  dynamic_cast<Carto::CRasterRGBRender*>(pRender.get());
-	long RChannel=pRGBRender->GetRedBandIndex();
-	long GChannel=pRGBRender->GetGreenBandIndex();
-	long BChannel=pRGBRender->GetBlueBandIndex();
-	BYTE *srcRLUT = new BYTE[256];
-	BYTE *srcGLUT = new BYTE[256];
-	BYTE *srcBLUT = new BYTE[256];
-	pRGBRender->GetBandLUT(RChannel, srcRLUT);
-	pRGBRender->GetBandLUT(GChannel, srcGLUT);
-	pRGBRender->GetBandLUT(BChannel, srcBLUT);
-	if (pRGBRender->GetRGBMode())
-	{
-		pRGBRender->SetBrightAndContrast(srcRLUT,srcGLUT,srcBLUT,nBrightPos,nPos);
-	}
-	else
-	{
-		pRGBRender->SetBrightAndContrast(srcRLUT,nBrightPos,nPos);
-	}
-	if(srcRLUT != NULL)
-	{
-		delete []srcRLUT;
-		srcRLUT = NULL;
-
-	}
-	if(srcGLUT != NULL)
-	{
-		delete []srcGLUT;
-		srcGLUT = NULL;
-
-	}
-	if(srcBLUT != NULL)
-	{
-		delete []srcBLUT;
-		srcBLUT = NULL;
-	}
-	m_MapCtrl.UpdateControl(drawAll);
-	UpdateData(FALSE);
+	BrightContrast();
 }
 void CTDAppView::OnTransparentSlider()
 {
 }
 void CTDAppView::OnContrastSlider()
 {
+	BrightContrast();
 }
 void CTDAppView::OnUpdateBrightRestore(CCmdUI* pCmdUI)
 {
@@ -746,6 +696,69 @@ void CTDAppView::OnUpdateContrastSlider(CCmdUI* pCmdUI)
 void CTDAppView::OnUpdateTransparentSlider(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(IsLayerComboNull());
+}
+void CTDAppView::BrightContrast(int nBright,int nContrast)
+{
+	if (nBright == -1)
+	{
+		CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+		CBCGPRibbonSlider* pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_BRIGHT_SLIDER));
+		ASSERT_VALID (pSlider);
+		nBright = pSlider->GetPos();
+	}
+	if (nContrast == -1)
+	{
+		CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+		CBCGPRibbonSlider* pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_CONTRAST_SLIDER));
+		ASSERT_VALID (pSlider);
+		nContrast = pSlider->GetPos();
+	}
+
+	Carto::CRasterLayerPtr layer = Carto::CRasterLayerPtr(GetComboLayer());
+	Carto::IRasterRenderPtr pRender = layer->GetRender();
+	if(!pRender)
+		return;
+	Carto::CRasterRGBRender* pRGBRender =  dynamic_cast<Carto::CRasterRGBRender*>(pRender.get());
+	long RChannel=pRGBRender->GetRedBandIndex();
+	long GChannel=pRGBRender->GetGreenBandIndex();
+	long BChannel=pRGBRender->GetBlueBandIndex();
+	BYTE *srcRLUT = new BYTE[256];
+	BYTE *srcGLUT = new BYTE[256];
+	BYTE *srcBLUT = new BYTE[256];
+	//这里计算LUT是有问题的，应该获取当前的LUT，暂时先这样
+	for (int i=0; i<256; ++i)
+	{
+		srcRLUT[i] = i;
+		srcGLUT[i] = i;
+		srcBLUT[i] = i;
+	}
+	if (pRGBRender->GetRGBMode())
+	{
+		pRGBRender->SetBrightAndContrast(srcRLUT,srcGLUT,srcBLUT,nBright,nContrast);
+	}
+	else
+	{
+		pRGBRender->SetBrightAndContrast(srcRLUT,nBright,nContrast);
+	}
+	if(srcRLUT != NULL)
+	{
+		delete []srcRLUT;
+		srcRLUT = NULL;
+
+	}
+	if(srcGLUT != NULL)
+	{
+		delete []srcGLUT;
+		srcGLUT = NULL;
+
+	}
+	if(srcBLUT != NULL)
+	{
+		delete []srcBLUT;
+		srcBLUT = NULL;
+	}
+	m_MapCtrl.UpdateControl(drawAll);
+	UpdateData(FALSE);
 }
 bool CTDAppView::IsLayerComboNull()
 {

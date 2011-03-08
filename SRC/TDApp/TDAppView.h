@@ -86,6 +86,7 @@ public:
 	Carto::ILayerPtr GetComboLayer();
 	void		RefreshLayerCombo();
 	bool		IsLayerComboNull();
+	void		BrightContrast(int nBright=-1,int nContrast=-1);
 	afx_msg void OnBrightRestore();
 	afx_msg void OnContrastRestore();
 	afx_msg void OnTransparentRestore();
@@ -138,6 +139,8 @@ public:
 	afx_msg void OnUpdateDrawMapFrameElement(CCmdUI* pCmdUI);
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
+protected:
+	
 };
 
 #ifndef _DEBUG  // debug version in TDAppView.cpp
