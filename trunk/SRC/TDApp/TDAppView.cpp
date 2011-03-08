@@ -678,6 +678,19 @@ void CTDAppView::OnBrightSlider()
 }
 void CTDAppView::OnTransparentSlider()
 {
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonSlider* pSlider = DYNAMIC_DOWNCAST (CBCGPRibbonSlider,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_TRANSPARENT_SLIDER));
+	ASSERT_VALID (pSlider);
+	int nPos = pSlider->GetPos();
+	Carto::CRasterLayerPtr layer = Carto::CRasterLayerPtr(GetComboLayer());
+	layer->SetTransparent(nPos);
+	CString str;
+	str.Format("%d", nPos);
+	CBCGPRibbonEdit* pZoom = DYNAMIC_DOWNCAST (CBCGPRibbonEdit,(CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID (ID_TRANSPARENT_TEXT));
+	ASSERT_VALID (pZoom);
+	pZoom->SetEditText(str);
+	m_MapCtrl.UpdateControl(drawAll);
+	UpdateData(FALSE);
 }
 void CTDAppView::OnContrastSlider()
 {

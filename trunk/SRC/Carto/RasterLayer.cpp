@@ -3,6 +3,8 @@
 #include "IRasterDataset.h"
 #include "RasterRGBRender.h"
 
+#pragma   comment(lib,  "msimg32")
+
 namespace Carto
 {
 
@@ -186,13 +188,13 @@ void CRasterLayer::AfterDraw(Display::IDisplayPtr pDisplay)
 
 		int iTransExtent = int(m_TransparentAlphaValue * 255.0 / 100.0);
 
-		//BLENDFUNCTION  bl;
-		//bl.AlphaFormat = 0 ;
-		//bl.BlendFlags = 0;
-		//bl.BlendOp = AC_SRC_OVER;
-		//bl.SourceConstantAlpha = iTransExtent;
-		::BitBlt((HDC)pDisplay->GetDrawDC()->GetSafeHdc(),viewrect.left,viewrect.top,lDcWidth,lDcHeight,blendDc,viewrect.left,viewrect.top,SRCCOPY);
-		//::AlphaBlend((HDC)pDisplay->GetDrawDC()->GetSafeHdc(),viewrect.left,viewrect.top,lDcWidth,lDcHeight,blendDc,viewrect.left,viewrect.top,lDcWidth,lDcHeight,bl);
+		BLENDFUNCTION  bl;
+		bl.AlphaFormat = 0 ;
+		bl.BlendFlags = 0;
+		bl.BlendOp = AC_SRC_OVER;
+		bl.SourceConstantAlpha = iTransExtent;
+		//::BitBlt((HDC)pDisplay->GetDrawDC()->GetSafeHdc(),viewrect.left,viewrect.top,lDcWidth,lDcHeight,blendDc,viewrect.left,viewrect.top,SRCCOPY);
+		::AlphaBlend((HDC)pDisplay->GetDrawDC()->GetSafeHdc(),viewrect.left,viewrect.top,lDcWidth,lDcHeight,blendDc,viewrect.left,viewrect.top,lDcWidth,lDcHeight,bl);
 
 	}
 }
