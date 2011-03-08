@@ -83,6 +83,7 @@ public:
 
 	//
 	afx_msg void OnCurrLayerCombo();
+	Carto::ILayerPtr GetComboLayer();
 	void		RefreshLayerCombo();
 	bool		IsLayerComboNull();
 	afx_msg void OnBrightRestore();
