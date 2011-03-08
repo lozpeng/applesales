@@ -643,8 +643,9 @@ void CTDAppView::OnSelectFeatureByPoint()
 }
 Carto::ILayerPtr CTDAppView::GetComboLayer()
 {
+	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
 	int nSel = GetCurLyrCombox()->GetCurSel();
-	if (nSel >=0)
+	if (nSel >=0 && nSel<nSize)
 	{
 		return m_MapCtrl.GetMap()->GetLayers().GetAt(nSel);
 	}
@@ -780,8 +781,9 @@ void CTDAppView::BrightContrast(int nBright,int nContrast)
 }
 bool CTDAppView::IsLayerComboNull()
 {
+	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
 	int nSel = GetCurLyrCombox()->GetCurSel();
-	if (nSel >=0)
+	if (nSel>=0 && nSel<nSize)
 	{
 		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(nSel);
 		if (Carto::LAYER_TYPE::RasterLayer == pLayer->GetLayerType())
