@@ -84,13 +84,19 @@ public:
 	//
 	afx_msg void OnCurrLayerCombo();
 	void		RefreshLayerCombo();
+	bool		IsLayerComboNull();
 	afx_msg void OnBrightRestore();
 	afx_msg void OnContrastRestore();
 	afx_msg void OnTransparentRestore();
 	afx_msg void OnBrightSlider();
 	afx_msg void OnContrastSlider();
 	afx_msg void OnTransparentSlider();
-	
+	afx_msg void OnUpdateBrightRestore(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateContrastRestore(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateTransparentRestore(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateBrightSlider(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateContrastSlider(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateTransparentSlider(CCmdUI* pCmdUI);
 	//±ê»æ
 	afx_msg void OnDrawSelect();
 	afx_msg void OnUpdateDrawSelect(CCmdUI* pCmdUI);

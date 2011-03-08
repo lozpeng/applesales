@@ -67,6 +67,14 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_TRANSPARENT_RESTORE, OnTransparentRestore)
 	ON_COMMAND(ID_TRANSPARENT_SLIDER, OnTransparentSlider)
 
+	ON_UPDATE_COMMAND_UI(ID_BRIGHT_RESTORE, OnUpdateBrightRestore)
+	ON_UPDATE_COMMAND_UI(ID_BRIGHT_SLIDER, OnUpdateBrightSlider)
+	ON_UPDATE_COMMAND_UI(ID_CONTRAST_RESTORE, OnUpdateContrastRestore)
+	ON_UPDATE_COMMAND_UI(ID_CONTRAST_SLIDER, OnUpdateContrastSlider)
+	ON_UPDATE_COMMAND_UI(ID_TRANSPARENT_RESTORE, OnUpdateTransparentRestore)
+	ON_UPDATE_COMMAND_UI(ID_TRANSPARENT_SLIDER, OnUpdateTransparentSlider)
+
+
 	//±ê»æ¹¤¾ß
 
 	ON_COMMAND(ID_DRAW_SELECT, OnDrawSelect)
@@ -655,6 +663,43 @@ void CTDAppView::OnContrastSlider()
 }
 void CTDAppView::OnTransparentSlider()
 {
+}
+void CTDAppView::OnUpdateBrightRestore(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(IsLayerComboNull());
+}
+void CTDAppView::OnUpdateContrastRestore(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(IsLayerComboNull());
+}
+void CTDAppView::OnUpdateTransparentRestore(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(IsLayerComboNull());
+}
+void CTDAppView::OnUpdateBrightSlider(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(IsLayerComboNull());
+}
+void CTDAppView::OnUpdateContrastSlider(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(IsLayerComboNull());
+}
+void CTDAppView::OnUpdateTransparentSlider(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(IsLayerComboNull());
+}
+bool CTDAppView::IsLayerComboNull()
+{
+	int nSel = GetCurLyrCombox()->GetCurSel();
+	if (nSel >=0)
+	{
+		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(nSel);
+		if (Carto::LAYER_TYPE::RasterLayer == pLayer->GetLayerType())
+		{
+			return true;
+		}
+	}
+	return false;
 }
 void CTDAppView::RefreshLayerCombo()
 {
