@@ -17,7 +17,7 @@ namespace Editor
 		//
 	public:
 		//初始化
-		void Triger(void);
+		void Initialize(Framework::IUIObject *pTargetControl);
 
 		//鼠标事件处理
 		void LButtonDownEvent (UINT nFlags, CPoint point);

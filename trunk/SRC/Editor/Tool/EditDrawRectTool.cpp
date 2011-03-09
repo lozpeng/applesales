@@ -6,10 +6,10 @@
 #include "SimpleMarkerSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "ISymbol.h"
-#include "DisplayCommon.h"
+#include "DisplayDef.h"
 #include "Editor.h"
 #include "ILayer.h"
-#include "IDataObject.h"
+#include "IGeoDataObject.h"
 #include "IWorkspace.h"
 #include <Geometry/geom/GeometryFactory.h>
 #include <Geometry/geom/Geometry.h>
@@ -22,9 +22,9 @@ namespace Editor
 
 static CActionEditDrawRect gActionEditDrawRect;
 
-CActionEditDrawRect::CActionEditDrawRect(void) : IAction("ActionEditDrawRect")
+CActionEditDrawRect::CActionEditDrawRect(void) : ITool("ActionEditDrawRect")
 {
-	RegisterAction("ActionEditDrawRect", this);
+	
 }
 
 CActionEditDrawRect::~CActionEditDrawRect(void)
@@ -33,18 +33,7 @@ CActionEditDrawRect::~CActionEditDrawRect(void)
 }
 
 //初始化
-void CActionEditDrawRect::Triger()
-{
-	m_bStartDraw = false;
 
-	//获取活动地图控件
-	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
-	if(!pMapCtrl)
-		return;
-
-	//设置光标类型
-	pMapCtrl->SetCursorType(cursorNormal);
-}
 
 void CActionEditDrawRect::LButtonDownEvent(UINT nFlags, CPoint point)
 {
@@ -85,38 +74,38 @@ void CActionEditDrawRect::AddRect(CPoint ulPt, CPoint lrPt)
 		return;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return;
 
 	//获得编辑类
-	Editor::CEditorPtr pEdit =pMap->GetEditor();
-	if(!pEdit)
-	{
-		return;
-	}
+	//Editor::CEditorPtr pEdit =pMap->GetEditor();
+	//if(!pEdit)
+	//{
+	//	return;
+	//}
 
 	//获得编辑图层的工作空间
-	Carto::ILayer *pLayer = pEdit->GetCurLayer();
+	Carto::ILayer *pLayer ;//= pEdit->GetCurLayer();
 	if (!pLayer)
 	{
 		return;
 	}
 
-	GeodataModel::IDataObjectPtr pDataObject = pLayer->GetDataObject();
+	Geodatabase::IGeodataObjectPtr pDataObject = pLayer->GetDataObject();
 	if (!pDataObject)
 	{
 		return;
 	}
 
-	GeodataModel::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
+	Geodatabase::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
 	if (!pWorkspace)
 	{
 		return;
 	}
 
 	//目前只支持对文件进行编辑
-	if(pWorkspace->GetType()!=GeodataModel::WT_FileSystem)
+	if(pWorkspace->GetType()!=Geodatabase::WT_FileSystem)
 	{
 		return;
 	}
@@ -141,7 +130,7 @@ void CActionEditDrawRect::AddRect(CPoint ulPt, CPoint lrPt)
 	pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(minx, maxy, p5);
 
 	bool bz,bm;
-	GeodataModel::IFeatureClass *pFeatureClass = dynamic_cast<GeodataModel::IFeatureClass*>(pDataObject.get());
+	Geodatabase::IFeatureClass *pFeatureClass = dynamic_cast<Geodatabase::IFeatureClass*>(pDataObject.get());
 	bz =pFeatureClass->HasZ();
 	bm =pFeatureClass->HasM();
 
@@ -152,7 +141,7 @@ void CActionEditDrawRect::AddRect(CPoint ulPt, CPoint lrPt)
 
 	switch (lShapeType)
 	{
-	case TT_GEOMETRY::geom::GEOS_LINESTRING:
+	case GEOMETRY::geom::GEOS_LINESTRING:
 		{
 			pGeometry = (Geometry*) GeometryFactory::getDefaultInstance()->createLineString();
 			pGeometry->SetbZ(bz);
@@ -166,7 +155,7 @@ void CActionEditDrawRect::AddRect(CPoint ulPt, CPoint lrPt)
 		}
 		break;
 
-	case TT_GEOMETRY::geom::GEOS_MULTILINESTRING:
+	case GEOMETRY::geom::GEOS_MULTILINESTRING:
 		{
 			pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createMultiLineString();
 			pGeometry->SetbZ(bz);
@@ -185,7 +174,7 @@ void CActionEditDrawRect::AddRect(CPoint ulPt, CPoint lrPt)
 
 		break;
 
-	case TT_GEOMETRY::geom::GEOS_POLYGON:
+	case GEOMETRY::geom::GEOS_POLYGON:
 		{
 			pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createPolygon();
 			pGeometry->SetbZ(bz);
@@ -199,7 +188,7 @@ void CActionEditDrawRect::AddRect(CPoint ulPt, CPoint lrPt)
 			pg->AddPoint(p4);
 			pg->AddPoint(p5);
 
-			((TT_GEOMETRY::geom::Polygon*)pGeometry)->AddGeometry(pg);
+			((GEOMETRY::geom::Polygon*)pGeometry)->AddGeometry(pg);
 		}
 
 		break;
@@ -209,7 +198,7 @@ void CActionEditDrawRect::AddRect(CPoint ulPt, CPoint lrPt)
 		break;
 	}
 
-	pEdit->AppendGeometry(pGeometry);
+	//pEdit->AppendGeometry(pGeometry);
 
 	delete pGeometry;
 	pGeometry =NULL;
@@ -227,12 +216,12 @@ void CActionEditDrawRect::ActionDraw()
 
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return;
 
 	//更新显示
-	otDisplay::IDisplayPtr dispaly = pMap->GetDisplay();
+	Display::IDisplayPtr dispaly = pMap->GetDisplay();
 	dispaly->SetDrawBuffer(drawEdit);
 	dispaly->DrawBackgroud();
 
@@ -250,12 +239,12 @@ void CActionEditDrawRect::ActionDraw()
 	pRect->bottom = bottom;
 
 	//绘制矩形
-	otDisplay::CDC *pDC =dispaly->GetDrawDC();
+	Display::CDC *pDC =dispaly->GetDrawDC();
 
 	LINE_STYLE pLineStyle;
 	pLineStyle.lColor = RGB(0, 0, 0);
 	pLineStyle.lWidth = 0.6f;
-	pLineStyle.eStyle = OT_SOLID;
+	pLineStyle.eStyle = SOLID;
 	DISPLAY_HANDLE pnewPen = pDC->CreatePen(pLineStyle);
 
 	DISPLAY_HANDLE pold = pDC->SelectObject(pnewPen);

@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "GroupShapeCommand.h"
 #include "IWorkspace.h"
+#include "IMapCtrl.h"
 #include <Geometry/geom/Geometry.h>
 #include <Geometry/geom/Polygon.h>
 #include <Geometry/geom/MultiPolygon.h>
 #include <Geometry/geom/GeometryFactory.h>
-using  namespace TT_GEOMETRY::geom;
+using  namespace GEOMETRY::geom;
 
 
 
@@ -15,15 +16,18 @@ namespace Editor
 
 	CActionGroupShape::CActionGroupShape(void) : ICommand("ActionGroupShape")
 	{
-		RegisterAction("ActionGroupShape", this);
+		
 	}
 
 	CActionGroupShape::~CActionGroupShape(void)
 	{
 		
 	}
-
-	void CActionGroupShape::Triger()
+	void CActionGroupShape::Initialize(Framework::IUIObject *pTargetControl)
+	{
+		ICommand::Initialize(pTargetControl);
+	}
+	void CActionGroupShape::Click()
 	{
 		//获取活动地图控件
 		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -31,7 +35,7 @@ namespace Editor
 			return;
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
@@ -74,7 +78,7 @@ namespace Editor
 			return;
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
@@ -92,23 +96,23 @@ namespace Editor
 		}
 
 		//判断编辑数据类型是否是矢量数据
-		if(pLayer->GetLayerType() != Carto::eFeatureLayer)
+		if(pLayer->GetLayerType() != Carto::FeatureLayer)
 		{
 			return;
 		}
 
 		//获得数据集
-		GeodataModel::IDataObjectPtr pDataObject = pLayer->GetDataObject();
+		Geodatabase::IGeodataObjectPtr pDataObject = pLayer->GetDataObject();
 		if (!pDataObject)
 		{
 			return;
 		}
 		
 		//获得当前工作空间
-		GeodataModel::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
+		Geodatabase::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
 
 		//获得数据集
-		GeodataModel::IFeatureClass *pFeatureClass = dynamic_cast<GeodataModel::IFeatureClass*>(pDataObject.get());
+		Geodatabase::IFeatureClass *pFeatureClass = dynamic_cast<Geodatabase::IFeatureClass*>(pDataObject.get());
 		long lshpType = pFeatureClass->ShapeType(); 
 
 		Geometry *pGeometry = NULL;		   //被组合的图形
@@ -117,15 +121,15 @@ namespace Editor
 		
 		switch(lshpType)
 		{
-			case TT_GEOMETRY::geom::GEOS_POLYGON: 
+			case GEOMETRY::geom::GEOS_POLYGON: 
 				 {
 					pGroupGeometry = m_shapes[0]->clone();
-					TT_GEOMETRY::geom::Polygon *pGroupPolygon = dynamic_cast<TT_GEOMETRY::geom::Polygon*> (pGroupGeometry);
+					GEOMETRY::geom::Polygon *pGroupPolygon = dynamic_cast<GEOMETRY::geom::Polygon*> (pGroupGeometry);
 					
 					for (int i = 1; i < m_shapes.size(); i++)
 					{
 						pGeometry = m_shapes[i];
-						TT_GEOMETRY::geom::Polygon *pPolygon = dynamic_cast<TT_GEOMETRY::geom::Polygon*> (pGeometry);
+						GEOMETRY::geom::Polygon *pPolygon = dynamic_cast<GEOMETRY::geom::Polygon*> (pGeometry);
 						
 						//获得多变形包含的环
 						long nRingcount = pPolygon->GeometryCount();
@@ -147,15 +151,15 @@ namespace Editor
 					}
 				 }
 				 break;
-			case TT_GEOMETRY::geom::GEOS_MULTIPOINT:
+			case GEOMETRY::geom::GEOS_MULTIPOINT:
 				 {
 					 pGroupGeometry = m_shapes[0]->clone();
-					 TT_GEOMETRY::geom::MultiPoint *pGroupPoint = dynamic_cast<TT_GEOMETRY::geom::MultiPoint*> (pGroupGeometry);
+					 GEOMETRY::geom::MultiPoint *pGroupPoint = dynamic_cast<GEOMETRY::geom::MultiPoint*> (pGroupGeometry);
 
 					for (int i = 1; i < m_shapes.size(); i++)
 					{
 						pGeometry = m_shapes[i];
-						TT_GEOMETRY::geom::MultiPoint *pMultiPoint = dynamic_cast<TT_GEOMETRY::geom::MultiPoint*> (pGeometry);
+						GEOMETRY::geom::MultiPoint *pMultiPoint = dynamic_cast<GEOMETRY::geom::MultiPoint*> (pGeometry);
 
 						//获得点
 						long nPtcount = pMultiPoint->GeometryCount();
@@ -177,15 +181,15 @@ namespace Editor
 					}
 				 }
 				 break;
-			case TT_GEOMETRY::geom::GEOS_MULTILINESTRING:
+			case GEOMETRY::geom::GEOS_MULTILINESTRING:
 				 {
 					 pGroupGeometry = m_shapes[0]->clone();
-					 TT_GEOMETRY::geom::MultiLineString *pGroupLineString = dynamic_cast<TT_GEOMETRY::geom::MultiLineString*> (pGroupGeometry);
+					 GEOMETRY::geom::MultiLineString *pGroupLineString = dynamic_cast<GEOMETRY::geom::MultiLineString*> (pGroupGeometry);
 
 					 for (int i = 1; i < m_shapes.size(); i++)
 					 {
 						 pGeometry = m_shapes[i];
-						 TT_GEOMETRY::geom::MultiLineString *pMultiLineString = dynamic_cast<TT_GEOMETRY::geom::MultiLineString*> (pGeometry);
+						 GEOMETRY::geom::MultiLineString *pMultiLineString = dynamic_cast<GEOMETRY::geom::MultiLineString*> (pGeometry);
 
 						 //获得线
 						 long nLineStringcount = pMultiLineString->GeometryCount();
@@ -215,7 +219,7 @@ namespace Editor
 		pWorkspace->StartEditOperation();
 		{
 			//添加第一个图形
-			GeodataModel::CFeaturePtr pFeature;
+			Geodatabase::CFeaturePtr pFeature;
 			pFeature = pFeatureClass->GetFeature(m_shapeIds[0]);
 			pFeature->SetShape(pGroupGeometry);
 			pFeature->Update();

@@ -16,7 +16,7 @@ namespace Editor
 
 	public:
 		//≥ı ºªØ
-		void Triger(void);
+		void Initialize(Framework::IUIObject *pTargetControl);
 
 		void LButtonDownEvent (UINT nFlags, CPoint point);
 

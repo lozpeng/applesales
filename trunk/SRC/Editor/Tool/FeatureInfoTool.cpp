@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "FeatureInfoTool.h"
 #include "IMapCtrl.h"
-#include "DlgFeatureInfo.h"
+//#include "DlgFeatureInfo.h"
 #include "SpatialQuery.h"
-#include "EditorRes.h"
+//#include "EditorRes.h"
 #include <geometry/geom/LinearRing.h>
 #include <geometry/geom/Polygon.h>
 
@@ -46,12 +46,12 @@ void CActionFeatureInfo::LButtonUpEvent(UINT nFlags, CPoint point)
 		return;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return;
 
 
-	TT_GEOMETRY::geom::Envelope envelop;
+	GEOMETRY::geom::Envelope envelop;
 	DIS_RECT rect;
 	rect.left =point.x -3;
 	rect.right =point.x+3;
@@ -61,13 +61,13 @@ void CActionFeatureInfo::LButtonUpEvent(UINT nFlags, CPoint point)
 	pMap->GetDisplay()->GetDisplayTransformation().TransformToGeo(rect,&envelop);
 	//构造一个用于查询的多边形
 
-	GeodataModel::CSpatialQuery queryfilter;
+	Geodatabase::CSpatialQuery queryfilter;
 
 
 	//构造一个空间查询条件
-	TT_GEOMETRY::geom::Geometry *pGeometry =GeometryFactory::getDefaultInstance()->toGeometry(&envelop);
+	GEOMETRY::geom::Geometry *pGeometry =GeometryFactory::getDefaultInstance()->toGeometry(&envelop);
 	queryfilter.SetGeometry(pGeometry);
-	queryfilter.SetSpatialRel(GeodataModel::SpatialRelIntersects);
+	queryfilter.SetSpatialRel(Geodatabase::SpatialRelIntersects);
 
 
 	Carto::CLayerArray &layers =pMap->GetLayers();
@@ -81,7 +81,7 @@ void CActionFeatureInfo::LButtonUpEvent(UINT nFlags, CPoint point)
 		{
 			continue;
 		}
-		if(pLayer->GetLayerType()!=Carto::eFeatureLayer)
+		if(pLayer->GetLayerType()!=Carto::FeatureLayer)
 		{
 			continue;
 		}
@@ -99,25 +99,25 @@ void CActionFeatureInfo::LButtonUpEvent(UINT nFlags, CPoint point)
 	}
 	pMapCtrl->UpdateControl(drawGeoSelection);
 
-    CDllResource hdll;
+   // CDllResource hdll;
 	if( NULL != m_dlg )
 	{
-		if( !IsWindow( m_dlg->m_hWnd ) )
+	/*	if( !IsWindow( m_dlg->m_hWnd ) )
 		{
 			m_dlg->Create( );			
 		}
 		m_dlg->SetMap(pMap.get());
 		m_dlg->Refresh();
-		m_dlg->ShowWindow(SW_SHOW);
+		m_dlg->ShowWindow(SW_SHOW);*/
 	}
 	else
 	{
-		m_dlg = new CDlgFeatureInfo;
-		if( NULL == m_dlg )
-			return;
-		m_dlg->Create( );
-		m_dlg->SetMap(pMap.get());
-		m_dlg->Refresh();
+		//m_dlg = new CDlgFeatureInfo;
+		//if( NULL == m_dlg )
+		//	return;
+		//m_dlg->Create( );
+		//m_dlg->SetMap(pMap.get());
+		//m_dlg->Refresh();
 
 	}
 }

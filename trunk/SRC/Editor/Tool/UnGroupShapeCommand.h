@@ -16,8 +16,9 @@ namespace Editor
 
 	public:
 		//初始化
-		void Triger(void);
+		void Initialize(Framework::IUIObject *pTargetControl);
 
+		void Click();
 		//组合图形
 		void UnGroupShape();
 

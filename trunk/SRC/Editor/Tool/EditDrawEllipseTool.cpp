@@ -8,9 +8,9 @@
 #include "ISymbol.h"
 #include "DisplayDef.h"
 #include "ILayer.h"
-#include "IDataObject.h"
+#include "IGeoDataObject.h"
 #include "IWorkspace.h"
-#include "TT_Shape.hxx"
+//#include "Shape.hxx"
 #include <Geometry/geom/GeometryFactory.h>
 #include <Geometry/geom/Geometry.h>
 #include <Geometry/geom/Coordinate.h>
@@ -22,9 +22,9 @@ namespace Editor
 
 	static CActionEditDrawEllipse gActionEditDrawEllipse;
 
-	CActionEditDrawEllipse::CActionEditDrawEllipse(void) : IAction("ActionEditDrawEllipse")
+	CActionEditDrawEllipse::CActionEditDrawEllipse(void) : ITool("ActionEditDrawEllipse")
 	{
-		RegisterAction("ActionEditDrawEllipse", this);
+		
 	}
 
 	CActionEditDrawEllipse::~CActionEditDrawEllipse(void)
@@ -33,18 +33,7 @@ namespace Editor
 	}
 
 	//初始化
-	void CActionEditDrawEllipse::Triger()
-	{
-		m_bStartDraw = false;
 
-		//获取活动地图控件
-		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
-		if(!pMapCtrl)
-			return;
-
-		//设置光标类型
-		pMapCtrl->SetCursorType(cursorNormal);
-	}
 
 	void CActionEditDrawEllipse::LButtonDownEvent(UINT nFlags, CPoint point)
 	{
@@ -85,43 +74,43 @@ namespace Editor
 			return;
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
-		Editor::CEditorPtr pEdit =pMap->GetEditor();
-		if(!pEdit)
-		{
-			return;
-		}
+		//Editor::CEditorPtr pEdit =pMap->GetEditor();
+		//if(!pEdit)
+		//{
+		//	return;
+		//}
 
 		//获得编辑图层的工作空间
-		Carto::ILayer *pLayer = pEdit->GetCurLayer();
+		Carto::ILayer *pLayer ;//= pEdit->GetCurLayer();
 		if (!pLayer)
 		{
 			return;
 		}
 
-		GeodataModel::IDataObjectPtr pDataObject = pLayer->GetDataObject();
+		Geodatabase::IGeodataObjectPtr pDataObject = pLayer->GetDataObject();
 		if (!pDataObject)
 		{
 			return;
 		}
 
-		GeodataModel::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
+		Geodatabase::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
 		if (!pWorkspace)
 		{
 			return;
 		}
 
 		//目前只支持对文件进行编辑
-		if(pWorkspace->GetType()!=GeodataModel::WT_FileSystem)
+		if(pWorkspace->GetType()!=Geodatabase::WT_FileSystem)
 		{
 			return;
 		}
 
 		bool bz,bm;
-		GeodataModel::IFeatureClass *pFeatureClass = dynamic_cast<GeodataModel::IFeatureClass*>(pDataObject.get());
+		Geodatabase::IFeatureClass *pFeatureClass = dynamic_cast<Geodatabase::IFeatureClass*>(pDataObject.get());
 		bz =pFeatureClass->HasZ();
 		bm =pFeatureClass->HasM();
 
@@ -133,7 +122,7 @@ namespace Editor
 		switch (lShapeType)
 		{
 
-		case TT_GEOMETRY::geom::GEOS_LINESTRING:	
+		case GEOMETRY::geom::GEOS_LINESTRING:	
 			{
 
 				pGeometry = (Geometry*) GeometryFactory::getDefaultInstance()->createLineString();
@@ -144,7 +133,7 @@ namespace Editor
 
 			}
 			break;
-		case TT_GEOMETRY::geom::GEOS_MULTILINESTRING:
+		case GEOMETRY::geom::GEOS_MULTILINESTRING:
 			{
 
 
@@ -161,7 +150,7 @@ namespace Editor
 			}
 			break;
 
-		case TT_GEOMETRY::geom::GEOS_POLYGON:
+		case GEOMETRY::geom::GEOS_POLYGON:
 			{
 
 				pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createPolygon();
@@ -172,7 +161,7 @@ namespace Editor
 				pg =(Geometry*) GeometryFactory::getDefaultInstance()->createLinearRing();
 
 				SplitEllipse(pg);
-				((TT_GEOMETRY::geom::Polygon*)pGeometry)->AddGeometry(pg);
+				((GEOMETRY::geom::Polygon*)pGeometry)->AddGeometry(pg);
 			}
 
 			break;
@@ -182,7 +171,7 @@ namespace Editor
 			break;
 		}
 
-		pEdit->AppendGeometry(pGeometry);
+		//pEdit->AppendGeometry(pGeometry);
 
 		delete pGeometry;
 		pGeometry =NULL;
@@ -200,12 +189,12 @@ namespace Editor
 
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
 		//更新显示
-		otDisplay::IDisplayPtr dispaly = pMap->GetDisplay();
+		Display::IDisplayPtr dispaly = pMap->GetDisplay();
 		dispaly->SetDrawBuffer(drawEdit);
 		dispaly->DrawBackgroud();
 
@@ -223,12 +212,12 @@ namespace Editor
 		pEllipse->bottom = bottom;
 
 		//绘制椭圆
-		otDisplay::CDC *pDC =dispaly->GetDrawDC();
+		Display::CDC *pDC =dispaly->GetDrawDC();
 
 		LINE_STYLE pLineStyle;
 		pLineStyle.lColor = RGB(0, 0, 0);
 		pLineStyle.lWidth = 0.6f;
-		pLineStyle.eStyle = OT_SOLID;
+		pLineStyle.eStyle = SOLID;
 		DISPLAY_HANDLE pnewPen = pDC->CreatePen(pLineStyle);
 
 		DISPLAY_HANDLE pold = pDC->SelectObject(pnewPen);
@@ -245,55 +234,55 @@ namespace Editor
 	}
 	
 	/*------------------------分割椭圆---------------------*/
-	void CActionEditDrawEllipse::SplitEllipse(TT_GEOMETRY::geom::Geometry *pGeometry)
+	void CActionEditDrawEllipse::SplitEllipse(GEOMETRY::geom::Geometry *pGeometry)
 	{
-		CttShape cShape;
-		cShape.Create();
-		
+		//CttShape cShape;
+		//cShape.Create();
+		//
 
-		STPoint centerPt;			//中心点	
-		STPoint ulPt;				//左上角点
-		STPoint lrPt;				//右下角点
+		//STPoint centerPt;			//中心点	
+		//STPoint ulPt;				//左上角点
+		//STPoint lrPt;				//右下角点
 
-		//获取活动地图控件
-		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
-		if(!pMapCtrl)
-			return;
+		////获取活动地图控件
+		//Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
+		//if(!pMapCtrl)
+		//	return;
 
-		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
-		if(!pMap)
-			return;
+		////获取活动地区
+		//Carto::CMapPtr pMap = pMapCtrl->GetMap();
+		//if(!pMap)
+		//	return;
 
-		//转化圆心为地理坐标
-		pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(m_ulPt.x, m_ulPt.y, ulPt.x, ulPt.y);
-		pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(m_lrPt.x, m_lrPt.y, lrPt.x, lrPt.y);
+		////转化圆心为地理坐标
+		//pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(m_ulPt.x, m_ulPt.y, ulPt.x, ulPt.y);
+		//pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(m_lrPt.x, m_lrPt.y, lrPt.x, lrPt.y);
 
-		centerPt.x =(ulPt.x + lrPt.x) * 0.5;
-		centerPt.y =(ulPt.y + lrPt.y) * 0.5;
-		
+		//centerPt.x =(ulPt.x + lrPt.x) * 0.5;
+		//centerPt.y =(ulPt.y + lrPt.y) * 0.5;
+		//
 
-		double dmajor = (lrPt.x - ulPt.x) * 0.5;
-		double dminor = (ulPt.y - lrPt.y) * 0.5;
+		//double dmajor = (lrPt.x - ulPt.x) * 0.5;
+		//double dminor = (ulPt.y - lrPt.y) * 0.5;
 
 
-		cShape.MakeEllipse(centerPt, dmajor, dminor, 720, NULL, NULL);
+		//cShape.MakeEllipse(centerPt, dmajor, dminor, 720, NULL, NULL);
 
-		//将点塞入Geometry
-		PSTPoint pstPoint = NULL;
-		cShape.GetAllPointsPtr(NULL,&pstPoint,NULL,NULL,NULL);
-		long lptnum;
-		cShape.GetNumPoints(&lptnum);
+		////将点塞入Geometry
+		//PSTPoint pstPoint = NULL;
+		//cShape.GetAllPointsPtr(NULL,&pstPoint,NULL,NULL,NULL);
+		//long lptnum;
+		//cShape.GetNumPoints(&lptnum);
 
-		Coordinate coord;
-		for(long i=0;i<lptnum;i++)
-		{
-			coord.x =pstPoint[i].x;
-			coord.y =pstPoint[i].y;
+		//Coordinate coord;
+		//for(long i=0;i<lptnum;i++)
+		//{
+		//	coord.x =pstPoint[i].x;
+		//	coord.y =pstPoint[i].y;
 
-			pGeometry->AddPoint(coord);
-		}
+		//	pGeometry->AddPoint(coord);
+		//}
 
-		cShape.Free();
+		//cShape.Free();
 	}	
 }

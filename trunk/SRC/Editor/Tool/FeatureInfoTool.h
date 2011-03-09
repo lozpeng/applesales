@@ -3,7 +3,7 @@
 
 #include "ITool.h"
 
-class CDlgFeatureInfo;
+//class CDlgFeatureInfo;
 
 namespace Editor
 {
@@ -16,7 +16,7 @@ public:
 
 public:
 	//≥ı ºªØ
-	void Triger(void);
+	void Initialize(Framework::IUIObject *pTargetControl);
 
 	void LButtonUpEvent (UINT nFlags, CPoint point);
 

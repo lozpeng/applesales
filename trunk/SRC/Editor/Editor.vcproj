@@ -268,11 +268,91 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tool\EditDrawEllipseTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\EditDrawEllipseTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\EditDrawRectTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\EditDrawRectTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\EditFeatureTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\EditFeatureTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\GroupShapeCommand.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\GroupShapeCommand.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonAdjacentTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonAdjacentTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonIntersectCommand.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonIntersectCommand.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonSubstractCommand.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonSubstractCommand.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonUnionCommand.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonUnionCommand.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonXorCommand.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\PolygonXorCommand.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Tool\SketchTool.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Tool\SketchTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\UnGroupShapeCommand.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\UnGroupShapeCommand.h"
 				>
 			</File>
 		</Filter>

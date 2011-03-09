@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "UnGroupShapeCommand.h"
-#include "PlgOPInterface.h"
-#include "ActionPolygonUnion.h"
+//#include "PlgOPInterface.h"
+#include "PolygonUnionCommand.h"
 #include "IWorkspace.h"
-#include "SnapAgent.h"
+//#include "SnapAgent.h"
+#include "IMapCtrl.h"
 
 #include  <Geometry/geom/Geometry.h>
 
@@ -11,17 +12,21 @@ namespace Editor
 {
 	static CActionUnGroupShape gActionUnGroupShape;
 
-	CActionUnGroupShape::CActionUnGroupShape(void) : IAction("ActionUnGroupShape")
+	CActionUnGroupShape::CActionUnGroupShape(void) : ICommand("ActionUnGroupShape")
 	{
-		RegisterAction("ActionUnGroupShape", this);
+		
 	}
 
 	CActionUnGroupShape::~CActionUnGroupShape(void)
 	{
 		
 	}
-
-	void CActionUnGroupShape::Triger()
+	//初始化
+	void CActionUnGroupShape::Initialize(Framework::IUIObject *pTargetControl)
+	{
+		ICommand::Initialize(pTargetControl);
+	}
+	void CActionUnGroupShape::Click()
 	{
 		//获取活动地图控件
 		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -29,17 +34,17 @@ namespace Editor
 			return;
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
-		CEditorPtr pEdit = pMap->GetEditor();
-		if (!pEdit)
-		{
-			return;
-		}
+		//CEditorPtr pEdit = pMap->GetEditor();
+		//if (!pEdit)
+		//{
+		//	return;
+		//}
 
-		pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
+		//pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
 		if(m_shapes.size( )< 1)
 		{
 			return;
@@ -72,41 +77,41 @@ namespace Editor
 			return;
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
-		CEditorPtr pEdit = pMap->GetEditor();
-		if (!pEdit)
-		{
-			return;
-		}
+		//CEditorPtr pEdit = pMap->GetEditor();
+		//if (!pEdit)
+		//{
+		//	return;
+		//}
 
 		//获得当前编辑层
-		Carto::ILayer *pLayer = pEdit->GetCurLayer();
+		Carto::ILayer *pLayer ;//= pEdit->GetCurLayer();
 		if (!pLayer)
 		{
 			return;
 		}
 
 		//判断编辑数据类型是否是矢量数据
-		if(pLayer->GetLayerType() != Carto::eFeatureLayer)
+		if(pLayer->GetLayerType() != Carto::FeatureLayer)
 		{
 			return;
 		}
 
 		//获得数据集
-		GeodataModel::IDataObjectPtr pDataObject = pLayer->GetDataObject();
+		Geodatabase::IGeodataObjectPtr pDataObject = pLayer->GetDataObject();
 		if (!pDataObject)
 		{
 			return;
 		}
 
 		//获得当前工作空间
-		GeodataModel::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
+		Geodatabase::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
 
 		//获得数据集
-		GeodataModel::IFeatureClass *pFeatureClass = dynamic_cast<GeodataModel::IFeatureClass*>(pDataObject.get());
+		Geodatabase::IFeatureClass *pFeatureClass = dynamic_cast<Geodatabase::IFeatureClass*>(pDataObject.get());
 		long lshpType = pFeatureClass->ShapeType(); 
 
 		vector<Geometry*> vUngroupGeo;	   //打散后的结果
@@ -115,12 +120,12 @@ namespace Editor
 		
 		switch(lshpType)
 		{
-		case TT_GEOMETRY::geom::GEOS_POLYGON: 
+		case GEOMETRY::geom::GEOS_POLYGON: 
 			{
 				for (int i = 0; i < m_shapes.size(); i++)
 				{
 					pGeometry = m_shapes[i];
-					TT_GEOMETRY::geom::Polygon *pPolygon = dynamic_cast<TT_GEOMETRY::geom::Polygon*> (pGeometry);
+					GEOMETRY::geom::Polygon *pPolygon = dynamic_cast<GEOMETRY::geom::Polygon*> (pGeometry);
 
 					//获得多边形包含的环
 					long nRingcount = pPolygon->GeometryCount();
@@ -142,12 +147,12 @@ namespace Editor
 				}
 			}
 			break;
-		case TT_GEOMETRY::geom::GEOS_MULTIPOINT:
+		case GEOMETRY::geom::GEOS_MULTIPOINT:
 			{
 				for (int i = 0; i < m_shapes.size(); i++)
 				{
 					pGeometry = m_shapes[i];
-					TT_GEOMETRY::geom::MultiPoint *pMultiPoint = dynamic_cast<TT_GEOMETRY::geom::MultiPoint*> (pGeometry);
+					GEOMETRY::geom::MultiPoint *pMultiPoint = dynamic_cast<GEOMETRY::geom::MultiPoint*> (pGeometry);
 
 					//获得点
 					long nPtcount = pMultiPoint->GeometryCount();
@@ -169,12 +174,12 @@ namespace Editor
 				}
 			}	
 			break;
-		case TT_GEOMETRY::geom::GEOS_MULTILINESTRING:
+		case GEOMETRY::geom::GEOS_MULTILINESTRING:
 			{
 				for (int i = 0; i < m_shapes.size(); i++)
 				{
 					pGeometry = m_shapes[i];
-					TT_GEOMETRY::geom::MultiLineString *pMultiLineString = dynamic_cast<TT_GEOMETRY::geom::MultiLineString*> (pGeometry);
+					GEOMETRY::geom::MultiLineString *pMultiLineString = dynamic_cast<GEOMETRY::geom::MultiLineString*> (pGeometry);
 
 					//获得线
 					long nLineStringcount = pMultiLineString->GeometryCount();
@@ -213,10 +218,10 @@ namespace Editor
 		//添加打散的图形 
 		for (size_t i = 0; i < vUngroupGeo.size(); i++)
 		{
-			TT_GEOMETRY::geom::Polygon *pPolygon = GeometryFactory::getDefaultInstance()->createPolygon();;
+			GEOMETRY::geom::Polygon *pPolygon = GeometryFactory::getDefaultInstance()->createPolygon();;
 			pPolygon->AddGeometry(vUngroupGeo[i]);
 			
-			GeodataModel::CFeaturePtr pnewFeature =pFeatureClass->CreateFeature();
+			Geodatabase::CFeaturePtr pnewFeature =pFeatureClass->CreateFeature();
 			pnewFeature->SetShape(((Geometry*)pPolygon)->clone());
 			//pnewFeature->Update();
 			pFeatureClass->AddFeature(pnewFeature.get());

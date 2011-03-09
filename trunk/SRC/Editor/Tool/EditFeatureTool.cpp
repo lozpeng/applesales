@@ -5,7 +5,7 @@
 #include "FeatureLayer.h"
 #include "IWorkspace.h"
 #include "resource.h"
-#include "EditorRes.h"
+//#include "EditorRes.h"
 
 namespace Editor
 {
@@ -53,7 +53,7 @@ void CActionEditFeature::LButtonDownEvent (UINT nFlags, CPoint point)
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
@@ -83,7 +83,7 @@ void CActionEditFeature::LButtonDownEvent (UINT nFlags, CPoint point)
 		m_nStatus =On_Selection;
 		//把图形压入回滚堆栈
 
-		TT_GEOMETRY::geom::Geometry *pGeometry= pEdit->m_modifyGeometrys[0]->clone();
+		GEOMETRY::geom::Geometry *pGeometry= pEdit->m_modifyGeometrys[0]->clone();
 
 		pEdit->PushGeometry2Undo(pGeometry);
 	}
@@ -113,7 +113,7 @@ void CActionEditFeature::MouseMoveEvent (UINT nFlags, CPoint point)
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
@@ -155,12 +155,12 @@ void CActionEditFeature::MouseMoveEvent (UINT nFlags, CPoint point)
 
 		pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(ltol,dblTol);
 
-		TT_GEOMETRY::geom::Coordinate pt;
+		GEOMETRY::geom::Coordinate pt;
 		pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x,point.y,pt.x,pt.y);
 
-		TT_GEOMETRY::geom::Coordinate coord;
+		GEOMETRY::geom::Coordinate coord;
 
-		TT_GEOMETRY::geom::Coordinate outpt;
+		GEOMETRY::geom::Coordinate outpt;
 		double  distance;
 		long lpart,lverindex;
 		//鼠标是否在节点上
@@ -208,15 +208,15 @@ void CActionEditFeature::MouseMoveEvent (UINT nFlags, CPoint point)
 		pMapCtrl->SetCursorType(cursorOnVertix);
 
 		//移动当前节点
-		TT_GEOMETRY::geom::Coordinate pt;
+		GEOMETRY::geom::Coordinate pt;
 		pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x,point.y,pt.x,pt.y);
 
-		TT_GEOMETRY::geom::Coordinate outPt;
+		GEOMETRY::geom::Coordinate outPt;
 		//捕捉
 		pEdit->Snap(pt,outPt);
 
 
-		TT_GEOMETRY::geom::Geometry *pGeometry =pEdit->m_modifyGeometrys[0];
+		GEOMETRY::geom::Geometry *pGeometry =pEdit->m_modifyGeometrys[0];
 
 		long ltype =pGeometry->getGeometryTypeId();
 
@@ -232,7 +232,7 @@ void CActionEditFeature::MouseMoveEvent (UINT nFlags, CPoint point)
 		case GEOS_MULTILINESTRING:
 			{
 				//找到编辑的哪一部分的图形
-				TT_GEOMETRY::geom::Geometry *pMoveGeometry =const_cast<Geometry*>(((GeometryCollection*)pGeometry)->getGeometryN(m_curPart));
+				GEOMETRY::geom::Geometry *pMoveGeometry =const_cast<Geometry*>(((GeometryCollection*)pGeometry)->getGeometryN(m_curPart));
 				if(pMoveGeometry!=NULL)
 				{
 					pMoveGeometry->ReplacePoint(m_curVertexIndex,outPt);
@@ -242,7 +242,7 @@ void CActionEditFeature::MouseMoveEvent (UINT nFlags, CPoint point)
 		case GEOS_POLYGON:
 			{
 				//找到编辑的哪一部分的图形
-				TT_GEOMETRY::geom::Geometry *pMoveGeometry =((TT_GEOMETRY::geom::Polygon *)pGeometry)->GetGeometry(m_curPart);
+				GEOMETRY::geom::Geometry *pMoveGeometry =((GEOMETRY::geom::Polygon *)pGeometry)->GetGeometry(m_curPart);
 				if(pMoveGeometry!=NULL)
 				{
 					pMoveGeometry->ReplacePoint(m_curVertexIndex,outPt);
@@ -271,7 +271,7 @@ void CActionEditFeature::MouseMoveEvent (UINT nFlags, CPoint point)
 
 			pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(m_lastmovePt.y-point.y,dy);
 			
-			TT_GEOMETRY::geom::Geometry *pGeometry =pEdit->m_modifyGeometrys[0];
+			GEOMETRY::geom::Geometry *pGeometry =pEdit->m_modifyGeometrys[0];
 
 			pGeometry->Move(dx,dy);
 
@@ -288,11 +288,11 @@ void CActionEditFeature::MouseMoveEvent (UINT nFlags, CPoint point)
 	else if(m_nStatus == On_SelectMoreShape)
 	{
 		
-		TT_GEOMETRY::geom::Coordinate pt;
+		GEOMETRY::geom::Coordinate pt;
 		pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x,point.y,pt.x,pt.y);
 
-		TT_GEOMETRY::geom::Geometry *pPoint =(TT_GEOMETRY::geom::Geometry*)
-			TT_GEOMETRY::geom::GeometryFactory::getDefaultInstance()->createPoint(pt);
+		GEOMETRY::geom::Geometry *pPoint =(GEOMETRY::geom::Geometry*)
+			GEOMETRY::geom::GeometryFactory::getDefaultInstance()->createPoint(pt);
 
 		m_bContain =false;
 		for(size_t i=0;i<m_moveGeometrys.size();i++)
@@ -363,7 +363,7 @@ void CActionEditFeature::LButtonUpEvent (UINT nFlags, CPoint point)
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
@@ -388,7 +388,7 @@ void CActionEditFeature::LButtonUpEvent (UINT nFlags, CPoint point)
 		{
 			//如果要素移动了，则保存进回滚堆栈
 
-			TT_GEOMETRY::geom::Geometry *pGeometry =pEdit->m_modifyGeometrys[0]->clone();
+			GEOMETRY::geom::Geometry *pGeometry =pEdit->m_modifyGeometrys[0]->clone();
 
 			pEdit->PushGeometry2Undo(pGeometry);
 		}
@@ -409,16 +409,16 @@ void CActionEditFeature::LButtonUpEvent (UINT nFlags, CPoint point)
 
 			std::vector<Carto::ILayer*> vecMapLayers;
 			long fid;
-			GeodataModel::CFeaturePtr pFeature;
-			GeodataModel::IFeatureClass *pFeatureClass =NULL;
-			GeodataModel::IWorkspace *pWorkspace =NULL;
+			Geodatabase::CFeaturePtr pFeature;
+			Geodatabase::IFeatureClass *pFeatureClass =NULL;
+			Geodatabase::IWorkspace *pWorkspace =NULL;
 
 			for(int i=0; i<m_moveGeometrys.size(); i++)
 			{
 				
 
 				fid =m_shpIds[i];
-				pFeatureClass =dynamic_cast<GeodataModel::IFeatureClass*>(m_layers[i]->GetDataObject().get());
+				pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(m_layers[i]->GetDataObject().get());
 
 				pWorkspace =pFeatureClass->GetWorkspace();
 				pFeature = pFeatureClass->GetFeature(fid);
@@ -481,7 +481,7 @@ void CActionEditFeature::LButtonDblClkEvent(UINT nFlags, CPoint point)
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
@@ -520,7 +520,7 @@ BOOL CActionEditFeature::GetSelectGeometrys()
 		return FALSE;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return FALSE;
 
@@ -537,13 +537,13 @@ BOOL CActionEditFeature::GetSelectGeometrys()
 	pEdit->GetEditLayers(alllayers);
 
 
-	TT_GEOMETRY::geom::Geometry *pGeometry =NULL;
+	GEOMETRY::geom::Geometry *pGeometry =NULL;
 
-	GeodataModel::ISelctionSet *pSelction =NULL;
+	Geodatabase::ISelctionSet *pSelction =NULL;
 	long fid;
     
 	Carto::CFeatureLayer* pFeatureLayer =NULL;
-	GeodataModel::IFeatureClass *pFeatureClass =NULL;
+	Geodatabase::IFeatureClass *pFeatureClass =NULL;
 	//将各个图层中选择集中的图形加入到m_moveGeometrys中
     for(size_t i=0;i<alllayers.size();i++)
 	{
@@ -557,7 +557,7 @@ BOOL CActionEditFeature::GetSelectGeometrys()
 		{
 			continue;
 		}
-		pFeatureClass =dynamic_cast<GeodataModel::IFeatureClass*>(pFeatureLayer->GetDataObject().get());
+		pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(pFeatureLayer->GetDataObject().get());
         pSelction =pFeatureLayer->GetSelection().get();
 		if(!pSelction)
 		{
@@ -591,7 +591,7 @@ BOOL CActionEditFeature::InstanceEditObject()
 		return FALSE;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return FALSE;
 
@@ -625,7 +625,7 @@ void CActionEditFeature::DrawMovedGeometrys()
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
@@ -636,7 +636,7 @@ void CActionEditFeature::DrawMovedGeometrys()
 	}
 
 	//更新显示
-	otDisplay::IDisplayPtr dispaly = pMap->GetDisplay();
+	Display::IDisplayPtr dispaly = pMap->GetDisplay();
 	dispaly->SetDrawBuffer(drawEdit);
 	dispaly->DrawBackgroud();
 
@@ -666,7 +666,7 @@ void CActionEditFeature::RButtonDownEvent(UINT nFlags, CPoint point)
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
@@ -691,7 +691,7 @@ void CActionEditFeature::RButtonDownEvent(UINT nFlags, CPoint point)
 			pWnd->ClientToScreen(&srnPoint);
 
 			//如果点的数目小于等于1，则不能删除节点
-			TT_GEOMETRY::geom::Geometry *pGeometry= pEdit->m_modifyGeometrys[0];
+			GEOMETRY::geom::Geometry *pGeometry= pEdit->m_modifyGeometrys[0];
 			if(pGeometry->PointCount()<=1)
 			{
 				pPopup->EnableMenuItem( ID_MT_DEL_VERTEX,MF_GRAYED);
@@ -729,7 +729,7 @@ void CActionEditFeature::RButtonDownEvent(UINT nFlags, CPoint point)
 void CActionEditFeature::InsertVertex()
 {
 
-	using namespace TT_GEOMETRY::geom;
+	using namespace GEOMETRY::geom;
 
 	//获取活动地图控件
 	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -737,7 +737,7 @@ void CActionEditFeature::InsertVertex()
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
@@ -783,7 +783,7 @@ void CActionEditFeature::InsertVertex()
 	case GEOS_POLYGON:
 		{
 			//找到编辑的哪一部分的图形
-			Geometry *pMoveGeometry =((TT_GEOMETRY::geom::Polygon *)pGeometry)->GetGeometry(m_curPart);
+			Geometry *pMoveGeometry =((GEOMETRY::geom::Polygon *)pGeometry)->GetGeometry(m_curPart);
 			if(pMoveGeometry!=NULL)
 			{
 				pMoveGeometry->InsertPoint(m_curVertexIndex,newpt);
@@ -810,7 +810,7 @@ void CActionEditFeature::InsertVertex()
 
 void CActionEditFeature::DelVertex()
 {
-	using namespace TT_GEOMETRY::geom;
+	using namespace GEOMETRY::geom;
 
 	//获取活动地图控件
 	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -818,7 +818,7 @@ void CActionEditFeature::DelVertex()
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
@@ -866,7 +866,7 @@ void CActionEditFeature::DelVertex()
 	case GEOS_POLYGON:
 		{
 			//找到编辑的哪一部分的图形
-			Geometry *pMoveGeometry =((TT_GEOMETRY::geom::Polygon *)pGeometry)->GetGeometry(m_curPart);
+			Geometry *pMoveGeometry =((GEOMETRY::geom::Polygon *)pGeometry)->GetGeometry(m_curPart);
 			if(pMoveGeometry!=NULL)
 			{
 				pMoveGeometry->RemovePoint(m_curVertexIndex);
@@ -964,7 +964,7 @@ void CActionEditFeature::MoveVertex()
 	//	case GEOS_POLYGON:
 	//		{
 	//			//找到编辑的哪一部分的图形
-	//			Geometry *pMoveGeometry =((TT_GEOMETRY::geom::Polygon *)pGeometry)->GetGeometry(m_curPart);
+	//			Geometry *pMoveGeometry =((GEOMETRY::geom::Polygon *)pGeometry)->GetGeometry(m_curPart);
 	//			if(pMoveGeometry!=NULL)
 	//			{
 	//				pMoveGeometry->ReplacePoint(m_curVertexIndex,newcoord);
@@ -993,7 +993,7 @@ void CActionEditFeature::ShowAttribute()
 		return ;
 
 	//获取活动地区
-	Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return ;
 
