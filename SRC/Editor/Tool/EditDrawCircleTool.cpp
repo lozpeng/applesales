@@ -243,7 +243,7 @@ namespace Editor
 		//	return;
 
 		////获取活动地区
-		//Carto::CMapPtr pMap = pMapCtrl->GetActiveMap();
+		//Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		//if(!pMap)
 		//	return;
 

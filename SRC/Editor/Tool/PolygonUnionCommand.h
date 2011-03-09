@@ -18,8 +18,9 @@ namespace Editor
 
 	public:
 		//³õÊ¼»¯
-		void Triger(void);
+		void Initialize(Framework::IUIObject *pTargetControl);
 
+		void Click();
 		//Çå³ý
 		void Clear(void);
 

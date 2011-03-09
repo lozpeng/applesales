@@ -1,13 +1,13 @@
 #ifndef _ACTION_EDIT_FEATURE_H_
 #define _ACTION_EDIT_FEATURE_H_
 
-#include "IAction.h"
+#include "ITool.h"
 #include <geometry/geom/Geometry.h>
-
+#include "ILayer.h"
 namespace Editor
 {
 
-class  EDITOR_DLL CActionEditFeature : public Framework::IAction
+class   CActionEditFeature : public Framework::ITool
 {
 public:
 	CActionEditFeature();
@@ -26,7 +26,9 @@ public:
 		On_MoveMoreShape   //移动多个图形
 	};
 public:
-	void Triger();
+	//初始化
+		
+	void Initialize(Framework::IUIObject *pTargetControl);
 	void LButtonDownEvent (UINT nFlags, CPoint point);
 	void MouseMoveEvent (UINT nFlags, CPoint point);
 	void LButtonUpEvent (UINT nFlags, CPoint point);
@@ -70,13 +72,13 @@ private:
 	bool   m_bContain;
 
 	//当前节点的坐标
-	TT_GEOMETRY::geom::Coordinate m_curVertex;
+	GEOMETRY::geom::Coordinate m_curVertex;
 
 	//当前在线上的点
-	TT_GEOMETRY::geom::Coordinate m_insertPt;
+	GEOMETRY::geom::Coordinate m_insertPt;
 
 	//移动的图形数组
-	std::vector<TT_GEOMETRY::geom::Geometry*> m_moveGeometrys;
+	std::vector<GEOMETRY::geom::Geometry*> m_moveGeometrys;
 
 	std::vector<long> m_shpIds;
 	std::vector<Carto::ILayer*> m_layers;

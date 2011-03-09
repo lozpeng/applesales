@@ -19,8 +19,11 @@ namespace Editor
 	{
 
 	}
-
-	void CActionPolygonIntersect::Triger()
+	void CActionPolygonIntersect::Initialize(Framework::IUIObject *pTargetControl)
+	{
+		ITool::Initialize(pTargetControl);
+	}
+	void CActionPolygonIntersect::Click()
 	{
 		//获取活动地图控件
 		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -28,7 +31,7 @@ namespace Editor
 			return;
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
@@ -47,27 +50,27 @@ namespace Editor
 		}
 
 		//判断编辑数据类型是否是矢量数据
-		if(pLayer->GetLayerType() != Carto::eFeatureLayer)
+		if(pLayer->GetLayerType() != Carto::FeatureLayer)
 		{
 			return;
 		}
 
 		//获得当前编辑层图形的类型，判断是否是多边形要素
-		GeodataModel::IDataObjectPtr pDataObject = pLayer->GetDataObject();
+		Geodatabase::IGeodataObjectPtr pDataObject = pLayer->GetDataObject();
 		if (!pDataObject)
 		{
 			return;
 		}
 
-		GeodataModel::IFeatureClass *pFeatureClass = dynamic_cast<GeodataModel::IFeatureClass*>(pDataObject.get());
+		Geodatabase::IFeatureClass *pFeatureClass = dynamic_cast<Geodatabase::IFeatureClass*>(pDataObject.get());
 		long lshpType = pFeatureClass->ShapeType(); 
-		if(lshpType != TT_GEOMETRY::geom::GEOS_POLYGON && lshpType != TT_GEOMETRY::geom::GEOS_MULTIPOLYGON)
+		if(lshpType != GEOMETRY::geom::GEOS_POLYGON && lshpType != GEOMETRY::geom::GEOS_MULTIPOLYGON)
 		{
 			return;
 		}
 
 		//获得当前工作空间
-		GeodataModel::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
+		Geodatabase::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
 
 		//获得当前编辑层的选择集
 		Clear();
@@ -90,7 +93,7 @@ namespace Editor
 		pWorkspace->StartEditOperation();
 		{
 			//添加第一个图形
-			GeodataModel::CFeaturePtr pFeature;
+			Geodatabase::CFeaturePtr pFeature;
 			pFeature = pFeatureClass->CreateFeature();
 			pFeature->SetShape(pGeometry);
 			//pFeature->Update();

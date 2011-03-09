@@ -4,7 +4,7 @@
 #include "ICommand.h"
 #include <vector>
 using std::vector;
-
+#include "ILayer.h"
 
 namespace Editor
 {
@@ -16,8 +16,9 @@ namespace Editor
 
 	public:
 		//初始化
-		void Triger(void);
+		void Initialize(Framework::IUIObject *pTargetControl);
 
+		void Click();
 		//组合图形
 		void GroupShape();
 		

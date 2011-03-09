@@ -9,7 +9,7 @@
 #include "ILayer.h"
 #include "SimpleFillSymbol.h"
 #include <Geometry/geom/Coordinate.h>
-using namespace TT_GEOMETRY::geom;
+using namespace GEOMETRY::geom;
 
 namespace Editor
 {
@@ -47,7 +47,7 @@ namespace Editor
 			return;
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
@@ -134,12 +134,12 @@ namespace Editor
 
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
 		//更新显示
-		otDisplay::IDisplayPtr dispaly = pMap->GetDisplay();
+		Display::IDisplayPtr dispaly = pMap->GetDisplay();
 		dispaly->SetDrawBuffer(drawEdit);
 		dispaly->DrawBackgroud();
 
@@ -187,9 +187,9 @@ namespace Editor
 			LINE_STYLE pLineStyle;
 			pLineStyle.lColor = RGB(0, 0, 0);
 			pLineStyle.lWidth = 0.6f;
-			pLineStyle.eStyle = OT_SOLID;
+			pLineStyle.eStyle = SOLID;
 
-			otDisplay::CDC *pDC = dispaly->GetDrawDC();
+			Display::CDC *pDC = dispaly->GetDrawDC();
 			DISPLAY_HANDLE pnewPen = pDC->CreatePen(pLineStyle);
 			DISPLAY_HANDLE pold = pDC->SelectObject(pnewPen);
 			
@@ -212,7 +212,7 @@ namespace Editor
 			return;
 
 		//获取活动地区
-		Carto::CGeoMapPtr pMap = pMapCtrl->GetActiveMap();
+		Carto::CMapPtr pMap = pMapCtrl->GetMap();
 		if(!pMap)
 			return;
 
@@ -230,20 +230,20 @@ namespace Editor
 			return;
 		}
 
-		GeodataModel::IDataObjectPtr pDataObject = pLayer->GetDataObject();
+		Geodatabase::IGeodataObjectPtr pDataObject = pLayer->GetDataObject();
 		if (!pDataObject)
 		{
 			return;
 		}
 
-		GeodataModel::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
+		Geodatabase::IWorkspace* pWorkspace = pDataObject->GetWorkspace();
 		if (!pWorkspace)
 		{
 			return;
 		}
 
 		//目前只支持对文件进行编辑
-		if(pWorkspace->GetType()!=GeodataModel::WT_FileSystem)
+		if(pWorkspace->GetType()!=Geodatabase::WT_FileSystem)
 		{
 			return;
 		}
@@ -252,7 +252,7 @@ namespace Editor
 		m_Points.push_back(m_Points[0]);
 
 		bool bz,bm;
-		GeodataModel::IFeatureClass *pFeatureClass = dynamic_cast<GeodataModel::IFeatureClass*>(pDataObject.get());
+		Geodatabase::IFeatureClass *pFeatureClass = dynamic_cast<Geodatabase::IFeatureClass*>(pDataObject.get());
 		bz =pFeatureClass->HasZ();
 		bm =pFeatureClass->HasM();
 
@@ -263,7 +263,7 @@ namespace Editor
 
 		switch (lShapeType)
 		{
-		case TT_GEOMETRY::geom::GEOS_LINESTRING:
+		case GEOMETRY::geom::GEOS_LINESTRING:
 			{
 				pGeometry = (Geometry*) GeometryFactory::getDefaultInstance()->createLineString();
 				pGeometry->SetbZ(bz);
@@ -278,7 +278,7 @@ namespace Editor
 			}
 			break;
 
-		case TT_GEOMETRY::geom::GEOS_MULTILINESTRING:
+		case GEOMETRY::geom::GEOS_MULTILINESTRING:
 			{
 				pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createMultiLineString();
 				pGeometry->SetbZ(bz);
@@ -293,12 +293,12 @@ namespace Editor
 					pg->AddPoint(pt);
 				}
 
-				((TT_GEOMETRY::geom::MultiLineString*)pGeometry)->AddGeometry(pg);
+				((GEOMETRY::geom::MultiLineString*)pGeometry)->AddGeometry(pg);
 			}
 
 			break;
 
-		case TT_GEOMETRY::geom::GEOS_POLYGON:
+		case GEOMETRY::geom::GEOS_POLYGON:
 			{
 	 			pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createPolygon();
 				pGeometry->SetbZ(bz);
@@ -313,7 +313,7 @@ namespace Editor
 					pg->AddPoint(pt);
 				}
 
-				((TT_GEOMETRY::geom::Polygon*)pGeometry)->AddGeometry(pg);
+				((GEOMETRY::geom::Polygon*)pGeometry)->AddGeometry(pg);
 			}
 
 			break;

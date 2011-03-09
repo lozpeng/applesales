@@ -15,8 +15,8 @@ public:
 	virtual ~CActionEditDrawRect(void);
 
 public:
-	//初始化
-	void Triger(void);
+		//初始化
+	void Initialize(Framework::IUIObject *pTargetControl);
 
 	void LButtonDownEvent (UINT nFlags, CPoint point);
 

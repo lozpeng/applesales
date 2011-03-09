@@ -1,5 +1,5 @@
-#ifndef _ACTION_EDITDRAWCIRCLE_H_
-#define _ACTION_EDITDRAWCIRCLE_H_
+#ifndef _EDITDRAWCIRCLE_TOOL_H_
+#define _EDITDRAWCIRCLE_TOOL_H_
 
 #include "ITool.h"
 #include "IDisplay.h"
