@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include "PolygonAdjacentTool.h"
-#include "TT_LinePlgOPInterface.h"
-#include "TT_PlgOPInterface.h"
-#include "TT_LineOP.h"
-#include "SnapAgent.h"
+
+//#include "SnapAgent.h"
 #include "IWorkspace.h"
 #include "Editor.h"
 #include "ILayer.h"
 #include "SimpleFillSymbol.h"
 #include <Geometry/geom/Coordinate.h>
+#include "IMapCtrl.h"
 using namespace GEOMETRY::geom;
 
 namespace Editor
@@ -17,14 +16,17 @@ namespace Editor
 
 	CActionPolygonAdjacent::CActionPolygonAdjacent() : ITool("ActionPolygonAdjacent")
 	{
-		RegisterAction("ActionPolygonAdjacent", this);
+		
 	}
 
 
 	CActionPolygonAdjacent::~CActionPolygonAdjacent(void)
 	{
 	}
-
+	void CActionPolygonAdjacent::Initialize(Framework::IUIObject *pTargetControl)
+	{
+		ITool::Initialize(pTargetControl);
+	}
 	void CActionPolygonAdjacent::Clear()
 	{
 		for(size_t i=0; i < m_shapes.size(); i++)
@@ -39,44 +41,6 @@ namespace Editor
 	}
 
 
-	void CActionPolygonAdjacent::Triger(void)
-	{
-		//获取活动地图控件
-		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
-		if(!pMapCtrl)
-			return;
-
-		//获取活动地区
-		Carto::CMapPtr pMap = pMapCtrl->GetMap();
-		if(!pMap)
-			return;
-
-		//获得编辑类
-		Editor::CEditorPtr pEdit =pMap->GetEditor();
-		if(!pEdit)
-		{
-			return;
-		}
-
-		//设置光标类型
-		pMapCtrl->SetCursorType(cursorNormal);
-
-		m_bIsDrawing = false;
-
-		//获得当前图层选择集
-		//获得当前编辑层的选择集
-		Clear();
-
-		pEdit->GetCurLayerSelection(m_shapes,m_shapeIds,m_players);
-		//如果选择的不是一个图形，则返回
-		if(m_shapes.size()!=1)
-		{
-			Clear();
-			return;
-		}
-
-		m_Points.clear();
-	}
 
 	void CActionPolygonAdjacent::LButtonDownEvent (UINT nFlags, CPoint point)
 	{
@@ -217,14 +181,14 @@ namespace Editor
 			return;
 
 		//获得编辑类
-		Editor::CEditorPtr pEdit =pMap->GetEditor();
-		if(!pEdit)
-		{
-			return;
-		}
+		//Editor::CEditorPtr pEdit =pMap->GetEditor();
+		//if(!pEdit)
+		//{
+		//	return;
+		//}
 
 		//获得编辑图层的工作空间
-		Carto::ILayer *pLayer = pEdit->GetCurLayer();
+		Carto::ILayer *pLayer;// = pEdit->GetCurLayer();
 		if (!pLayer)
 		{
 			return;
@@ -333,7 +297,7 @@ namespace Editor
 
 		pGeometry = pGeometry->difference(m_shapes[0]);
 
-		pEdit->AppendGeometry(pGeometry);
+//		pEdit->AppendGeometry(pGeometry);
 
 		delete pGeometry;
 		pGeometry = NULL;

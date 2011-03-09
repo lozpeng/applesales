@@ -2,6 +2,8 @@
 #define _ACTION_POLYGON_ADJACENT_H
 
 #include "ITool.h"
+#include "ILayer.h"
+
 #include <vector>
 using std::vector;
 

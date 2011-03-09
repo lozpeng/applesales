@@ -3,6 +3,7 @@
 #include "PolygonUnionCommand.h"
 #include "PolygonSubstractCommand.h"
 //#include "PlgOPInterface.h"
+#include "IMapCtrl.h"
 #include "IWorkspace.h"
 #include <Geometry/geom/Geometry.h>
 
@@ -22,7 +23,7 @@ namespace Editor
 	}
 	void CActionPolygonSubstract::Initialize(Framework::IUIObject *pTargetControl)
 	{
-		ITool::Initialize(pTargetControl);
+		ICommand::Initialize(pTargetControl);
 	}
 	void CActionPolygonSubstract::Click()
 	{
@@ -37,14 +38,14 @@ namespace Editor
 			return;
 
 		//获得编辑类
-		Editor::CEditorPtr pEdit =pMap->GetEditor();
-		if(!pEdit)
-		{
-			return;
-		}
+		//Editor::CEditorPtr pEdit =pMap->GetEditor();
+		//if(!pEdit)
+		//{
+		//	return;
+		//}
 
 		//获得当前编辑层
-		Carto::ILayer *pLayer = pEdit->GetCurLayer();
+		Carto::ILayer *pLayer;// = pEdit->GetCurLayer();
 		if (!pLayer)
 		{
 			return;
@@ -75,7 +76,7 @@ namespace Editor
 
 		//获得当前编辑层的选择集
 		Clear();
-		pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
+		//pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
 
 		//多边形要素个数必须大于2
 		if(m_shapes.size() < 2)
