@@ -39,13 +39,13 @@ namespace Editor
 		if(!pMap)
 			return;
 
-		CEditorPtr pEdit = pMap->GetEditor();
-		if (!pEdit)
-		{
-			return;
-		}
+		//CEditorPtr pEdit = pMap->GetEditor();
+		//if (!pEdit)
+		//{
+		//	return;
+		//}
 	
-		pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
+		//pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
 		if(m_shapes.size( )<= 1)
 		{
 			return;
@@ -82,14 +82,14 @@ namespace Editor
 		if(!pMap)
 			return;
 
-		CEditorPtr pEdit = pMap->GetEditor();
-		if (!pEdit)
-		{
-			return;
-		}
+		//CEditorPtr pEdit = pMap->GetEditor();
+		//if (!pEdit)
+		//{
+		//	return;
+		//}
 
 		//获得当前编辑层
-		Carto::ILayer *pLayer = pEdit->GetCurLayer();
+		Carto::ILayer *pLayer ;//= pEdit->GetCurLayer();
 		if (!pLayer)
 		{
 			return;

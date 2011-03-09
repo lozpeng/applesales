@@ -2,6 +2,7 @@
 #define _ACTION_POLYGONINTERSECT_H_
 
 #include "ICommand.h"
+#include "ILayer.h"
 #include <vector>
 using std::vector;
 
@@ -19,6 +20,7 @@ namespace Editor
 		//³õÊ¼»¯
 		void Initialize(Framework::IUIObject *pTargetControl);
 
+		void Click();
 		//Çå³ý
 		void Clear(void);
 

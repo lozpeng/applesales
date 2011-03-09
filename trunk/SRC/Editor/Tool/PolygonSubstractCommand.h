@@ -1,7 +1,7 @@
 #ifndef _ACTION_POLYGONSUBSTRACT_H_
 #define _ACTION_POLYGONSUBSTRACT_H_
 
-#include "IAction.h"
+#include "ICommand.h"
 #include <vector>
 using std::vector;
 
@@ -9,7 +9,7 @@ using std::vector;
 namespace Editor
 {
 
-	class CActionPolygonSubstract: public Framework::IAction
+	class CActionPolygonSubstract: public Framework::ICommand
 	{
 	public:
 		CActionPolygonSubstract(void);
@@ -17,7 +17,8 @@ namespace Editor
 
 	public:
 		//³õÊ¼»¯
-		void Triger(void);
+		void Initialize(Framework::IUIObject *pTargetControl);
+		void Click(void);
 
 		//Çå³ý
 		void Clear(void);

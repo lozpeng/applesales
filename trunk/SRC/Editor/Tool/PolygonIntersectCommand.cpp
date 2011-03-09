@@ -4,15 +4,15 @@
 #include "IWorkspace.h"
 #include "SimpleQuery.h"
 #include <Geometry/geom/Geometry.h>
-
+#include "IMapCtrl.h"
 namespace Editor
 {
 
 	static CActionPolygonIntersect gActionPolygonIntersect;
 
-	CActionPolygonIntersect::CActionPolygonIntersect(void) : IAction("ActionPolygonIntersect")
+	CActionPolygonIntersect::CActionPolygonIntersect(void) : ICommand("ActionPolygonIntersect")
 	{
-		RegisterAction("ActionPolygonIntersect", this);
+		
 	}
 
 	CActionPolygonIntersect::~CActionPolygonIntersect(void)
@@ -21,7 +21,7 @@ namespace Editor
 	}
 	void CActionPolygonIntersect::Initialize(Framework::IUIObject *pTargetControl)
 	{
-		ITool::Initialize(pTargetControl);
+		ICommand::Initialize(pTargetControl);
 	}
 	void CActionPolygonIntersect::Click()
 	{
@@ -36,14 +36,14 @@ namespace Editor
 			return;
 
 		//获得编辑类
-		Editor::CEditorPtr pEdit =pMap->GetEditor();
-		if(!pEdit)
-		{
-			return;
-		}
+		//Editor::CEditorPtr pEdit =pMap->GetEditor();
+		//if(!pEdit)
+		//{
+		//	return;
+		//}
 
 		//获得当前编辑层
-		Carto::ILayer *pLayer = pEdit->GetCurLayer();
+		Carto::ILayer *pLayer ;//= pEdit->GetCurLayer();
 		if (!pLayer)
 		{
 			return;
@@ -74,7 +74,7 @@ namespace Editor
 
 		//获得当前编辑层的选择集
 		Clear();
-		pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
+		//pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
 
 		//多边形要素个数必须大于2
 		if(m_shapes.size() < 2)

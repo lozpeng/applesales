@@ -34,7 +34,10 @@ namespace Editor
 
 	//≥ı ºªØ
 
-
+	void CActionEditDrawEllipse::Initialize(Framework::IUIObject *pTargetControl)
+	{
+		ITool::Initialize(pTargetControl);
+	}
 	void CActionEditDrawEllipse::LButtonDownEvent(UINT nFlags, CPoint point)
 	{
 		if (!m_bStartDraw)

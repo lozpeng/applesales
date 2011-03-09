@@ -32,9 +32,13 @@ CActionEditDrawRect::~CActionEditDrawRect(void)
 
 }
 
+
 //≥ı ºªØ
 
-
+void CActionEditDrawRect::Initialize(Framework::IUIObject *pTargetControl)
+{
+	ITool::Initialize(pTargetControl);
+}
 void CActionEditDrawRect::LButtonDownEvent(UINT nFlags, CPoint point)
 {
 	if (!m_bStartDraw)
