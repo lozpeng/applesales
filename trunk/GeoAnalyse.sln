@@ -61,12 +61,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TDApp", "SRC\TDApp\TDApp.vc
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UIRaster", "SRC\UIRaster\UIRaster.vcproj", "{8A922349-2C10-4388-9A95-0DB2AA735E07}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "SRC\Editor\Editor.vcproj", "{1D59BE5D-41DA-4C24-846C-13B8889F9710}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -119,10 +113,6 @@ Global
 		{92696377-6D07-44EE-9765-F00C72C8F7E5}.Debug|Win32.Build.0 = Debug|Win32
 		{92696377-6D07-44EE-9765-F00C72C8F7E5}.Release|Win32.ActiveCfg = Release|Win32
 		{92696377-6D07-44EE-9765-F00C72C8F7E5}.Release|Win32.Build.0 = Release|Win32
-		{8A922349-2C10-4388-9A95-0DB2AA735E07}.Debug|Win32.ActiveCfg = Debug|Win32
-		{8A922349-2C10-4388-9A95-0DB2AA735E07}.Debug|Win32.Build.0 = Debug|Win32
-		{8A922349-2C10-4388-9A95-0DB2AA735E07}.Release|Win32.ActiveCfg = Release|Win32
-		{8A922349-2C10-4388-9A95-0DB2AA735E07}.Release|Win32.Build.0 = Release|Win32
 		{1D59BE5D-41DA-4C24-846C-13B8889F9710}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1D59BE5D-41DA-4C24-846C-13B8889F9710}.Debug|Win32.Build.0 = Debug|Win32
 		{1D59BE5D-41DA-4C24-846C-13B8889F9710}.Release|Win32.ActiveCfg = Release|Win32
