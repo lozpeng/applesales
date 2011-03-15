@@ -899,10 +899,6 @@ namespace Carto
 		m_bFramed = bFramed;
 	}
 
-	//CGraphicLayerPtr CMap::GetGraphicLayer()
-	//{
-	//	return m_pGraphicLayer;
-	//}
 
 
 }

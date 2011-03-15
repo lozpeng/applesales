@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\carto;..\DataSourceRaster;..\carto\element;..\Geometry\source\headers\geometry\io"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\carto;..\DataSourceRaster;..\carto\element;..\Geometry\source\headers\geometry\io;..\DataSourcesFile"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CARTO_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

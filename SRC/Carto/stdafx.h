@@ -26,4 +26,5 @@
 #include "IRender.h"
 
 #include "DSRasterDefine.h"
+#include "DSFileDefine.h"
 // TODO: 在此处引用程序需要的其他头文件

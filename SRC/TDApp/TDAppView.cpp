@@ -52,7 +52,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_PRE_EXTENT, OnUpdateMapPreExtent)
 	ON_COMMAND(ID_NEXT_EXTENT, OnMapNextExtent)
 	ON_UPDATE_COMMAND_UI(ID_NEXT_EXTENT, OnUpdateMapNextExtent)
-	
+
 
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
@@ -106,7 +106,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_CalloutText, OnUpdateDrawCalloutText)
 	ON_COMMAND(ID_DRAW_HANDLINE, OnDrawFreeHandline)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_HANDLINE, OnUpdateDrawFreeHandline)
-	
+
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
 
@@ -151,7 +151,7 @@ void CTDAppView::OnDraw(CDC* pDC)
 	CTDAppDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 
-	
+
 	m_MapCtrl.OnPaint();
 }
 
@@ -182,7 +182,7 @@ void CTDAppView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 
 void CTDAppView::OnDestroy()
 {
-   CView::OnDestroy();
+	CView::OnDestroy();
 }
 
 
@@ -201,7 +201,7 @@ void CTDAppView::OnFilePrint()
 	ASSERT(printInfo.m_pPD != NULL); 
 	if (S_OK == COleDocObjectItem::DoDefaultPrinting(this, &printInfo))
 		return;
-	
+
 	CView::OnFilePrint();
 
 }
@@ -220,7 +220,7 @@ int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//m_wndButton.Create(_T("Test"),WS_CHILD|WS_VISIBLE,CRect(0,0,10,20),&m_WndTab,IDC_TEST);
 	m_WndTab.AddTab(&m_LayoutCtrl,_T("Layout"));
 
-	
+
 	CTDAppDoc* pDoc = GetDocument();
 	pDoc->SetLinkMapCtrl(&m_MapCtrl);
 	pDoc->SetLinkLayoutCtrl(&m_LayoutCtrl);
@@ -272,7 +272,7 @@ void CTDAppView::OnOpenVector()
 
 	//_crtBreakAlloc = 9878;
 
-	
+
 
 
 	// TODO: 在此添加命令处理程序代码
@@ -284,7 +284,7 @@ void CTDAppView::OnOpenVector()
 	else
 		return;
 
-	
+
 	this->GetDocument()->LoadShpFile(fileName);
 	m_MapCtrl.UpdateControl(drawAll);
 	RefreshLayerCombo();
@@ -324,6 +324,7 @@ void CTDAppView::OnMapPan()
 	{
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	}
+	Element2Shp();
 }
 
 void CTDAppView::OnUpdateMapPan(CCmdUI* pCmdUI)
@@ -346,7 +347,7 @@ void CTDAppView::OnMapZoomin()
 
 void CTDAppView::OnUpdateMapZoomin(CCmdUI* pCmdUI)
 {
-    pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomin");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomin");
 }
 
 void CTDAppView::OnMapZoomout()
@@ -363,7 +364,7 @@ void CTDAppView::OnMapZoomout()
 
 void CTDAppView::OnUpdateMapZoomout(CCmdUI* pCmdUI)
 {
-    pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomout");
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomout");
 }
 
 void CTDAppView::OnMapPreExtent()
@@ -496,7 +497,7 @@ afx_msg void CTDAppView::OnDrawCircle()
 	//	pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	//	pCommand->Click();
 	//}
-	
+
 }
 afx_msg void CTDAppView::OnUpdateDrawCircle(CCmdUI* pCmdUI)
 {
@@ -879,4 +880,46 @@ void CTDAppView::OnUpdateDrawMapFrameElement(CCmdUI *pCmdUI)
 {
 	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawMapFrameElementCmd");
 	//pCmdUI->Enable(m_bLayout);
+}
+//element 转成shp
+void CTDAppView::Element2Shp()
+{
+
+	Carto::CMapPtr ipMap = m_MapCtrl.GetMap();
+	Carto::CGraphicLayerPtr ipGraphicLayer = ipMap->GetGraphicLayer();
+	long lElementCnt = ipGraphicLayer->GetElementCount();
+
+
+	std::string fileName="D:\\ss.shp";
+	ipGraphicLayer->SaveElementAsShp(fileName);
+	//CString csDataSourceTmp=fileName;
+
+	//CString csThemeName = csDataSourceTmp.Mid (csDataSourceTmp.ReverseFind ('\\') + 1);
+	//csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
+
+	//Geodatabase::FeatureClassDef pFeatureDef;
+	//pFeatureDef.lshptype = GEOMETRY::geom::GEOS_POLYGON;
+	//Geodatabase::IWorkspace* ipWorkspace = CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(fileName);
+	//Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->CreateFeatureClass(fileName,pFeatureDef);
+
+	//ipWorkspace->StartEdit();
+	//Geodatabase::CFeaturePtr ipFeature;
+	//GEOMETRY::geom::Geometry* pGeometry;
+	////将选择的element导出shp
+	//Element::IElementPtr ipElement = NULL;
+	//
+	//for(int i=0; i< ipGraphicLayer->GetSelectedElementCount(); i++)
+	//{
+	//	ipElement = ipGraphicLayer->GetSelectedElement(i);
+	//	
+	//	pGeometry = ipElement->GetGeometry();
+	//	ipFeature= ipFeatureCls->CreateFeature();
+	//	ipFeature->SetShape(pGeometry);
+	//	ipFeatureCls->AddFeature(ipFeature.get());
+
+	//}
+
+	//ipWorkspace->StopEdit();
+
+	
 }
