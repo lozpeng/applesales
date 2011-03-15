@@ -139,6 +139,8 @@ public:
 	afx_msg void OnUpdateDrawMapFrameElement(CCmdUI* pCmdUI);
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
+
+	void Element2Shp();//element ×ª³Éshp
 protected:
 	
 };
