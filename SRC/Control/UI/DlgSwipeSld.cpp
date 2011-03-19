@@ -64,7 +64,7 @@ BOOL CEnhanceSld:: OnInitDialog()
 	m_rdLR.SetCheck(BST_CHECKED);
 
 	//SetTimer(1,500,NULL);
-
+	m_pdisplay->RefreshDisplay(drawAll);
 	return TRUE;
 }
 void CEnhanceSld::OnNMCustomdrawSlider(NMHDR *pNMHDR, LRESULT *pResult)
