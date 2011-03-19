@@ -77,7 +77,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 
 	ON_COMMAND(ID_SWIPE, OnSwipe)
 	ON_UPDATE_COMMAND_UI(ID_SWIPE, OnUpdateSwipe)
-
+	ON_COMMAND(ID_RASLUT_EDIT, OnFlick)
+	ON_UPDATE_COMMAND_UI(ID_RASLUT_EDIT, OnUpdateFlick)
 	//±ê»æ¹¤¾ß
 
 	ON_COMMAND(ID_DRAW_SELECT, OnDrawSelect)
@@ -744,6 +745,21 @@ void CTDAppView::OnSwipe()
 	}
 }
 void CTDAppView::OnUpdateSwipe(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(IsLayerComboNull());
+}
+void CTDAppView::OnFlick()
+{
+	Framework::ICommand* pCmd = NULL;
+	m_MapCtrl.SetCurTool("Flick");
+
+	pCmd= Framework::ICommand::FindCommand("Flick");
+	if(pCmd)
+	{
+		pCmd->Click();
+	}
+}
+void CTDAppView::OnUpdateFlick(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(IsLayerComboNull());
 }

@@ -101,7 +101,10 @@ public:
 	afx_msg void OnUpdateTransparentSlider(CCmdUI* pCmdUI);
 	//¾íÁ±
 	afx_msg void OnSwipe();
-	afx_msg void OnUpdateSwipe(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateSwipe(CCmdUI* pCmdUI); 
+
+	afx_msg void OnFlick();
+	afx_msg void OnUpdateFlick(CCmdUI* pCmdUI);
 	//±ê»æ
 	afx_msg void OnDrawSelect();
 	afx_msg void OnUpdateDrawSelect(CCmdUI* pCmdUI);
