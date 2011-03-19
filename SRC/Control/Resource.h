@@ -29,6 +29,7 @@
 #define IDD_PROGRESS_BAR                2014
 #define IDR_LAYER_MENU                  2015
 #define IDD_LAYERPROP_GENERAL           2016
+#define IDD_TRANSPARENT_ENHANCE         9004
 #define IDD_SWIPE_SHOW                  9011
 #define ID_32771                        32771
 #define ID_ZOOMTO_LAYER                 32772

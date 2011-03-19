@@ -350,7 +350,7 @@ void CMainFrame::AddTab_ImageAnalyse()
 	pPanelTargetLayer->AddSeparator();
 	CBCGPRibbonButton* pBtnSwipView = new CBCGPRibbonButton (ID_SWIPE, _T("卷帘"),5,5);
 	pPanelTargetLayer->Add ( pBtnSwipView);
-	CBCGPRibbonButton* pBtnStretch = new CBCGPRibbonButton (ID_RASLUT_EDIT, _T("手动增强"),6,6);
+	CBCGPRibbonButton* pBtnStretch = new CBCGPRibbonButton (ID_RASLUT_EDIT, _T("闪烁"),6,6);
 	pPanelTargetLayer->Add ( pBtnStretch);
 }
 

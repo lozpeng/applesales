@@ -662,10 +662,26 @@
 				RelativePath=".\UI\ProgressBar.h"
 				>
 			</File>
+			<File
+				RelativePath=".\UI\TransparentDLG.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\TransparentDLG.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Command"
 			>
+			<File
+				RelativePath=".\Tool\FlickCmd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\FlickCmd.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Tool\SwipeCommand.cpp"
 				>
