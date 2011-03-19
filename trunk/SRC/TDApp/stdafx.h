@@ -66,6 +66,7 @@
 #include "Geometry.h"
 #include "ControlDefine.h"
 #include "DSFileDefine.h"
+#include "EditorDef.h"
 
 #define CRTDBG_MAP_ALLOC
 #include <stdlib.h>

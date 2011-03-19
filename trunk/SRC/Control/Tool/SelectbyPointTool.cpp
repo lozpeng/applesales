@@ -42,11 +42,12 @@ void CSelectbyPointTool::Initialize(Framework::IUIObject *pTargetControl)
 void CSelectbyPointTool::LButtonDownEvent (UINT nFlags, CPoint point)
 {
 	//获取活动地图控件
-	if(!m_pMapCtrl)
+	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
+	if(!pMapCtrl)
 		return;
-
+	m_pMapCtrl = pMapCtrl;
 	//获取活动地区
-	Carto::CMapPtr pMap = m_pMapCtrl->GetMap();
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
 		return;
 

@@ -9,7 +9,7 @@
 #ifndef _Editor_Define_H
 #define _Editor_Define_H
 
-#if defined  CONTROL_EXPORTS
+#if defined  EDITOR_EXPORTS
 #define EDITOR_DLL __declspec(dllexport)
 #else
 #define EDITOR_DLL __declspec(dllimport)

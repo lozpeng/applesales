@@ -29,9 +29,9 @@ Display::CSymbolFactory g_SymbolFactory;
 
 //SYSTEM::XMLConfigurationPtr ptrSymbolRender = NULL;
 
-//static std::map< std::string , otDisplay::IExtSymbolInterFacePtr >::iterator curItem;
+//static std::map< std::string , Display::IExtSymbolInterFacePtr >::iterator curItem;
 
-//SYSTEM::XMLConfigurationPtr otDisplay::GetSymbolRenderConfig()
+//SYSTEM::XMLConfigurationPtr Display::GetSymbolRenderConfig()
 //{
 //	if(ptrSymbolRender == NULL)
 //	{
@@ -53,7 +53,7 @@ Display::CSymbolFactory g_SymbolFactory;
 //
 //}
 //
-//void otDisplay::ReleaseSymbolRenderConfig()
+//void Display::ReleaseSymbolRenderConfig()
 //{
 //	ptrSymbolRender.reset();
 //}
@@ -74,7 +74,7 @@ Display::CSymbolFactory::~CSymbolFactory(void)
 //	return initFunc();
 //}
 //
-//BOOL otDisplay::CSymbolFactory::RegisterExtSymbolInterfaceObject(std::string name, otDisplay::IExtSymbolInterFacePtr pExtSymbolInterface )
+//BOOL Display::CSymbolFactory::RegisterExtSymbolInterfaceObject(std::string name, Display::IExtSymbolInterFacePtr pExtSymbolInterface )
 //{
 //	if( g_SymbolFactory.m_mapExtSymbolInterFace.find( name ) != g_SymbolFactory.m_mapExtSymbolInterFace.end() )
 //		OTFALSERETURN1(FALSE,"The Same Name Of Ext Symbol Object Is Already Exist!(%s)",(char*)name.c_str() );
@@ -84,9 +84,9 @@ Display::CSymbolFactory::~CSymbolFactory(void)
 //	return TRUE;
 //}
 //
-//otDisplay::ISymbolPtr otDisplay::CSymbolFactory::CreateExtSymbol(std::string name)
+//Display::ISymbolPtr Display::CSymbolFactory::CreateExtSymbol(std::string name)
 //{
-//	std::map< std::string , otDisplay::IExtSymbolInterFacePtr >::iterator item;
+//	std::map< std::string , Display::IExtSymbolInterFacePtr >::iterator item;
 //	item = g_SymbolFactory.m_mapExtSymbolInterFace.find( name );
 //	if( item == g_SymbolFactory.m_mapExtSymbolInterFace.end() )
 //		OTFALSERETURN1(NULL, "No Find Ext Symbol:(%s)" , (char*)name.c_str() );
@@ -121,7 +121,7 @@ Display::CSymbolFactory::~CSymbolFactory(void)
 //}
 //////////////////////////////////////////////////////////////////////////
 
-// 函数名称   : otDisplay::CSymbolFactory::CreateSymbolFromStream
+// 函数名称   : Display::CSymbolFactory::CreateSymbolFromStream
 // 描述       : 根据一个数据流创建一个符号对象
 // 返回值     : Display::ISymbolPtr 
 // 参数       : System::IArchive &ar
@@ -176,9 +176,9 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbolFromStream(SYSTEM::IArc
 }
 
 
-// 函数名称   : otDisplay::CSymbolFactory::CreateSymbol
+// 函数名称   : Display::CSymbolFactory::CreateSymbol
 // 描述       : 通过指定类型，返回一个初始化状态的符号对象
-// 返回值     : otDisplay::ISymbolPtr 
+// 返回值     : Display::ISymbolPtr 
 // 参数       : SYMBOL_TYPE SymboType
 
 Display::ISymbolPtr Display::CSymbolFactory::CreateSymbol(SYMBOL_TYPE SymboType)

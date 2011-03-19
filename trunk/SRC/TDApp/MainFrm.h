@@ -56,6 +56,7 @@ public:
 	void		AddMainCategory();
 	void		AddTab_MapControl();
 	void		AddTab_ImageAnalyse();
+	void		AddTab_Editor();
 
 	Framework::IMaptreeCtrl* GetTOC();
 

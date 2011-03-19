@@ -24,9 +24,12 @@
 #define IDB_Drawing                     172
 #define IDB_EXPLORER                    173
 #define IDB_ZOOMBAR1                    174
+#define IDB_BITMAP2                     175
+#define IDB_EDITORLARGE                 175
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
+#define ID_EDITNODE_ELEMENT             30030
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
 #define ID_VIEW_TOOLBARS                32771
@@ -89,35 +92,44 @@
 #define ID_OPENMAPCLASS                 40004
 #define ID_SAVEMAPCLASS                 40005
 #define ID_SAVEASMAPCLASS               40006
-#define ID_FIXEDZOOM_IN					40007
-#define ID_FIXEDZOOM_OUT				40008
-#define ID_DUMMY_COMBO					40009
-#define ID_PRE_EXTENT					40010
-#define ID_NEXT_EXTENT					40011
-#define ID_SETTING						40012
-#define ID_FOR_HELP						40013
-#define ID_FOR_EXIT						40014
-#define ID_CURRLAYER_COMBO				40015
-#define ID_ZOOMTO_LYREXTENT				40016
-#define ID_ZOOMTO_LYRRESOLUTION			40017
-#define ID_BRIGHT_RESTORE				40018
-#define ID_CONTRAST_RESTORE				40019
-#define ID_BRIGHT_SLIDER				40020
-#define ID_CONTRAST_SLIDER				40021
-#define ID_BRIGHT_TEXT					40022
-#define ID_CONTRAST_TEXT				40023
-#define ID_TRANSPARENT_RESTORE			40024
-#define ID_TRANSPARENT_SLIDER			40025
-#define ID_TRANSPARENT_TEXT				40026
-#define ID_SWIPE						40027
-#define ID_RASLUT_EDIT					40028
-#define ID_ROTATION_ELEMENT				40029
-#define ID_EDITNODE_ELEMENT				30030
+#define ID_FIXEDZOOM_IN                 40007
+#define ID_FIXEDZOOM_OUT                40008
+#define ID_DUMMY_COMBO                  40009
+#define ID_PRE_EXTENT                   40010
+#define ID_NEXT_EXTENT                  40011
+#define ID_SETTING                      40012
+#define ID_FOR_HELP                     40013
+#define ID_FOR_EXIT                     40014
+#define ID_CURRLAYER_COMBO              40015
+#define ID_ZOOMTO_LYREXTENT             40016
+#define ID_ZOOMTO_LYRRESOLUTION         40017
+#define ID_BRIGHT_RESTORE               40018
+#define ID_CONTRAST_RESTORE             40019
+#define ID_BRIGHT_SLIDER                40020
+#define ID_CONTRAST_SLIDER              40021
+#define ID_BRIGHT_TEXT                  40022
+#define ID_CONTRAST_TEXT                40023
+#define ID_TRANSPARENT_RESTORE          40024
+#define ID_TRANSPARENT_SLIDER           40025
+#define ID_TRANSPARENT_TEXT             40026
+#define ID_SWIPE                        40027
+#define ID_RASLUT_EDIT                  40028
+#define ID_ROTATION_ELEMENT             40029
+
+
+
+#define ID_EDITOR_START		            40030	
+#define ID_EDITOR_END				    40031
+#define ID_EDITOR_SKETCH                40032
+#define ID_EDITOR_EDIT                  40033
+#define ID_EDITOR_REDO                  40034
+#define ID_EDITOR_UNDO					40035
+#define ID_EDITOR_SAVE					40036
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        174
+#define _APS_NEXT_RESOURCE_VALUE        176
 #define _APS_NEXT_COMMAND_VALUE         32886
 #define _APS_NEXT_CONTROL_VALUE         1054
 #define _APS_NEXT_SYMED_VALUE           108

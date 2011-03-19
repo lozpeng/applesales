@@ -365,13 +365,13 @@ namespace Carto
 
 
 			//绘制编辑空间里的内容
-			//if(m_pEditor)
-			//{
-			//	if(m_pEditor->IsEditing())
-			//	{
-			//		m_pEditor->DrawEdit(m_pDisplay);
-			//	}
-			//}
+			if(m_pEditor)
+			{
+				if(m_pEditor->IsEditing())
+				{
+					m_pEditor->DrawEdit(m_pDisplay);
+				}
+			}
 
 			if(m_pGraphicLayer)
 				m_pGraphicLayer->Draw( m_pDisplay,drawEdit);

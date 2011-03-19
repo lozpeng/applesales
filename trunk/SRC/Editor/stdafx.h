@@ -62,4 +62,4 @@
 #include "CartoHeader.h"
 #include "FrameworkDefine.h"
 #include "Geometry.h"
-//#include "EditorDef.h"
+#include "EditorDef.h"

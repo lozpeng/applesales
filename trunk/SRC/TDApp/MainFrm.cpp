@@ -98,6 +98,8 @@ BOOL CMainFrame::CreateRibbonBar()
 	AddTab_MapControl();
 	//影像分析
 	AddTab_ImageAnalyse();
+	//矢量编辑
+	AddTab_Editor();
 	//-----------------------------------
 	// Add quick access toolbar commands:
 	//-----------------------------------
@@ -171,7 +173,7 @@ void CMainFrame::AddTab_MapControl()
 	pPanelFile->Add (pPanelFeature);
 
 	//创建视图基本操作
-	CBCGPRibbonPanel* pPanelMap = pCategory->AddPanel (_T("工具"));
+	CBCGPRibbonPanel* pPanelMap = pCategory->AddPanel (_T("浏览工具"));
 	//--------------------------
 	// 放大:
 	//--------------------------
@@ -219,7 +221,7 @@ void CMainFrame::AddTab_MapControl()
 
 	
 
-	CBCGPRibbonPanel* pPanelLabel = pCategory->AddPanel (_T("工具"));
+	CBCGPRibbonPanel* pPanelLabel = pCategory->AddPanel (_T("标绘工具"));
 	//--------------------------
 	// 选择:
 	//--------------------------
@@ -354,6 +356,56 @@ void CMainFrame::AddTab_ImageAnalyse()
 	pPanelTargetLayer->Add ( pBtnStretch);
 }
 
+void CMainFrame::AddTab_Editor()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("矢量编辑"),
+		IDB_FILELARGE,
+		IDB_EDITORLARGE);
+
+	//创建编辑基本操作
+	CBCGPRibbonPanel* pPanelEditor = pCategory->AddPanel (_T("编辑工具"));
+	//--------------------------
+	// 开始编辑:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditStart = new CBCGPRibbonButton (ID_EDITOR_START, _T("开始编辑"), 0, 0);
+	pPanelEditor->Add (pBtnEditStart);
+	//--------------------------
+	// 绘制:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditSketch = new CBCGPRibbonButton (ID_EDITOR_SKETCH,_T("绘制"), 1, 1);
+	pPanelEditor->Add (pBtnEditSketch);
+	//--------------------------
+	// 编辑:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEdit = new CBCGPRibbonButton (ID_EDITOR_EDIT, _T("编辑"), 2, 2);
+	pPanelEditor->Add (pBtnEdit);
+	//--------------------------
+	// 撤销:
+	//--------------------------
+
+	CBCGPRibbonButton* pBtnEditUndo = new CBCGPRibbonButton (ID_EDITOR_UNDO, _T("撤销"), 3, 3);
+	pPanelEditor->Add (pBtnEditUndo);
+	//--------------------------
+	// 重复:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditRedo = new CBCGPRibbonButton (ID_EDITOR_REDO, _T("重复"), 4, 4);
+	pPanelEditor->Add (pBtnEditRedo);
+
+	//--------------------------
+	// 结束编辑:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditEnd = new CBCGPRibbonButton (ID_EDITOR_END,_T("结束编辑"), 5, 5);
+	pPanelEditor->Add (pBtnEditEnd);
+
+	//--------------------------
+	// 保存:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditSave = new CBCGPRibbonButton (ID_EDITOR_SAVE, _T("保存"), 6, 6);
+	pPanelEditor->Add (pBtnEditSave);
+
+}
+
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	if( !CBCGPFrameWnd::PreCreateWindow(cs) )
@@ -363,7 +415,6 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 	return TRUE;
 }
-
 
 Framework::IMaptreeCtrl* CMainFrame::GetTOC()
 {

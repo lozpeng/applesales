@@ -137,6 +137,21 @@ public:
 	afx_msg void OnDrawFreeHandline();
 	afx_msg void OnUpdateDrawFreeHandline(CCmdUI* pCmdUI);
 
+	//编辑工具
+	afx_msg void OnEditorStart();
+	afx_msg void OnUpdateEditorStart(CCmdUI *pCmdUI);
+	afx_msg void OnEditorSketch();
+	afx_msg void OnUpdateEditorSketch(CCmdUI *pCmdUI);
+	afx_msg void OnEditerEdit();
+	afx_msg void OnUpdateEditerEdit(CCmdUI *pCmdUI);
+	afx_msg void OnEditerRedo();
+	afx_msg void OnUpdateEditerRedo(CCmdUI *pCmdUI);
+	afx_msg void OnEditerUndo();
+	afx_msg void OnUpdateEditerUndo(CCmdUI *pCmdUI);
+	afx_msg void OnEditerEnd();
+	afx_msg void OnUpdateEditerEnd(CCmdUI *pCmdUI);
+	afx_msg void OnEditerSave();
+	afx_msg void OnUpdateEditerSave(CCmdUI *pCmdUI);
 
 	//地图整饰
 	afx_msg void OnSelectFrameElement();
