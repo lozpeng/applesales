@@ -75,6 +75,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_TRANSPARENT_RESTORE, OnUpdateTransparentRestore)
 	ON_UPDATE_COMMAND_UI(ID_TRANSPARENT_SLIDER, OnUpdateTransparentSlider)
 
+	ON_COMMAND(ID_SWIPE, OnSwipe)
+	ON_UPDATE_COMMAND_UI(ID_SWIPE, OnUpdateSwipe)
 
 	//±ê»æ¹¤¾ß
 
@@ -727,6 +729,21 @@ void CTDAppView::OnUpdateContrastSlider(CCmdUI* pCmdUI)
 	pCmdUI->Enable(IsLayerComboNull());
 }
 void CTDAppView::OnUpdateTransparentSlider(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(IsLayerComboNull());
+}
+void CTDAppView::OnSwipe()
+{
+	Framework::ICommand* pCmd = NULL;
+	m_MapCtrl.SetCurTool("SwipeEnhance");
+
+	pCmd= Framework::ICommand::FindCommand("SwipeEnhance");
+	if(pCmd)
+	{
+		pCmd->Click();
+	}
+}
+void CTDAppView::OnUpdateSwipe(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(IsLayerComboNull());
 }

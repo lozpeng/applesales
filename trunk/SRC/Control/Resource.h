@@ -29,12 +29,17 @@
 #define IDD_PROGRESS_BAR                2014
 #define IDR_LAYER_MENU                  2015
 #define IDD_LAYERPROP_GENERAL           2016
+#define IDD_SWIPE_SHOW                  9011
 #define ID_32771                        32771
 #define ID_ZOOMTO_LAYER                 32772
 #define ID_32773                        32773
 #define ID_32774                        32774
 #define ID_REMOVE_LAYER                 32775
 #define ID_LAYER_PROP                   32776
+#define IDC_SLIDER1                     32850
+#define IDC_RADIO_UD                    32851
+#define IDC_RADIO_LR                    32852
+#define IDC_STATIC1                     32853
 
 // Next default values for new objects
 // 
