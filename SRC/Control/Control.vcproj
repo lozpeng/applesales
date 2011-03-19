@@ -623,6 +623,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\DlgSwipeSld.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgSwipeSld.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\GradientProgressCtrl.cpp"
 				>
 			</File>
@@ -652,6 +660,18 @@
 			</File>
 			<File
 				RelativePath=".\UI\ProgressBar.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Command"
+			>
+			<File
+				RelativePath=".\Tool\SwipeCommand.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\SwipeCommand.h"
 				>
 			</File>
 		</Filter>
