@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\carto;..\carto\element;..\Geometry\source\headers\geometry\io"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\carto;..\carto\element;..\Geometry\source\headers\geometry\io;..\DataSourcesFile"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CARTO_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -198,6 +198,10 @@
 			</File>
 			<File
 				RelativePath=".\GraphicLayer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\IEditor.cpp"
 				>
 			</File>
 			<File
@@ -292,6 +296,10 @@
 			</File>
 			<File
 				RelativePath=".\GraphicLayer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IEditor.h"
 				>
 			</File>
 			<File

@@ -84,6 +84,7 @@ IDB_FILESMALL           BITMAP                  "res\\bitmap3.bmp"
 IDB_FILELARGE           BITMAP                  "res\\filelarg.bmp"
 IDB_ZOOMBAR1            BITMAP                  "res\\zoombar1.bmp"
 IDB_ZOOMBARSMALL        BITMAP                  "res\\bmp00005.bmp"
+IDB_EDITORLARGE         BITMAP                  "res\\bmp00003.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -211,7 +212,7 @@ BEGIN
     BEGIN
         MENUITEM "&Help Topics",                ID_HELP_FINDER
         MENUITEM SEPARATOR
-        MENUITEM "&About 遥感基础平台...",             ID_APP_ABOUT
+        MENUITEM "&About 遥感基础平台...",            ID_APP_ABOUT
     END
 END
 
@@ -396,7 +397,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "遥感基础平台\n\遥感基础平台\n\n\nTDApp.Document\nTDApp.Document"
+    IDR_MAINFRAME           "遥感基础平台\n\\遥感基础平台\n\n\nTDApp.Document\nTDApp.Document"
 END
 
 STRINGTABLE 

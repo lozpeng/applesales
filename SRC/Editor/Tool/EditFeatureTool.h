@@ -1,5 +1,5 @@
-#ifndef _ACTION_EDIT_FEATURE_H_
-#define _ACTION_EDIT_FEATURE_H_
+#ifndef _EDIT_FEATURE_TOOL_H_
+#define _EDIT_FEATURE_TOOL_H_
 
 #include "ITool.h"
 #include <geometry/geom/Geometry.h>
@@ -7,11 +7,11 @@
 namespace Editor
 {
 
-class   CActionEditFeature : public Framework::ITool
+class   CEditFeatureTool : public Framework::ITool
 {
 public:
-	CActionEditFeature();
-	~CActionEditFeature();
+	CEditFeatureTool();
+	~CEditFeatureTool();
 public:
 
 	enum Status 
@@ -79,6 +79,12 @@ private:
 
 	//移动的图形数组
 	std::vector<GEOMETRY::geom::Geometry*> m_moveGeometrys;
+
+	Status m_nStatus;
+	HCURSOR cursorOnVertix ;
+	HCURSOR cursorOnLine ;
+	HCURSOR cursorModifyShape ;
+	HCURSOR cursorSizeAll ;
 
 	std::vector<long> m_shpIds;
 	std::vector<Carto::ILayer*> m_layers;

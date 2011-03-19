@@ -44,7 +44,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;EDITOR_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -102,11 +102,11 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\..\..\outdir\$(ConfigurationName)\"
+			IntermediateDirectory="..\..\..\indir\$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="2"
 			UseOfMFC="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -128,7 +128,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;EDITOR_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
@@ -149,7 +150,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="Geometry.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OutDir)"
 				ModuleDefinitionFile=".\Editor.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -192,11 +195,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\CEditor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CreateFeatureTask.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Editor.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Editor.def"
+				>
+			</File>
+			<File
+				RelativePath=".\IEditTask.cpp"
 				>
 			</File>
 			<File
@@ -226,11 +241,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\CEditor.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CreateFeatureTask.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Editor.h"
 				>
 			</File>
 			<File
 				RelativePath=".\EditorDef.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IEditTask.h"
 				>
 			</File>
 			<File
@@ -247,6 +274,18 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\res\cur00004.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cur00005.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\cursor1.cur"
+				>
+			</File>
 			<File
 				RelativePath=".\Editor.rc"
 				>

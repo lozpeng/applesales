@@ -10,7 +10,7 @@
 
 #include "IDisplay.h"
 #include "LayerArray.h"
-//#include "IEditor.h"
+#include "IEditor.h"
 //#include "IEagleEyeView.h"
 #include "GraphicLayer.h"
 #include <boost/signal.hpp>
@@ -208,12 +208,12 @@ namespace Carto
 		/**
 		* 获得编辑器
 		*/
-		//IEditorPtr GetEditor() {return m_pEditor;};
+		IEditorPtr GetEditor() {return m_pEditor;};
 
 		/**
 		* 设置编辑器
 		*/
-		//void SetEditor(IEditorPtr pEditor){m_pEditor =pEditor;}
+		void SetEditor(IEditorPtr pEditor){m_pEditor =pEditor;}
 
 		/** 
 		* 获得鹰眼绘制对象
@@ -365,7 +365,7 @@ namespace Carto
 		//ILayerPtr m_activeLayer;
 
 		//编辑器
-		//IEditorPtr m_pEditor;
+		IEditorPtr m_pEditor;
 
 		//保存当前视图位置的临时对象
 		//IEagleEyeViewPtr m_pEagleEyeViewPtr;

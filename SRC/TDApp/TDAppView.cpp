@@ -16,6 +16,7 @@
 #include "RasterRGBRender.h"
 #include "ProgressBar.h"
 #include "MainFrm.h"
+#include "CEditor.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -109,6 +110,24 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_CalloutText, OnUpdateDrawCalloutText)
 	ON_COMMAND(ID_DRAW_HANDLINE, OnDrawFreeHandline)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_HANDLINE, OnUpdateDrawFreeHandline)
+
+	//编辑工具
+	
+	ON_COMMAND(ID_EDITOR_START, OnEditorStart)
+	ON_UPDATE_COMMAND_UI(ID_EDITOR_START, OnUpdateEditorStart)
+	ON_COMMAND(ID_EDITOR_SKETCH, OnEditorSketch)
+	ON_UPDATE_COMMAND_UI(ID_EDITOR_SKETCH, OnUpdateEditorSketch)
+	ON_COMMAND(ID_EDITOR_EDIT, OnEditerEdit)
+	ON_UPDATE_COMMAND_UI(ID_EDITOR_EDIT, OnUpdateEditerEdit)
+	ON_COMMAND(ID_EDITOR_REDO, OnEditerRedo)
+	ON_UPDATE_COMMAND_UI(ID_EDITOR_REDO, OnUpdateEditerRedo)
+	ON_COMMAND(ID_EDITOR_UNDO, OnEditerUndo)
+	ON_UPDATE_COMMAND_UI(ID_EDITOR_UNDO, OnUpdateEditerUndo)
+	ON_COMMAND(ID_EDITOR_END, OnEditerEnd)
+	ON_UPDATE_COMMAND_UI(ID_EDITOR_END, OnUpdateEditerEnd)
+	ON_COMMAND(ID_EDITOR_SAVE, OnEditerSave)
+	ON_UPDATE_COMMAND_UI(ID_EDITOR_SAVE, OnUpdateEditerSave)
+
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
@@ -914,6 +933,91 @@ void CTDAppView::OnUpdateDrawMapFrameElement(CCmdUI *pCmdUI)
 	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawMapFrameElementCmd");
 	//pCmdUI->Enable(m_bLayout);
 }
+//编辑工具
+afx_msg void CTDAppView::OnEditorStart()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		pMap->GetEditor()->StartEdit();
+	}
+}
+afx_msg void CTDAppView::OnUpdateEditorStart(CCmdUI *pCmdUI)
+{
+
+}
+afx_msg void CTDAppView::OnEditorSketch()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("SketchTool");
+}
+afx_msg void CTDAppView::OnUpdateEditorSketch(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "SketchTool");
+}
+afx_msg void CTDAppView::OnEditerEdit()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("EditFeatureTool");
+	pTool=Framework::ITool::FindTool("EditFeatureTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateEditerEdit(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "EditFeatureTool");
+}
+afx_msg void CTDAppView::OnEditerRedo()
+{
+
+}
+afx_msg void CTDAppView::OnUpdateEditerRedo(CCmdUI *pCmdUI)
+{
+
+}
+afx_msg void CTDAppView::OnEditerUndo()
+{
+
+}
+afx_msg void CTDAppView::OnUpdateEditerUndo(CCmdUI *pCmdUI)
+{
+
+}
+afx_msg void CTDAppView::OnEditerEnd()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		pMap->GetEditor()->StopEdit(true);
+	}
+}
+afx_msg void CTDAppView::OnUpdateEditerEnd(CCmdUI *pCmdUI)
+{
+
+}
+afx_msg void CTDAppView::OnEditerSave()
+{
+
+}
+afx_msg void CTDAppView::OnUpdateEditerSave(CCmdUI *pCmdUI)
+{
+
+}
+
 //element 转成shp
 void CTDAppView::Element2Shp()
 {
@@ -925,6 +1029,8 @@ void CTDAppView::Element2Shp()
 
 	std::string fileName="D:\\ss.shp";
 	ipGraphicLayer->SaveElementAsShp(fileName);
+
+
 	//CString csDataSourceTmp=fileName;
 
 	//CString csThemeName = csDataSourceTmp.Mid (csDataSourceTmp.ReverseFind ('\\') + 1);
@@ -953,6 +1059,5 @@ void CTDAppView::Element2Shp()
 	//}
 
 	//ipWorkspace->StopEdit();
-
 	
 }

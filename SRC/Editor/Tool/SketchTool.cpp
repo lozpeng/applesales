@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SketchTool.h"
 #include "IMapCtrl.h"
-
+#include "CEditor.h"
 #include "resource.h"
 
 namespace Editor
@@ -9,7 +9,7 @@ namespace Editor
 
 static CSketchTool gSketchTool;
 
-CSketchTool::CSketchTool() : ITool("ActionSketch")
+CSketchTool::CSketchTool() : ITool("SketchTool")
 {
 	
 }
@@ -37,23 +37,23 @@ void CSketchTool::LButtonDownEvent (UINT nFlags, CPoint point)
 	if(!pMap)
 		return;
 
-	//Editor::CEditorPtr pEdit =pMap->GetEditor();
-	//if(!pEdit)
-	//{
-	//	return;
-	//}
+	CEditorPtr pEdit =pMap->GetEditor();
+	if(!pEdit)
+	{
+		return;
+	}
 
 	//ÉèÖÃ±à¼­¿Õ¼äµÄ×´Ì¬
-	//pEdit->SetbSketch(true);
+	pEdit->SetbSketch(true);
 
-	//pEdit->SetbEditFeature(false);
+	pEdit->SetbEditFeature(false);
 
-	//pEdit->SetbEditVertex(true);
+	pEdit->SetbEditVertex(true);
 
 	GEOMETRY::geom::Coordinate inPt,outPt;
 	pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x,point.y,inPt);
 
-	//pEdit->Snap(inPt,outPt);
+	pEdit->Snap(inPt,outPt);
 
     CPoint  cpt;
 	pMap->GetDisplay()->GetDisplayTransformation().ConvertGeoToDisplay(outPt.x,outPt.y,cpt.x,cpt.y);
@@ -62,7 +62,7 @@ void CSketchTool::LButtonDownEvent (UINT nFlags, CPoint point)
 
 	if(cpt!=m_clickPt)
 	{
-		//pEdit->AddSketchPoint(outPt);
+		pEdit->AddSketchPoint(outPt);
 
 		pMapCtrl->UpdateControl(drawEdit);
 
@@ -84,15 +84,15 @@ void CSketchTool::MouseMoveEvent (UINT nFlags, CPoint point)
 	if(!pMap)
 		return;
 
-	//Editor::CEditorPtr pEdit =pMap->GetEditor();
-	//if(!pEdit)
-	//{
-	//	return;
-	//}
+	Editor::CEditorPtr pEdit =pMap->GetEditor();
+	if(!pEdit)
+	{
+		return;
+	}
 	GEOMETRY::geom::Coordinate inPt,outPt;
 	pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x,point.y,inPt);
 
-	//pEdit->Snap(inPt,outPt);
+	pEdit->Snap(inPt,outPt);
 
 	pMapCtrl->UpdateControl(drawEdit);
 
@@ -117,14 +117,14 @@ void CSketchTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 	if(!pMap)
 		return;
 
-	//Editor::CEditorPtr pEdit =pMap->GetEditor();
-	//if(!pEdit)
-	//{
-	//	return;
-	//}
+	Editor::CEditorPtr pEdit =pMap->GetEditor();
+	if(!pEdit)
+	{
+		return;
+	}
 
 	//½áÊø»æÖÆ
-	//pEdit->FinishSketch();
+	pEdit->FinishSketch();
 
     m_clickPt.x =-1;
 	m_clickPt.y =-1;

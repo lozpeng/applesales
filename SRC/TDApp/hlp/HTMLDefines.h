@@ -1,6 +1,7 @@
  
 // Commands (ID_* and IDM_*) 
 #define HID_TABCONTROL                          0x1041E
+#define HID_EDITNODE_ELEMENT                    0x1754E
 #define HID_CANCEL_EDIT_CNTR                    0x18000
 #define HID_VIEW_CUSTOMIZE                      0x18002
 #define HID_VIEW_TOOLBARS                       0x18003
@@ -86,7 +87,13 @@
 #define HID_SWIPE                               0x19C5B
 #define HID_RASLUT_EDIT                         0x19C5C
 #define HID_ROTATION_ELEMENT                    0x19C5D
-#define HID_EDITNODE_ELEMENT                    0x1754E
+#define HID_EDITOR_START                        0x19C5E
+#define HID_EDITOR_END                          0x19C5F
+#define HID_EDITOR_SKETCH                       0x19C60
+#define HID_EDITOR_EDIT                         0x19C61
+#define HID_EDITOR_REDO                         0x19C62
+#define HID_EDITOR_UNDO                         0x19C63
+#define HID_EDITOR_SAVE                         0x19C64
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064

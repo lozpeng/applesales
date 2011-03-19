@@ -210,6 +210,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GeometrySketch.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IDisplay.cpp"
 				>
 			</File>
@@ -309,6 +313,10 @@
 			</File>
 			<File
 				RelativePath=".\DisplayTransformation.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GeometrySketch.h"
 				>
 			</File>
 			<File
