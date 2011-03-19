@@ -11,7 +11,7 @@
 #include "Resource.h"
 #include <geometry/geom/Geometry.h>
 #include "DllResource.h"
-
+#include "LayerPropSheet.h"
 
 #define   DRAG_DELAY   60
 
@@ -1800,41 +1800,41 @@ void CMaptreeCtrl::OnRemoveAllLayer()
 
 void CMaptreeCtrl::OnLayerProp()
 {
-	//HTREEITEM item =CTreeCtrl::GetSelectedItem();
-	//if(!item)
-	//{
-	//	return;
-	//}
-	//Framework::IMapCtrl *pMapCtrl =Framework::IMapCtrl::GetActiveMapCtrl();
-	//if(!pMapCtrl)
-	//{
-	//	return;
-	//}
-	//HTREEITEM layerItem,mapItem;
-	//if(m_iSelectedItemType==Framework::eLayerItem)
-	//{
-	//	layerItem =item;
-	//}
-	//else if(m_iSelectedItemType ==Framework::eLegendItem)
-	//{
-	//	layerItem =GetParentItem(item);
-	//}
-	//std::map  <HTREEITEM, Carto::ILayerPtr>::iterator layerIter;
-	////≤È’“Õº≤„
-	//layerIter =m_LayerItemMap.find(layerItem);
-	//if(layerIter ==m_LayerItemMap.end())
-	//{
-	//	return;
-	//}
-	//CDllResource hdll;
+	HTREEITEM item =CTreeCtrl::GetSelectedItem();
+	if(!item)
+	{
+		return;
+	}
+	Framework::IMapCtrl *pMapCtrl =Framework::IMapCtrl::GetActiveMapCtrl();
+	if(!pMapCtrl)
+	{
+		return;
+	}
+	HTREEITEM layerItem,mapItem;
+	if(m_iSelectedItemType==Framework::eLayerItem)
+	{
+		layerItem =item;
+	}
+	else if(m_iSelectedItemType ==Framework::eLegendItem)
+	{
+		layerItem =GetParentItem(item);
+	}
+	std::map  <HTREEITEM, Carto::ILayerPtr>::iterator layerIter;
+	//≤È’“Õº≤„
+	layerIter =m_LayerItemMap.find(layerItem);
+	if(layerIter ==m_LayerItemMap.end())
+	{
+		return;
+	}
+	CDllResource hdll;
 
-	//CLayerPropSheet sheet("Õº≤„ Ù–‘");
-	//sheet.SetLayer(layerIter->second);
-	//if(sheet.DoModal()==IDOK)
-	//{
- //       pMapCtrl->UpdateControl(drawAll);
-	//	UpdateLayerNode(layerIter->second,layerItem);
-	//}
+	CLayerPropSheet sheet("Õº≤„ Ù–‘");
+	sheet.SetLayer(layerIter->second);
+	if(sheet.DoModal()==IDOK)
+	{
+        pMapCtrl->UpdateControl(drawAll);
+		UpdateLayerNode(layerIter->second,layerItem);
+	}
 
 
 

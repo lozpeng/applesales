@@ -65,4 +65,5 @@
 #include "ControlDefine.h"
 
 #include "ToolDefine.h"
+#include <afxdlgs.h>
 

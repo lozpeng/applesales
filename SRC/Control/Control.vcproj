@@ -639,6 +639,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\LayerPropSheet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\LayerPropSheet.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\ProgressBar.cpp"
 				>
 			</File>
