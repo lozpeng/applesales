@@ -137,6 +137,8 @@ public:
 	afx_msg void OnDrawFreeHandline();
 	afx_msg void OnUpdateDrawFreeHandline(CCmdUI* pCmdUI);
 
+	afx_msg void OnDrawSaveAs();
+	afx_msg void OnUpdateDrawSaveAs(CCmdUI* pCmdUI);
 	//编辑工具
 	afx_msg void OnEditorStart();
 	afx_msg void OnUpdateEditorStart(CCmdUI *pCmdUI);
@@ -161,7 +163,6 @@ public:
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
-	void Element2Shp();//element 转成shp
 protected:
 	
 };

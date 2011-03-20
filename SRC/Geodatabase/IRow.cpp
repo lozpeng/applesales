@@ -39,7 +39,7 @@ FieldValue& IRow::GetValue(long index)
 {
 	if(index>=1 && index<=m_values.size())
 	{
-		return m_values[index-1];
+		return m_values[index-1];\
 	}
 	else
 	{

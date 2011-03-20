@@ -49,10 +49,11 @@
 #define HID_DRAW_POLYLINE                       0x1805F
 #define HID_DRAW_CURVE                          0x18060
 #define HID_DRAW_TEXT                           0x18061
-#define HID_EDITOR                              0x1806A
-#define HID_Ellipse                             0x1806B
-#define HID_CalloutText                         0x1806C
+#define HID_DRAW_EDITOR                         0x1806A
+#define HID_DRAW_Ellipse                        0x1806B
+#define HID_DRAW_CalloutText                    0x1806C
 #define HID_DRAW_HANDLINE                       0x18070
+#define HID_DRAW_SAVEAS                         0x18071
 #define HID_POINT_SELECTFEATURE                 0x18072
 #define HID_ELEMENT_SEL                         0x18073
 #define HID_MAP_FULLVIEW                        0x18074
@@ -110,6 +111,7 @@
  
 // Dialogs (IDD_*) 
 #define HIDD_ABOUTBOX                           0x20064
+#define HIDD_DIG_DRAWINGEXPORT                  0x200B0
  
 // Frame Controls (IDW_*) 
 // This is a part of the Microsoft Foundation Classes C++ library.

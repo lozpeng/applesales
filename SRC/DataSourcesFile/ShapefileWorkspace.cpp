@@ -944,7 +944,7 @@ bool CShapefileWorkspace::WriteFeature(Geodatabase::CFeature *pFeature, SHPHandl
 			//判断属性值是否空值
 			if(type ==Geodatabase::FieldValue::VT_EMPTY || type==Geodatabase::FieldValue::VT_NULL)
 			{
-				continue;
+				//continue; //hhzhao 注释掉，不然dbf表记录与shp记录不一致
 			}
 
 			if ( hdbf->pachFieldType[iField] == 'L' )

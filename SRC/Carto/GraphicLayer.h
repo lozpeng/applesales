@@ -68,7 +68,7 @@ public:
 	void SendToBack(Element::CElementCollection pElements);
 
 	//将Element保存为shp 当前选择或者全部
-	void SaveElementAsShp(std::string filename,bool bSlected=false);
+	void SaveElementAsShp(std::string filename,bool bSlected=false,long drawingType =0);
 
 	/*
 	*描述			:	注册删除图元的回调函数

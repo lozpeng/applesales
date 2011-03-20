@@ -26,9 +26,17 @@
 #define IDB_ZOOMBAR1                    174
 #define IDB_BITMAP2                     175
 #define IDB_EDITORLARGE                 175
+#define IDD_DIG_DRAWINGEXPORT           176
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
+#define IDC_RADIO_EXPORT_ALL            1054
+#define IDC_RADIO2                      1055
+#define IDC_RADIO_EXPOERT_SELECTED      1055
+#define IDC_COMBO_DRAWINGTYPE           1056
+#define IDC_EDIT1                       1057
+#define IDC_CHECK_ISADD                 1059
+#define IDC_BTN_SLECTPATH               1060
 #define ID_EDITNODE_ELEMENT             30030
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
@@ -77,10 +85,11 @@
 #define ID_DRAW_POLYLINE                32863
 #define ID_DRAW_CURVE                   32864
 #define ID_DRAW_TEXT                    32865
-#define ID_EDITOR                       32874
-#define ID_Ellipse                      32875
-#define ID_CalloutText                  32876
+#define ID_DRAW_EDITOR                  32874
+#define ID_DRAW_Ellipse                 32875
+#define ID_DRAW_CalloutText             32876
 #define ID_DRAW_HANDLINE                32880
+#define ID_DRAW_SAVEAS                  32881
 #define ID_POINT_SELECTFEATURE          32882
 #define ID_ELEMENT_SEL                  32883
 #define ID_MAP_FULLVIEW                 32884
@@ -115,23 +124,21 @@
 #define ID_SWIPE                        40027
 #define ID_RASLUT_EDIT                  40028
 #define ID_ROTATION_ELEMENT             40029
-
-
-
-#define ID_EDITOR_START		            40030	
-#define ID_EDITOR_END				    40031
+#define ID_EDITOR_START                 40030
+#define ID_EDITOR_END                   40031
 #define ID_EDITOR_SKETCH                40032
 #define ID_EDITOR_EDIT                  40033
 #define ID_EDITOR_REDO                  40034
-#define ID_EDITOR_UNDO					40035
-#define ID_EDITOR_SAVE					40036
+#define ID_EDITOR_UNDO                  40035
+#define ID_EDITOR_SAVE                  40036
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        176
+#define _APS_NEXT_RESOURCE_VALUE        177
 #define _APS_NEXT_COMMAND_VALUE         32886
-#define _APS_NEXT_CONTROL_VALUE         1054
+#define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif
