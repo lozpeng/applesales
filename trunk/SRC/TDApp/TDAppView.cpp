@@ -17,6 +17,8 @@
 #include "ProgressBar.h"
 #include "MainFrm.h"
 #include "CEditor.h"
+#include "DlgDrawingExport.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -102,15 +104,16 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_DRAW_TEXT, OnDrawText)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_TEXT, OnUpdateDrawtext)
 
-	ON_COMMAND(ID_EDITOR, OnEditElement)
-	ON_UPDATE_COMMAND_UI(ID_EDITOR, OnUpdateEditElement)
-	ON_COMMAND(ID_Ellipse, OnDrawEllipse)
-	ON_UPDATE_COMMAND_UI(ID_Ellipse, OnUpdateDrawEllipse)
-	ON_COMMAND(ID_CalloutText, OnDrawCalloutText)
-	ON_UPDATE_COMMAND_UI(ID_CalloutText, OnUpdateDrawCalloutText)
+	ON_COMMAND(ID_DRAW_EDITOR, OnEditElement)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_EDITOR, OnUpdateEditElement)
+	ON_COMMAND(ID_DRAW_Ellipse, OnDrawEllipse)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_Ellipse, OnUpdateDrawEllipse)
+	ON_COMMAND(ID_DRAW_CalloutText, OnDrawCalloutText)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_CalloutText, OnUpdateDrawCalloutText)
 	ON_COMMAND(ID_DRAW_HANDLINE, OnDrawFreeHandline)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_HANDLINE, OnUpdateDrawFreeHandline)
-
+	ON_COMMAND(ID_DRAW_SAVEAS, OnDrawSaveAs)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_SAVEAS, OnUpdateDrawSaveAs)
 	//编辑工具
 	
 	ON_COMMAND(ID_EDITOR_START, OnEditorStart)
@@ -346,7 +349,6 @@ void CTDAppView::OnMapPan()
 	{
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	}
-	Element2Shp();
 }
 
 void CTDAppView::OnUpdateMapPan(CCmdUI* pCmdUI)
@@ -650,7 +652,34 @@ afx_msg void CTDAppView::OnUpdateDrawFreeHandline(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawFreehandLineElement");
 }
+afx_msg void CTDAppView::OnDrawSaveAs()
+{
+	//element 转成shp
 
+	Carto::CMapPtr ipMap = m_MapCtrl.GetMap();
+	Carto::CGraphicLayerPtr ipGraphicLayer = ipMap->GetGraphicLayer();
+	long lElementCnt = ipGraphicLayer->GetElementCount();
+	if(lElementCnt <1)return;
+
+	CDlgDrawingExport Dlg;
+	if(Dlg.DoModal()==IDOK)
+	{
+		char* fileName = Dlg.m_ExportPath.GetBuffer(Dlg.m_ExportPath.GetLength());
+		ipGraphicLayer->SaveElementAsShp(fileName,!Dlg.m_bExpoertAll,Dlg.m_DrawingType);
+		if (Dlg.m_CheckAddMap)
+		{
+			this->GetDocument()->LoadShpFile(fileName);
+			m_MapCtrl.UpdateControl(drawAll);
+			RefreshLayerCombo();
+		}
+	}
+
+
+}
+afx_msg void CTDAppView::OnUpdateDrawSaveAs(CCmdUI* pCmdUI)
+{
+
+}
 
 
 void CTDAppView::OnSelectFeatureByPoint()
@@ -1016,48 +1045,4 @@ afx_msg void CTDAppView::OnEditerSave()
 afx_msg void CTDAppView::OnUpdateEditerSave(CCmdUI *pCmdUI)
 {
 
-}
-
-//element 转成shp
-void CTDAppView::Element2Shp()
-{
-
-	Carto::CMapPtr ipMap = m_MapCtrl.GetMap();
-	Carto::CGraphicLayerPtr ipGraphicLayer = ipMap->GetGraphicLayer();
-	long lElementCnt = ipGraphicLayer->GetElementCount();
-
-
-	std::string fileName="D:\\ss.shp";
-	ipGraphicLayer->SaveElementAsShp(fileName);
-
-
-	//CString csDataSourceTmp=fileName;
-
-	//CString csThemeName = csDataSourceTmp.Mid (csDataSourceTmp.ReverseFind ('\\') + 1);
-	//csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
-
-	//Geodatabase::FeatureClassDef pFeatureDef;
-	//pFeatureDef.lshptype = GEOMETRY::geom::GEOS_POLYGON;
-	//Geodatabase::IWorkspace* ipWorkspace = CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(fileName);
-	//Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->CreateFeatureClass(fileName,pFeatureDef);
-
-	//ipWorkspace->StartEdit();
-	//Geodatabase::CFeaturePtr ipFeature;
-	//GEOMETRY::geom::Geometry* pGeometry;
-	////将选择的element导出shp
-	//Element::IElementPtr ipElement = NULL;
-	//
-	//for(int i=0; i< ipGraphicLayer->GetSelectedElementCount(); i++)
-	//{
-	//	ipElement = ipGraphicLayer->GetSelectedElement(i);
-	//	
-	//	pGeometry = ipElement->GetGeometry();
-	//	ipFeature= ipFeatureCls->CreateFeature();
-	//	ipFeature->SetShape(pGeometry);
-	//	ipFeatureCls->AddFeature(ipFeature.get());
-
-	//}
-
-	//ipWorkspace->StopEdit();
-	
 }

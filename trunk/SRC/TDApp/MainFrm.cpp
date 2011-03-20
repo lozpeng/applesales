@@ -268,9 +268,14 @@ void CMainFrame::AddTab_MapControl()
 	//--------------------------
 	//添加编辑选择要素工具要素工具
 	//--------------------------
-	CBCGPRibbonButton* pBtnEditNodeElement = new CBCGPRibbonButton(ID_EDITOR, _T("编辑结点"), -1, 5);
+	CBCGPRibbonButton* pBtnEditNodeElement = new CBCGPRibbonButton(ID_DRAW_EDITOR, _T("编辑结点"), -1, 5);
 	pPanelLabel->Add (pBtnEditNodeElement);
 
+	//--------------------------
+	//将标绘要素保存为shp
+	//--------------------------
+	CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 17);
+	pPanelLabel->Add (pBtnElementSaveAs);
 
 	CBCGPRibbonPanel* pPanelSystem = pCategory->AddPanel (_T("系统"));
 	CBCGPRibbonButton* pBtnSetting = new CBCGPRibbonButton (ID_SETTING,_T("设置"), 3, 22);

@@ -1965,11 +1965,8 @@ namespace Editor
 
 			//这就是新加一个要素的步骤，首先创建一个空要素
 			pFeature =pFeatureClass->CreateFeature();
-
 			if(!pFeature)
-			{
 				continue;
-			}
 
 			//然后对这个要素设置图形，和属性
 			pFeature->SetShape(pGeometry->clone());

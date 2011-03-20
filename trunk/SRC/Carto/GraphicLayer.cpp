@@ -5,6 +5,7 @@
 #include "ShapefileWorkspaceFactory.h"
 #include "ShapefileWorkspace.h"
 #include "ShapefileFeatureClass.h"
+using namespace Element;
 
 namespace Carto
 {
@@ -403,7 +404,7 @@ namespace Carto
 		return gCallbackDeleteElement.connect(fun);
 	}
 
-	void CGraphicLayer::SaveElementAsShp(std::string filename,bool bSlected)
+	void CGraphicLayer::SaveElementAsShp(std::string filename,bool bSlected,long drawingType)
 	{
 		std::string path =filename;
 		//得到文件路径
@@ -415,10 +416,23 @@ namespace Carto
 			return;
 		}
 
+		Element::ELEMENT_TYPE elementType;
+
 		Geodatabase::FeatureClassDef fdef;
 		fdef.hasz =false;
-		fdef.lshptype =GEOMETRY::geom::GEOS_POLYGON;
-	
+
+		if (drawingType == 0)
+		{
+			fdef.lshptype = GEOMETRY::geom::GEOS_POINT;
+		}
+		else if (drawingType ==1)
+		{
+			fdef.lshptype = GEOMETRY::geom::GEOS_LINESTRING;
+		}
+		else
+		{
+			fdef.lshptype = GEOMETRY::geom::GEOS_POLYGON;
+		}
 
 		Geodatabase::CField *pField =new Geodatabase::CField();
 		pField->SetType(Geodatabase::FTYPE_LONG);
@@ -436,19 +450,78 @@ namespace Carto
 		//开始编辑
 		pWorkspace->StartEdit();
 		pWorkspace->StartEditOperation();
-		
+
 		Geodatabase::CFeaturePtr pFeature;
 
-		for (size_t i=0;i<GetElementCount();i++)
+		if (bSlected)
 		{
-			//产生一个新的要素
-			pFeature =pFeatureClass->CreateFeature();
-			pFeature->SetShape( this->GetElement(i)->GetGeometry()->clone());
-			
-			//提交要素
-			//pFeatureClass->AddFeature(pFeature.get());
-			pFeature->Update();
+			for (size_t i=0;i<this->GetSelectedElementCount();i++)
+			{
+				elementType = this->GetSelectedElement(i)->GetType();
+				if (drawingType == 0)
+				{
+					if (elementType!=ELEMENT_TYPE::ET_POINTELEMENT&&elementType!=ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
+					{
+						continue;
+					}
+				}
+				else if (drawingType ==1)
+				{
+					if (elementType!=ELEMENT_TYPE::ET_LINEELEMENT&&elementType!=ELEMENT_TYPE::ET_POLYLINE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_CURVE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_BEZIERCURVE_ELEMENT)
+					{
+						continue;
+					}
+				}
+				else
+				{
+					if (elementType!=ELEMENT_TYPE::ET_FILLELEMENT&&elementType!=ET_FILL_RECTANGLE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_POLYGON_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_CIRCLE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_ELLIPSE_ELEMENT)
+					{
+						continue;
+					}
+				}
+				//产生一个新的要素
+				pFeature =pFeatureClass->CreateFeature();
+				pFeature->SetShape( this->GetSelectedElement(i)->GetGeometry()->clone());
+
+				//提交要素
+				pFeatureClass->AddFeature(pFeature.get());
+			}
 		}
+		else
+		{
+			for (size_t i=0;i<GetElementCount();i++)
+			{
+				elementType = this->GetElement(i)->GetType();
+				if (drawingType == 0)
+				{
+					if (elementType!=ELEMENT_TYPE::ET_POINTELEMENT&&elementType!=ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
+					{
+						continue;
+					}
+				}
+				else if (drawingType ==1)
+				{
+					if (elementType!=ELEMENT_TYPE::ET_LINEELEMENT&&elementType!=ELEMENT_TYPE::ET_POLYLINE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_CURVE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_BEZIERCURVE_ELEMENT)
+					{
+						continue;
+					}
+				}
+				else
+				{
+					if (elementType!=ELEMENT_TYPE::ET_FILLELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_RECTANGLE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_POLYGON_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_CIRCLE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_ELLIPSE_ELEMENT)
+					{
+						continue;
+					}
+				}
+				//产生一个新的要素
+				pFeature =pFeatureClass->CreateFeature();
+				pFeature->SetShape( this->GetElement(i)->GetGeometry()->clone());
+
+				//提交要素
+				pFeatureClass->AddFeature(pFeature.get());
+			}
+		}
+
 
 		pWorkspace->StopEditOperation();
 		pWorkspace->StopEdit(true);
