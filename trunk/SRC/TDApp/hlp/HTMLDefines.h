@@ -95,6 +95,11 @@
 #define HID_EDITOR_REDO                         0x19C62
 #define HID_EDITOR_UNDO                         0x19C63
 #define HID_EDITOR_SAVE                         0x19C64
+#define HID_CHANGE_DETECT                       0x19E34
+#define HID_CHANGE_RENDER                       0x19E35
+#define HID_MAGIC_STICK                         0x19E3E
+#define HID_EDGE_EXTRACT                        0x19E3F
+#define HID_WATER_EXTRACT                       0x19E40
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064

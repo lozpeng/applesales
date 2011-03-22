@@ -57,6 +57,10 @@ public:
 	void		AddTab_MapControl();
 	void		AddTab_ImageAnalyse();
 	void		AddTab_Editor();
+	//变化发现模块
+	void        AddTab_ChangeDetect();
+	//地理要素提取
+	void        AddTab_GeoInfoExtract();
 
 	Framework::IMaptreeCtrl* GetTOC();
 
