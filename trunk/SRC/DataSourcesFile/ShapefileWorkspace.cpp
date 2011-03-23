@@ -970,7 +970,7 @@ bool CShapefileWorkspace::WriteFeature(Geodatabase::CFeature *pFeature, SHPHandl
 			else
 			{
 				//×Ö·ûĞÍ
-				DBFWriteStringAttribute(hdbf,Fid,iField,pFeature->GetValue(iField+1).m_Var.pstrVal->c_str());
+				//DBFWriteStringAttribute(hdbf,Fid,iField,pFeature->GetValue(iField+1).m_Var.pstrVal->c_str());
 			}
 		}
 	}

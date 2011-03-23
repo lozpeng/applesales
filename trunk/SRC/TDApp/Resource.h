@@ -27,6 +27,8 @@
 #define IDB_BITMAP2                     175
 #define IDB_EDITORLARGE                 175
 #define IDD_DIG_DRAWINGEXPORT           176
+#define IDB_BITMAP_                     177
+#define IDB_ChangeDetect                177
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
@@ -131,19 +133,17 @@
 #define ID_EDITOR_REDO                  40034
 #define ID_EDITOR_UNDO                  40035
 #define ID_EDITOR_SAVE                  40036
-
 #define ID_CHANGE_DETECT                40500
 #define ID_CHANGE_RENDER                40501
 #define ID_MAGIC_STICK                  40510
 #define ID_EDGE_EXTRACT                 40511
 #define ID_WATER_EXTRACT                40512
 
-
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        177
+#define _APS_NEXT_RESOURCE_VALUE        178
 #define _APS_NEXT_COMMAND_VALUE         32886
 #define _APS_NEXT_CONTROL_VALUE         1061
 #define _APS_NEXT_SYMED_VALUE           108

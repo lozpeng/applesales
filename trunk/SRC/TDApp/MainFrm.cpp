@@ -425,7 +425,7 @@ void CMainFrame::AddTab_ChangeDetect()
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
 		_T("变化发现与地理要素提取"),
 		IDB_FILELARGE,
-		IDB_ZOOMBAR);
+		IDB_ChangeDetect);
 
 	
 	CBCGPRibbonPanel* pPanel = pCategory->AddPanel (_T("变化发现工具"));
@@ -446,12 +446,12 @@ void CMainFrame::AddTab_ChangeDetect()
 	//--------------------------
 	// 选择:
 	//--------------------------
-	CBCGPRibbonButton* pBtnSelected = new CBCGPRibbonButton(ID_DRAW_SELECT, _T("选择"), -1, 0);
+	CBCGPRibbonButton* pBtnSelected = new CBCGPRibbonButton(ID_DRAW_SELECT, _T("选择"), -1, 2);
 	pPanelLabel->Add (pBtnSelected);
 	//--------------------------
 	// 矢量要素:
 	//--------------------------
-	CBCGPRibbonButton* pBtnRect = new CBCGPRibbonButton (ID_DRAW_RECT, _T("矩形"), -1, 1);
+	CBCGPRibbonButton* pBtnRect = new CBCGPRibbonButton (ID_DRAW_RECT, _T("矩形"), -1, 3);
 	pPanelLabel->Add (pBtnRect);
 	//--------------------------
 	// 矢量要素:
@@ -465,19 +465,19 @@ void CMainFrame::AddTab_ChangeDetect()
 	pPanelLabel->Add (pBtnPolyline);	
 	// 点标绘:
 	//--------------------------
-	CBCGPRibbonButton* pBtnPoint = new CBCGPRibbonButton(ID_DRAW_MARKER, _T("点"), -1, 8);
+	CBCGPRibbonButton* pBtnPoint = new CBCGPRibbonButton(ID_DRAW_MARKER, _T("点"), -1, 6);
 	pPanelLabel->Add (pBtnPoint);
 
 	//--------------------------
 	//添加编辑选择要素工具要素工具
 	//--------------------------
-	CBCGPRibbonButton* pBtnEditNodeElement = new CBCGPRibbonButton(ID_DRAW_EDITOR, _T("编辑结点"), -1, 5);
+	CBCGPRibbonButton* pBtnEditNodeElement = new CBCGPRibbonButton(ID_DRAW_EDITOR, _T("编辑结点"), -1, 7);
 	pPanelLabel->Add (pBtnEditNodeElement);
 
 	//--------------------------
 	//将标绘要素保存为shp
 	//--------------------------
-	CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 17);
+	CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 8);
 	pPanelLabel->Add (pBtnElementSaveAs);
 
     //半自动提取

@@ -1031,7 +1031,16 @@ afx_msg void CTDAppView::OnEditerEnd()
 			pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
 		}
-		pMap->GetEditor()->StopEdit(true);
+		int flagSave = MessageBox("是否保存编辑！","提示",MB_YESNO);
+		if (flagSave = 6)
+		{
+			pMap->GetEditor()->StopEdit(true);
+		}
+		else
+		{
+			pMap->GetEditor()->StopEdit(false);
+		}
+		
 	}
 }
 afx_msg void CTDAppView::OnUpdateEditerEnd(CCmdUI *pCmdUI)
@@ -1040,7 +1049,17 @@ afx_msg void CTDAppView::OnUpdateEditerEnd(CCmdUI *pCmdUI)
 }
 afx_msg void CTDAppView::OnEditerSave()
 {
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
 
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		pMap->GetEditor()->StopEdit(true);
+	}
 }
 afx_msg void CTDAppView::OnUpdateEditerSave(CCmdUI *pCmdUI)
 {
