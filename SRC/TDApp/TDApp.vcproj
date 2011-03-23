@@ -356,6 +356,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\bmp00004.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\bmp00005.bmp"
 				>
 			</File>
@@ -420,11 +424,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\res\viewToolbar.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
+				RelativePath=".\res\viewToolbar.bmp"
 				>
 			</File>
 			<File
