@@ -319,7 +319,7 @@ void CTDAppView::OnOpenImg()
 {
 	// TODO: 在此添加命令处理程序代码
 	CString fileName("");
-	CFileDialog dlg(true, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"ImageFile(*.jpg)|*.jpg|All file(*.*)|*.*|",this);
+	CFileDialog dlg(true, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"影像数据(*.tif;*.img;*.tiff;*.bmp)|*.tif;*.img;*.tiff;*.bmp|All Files(*.*)|*.*||",this);
 	if(dlg.DoModal()==IDOK) 
 		fileName = dlg.GetPathName(); 
 	else
