@@ -300,17 +300,17 @@ void CMainFrame::AddTab_ImageAnalyse()
 	CBCGPRibbonPanel* pPanelTargetLayer = pCategory->AddPanel (_T("显示"));
 	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,100,"图  层:");
 	pPanelTargetLayer->Add(pBtnCurrLayer);
-	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 7);
+	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 1);
 	pPanelTargetLayer->Add (pBtnShowOverView);
-	CBCGPRibbonButton* pBtnHideOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYRRESOLUTION, _T("1:1显示"), 8);
+	CBCGPRibbonButton* pBtnHideOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYRRESOLUTION, _T("1:1显示"), 0);
 	pPanelTargetLayer->Add (pBtnHideOverView);
 	pPanelTargetLayer->AddSeparator();
 
 	
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T("   调  整:")));
-	CBCGPRibbonButton* pBtnBright = new CBCGPRibbonButton (ID_BRIGHT_RESTORE, _T("亮  度:"),0);
+	CBCGPRibbonButton* pBtnBright = new CBCGPRibbonButton (ID_BRIGHT_RESTORE, _T("亮  度:"),4);
 	pPanelTargetLayer->Add (pBtnBright);
-	CBCGPRibbonButton* pBtnContrast = new CBCGPRibbonButton (ID_CONTRAST_RESTORE, _T("对比度:"), 1);
+	CBCGPRibbonButton* pBtnContrast = new CBCGPRibbonButton (ID_CONTRAST_RESTORE, _T("对比度:"), 5);
 	pPanelTargetLayer->Add ( pBtnContrast);
 
 
@@ -339,7 +339,7 @@ void CMainFrame::AddTab_ImageAnalyse()
 
 
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
-	CBCGPRibbonButton* pBtnTrans = new CBCGPRibbonButton (ID_TRANSPARENT_RESTORE, _T("透明度:"), 2);
+	CBCGPRibbonButton* pBtnTrans = new CBCGPRibbonButton (ID_TRANSPARENT_RESTORE, _T("透明度:"), 6);
 	pPanelTargetLayer->Add ( pBtnTrans);
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
 	
