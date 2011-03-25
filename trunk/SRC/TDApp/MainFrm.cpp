@@ -308,9 +308,9 @@ void CMainFrame::AddTab_ImageAnalyse()
 
 	
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T("   调  整:")));
-	CBCGPRibbonButton* pBtnBright = new CBCGPRibbonButton (ID_BRIGHT_RESTORE, _T("亮  度:"),4);
+	CBCGPRibbonButton* pBtnBright = new CBCGPRibbonButton (ID_BRIGHT_RESTORE, _T("亮  度:"),3);
 	pPanelTargetLayer->Add (pBtnBright);
-	CBCGPRibbonButton* pBtnContrast = new CBCGPRibbonButton (ID_CONTRAST_RESTORE, _T("对比度:"), 5);
+	CBCGPRibbonButton* pBtnContrast = new CBCGPRibbonButton (ID_CONTRAST_RESTORE, _T("对比度:"), 4);
 	pPanelTargetLayer->Add ( pBtnContrast);
 
 
@@ -339,7 +339,7 @@ void CMainFrame::AddTab_ImageAnalyse()
 
 
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
-	CBCGPRibbonButton* pBtnTrans = new CBCGPRibbonButton (ID_TRANSPARENT_RESTORE, _T("透明度:"), 6);
+	CBCGPRibbonButton* pBtnTrans = new CBCGPRibbonButton (ID_TRANSPARENT_RESTORE, _T("透明度:"), 5);
 	pPanelTargetLayer->Add ( pBtnTrans);
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
 	
@@ -359,9 +359,9 @@ void CMainFrame::AddTab_ImageAnalyse()
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
 
 	pPanelTargetLayer->AddSeparator();
-	CBCGPRibbonButton* pBtnSwipView = new CBCGPRibbonButton (ID_SWIPE, _T("卷帘"),5,5);
+	CBCGPRibbonButton* pBtnSwipView = new CBCGPRibbonButton (ID_SWIPE, _T("卷帘"),0,0);
 	pPanelTargetLayer->Add ( pBtnSwipView);
-	CBCGPRibbonButton* pBtnStretch = new CBCGPRibbonButton (ID_RASLUT_EDIT, _T("闪烁"),6,6);
+	CBCGPRibbonButton* pBtnStretch = new CBCGPRibbonButton (ID_RASLUT_EDIT, _T("闪烁"),1,1);
 	pPanelTargetLayer->Add ( pBtnStretch);
 }
 
@@ -428,18 +428,6 @@ void CMainFrame::AddTab_ChangeDetect()
 		IDB_ChangeDetect);
 
 	
-	CBCGPRibbonPanel* pPanel = pCategory->AddPanel (_T("变化发现工具"));
-	//--------------------------
-	// 变化检测
-	//--------------------------
-	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_CHANGE_DETECT, _T("变化发现"), 0, 0);
-	pPanel->Add (pBtnChange);
-	//--------------------------
-	// 变化标识
-	//--------------------------
-	CBCGPRibbonButton* pBtnChangeRender = new CBCGPRibbonButton (ID_CHANGE_RENDER,_T("变化标识"), 1, 1);
-	pPanel->Add (pBtnChangeRender);
-
 
 
 	CBCGPRibbonPanel* pPanelLabel = pCategory->AddPanel (_T("手动提取工具"));
@@ -480,17 +468,30 @@ void CMainFrame::AddTab_ChangeDetect()
 	CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 8);
 	pPanelLabel->Add (pBtnElementSaveAs);
 
+
+	CBCGPRibbonPanel* pPanel = pCategory->AddPanel (_T("变化发现工具"));
+	//--------------------------
+	// 变化检测
+	//--------------------------
+	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_CHANGE_DETECT, _T("变化发现"), 1, 1);
+	pPanel->Add (pBtnChange);
+	//--------------------------
+	// 变化标识
+	//--------------------------
+	CBCGPRibbonButton* pBtnChangeRender = new CBCGPRibbonButton (ID_CHANGE_RENDER,_T("变化标识"), 9, 9);
+	pPanel->Add (pBtnChangeRender);
+
     //半自动提取
 	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));
 	//--------------------------
 	// 魔术棒
 	//--------------------------
-	CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 0, 0);
+	CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 10, 10);
 	pPanelHalfAuto->Add (pBtnMagic);
 	//--------------------------
 	// 边缘提取
 	//--------------------------
-	CBCGPRibbonButton* pBtnEdge = new CBCGPRibbonButton (ID_EDGE_EXTRACT,_T("边界跟踪提取"), 1, 1);
+	CBCGPRibbonButton* pBtnEdge = new CBCGPRibbonButton (ID_EDGE_EXTRACT,_T("边界跟踪提取"), 0, 0);
 	pPanelHalfAuto->Add (pBtnEdge);
 
 	//水体自动提取
@@ -498,7 +499,7 @@ void CMainFrame::AddTab_ChangeDetect()
 	//--------------------------
 	// 水体自动
 	//--------------------------
-	CBCGPRibbonButton* pBtnWater = new CBCGPRibbonButton (ID_WATER_EXTRACT, _T("水体自动提取"), 0, 0);
+	CBCGPRibbonButton* pBtnWater = new CBCGPRibbonButton (ID_WATER_EXTRACT, _T("水体自动提取"), 11, 11);
 	pPanelAuto->Add (pBtnWater);
 }
 
