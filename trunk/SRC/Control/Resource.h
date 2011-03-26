@@ -16,6 +16,7 @@
 #define IDC_EXTENT_LEFT                 2005
 #define IDC_SIZE_LEFTRIGHT              2006
 #define IDC_EXTENT_TOP                  2006
+#define IDC_RASTERLOC                   2006
 #define IDC_SIZE_LEFTTOP                2007
 #define IDC_EXTENT_RIGHT                2007
 #define IDC_SIZE_RIGHTTOP               2008
@@ -29,6 +30,7 @@
 #define IDD_PROGRESS_BAR                2014
 #define IDR_LAYER_MENU                  2015
 #define IDD_LAYERPROP_GENERAL           2016
+#define IDD_RASTER_PROP                 2017
 #define IDD_TRANSPARENT_ENHANCE         9004
 #define IDD_SWIPE_SHOW                  9011
 #define ID_32771                        32771
@@ -46,9 +48,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2017
+#define _APS_NEXT_RESOURCE_VALUE        2018
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         2006
+#define _APS_NEXT_CONTROL_VALUE         2007
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif
