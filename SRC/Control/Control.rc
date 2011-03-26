@@ -175,6 +175,14 @@ BEGIN
     LTEXT           "",IDC_STATIC1,10,23,18,8
 END
 
+IDD_RASTER_PROP DIALOGEX 0, 0, 306, 212
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "”∞œÒ Ù–‘"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_RASTERLOC,"Static",SS_BLACKFRAME,7,7,292,198
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -213,6 +221,14 @@ BEGIN
         RIGHTMARGIN, 135
         TOPMARGIN, 7
         BOTTOMMARGIN, 21
+    END
+
+    IDD_RASTER_PROP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 299
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 205
     END
 END
 #endif    // APSTUDIO_INVOKED
