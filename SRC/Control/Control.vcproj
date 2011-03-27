@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include"
+				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;CONTROL_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -128,7 +128,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\carto\element;..\..\thirdPartyLib\bcg12\include"
+				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\carto\element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;CONTROL_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -607,6 +607,18 @@
 				</File>
 				<File
 					RelativePath=".\Tool\SelectFrameElementsTool.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="ExtractInfo"
+				>
+				<File
+					RelativePath=".\Tool\MagicStickTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\MagicStickTool.h"
 					>
 				</File>
 			</Filter>
