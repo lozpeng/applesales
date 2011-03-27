@@ -65,5 +65,6 @@
 #include "ControlDefine.h"
 
 #include "ToolDefine.h"
+#include "ImageProcessDef.h"
 #include <afxdlgs.h>
 
