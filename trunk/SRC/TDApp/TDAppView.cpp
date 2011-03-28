@@ -979,7 +979,17 @@ afx_msg void CTDAppView::OnEditorStart()
 }
 afx_msg void CTDAppView::OnUpdateEditorStart(CCmdUI *pCmdUI)
 {
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
+	}
+	pCmdUI->Enable(!pMap->GetEditor()->IsEditing());
 }
 afx_msg void CTDAppView::OnEditorSketch()
 {
@@ -989,6 +999,17 @@ afx_msg void CTDAppView::OnEditorSketch()
 afx_msg void CTDAppView::OnUpdateEditorSketch(CCmdUI *pCmdUI)
 {
 	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "SketchTool");
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
 afx_msg void CTDAppView::OnEditerEdit()
 {
@@ -1003,22 +1024,75 @@ afx_msg void CTDAppView::OnEditerEdit()
 afx_msg void CTDAppView::OnUpdateEditerEdit(CCmdUI *pCmdUI)
 {
 	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "EditFeatureTool");
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
 afx_msg void CTDAppView::OnEditerRedo()
 {
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
 
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		if(pMap->GetEditor()->CanRedo())
+			pMap->GetEditor()->Redo();
+	}
 }
 afx_msg void CTDAppView::OnUpdateEditerRedo(CCmdUI *pCmdUI)
 {
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
+	}
+	pCmdUI->Enable(pMap->GetEditor()->CanRedo());
 }
 afx_msg void CTDAppView::OnEditerUndo()
 {
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
 
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		if(pMap->GetEditor()->CanUndo())
+			pMap->GetEditor()->Undo();
+	}
 }
 afx_msg void CTDAppView::OnUpdateEditerUndo(CCmdUI *pCmdUI)
 {
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
+	}
+	pCmdUI->Enable(pMap->GetEditor()->CanUndo());
 }
 afx_msg void CTDAppView::OnEditerEnd()
 {
@@ -1045,7 +1119,17 @@ afx_msg void CTDAppView::OnEditerEnd()
 }
 afx_msg void CTDAppView::OnUpdateEditerEnd(CCmdUI *pCmdUI)
 {
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
 afx_msg void CTDAppView::OnEditerSave()
 {
@@ -1063,5 +1147,15 @@ afx_msg void CTDAppView::OnEditerSave()
 }
 afx_msg void CTDAppView::OnUpdateEditerSave(CCmdUI *pCmdUI)
 {
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }

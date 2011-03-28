@@ -54,7 +54,15 @@ void CEditFeatureTool::Initialize(Framework::IUIObject *pTargetControl)
 	if(cursorOnLine == NULL)
 		cursorOnLine =::LoadCursor( theApp.m_hInstance , ATL_MAKEINTRESOURCE( IDC_VERTIX_MOVE));
 	if(cursorModifyShape == NULL)
-		cursorModifyShape =::LoadCursor( theApp.m_hInstance , ATL_MAKEINTRESOURCE( IDC_ON_VERTIX));
+		cursorModifyShape =::LoadCursor( theApp.m_hInstance , ATL_MAKEINTRESOURCE( IDC_ModifyShape));
+
+	//判断一下现在是否选择了图形，如果选择了图形，则进入移动多个图形的状态
+	ClearMoveGeometrys();
+
+	if(GetSelectGeometrys())
+	{
+		m_nStatus =On_SelectMoreShape;
+	}
 }
 
 void CEditFeatureTool::LButtonDownEvent (UINT nFlags, CPoint point)
@@ -73,6 +81,18 @@ void CEditFeatureTool::LButtonDownEvent (UINT nFlags, CPoint point)
 	if(!pEdit)
 	{
 		return ;
+	}
+
+	if(m_nStatus==On_SelectMoreShape)
+	{
+		//如果在选择图形的范围之外，双击会结束移动状态
+		if(!m_bContain)
+		{
+			m_nStatus = On_None;
+
+			//清空选择集
+			ClearMoveGeometrys();
+		}
 	}
 
 	if(m_nStatus == On_None )
@@ -99,7 +119,7 @@ void CEditFeatureTool::LButtonDownEvent (UINT nFlags, CPoint point)
 
 		pEdit->PushGeometry2Undo(pGeometry);
 	}
-	else if(m_nStatus == On_Line)
+	else if(m_nStatus == On_Line||m_nStatus == On_Inside)
 	{
 		m_nStatus = On_ShapeMove;
 
@@ -137,7 +157,6 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 
 	if(m_nStatus == On_None)
 	{
-		
 		pMapCtrl->SetCursor(cursorModifyShape);
 		return;
 	}
@@ -154,10 +173,8 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 	}
 
 	//如果有选择图形的情况
-	if(m_nStatus == On_Selection || m_nStatus == On_Vertex || m_nStatus == On_Line)
+	if(m_nStatus == On_Selection || m_nStatus == On_Vertex || m_nStatus == On_Line||m_nStatus == On_Inside)
 	{
-
-
 		if(pEdit->m_modifyGeometrys.empty())
 		{
 			return ;
@@ -207,7 +224,32 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 				m_curVertexIndex =lverindex;
 				return;
 			}
+			//如果是多边形，则判断是否在图形内
+			long type =pEdit->m_modifyGeometrys[i]->getGeometryTypeId();
 
+			if(type==GEOS_POLYGON || type==GEOS_MULTIPOLYGON)
+			{
+				Geometry *pPoint =(Geometry*)GeometryFactory::getDefaultInstance()->createPoint(Coordinate(pt.x,pt.y));
+
+				bool bcontain =false;
+
+				if(pEdit->m_modifyGeometrys[i]->contains(pPoint))
+				{
+					bcontain =true;
+
+				}
+
+
+				if(bcontain)
+				{
+					m_nStatus=On_Inside;
+					pMapCtrl->SetCursor(cursorSizeAll);
+					delete pPoint;
+					return;
+				}
+
+				delete pPoint;
+			}
 
 		}
 		//如果鼠标不在节点上或者线上，则重新把状态设为On_Selection
@@ -346,11 +388,9 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 			{
 				//对每个图形进行移动
 				m_moveGeometrys[i]->Move(dx,dy);
-
-
 			}
 
-			//pMapCtrl->UpdateControl(drawEdit);
+			//pMapCtrl->UpdateControl(drawGeoSelection);
 
 			DrawMovedGeometrys();
 
@@ -409,7 +449,6 @@ void CEditFeatureTool::LButtonUpEvent (UINT nFlags, CPoint point)
 	else if(m_nStatus == On_MoveMoreShape)
 	{
 		m_nStatus =On_SelectMoreShape;
-
 
 		if(m_bMoved)
 		{
@@ -615,10 +654,10 @@ BOOL CEditFeatureTool::InstanceEditObject()
 		pMapCtrl->UpdateControl(drawEdit);
 		return FALSE;
 	}
-
-
-	m_nStatus = On_Selection;
-
+	if(pEdit->m_modifyGeometrys.size()>1)
+		m_nStatus = On_SelectMoreShape;
+		else m_nStatus = On_Selection;
+	GetSelectGeometrys();
 	pMapCtrl->UpdateControl(drawEdit);
 
 
@@ -645,7 +684,7 @@ void CEditFeatureTool::DrawMovedGeometrys()
 
 	//更新显示
 	Display::IDisplayPtr dispaly = pMap->GetDisplay();
-	dispaly->SetDrawBuffer(drawEdit);
+	dispaly->SetDrawBuffer(drawGeoSelection);
 	dispaly->DrawBackgroud();
 
 	for(size_t i=0;i<m_moveGeometrys.size();i++)

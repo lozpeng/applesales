@@ -294,6 +294,10 @@
 				RelativePath=".\res\Editor.rc2"
 				>
 			</File>
+			<File
+				RelativePath=".\res\ModifyShape.cur"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Tool"
