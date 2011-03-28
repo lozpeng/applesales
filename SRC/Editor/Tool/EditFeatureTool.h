@@ -19,6 +19,7 @@ public:
 		On_None,
 		On_Selection,
 		On_ShapeMove,
+		On_Inside,
 		On_Vertex,    //鼠标在节点上
 		On_Line,      //鼠标在线上
 		On_VertexMove,  //节点移动
