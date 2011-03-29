@@ -213,7 +213,7 @@ BEGIN
     BEGIN
         MENUITEM "&Help Topics",                ID_HELP_FINDER
         MENUITEM SEPARATOR
-        MENUITEM "&About 面向巨灾的地理信息变化增量快速提取...",            ID_APP_ABOUT
+        MENUITEM "&About 面向巨灾的地理信息变化增量快速提取...", ID_APP_ABOUT
     END
 END
 

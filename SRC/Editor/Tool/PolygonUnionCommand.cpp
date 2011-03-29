@@ -2,31 +2,32 @@
 #include "PolygonUnionCommand.h"
 #include "IWorkspace.h"
 #include "SimpleQuery.h"
-#include "Editor.h"
+#include "CEditor.h"
 #include <Geometry/geom/Geometry.h>
 #include "IMapCtrl.h"
 #include "IGeoDataObject.h"
+#include "EditFeatureTool.h"
 
 namespace Editor
 {
 
-	static CActionPolygonUnion gActionPolygonUnion;
+	static CPolygonUnionTool gPolygonUnionCommand;
 
-	CActionPolygonUnion::CActionPolygonUnion(void) : ICommand("ActionPolygonUnion")
+	CPolygonUnionTool::CPolygonUnionTool(void) : ICommand("PolygonUnionCmd")
 	{
 		
 	}
 
-	CActionPolygonUnion::~CActionPolygonUnion(void)
+	CPolygonUnionTool::~CPolygonUnionTool(void)
 	{
 
 	}
 		//初始化
-	void CActionPolygonUnion::Initialize(Framework::IUIObject *pTargetControl)
+	void CPolygonUnionTool::Initialize(Framework::IUIObject *pTargetControl)
 	{
 		ICommand::Initialize(pTargetControl);
 	}
-	void CActionPolygonUnion::Click()
+	void CPolygonUnionTool::Click()
 	{
 		//获取活动地图控件
 		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -39,14 +40,14 @@ namespace Editor
 			return;
 
 		//获得编辑类
-		//Editor::CEditorPtr pEdit =pMap->GetEditor();
-		//if(!pEdit)
-		//{
-		//	return;
-		//}
+		Editor::CEditorPtr pEdit =pMap->GetEditor();
+		if(!pEdit)
+		{
+			return;
+		}
 
 		//获得当前编辑层
-		Carto::ILayer *pLayer ;//= pEdit->GetCurLayer();
+		Carto::ILayer *pLayer = pEdit->GetCurLayer();
 		if (!pLayer)
 		{
 			return;
@@ -77,7 +78,7 @@ namespace Editor
 		
 		//获得当前编辑层的选择集
 		Clear();
- 		//pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
+ 		pEdit->GetCurLayerSelection(m_shapes, m_shapeIds, m_players);
 
 		//多边形要素个数必须大于2
 		if(m_shapes.size() < 2)
@@ -111,10 +112,15 @@ namespace Editor
 		
 		Clear();
 		
+		//
+		Framework::ITool *pTool = Framework::ITool::FindTool("EditFeatureTool");
+		CEditFeatureTool *ipEditorFeatureTool = (CEditFeatureTool*)pTool;
+		if(ipEditorFeatureTool)
+			ipEditorFeatureTool->ClearMoveGeometrys();
 		pMapCtrl->UpdateControl(drawAll);
 	}
 
-	void CActionPolygonUnion::Clear()
+	void CPolygonUnionTool::Clear()
 	{
 		for(size_t i=0;i<m_shapes.size();i++)
 		{
@@ -126,6 +132,6 @@ namespace Editor
 		m_shapeIds.clear();
 		m_players.clear();
 	}
-	
+
 
 }

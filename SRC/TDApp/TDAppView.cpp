@@ -130,7 +130,10 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_EDITOR_END, OnUpdateEditerEnd)
 	ON_COMMAND(ID_EDITOR_SAVE, OnEditerSave)
 	ON_UPDATE_COMMAND_UI(ID_EDITOR_SAVE, OnUpdateEditerSave)
-
+	ON_COMMAND(ID_DELETE_FEATURES, OnEditerDel)
+	ON_UPDATE_COMMAND_UI(ID_DELETE_FEATURES, OnUpdateEditerSave)
+	ON_COMMAND(ID_UNION_FEATURES, OnEditerUnion)
+	ON_UPDATE_COMMAND_UI(ID_UNION_FEATURES, OnUpdateEditerUnion)
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
@@ -1131,6 +1134,7 @@ afx_msg void CTDAppView::OnUpdateEditerEnd(CCmdUI *pCmdUI)
 	}
 	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
+
 afx_msg void CTDAppView::OnEditerSave()
 {
 	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
@@ -1146,6 +1150,72 @@ afx_msg void CTDAppView::OnEditerSave()
 	}
 }
 afx_msg void CTDAppView::OnUpdateEditerSave(CCmdUI *pCmdUI)
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
+}
+
+afx_msg void CTDAppView::OnEditerDel()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		Editor::CEditorPtr pEditor = pMap->GetEditor();
+		pEditor->DeleteFeature();
+	}
+}
+afx_msg void CTDAppView::OnUpdateEditerDel(CCmdUI *pCmdUI)
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
+}
+
+afx_msg void CTDAppView::OnEditerUnion()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		Framework::ICommand* pCommand = NULL;
+		m_MapCtrl.SetCurTool("PolygonUnionCmd");
+		pCommand=Framework::ICommand::FindCommand("PolygonUnionCmd");
+		if(pCommand)
+		{
+			pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+			pCommand->Click();
+		}
+	}
+}
+afx_msg void CTDAppView::OnUpdateEditerUnion(CCmdUI *pCmdUI)
 {
 	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
 	if(!pMap)

@@ -1044,14 +1044,14 @@ void CEditFeatureTool::ShowAttribute()
 	if(!pMap)
 		return ;
 
-	//Editor::CEditorPtr pEdit =pMap->GetEditor();
-	//if(!pEdit)
-	//{
-	//	return ;
-	//}
+	Editor::CEditorPtr pEdit =pMap->GetEditor();
+	if(!pEdit)
+	{
+		return ;
+	}
 
 
-	//pEdit->EditAttribute();
+	pEdit->EditAttribute();
 }
 
 } //namespace Editor
