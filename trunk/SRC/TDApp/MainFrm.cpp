@@ -412,6 +412,16 @@ void CMainFrame::AddTab_Editor()
 	//--------------------------
 	CBCGPRibbonButton* pBtnEditSave = new CBCGPRibbonButton (ID_EDITOR_SAVE, _T("保存"), 6, 6);
 	pPanelEditor->Add (pBtnEditSave);
+	//--------------------------
+	// 删除:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditDel = new CBCGPRibbonButton (ID_DELETE_FEATURES, _T("删除"), 7, 7);
+	pPanelEditor->Add (pBtnEditDel);
+	//--------------------------
+	// 合并要素:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditUnion = new CBCGPRibbonButton (ID_UNION_FEATURES, _T("合并要素"), 8, 8);
+	pPanelEditor->Add (pBtnEditUnion);
 
 }
 

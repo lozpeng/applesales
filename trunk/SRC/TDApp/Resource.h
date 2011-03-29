@@ -138,7 +138,8 @@
 #define ID_MAGIC_STICK                  40510
 #define ID_EDGE_EXTRACT                 40511
 #define ID_WATER_EXTRACT                40512
-
+#define ID_DELETE_FEATURES				40513
+#define ID_UNION_FEATURES				40514
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

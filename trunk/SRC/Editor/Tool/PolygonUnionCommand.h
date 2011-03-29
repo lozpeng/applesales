@@ -10,11 +10,11 @@ using std::vector;
 namespace Editor
 {
 
-	class CActionPolygonUnion: public Framework::ICommand
+	class CPolygonUnionTool: public Framework::ICommand
 	{
 	public:
-		CActionPolygonUnion(void);
-		virtual ~CActionPolygonUnion(void);
+		CPolygonUnionTool(void);
+		virtual ~CPolygonUnionTool(void);
 
 	public:
 		//≥ı ºªØ
