@@ -135,6 +135,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_UNION_FEATURES, OnEditerUnion)
 	ON_UPDATE_COMMAND_UI(ID_UNION_FEATURES, OnUpdateEditerUnion)
 
+	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
+
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
 
@@ -1228,4 +1230,15 @@ afx_msg void CTDAppView::OnUpdateEditerUnion(CCmdUI *pCmdUI)
 
 	}
 	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
+}
+
+void CTDAppView::OnMagicStick()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("MagicStickTool");
+	pTool=Framework::ITool::FindTool("MagicStickTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
 }

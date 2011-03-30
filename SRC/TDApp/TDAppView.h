@@ -164,6 +164,9 @@ public:
 	afx_msg void OnDrawMapFrameElement();
 	afx_msg void OnUpdateDrawMapFrameElement(CCmdUI* pCmdUI);
 
+	//ƒß ı∞ÙÃ·»°
+	afx_msg void OnMagicStick();
+
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
 protected:
