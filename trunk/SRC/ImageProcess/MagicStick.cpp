@@ -14,7 +14,102 @@ typedef struct{
 GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,int y,unsigned char rate)
 {
 
-    return NULL;   
+	using namespace GEOMETRY::geom;
+    long lwidth,lheight;
+	pDataset->GetSize(&lwidth,&lheight);
+	if(x<=0 || x>lwidth)
+	{
+		return NULL;
+	}
+	if(y<=0 || y>lheight)
+	{
+		return NULL;
+	}
+	long lband =pDataset->GetBandCount();
+	unsigned char *pRed,*pGreen,*pBlue;
+	pRed =pGreen =pBlue =NULL;
+	long lstartx,lstarty,lendx,lendy;
+	long half =700;
+	lstartx =(x-half>0)?(x-half):1;
+	lstarty =(y-half>0)?(y-half):1;
+	lendx =(x+half<=lwidth)?(x+half):lwidth;
+	lendy =(y+half<=lheight)?(y+half):lheight;
+
+	double dmin,dmax;
+	long lbufferx,lbuffery;
+	lbufferx =lendx-lstartx+1;
+	lbuffery =lendy-lstarty+1;
+	unsigned char value;
+	int posx =x-lstartx+1;
+	int posy =y-lstarty+1;
+	if(lband>=3)
+	{
+
+		pRed =new unsigned char[lbufferx*lbuffery];
+		pDataset->GetBandMinMaxValue(1,&dmax,&dmin);
+		pDataset->DataReadBandNormalize(1,lstartx,lstarty,lendx-lstartx+1,lendy-lstarty+1,lendx-lstartx+1,lendy-lstarty+1,pRed,dmin,dmax);
+
+		pGreen =new unsigned char[lbufferx*lbuffery];
+		pDataset->GetBandMinMaxValue(2,&dmax,&dmin);
+		pDataset->DataReadBandNormalize(2,lstartx,lstarty,lendx-lstartx+1,lendy-lstarty+1,lendx-lstartx+1,lendy-lstarty+1,pGreen,dmin,dmax);
+
+		pBlue =new unsigned char[lbufferx*lbuffery];
+		pDataset->GetBandMinMaxValue(3,&dmax,&dmin);
+		pDataset->DataReadBandNormalize(3,lstartx,lstarty,lendx-lstartx+1,lendy-lstarty+1,lendx-lstartx+1,lendy-lstarty+1,pBlue,dmin,dmax);
+
+		value =((int)pRed[(posy-1)*lbufferx+posx-1]+(int)pGreen[(posy-1)*lbufferx+posx-1]+(int)pBlue[(posy-1)*lbufferx+posx-1])/3;
+
+	}
+	else
+	{
+		pRed =new unsigned char[lbufferx*lbuffery];
+		pDataset->GetBandMinMaxValue(1,&dmin,&dmax);
+		pDataset->DataReadBandNormalize(1,lstartx,lstarty,lendx-lstartx+1,lendy-lstarty+1,lendx-lstartx+1,lendy-lstarty+1,pRed,dmin,dmax);
+
+		value =pRed[(posy-1)*lbufferx+posx-1];
+	}
+
+	std::vector<IntPoint> points;
+
+    AreaIncrease(pRed,pGreen,pBlue,lbufferx,lbuffery,x-lstartx+1,y-lstarty+1,value,rate,points);
+	if(points.size()<4)
+	{
+		return NULL;
+	}
+	//建立一个空的多边形要素
+	typedef std::vector<GEOMETRY::geom::Coordinate> CoordVect;
+	Geometry *pGeometry =(Geometry*)GeometryFactory::getDefaultInstance()->createPolygon();
+    Coordinate coord;
+
+	CoordVect *pcoords =new CoordVect(points.size()+1);
+	for(int i=0;i<points.size();i++)
+	{
+		pDataset->PixelToWorld(lstartx+points[i].x,lstarty+points[i].y,&coord.x,&coord.y);
+		(*pcoords)[i] =coord;
+	}
+	(*pcoords)[points.size()] =(*pcoords)[0];
+
+	CoordinateSequence *coords = GeometryFactory::getDefaultInstance()->getCoordinateSequenceFactory()->create(pcoords);
+	LinearRing *pring = GeometryFactory::getDefaultInstance()->createLinearRing(coords);
+
+	((GEOMETRY::geom::Polygon*)pGeometry)->AddGeometry((Geometry*)pring);
+
+
+
+	if(pRed)
+	{
+		delete []pRed;
+	}
+	if(pGreen)
+	{
+		delete []pGreen;
+	}
+	if(pBlue)
+	{
+		delete []pBlue;
+	}
+
+    return ((GEOMETRY::geom::Polygon*)pGeometry);   
 }
 
 
