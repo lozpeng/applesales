@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "MagicStickTool.h"
-
+#include "MagicStick.h"
 #include "Control.h"
-
+#include "PolygonElement.h"
 
 extern CControlApp theApp;
 namespace Control
@@ -59,8 +59,31 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 	if(!pMap)
 		return;
 
+	Carto::ILayerPtr pLayer =pMap->GetLayers().GetAt(0);
 
-	
+	Geodatabase::IRasterDatasetPtr pRaster =pLayer->GetDataObject();
+	if(!pRaster)
+	{
+		return ;
+	}
+	double geoCenterX, geoCenterY;
+	pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x,point.y,geoCenterX, geoCenterY);
+	long x,y;
+	pRaster->WorldToPixel(geoCenterX,geoCenterY,&x,&y);
+	//魔术棒提取
+	GEOMETRY::geom::Polygon *pPolygon =ImageProcess::MagicStick(pRaster.get(),x,y,10);
+
+	if(!pPolygon)
+	{
+		return;
+	}
+	//构建一个多边形图元
+
+	Element::CPolygonElement *pElement =new Element::CPolygonElement(*pPolygon);
+
+	pMap->GetGraphicLayer()->AddElement(pElement);
+
+    m_pMapCtrl->UpdateControl(drawElement);
 
 }
 
