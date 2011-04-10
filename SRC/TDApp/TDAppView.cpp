@@ -246,9 +246,9 @@ int CTDAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_MapCtrl.CreateControl(Framework::CommonUIName::AppMapControl, &m_WndTab, ID_MAPCTRL);
 	m_WndTab.AddTab( &m_MapCtrl , "Map" );
 
-	m_LayoutCtrl.CreateControl(Framework::CommonUIName::AppLayoutControl, &m_WndTab,ID_LAYOUTCTRL);
+	//m_LayoutCtrl.CreateControl(Framework::CommonUIName::AppLayoutControl, &m_WndTab,ID_LAYOUTCTRL);
 	//m_wndButton.Create(_T("Test"),WS_CHILD|WS_VISIBLE,CRect(0,0,10,20),&m_WndTab,IDC_TEST);
-	m_WndTab.AddTab(&m_LayoutCtrl,_T("Layout"));
+	//m_WndTab.AddTab(&m_LayoutCtrl,_T("Layout"));
 
 
 	CTDAppDoc* pDoc = GetDocument();
