@@ -182,10 +182,8 @@ namespace Display
 	//Draw PolyLine Method 
 	inline void CDC::DrawPolyLines(const DIS_LINE &line)
 	{
-
-
-		/*
-		POINT* pts = (POINT*)&(line.ps[0]);
+		
+		/*POINT* pts = (POINT*)&(line.ps[0]);
 		Gdiplus::PointF* pfs = new Gdiplus::PointF[line.Count];
 		for(int i=0; i<line.Count; i++)
 		{
@@ -197,11 +195,14 @@ namespace Display
 		Gdiplus::Graphics graphics(m_hDC);
 		Gdiplus::Pen pen(Gdiplus::Color(255,0,0),2);
 
+		HPEN hPen = (HPEN)GetCurrentObject(m_hDC,OBJ_PEN);
+		COLORREF  col = GetDCPenColor(m_hDC);
+		int r= GetRValue(col);
 		graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
 		graphics.DrawLines(&pen,pfs,line.Count);
 
-		delete []pfs;
-		*/
+		delete []pfs;*/
+		
 
 		Polyline(m_hDC , (POINT*)&(line.ps[0]) , line.Count);
 
@@ -209,10 +210,7 @@ namespace Display
 
 	void CDC::DrawPolyLines(long &points,long count)
 	{
-
-
-		/*
-		POINT* pts = (POINT*)&points;
+		/*POINT* pts = (POINT*)&points;
 		Gdiplus::PointF* pfs = new Gdiplus::PointF[count];
 		for(int i=0; i<count; i++)
 		{
@@ -223,11 +221,14 @@ namespace Display
 		Gdiplus::Graphics graphics(m_hDC);
 		Gdiplus::Pen pen(Gdiplus::Color(255,0,0),2);
 
+		HPEN hPen = (HPEN)GetCurrentObject(m_hDC,OBJ_PEN);
+
+		
 		graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
 		graphics.DrawLines(&pen,pfs,count);
 
-		delete []pfs;
-		*/
+		delete []pfs;*/
+		
 		Polyline(m_hDC , (POINT*)&points , count);
 
 	}
@@ -1037,9 +1038,8 @@ namespace Display
 
 		HPEN hPen = NULL;
 
-		if( !m_hDC )
-			//OTFALSERETURN(0,"Error: m_hDC == NULL");
-
+		if(m_hDC )
+		{
 			if( style.bExt )	
 			{
 				//ÆôÓÃÀ©Õ¹±Ê
@@ -1062,7 +1062,7 @@ namespace Display
 			{
 				return (DISPLAY_HANDLE)hPen;
 			}
-			//OTEND(NULL,NULL)
+		}
 	}
 
 
