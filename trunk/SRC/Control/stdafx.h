@@ -66,5 +66,7 @@
 
 #include "ToolDefine.h"
 #include "ImageProcessDef.h"
+#include "ElementDefine.h"
+#include "SystemUnit.h"
 #include <afxdlgs.h>
 
