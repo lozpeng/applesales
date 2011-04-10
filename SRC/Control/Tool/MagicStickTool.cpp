@@ -81,6 +81,12 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 
 	Element::CPolygonElement *pElement =new Element::CPolygonElement(*pPolygon);
 
+	//ÉèÖÃ·ûºÅ
+	Display::CSimpleFillSymbolPtr pFillSymbol =pElement->GetSymbol();
+	pFillSymbol->SetDrawFill(false);
+	pFillSymbol->SetOutLineWidth(2);
+	pFillSymbol->SetOutLineColor(RGB(0,255,0));
+
 	pMap->GetGraphicLayer()->AddElement(pElement);
 
     m_pMapCtrl->UpdateControl(drawElement);
