@@ -41,7 +41,7 @@ IRasterDatasetPtr CRasterWorkspace::OpenRasterDataset(const char *name, bool Rea
 
 	if(NULL==m_pDataset)
 	{
-		return false;
+		return NULL;
 	}
 
 	CDSRasterDataset *pDataset =new CDSRasterDataset(this,m_pDataset,ReadOnly,name);

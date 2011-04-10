@@ -125,6 +125,9 @@ namespace Framework
 
 		Geodatabase::IWorkspace* pWorkspace = CRasterWSFactory::GetInstance()->OpenFromFile(fileName);
 		Geodatabase::IRasterDatasetPtr pRasterDataset = pWorkspace->OpenRasterDataset(fileName);
+		
+		if (NULL == pRasterDataset)
+			return;
 
 		if(buildPyd)
 		{
