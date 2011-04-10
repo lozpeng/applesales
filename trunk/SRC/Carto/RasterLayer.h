@@ -27,6 +27,8 @@ public:
 
 	virtual void Draw(Display::IDisplayPtr pDisplay,DRAW_CONTENT content);
 
+	virtual void BeforeDraw(SYSTEM::CSmartPtr<Display::IDisplay> pDisplay);
+
 	virtual void AfterDraw(SYSTEM::CSmartPtr<Display::IDisplay> pDisplay);
 
 	virtual void ClearSelectionSet();
@@ -55,6 +57,10 @@ public:
 protected:
 
 	IRasterRenderPtr m_pRender;
+
+	HDC m_blendDc;
+
+	HBITMAP m_TransBmp;
 
 };
 

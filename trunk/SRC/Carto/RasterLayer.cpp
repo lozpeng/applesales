@@ -11,6 +11,7 @@ namespace Carto
 CRasterLayer::CRasterLayer()
 {
 	m_layerType = RasterLayer;
+	m_blendDc=NULL;
 
 }
 
@@ -156,6 +157,31 @@ void CRasterLayer::Draw(Display::IDisplayPtr pDisplay, DRAW_CONTENT content)
 	
 	ILayer::Draw(pDisplay,drawGeography);
 }
+
+void  CRasterLayer::BeforeDraw(SYSTEM::CSmartPtr<Display::IDisplay> pDisplay)
+{
+	if (m_TransparentAlphaValue!=0)
+	{
+		m_blendDc =::CreateCompatibleDC((HDC)pDisplay->GetDrawDC()->GetSafeHdc());
+
+		RECT viewrect = pDisplay->GetDisplayTransformation().GetViewPosition().GetViewBound().GetRect();
+
+		long lDcWidth = pDisplay->GetDrawDC()->GetDCWidth();
+		long lDcHeight = pDisplay->GetDrawDC()->GetDCHeight();
+
+		m_TransBmp =::CreateCompatibleBitmap((HDC)(pDisplay->GetDrawDC())->GetSafeHdc(),lDcWidth,lDcHeight);
+
+		HBITMAP oldbmp =(HBITMAP)::SelectObject(m_blendDc,m_TransBmp);
+
+		//将原来的背景复制
+		::BitBlt(m_blendDc,viewrect.left,viewrect.top,lDcWidth,lDcHeight,(HDC)pDisplay->GetDrawDC()->GetSafeHdc(),
+			viewrect.left,viewrect.top,SRCCOPY);
+
+
+
+
+	}
+}
 void CRasterLayer::AfterDraw(Display::IDisplayPtr pDisplay)
 {
 	if(!m_pRender)
@@ -164,37 +190,26 @@ void CRasterLayer::AfterDraw(Display::IDisplayPtr pDisplay)
 	if (m_TransparentAlphaValue!=0)
 	{
 
-		HDC blendDc;
-
-		blendDc = ::CreateCompatibleDC((HDC)pDisplay->GetDrawDC()->GetSafeHdc());
 
 		RECT viewrect = pDisplay->GetDisplayTransformation().GetViewPosition().GetViewBound().GetRect();
 
 		long lDcWidth = pDisplay->GetDrawDC()->GetDCWidth();
 		long lDcHeight = pDisplay->GetDrawDC()->GetDCHeight();
-
-		HBITMAP blendBitmap;
-
-		blendBitmap = ::CreateCompatibleBitmap((HDC)(pDisplay->GetDrawDC())->GetSafeHdc(),lDcWidth,lDcHeight);
-
-		::SelectObject(blendDc,blendBitmap);
-
-		//绘制背景
-		HBRUSH hbrush = ::CreateSolidBrush( RGB(255,255,255));
-
-		::FillRect(blendDc , &viewrect , hbrush );
-
-		::DeleteObject( hbrush );
-
 		int iTransExtent = int(m_TransparentAlphaValue * 255.0 / 100.0);
 
 		BLENDFUNCTION  bl;
 		bl.AlphaFormat = 0 ;
 		bl.BlendFlags = 0;
 		bl.BlendOp = AC_SRC_OVER;
-		bl.SourceConstantAlpha = iTransExtent;
-		//::BitBlt((HDC)pDisplay->GetDrawDC()->GetSafeHdc(),viewrect.left,viewrect.top,lDcWidth,lDcHeight,blendDc,viewrect.left,viewrect.top,SRCCOPY);
-		::AlphaBlend((HDC)pDisplay->GetDrawDC()->GetSafeHdc(),viewrect.left,viewrect.top,lDcWidth,lDcHeight,blendDc,viewrect.left,viewrect.top,lDcWidth,lDcHeight,bl);
+		bl.SourceConstantAlpha = 255-iTransExtent;
+
+		::AlphaBlend(m_blendDc,viewrect.left,viewrect.top,lDcWidth,lDcHeight,(HDC)pDisplay->GetDrawDC()->GetSafeHdc(),viewrect.left,viewrect.top,lDcWidth,lDcHeight,bl);
+
+		::BitBlt((HDC)pDisplay->GetDrawDC()->GetSafeHdc(),viewrect.left,viewrect.top,lDcWidth,lDcHeight,m_blendDc,
+			viewrect.left,viewrect.top,SRCCOPY);
+
+		::DeleteDC( m_blendDc );
+		::DeleteObject(m_TransBmp);
 
 	}
 }
