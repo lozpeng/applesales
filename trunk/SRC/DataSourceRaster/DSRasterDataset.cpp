@@ -104,27 +104,27 @@ void CDSRasterDataset::Init()
 			break;
 		case GDT_UInt16:
 			
-			ComputeMinMax<unsigned short>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			ComputeMinMax<unsigned short>(lband+1,1,1,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
 			break;
 		case GDT_Int16:
 		case GDT_CInt16:
-			ComputeMinMax<short>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			ComputeMinMax<short>(lband+1,1,1,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
 			break;
 		case GDT_UInt32:
 			
-			ComputeMinMax<unsigned int>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			ComputeMinMax<unsigned int>(lband+1,1,1,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
 			break;
 		case GDT_Int32:
 		case GDT_CInt32:
-			ComputeMinMax< int>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			ComputeMinMax< int>(lband+1,1,1,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
 			break;
 		case GDT_Float32:
 		case GDT_CFloat32:
-			ComputeMinMax< float>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			ComputeMinMax< float>(lband+1,1,1,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
 			break;
 		case GDT_Float64:
 		case GDT_CFloat64:
-			ComputeMinMax< double>(lband+1,0,0,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
+			ComputeMinMax< double>(lband+1,1,1,lwidth,lheight,lReadwidth,lReadheight,buffer,&dMin,&dMax);
 			break;
 		default:
 			return;
