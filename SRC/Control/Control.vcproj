@@ -643,11 +643,35 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\ElementProperSheet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ElementProperSheet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ElementSizePositionPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ElementSizePositionPage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\GradientProgressCtrl.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\UI\GradientProgressCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ISymbolListCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ISymbolListCtrl.h"
 				>
 			</File>
 			<File
@@ -698,6 +722,30 @@
 			</File>
 			<File
 				RelativePath=".\UI\RasterPropPage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SimpleElementProperSheet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SimpleElementProperSheet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolPreviewButton.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolPreviewButton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolPreviewPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolPreviewPage.h"
 				>
 			</File>
 			<File
