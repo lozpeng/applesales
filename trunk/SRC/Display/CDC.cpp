@@ -1056,7 +1056,8 @@ namespace Display
 
 			if( !hPen )
 			{
-				//OTFALSERETURN(NULL,"Error:Create pen fail")
+				
+				return NULL;
 			}
 			else
 			{
