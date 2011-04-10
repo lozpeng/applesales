@@ -101,7 +101,7 @@ BOOL CMainFrame::CreateRibbonBar()
 	//变化发现
 	AddTab_ChangeDetect();
 	//地理要素提取
-	//AddTab_GeoInfoExtract();
+	AddTab_GeoInfoExtract();
 	//矢量编辑
 	AddTab_Editor();
 	//-----------------------------------
@@ -292,7 +292,7 @@ void CMainFrame::AddTab_MapControl()
 void CMainFrame::AddTab_ImageAnalyse()
 {
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
-		_T("影像分析"),
+		_T("影像增强"),
 		IDB_FILESMALL,
 		IDB_FILELARGE);
 
@@ -427,17 +427,12 @@ void CMainFrame::AddTab_Editor()
 
 void CMainFrame::AddTab_GeoInfoExtract()
 {
-
-}
-
-void CMainFrame::AddTab_ChangeDetect()
-{
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
-		_T("变化发现与地理要素提取"),
+		_T("地理要素提取"),
 		IDB_FILELARGE,
 		IDB_ChangeDetect);
 
-	
+
 
 
 	CBCGPRibbonPanel* pPanelLabel = pCategory->AddPanel (_T("手动提取工具"));
@@ -478,20 +473,7 @@ void CMainFrame::AddTab_ChangeDetect()
 	CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 8);
 	pPanelLabel->Add (pBtnElementSaveAs);
 
-
-	CBCGPRibbonPanel* pPanel = pCategory->AddPanel (_T("变化发现工具"));
-	//--------------------------
-	// 变化检测
-	//--------------------------
-	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_CHANGE_DETECT, _T("变化发现"), 1, 1);
-	pPanel->Add (pBtnChange);
-	//--------------------------
-	// 变化标识
-	//--------------------------
-	CBCGPRibbonButton* pBtnChangeRender = new CBCGPRibbonButton (ID_CHANGE_RENDER,_T("变化标识"), 9, 9);
-	pPanel->Add (pBtnChangeRender);
-
-    //半自动提取
+	//半自动提取
 	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));
 	//--------------------------
 	// 魔术棒
@@ -511,6 +493,37 @@ void CMainFrame::AddTab_ChangeDetect()
 	//--------------------------
 	CBCGPRibbonButton* pBtnWater = new CBCGPRibbonButton (ID_WATER_EXTRACT, _T("水体自动提取"), 11, 11);
 	pPanelAuto->Add (pBtnWater);
+}
+
+void CMainFrame::AddTab_ChangeDetect()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("变化检测"),
+		IDB_FILELARGE,
+		IDB_ChangeDetect);
+
+
+	CBCGPRibbonPanel* pPanel = pCategory->AddPanel (_T("变化发现工具"));
+	//--------------------------
+	// 变化检测
+	//--------------------------
+	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_CHANGE_DETECT, _T("变化发现"), 1, 1);
+	pPanel->Add (pBtnChange);
+	//--------------------------
+	// 变化标识
+	//--------------------------
+	CBCGPRibbonButton* pBtnChangeRender = new CBCGPRibbonButton (ID_CHANGE_RENDER,_T("变化标识"), 9, 9);
+	pPanel->Add (pBtnChangeRender);
+
+
+	//--------------------------
+	// 变化结果导出
+	//--------------------------
+	CBCGPRibbonButton* pBtnChangeExport = new CBCGPRibbonButton (ID_CHANGE_EXPORT,_T("检测结果导出"), -1, 8);
+	pPanel->Add (pBtnChangeExport);
+	
+
+  
 }
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
