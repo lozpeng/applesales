@@ -7,7 +7,7 @@
 #include "IMapCtrl.h"
 #include "IGeoDataObject.h"
 #include "EditFeatureTool.h"
-
+#include "FeatureLayer.h"
 namespace Editor
 {
 
@@ -106,11 +106,18 @@ namespace Editor
 			{
 				pFeatureClass->DeleteFeature(m_shapeIds[i]);
 			}
+
+			//add selection
+			//Carto::ILayerPtr ipLayer = pLayer;
+			pMap->ClearSelection();
+			pMap->SelectFeature(pLayer,pFeature);
+			
 		}
 		pWorkspace->StopEditOperation();
 		
 		
 		Clear();
+		
 		
 		//
 		Framework::ITool *pTool = Framework::ITool::FindTool("EditFeatureTool");
