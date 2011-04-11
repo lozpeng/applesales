@@ -19,8 +19,7 @@
 //#include "AoiManager.h"
 //#include "CrossLine.h"
 //#include "ElementOperationStack.h"
-
-
+#include "Feature.h"
 namespace Carto
 {
 
@@ -246,7 +245,15 @@ namespace Carto
 		*/
 		//void SetCrossLiner(CCrossLine* pCrossLiner) {m_pCrossLine = pCrossLiner;};
 
+		/** 
+		* 添加选择对象到Map
+		*/
+		void SelectFeature(ILayer* pLayer,Geodatabase::CFeaturePtr pFeature);
 
+		/** 
+		* 删除Map中所有选择对象
+		*/
+		void ClearSelection();
 
 		/** 函数名称	:	RegisterDeleteLayer(boost::function fun)
 		*描述			:	注册删除图层的回调函数

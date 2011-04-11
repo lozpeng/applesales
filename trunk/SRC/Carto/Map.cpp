@@ -1,14 +1,11 @@
 #include "stdafx.h"
 #include "Map.h"
-//#include "FeatureLayer.h"
-//#include "GraphicLayer.h"
+#include "FeatureLayer.h"
+#include "GraphicLayer.h"
 #include "IFeatureClass.h"
 #include "IRasterDataset.h"
 #include "DisplayTransformation.h"
-//#include "TI_Project.h"
 #include "ProjTransform.h"
-//#include "AOIClass.h"
-
 
 namespace Carto
 {
@@ -311,6 +308,8 @@ namespace Carto
 
 			for (int i=0 ; i<m_Layers.GetSize() ; i++ )
 			{
+				int cnt = m_Layers.GetSize();
+				ILayerPtr pLayer = m_Layers[i];
 				m_Layers[i]->Draw( m_pDisplay , drawGeography );
 				gCallbackLayerColorAdjust(m_Layers[i]);
 			}
@@ -899,6 +898,33 @@ namespace Carto
 		m_bFramed = bFramed;
 	}
 
+	void CMap::SelectFeature(ILayer* ipLayer,Geodatabase::CFeaturePtr pFeature)
+	{
+		if (ipLayer == NULL || pFeature== NULL)
+		 return;
+		if (ipLayer->GetLayerType()!=FeatureLayer)
+			return;
+		long lFeatureID = -1;
+		Geodatabase::IRowPtr pRow = pFeature;
+		lFeatureID = pRow->GetId();
+		CFeatureLayer* pFeatureLayer = (CFeatureLayer*)ipLayer;
+		
+		pFeatureLayer->Select(NULL,SELECT_ADD);
+		Geodatabase::ISelctionSet* pFSelection = pFeatureLayer->GetSelection().get();
+		if(pFSelection&&lFeatureID >0)
+			pFSelection->Add(lFeatureID);
 
+	}
+	void CMap::ClearSelection()
+	{
+		for (int i = 0 ; i < m_Layers.GetSize() ; i++ )
+		{
+			ILayerPtr pLayer = m_Layers[i];
+			if (pLayer->GetLayerType()!=FeatureLayer)
+				continue;
+			IFeatureLayerPtr pFeatureLayer = pLayer;
+			pFeatureLayer->ClearSelectionSet();
+		}
+	}
 
 }

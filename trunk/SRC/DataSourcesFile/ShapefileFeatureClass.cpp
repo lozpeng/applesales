@@ -906,6 +906,9 @@ ICursorPtr CShapefileFeatureClass::QueryByExtent(GEOMETRY::geom::Envelope *pEnve
 //简单的条件选择
 ISelctionSetPtr CShapefileFeatureClass::SimpleSelect(Geodatabase::CSimpleQuery* query)
 {
+	IFeatureSelection *pSelectionSet =new IFeatureSelection(this);
+	if (query == NULL)
+		return ISelctionSetPtr(pSelectionSet);
 
 	bool ball =false;
 	if(query->GetWhereString().empty())
@@ -914,7 +917,7 @@ ISelctionSetPtr CShapefileFeatureClass::SimpleSelect(Geodatabase::CSimpleQuery* 
 	}
 
 	long ltotal=GetTotalNum();
-	IFeatureSelection *pSelectionSet =new IFeatureSelection(this);
+	
 	if(!ball)
 	{
 
