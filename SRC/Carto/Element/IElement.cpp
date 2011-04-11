@@ -463,7 +463,7 @@ HIT_TEST_RES IElement::HitTest ( GEOMETRY::geom::Coordinate coord, double dbTole
 	{
 		GEOMETRY::geom::Coordinate coordOut;
 		double dbSearchDis = 0;
-		long lPartIndex, lVertixIndex;
+		long lPartIndex = 0, lVertixIndex= -1;
 		m_pGeometry->SnapVertex(&coord, dbTolerance, &coordOut, &dbSearchDis, &lPartIndex, &lVertixIndex);
 		hitTestRes.lPartIndex= lPartIndex;
 		hitTestRes.lHitLocation = lVertixIndex;
