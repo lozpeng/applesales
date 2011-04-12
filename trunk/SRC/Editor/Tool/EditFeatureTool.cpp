@@ -355,10 +355,10 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 			GEOMETRY::geom::GeometryFactory::getDefaultInstance()->createPoint(pt);
 
 		m_bContain =false;
-		for(size_t i=0;i<m_moveGeometrys.size();i++)
+		for(size_t i=0;i<pEdit->m_modifyGeometrys.size();i++)
 		{
 			//点是否在要素之内
-			if(m_moveGeometrys[i]->contains(pPoint))
+			if(pEdit->m_modifyGeometrys[i]->contains(pPoint))
 			{
 				m_bContain =true;
 				break;
@@ -390,10 +390,10 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 			pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x-m_lastmovePt.x,dx);
 
 			pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(m_lastmovePt.y-point.y,dy);
-			for(size_t i=0;i<m_moveGeometrys.size();i++)
+			for(size_t i=0;i<pEdit->m_modifyGeometrys.size();i++)
 			{
 				//对每个图形进行移动
-				m_moveGeometrys[i]->Move(dx,dy);
+				pEdit->m_modifyGeometrys[i]->Move(dx,dy);
 			}
 
 			DrawMovedGeometrys();
@@ -456,51 +456,51 @@ void CEditFeatureTool::LButtonUpEvent (UINT nFlags, CPoint point)
 	}
 	else if(m_nStatus == On_MoveMoreShape)
 	{
-		m_nStatus =On_SelectMoreShape;
+	//	m_nStatus =On_SelectMoreShape;
 
-		if(m_bMoved)
-		{
-			//如果要素移动了，则提交修改结果
+	//	if(m_bMoved)
+	//	{
+	//		//如果要素移动了，则提交修改结果
 
-			std::vector<Carto::ILayer*> vecMapLayers;
-			long fid;
-			Geodatabase::CFeaturePtr pFeature;
-			Geodatabase::IFeatureClass *pFeatureClass =NULL;
-			Geodatabase::IWorkspace *pWorkspace =NULL;
+	//		std::vector<Carto::ILayer*> vecMapLayers;
+	//		long fid;
+	//		Geodatabase::CFeaturePtr pFeature;
+	//		Geodatabase::IFeatureClass *pFeatureClass =NULL;
+	//		Geodatabase::IWorkspace *pWorkspace =NULL;
 
-			for(int i=0; i<m_moveGeometrys.size(); i++)
-			{
-				fid =m_shpIds[i];
-				pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(m_layers[i]->GetDataObject().get());
+	//	//	for(int i=0; i<m_moveGeometrys.size(); i++)
+	//	//	{
+	//	//		fid =m_shpIds[i];
+	//	//		pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(m_layers[i]->GetDataObject().get());
 
-				pWorkspace =pFeatureClass->GetWorkspace();
-				pFeature = pFeatureClass->GetFeature(fid);
+	//	//		pWorkspace =pFeatureClass->GetWorkspace();
+	//	//		pFeature = pFeatureClass->GetFeature(fid);
 
-				if(!pFeature)
-				{
-					continue;
-				}
+	//	//		if(!pFeature)
+	//	//		{
+	//	//			continue;
+	//	//		}
 
-				pWorkspace->StartEditOperation();
-				pFeature->SetShape(m_moveGeometrys[i]->clone());
-				pFeature->Update();
+	//	//		pWorkspace->StartEditOperation();
+	//	//		pFeature->SetShape(m_moveGeometrys[i]->clone());
+	//	//		pFeature->Update();
 
-				pWorkspace->StopEditOperation();
-
-
-				vecMapLayers.push_back(m_layers[i]);
-
-			}
-			if(!vecMapLayers.empty())
-			{
-				//加入回滚列表
-				pEdit->AddToCircle(vecMapLayers);
+	//	//		pWorkspace->StopEditOperation();
 
 
-			}
-			
+	//	//		vecMapLayers.push_back(m_layers[i]);
 
-		}
+	//	//	}
+	//	//	if(!vecMapLayers.empty())
+	//	//	{
+	//	//		//加入回滚列表
+	//	//		pEdit->AddToCircle(vecMapLayers);
+
+
+	//	}
+	//	//	
+
+	//	}
 
 		m_bMoved =false;
 
@@ -561,14 +561,14 @@ void CEditFeatureTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 
 void CEditFeatureTool::ClearMoveGeometrys()
 {
-	for(size_t i=0;i<m_moveGeometrys.size();i++)
-	{
-		delete m_moveGeometrys[i];
-	}
+	//for(size_t i=0;i<m_moveGeometrys.size();i++)
+	//{
+	//	delete m_moveGeometrys[i];
+	//}
 
-	m_moveGeometrys.clear();
-	m_shpIds.clear();
-	m_layers.clear();
+	//m_moveGeometrys.clear();
+	//m_shpIds.clear();
+	//m_layers.clear();
 }
 
 BOOL CEditFeatureTool::GetSelectGeometrys()
@@ -628,10 +628,10 @@ BOOL CEditFeatureTool::GetSelectGeometrys()
 			fid =pSelction->NextID();
 			pGeometry =pFeatureClass->GetFeatureShape(fid);
 
-			m_moveGeometrys.push_back(pGeometry);
+			//m_moveGeometrys.push_back(pGeometry);
 
-			m_shpIds.push_back(fid);
-			m_layers.push_back(alllayers[i]);
+			//m_shpIds.push_back(fid);
+			//m_layers.push_back(alllayers[i]);
 			bSearch=TRUE;
 
 		}
@@ -699,9 +699,9 @@ void CEditFeatureTool::DrawMovedGeometrys()
 	dispaly->SetDrawBuffer(drawGeoSelection);
 	dispaly->DrawBackgroud();
 
-	for(size_t i=0;i<m_moveGeometrys.size();i++)
+	for(size_t i=0;i<pEdit->m_modifyGeometrys.size();i++)
 	{
-		pEdit->DrawEditShape(dispaly,m_moveGeometrys[i]);
+		pEdit->DrawEditShape(dispaly,pEdit->m_modifyGeometrys[i]);
 	}
 	pMapCtrl->RefreshScreen();
 }

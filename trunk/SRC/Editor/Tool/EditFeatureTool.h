@@ -79,7 +79,7 @@ private:
 		GEOMETRY::geom::Coordinate m_insertPt;
 
 		//移动的图形数组
-		std::vector<GEOMETRY::geom::Geometry*> m_moveGeometrys;
+		//std::vector<GEOMETRY::geom::Geometry*> m_moveGeometrys;
 
 		Status m_nStatus;
 		HCURSOR cursorOnVertix ;
