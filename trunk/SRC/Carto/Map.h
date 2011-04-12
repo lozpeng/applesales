@@ -255,6 +255,9 @@ namespace Carto
 		*/
 		void ClearSelection();
 
+		//
+		long SelectionCount();
+
 		/** 函数名称	:	RegisterDeleteLayer(boost::function fun)
 		*描述			:	注册删除图层的回调函数
 		* 参数			:	boost::function fun 函数对象

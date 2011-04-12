@@ -83,15 +83,21 @@ void CEditFeatureTool::LButtonDownEvent (UINT nFlags, CPoint point)
 		return ;
 	}
 
-	if(m_nStatus==On_SelectMoreShape)
+	if(m_nStatus==On_SelectMoreShape||m_nStatus == On_Selection)
 	{
-		//如果在选择图形的范围之外，双击会结束移动状态
+		//如果在选择图形的范围之外，结束移动状态
 		if(!m_bContain)
 		{
 			m_nStatus = On_None;
-
+	
+			//将提交
+			pEdit->CommitModifyShape();
 			//清空选择集
 			ClearMoveGeometrys();
+
+			pMapCtrl->UpdateControl(drawAll);
+
+			return;
 		}
 	}
 
@@ -231,16 +237,16 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 			{
 				Geometry *pPoint =(Geometry*)GeometryFactory::getDefaultInstance()->createPoint(Coordinate(pt.x,pt.y));
 
-				bool bcontain =false;
+				m_bContain =false;
 
 				if(pEdit->m_modifyGeometrys[i]->contains(pPoint))
 				{
-					bcontain =true;
+					m_bContain =true;
 
 				}
 
 
-				if(bcontain)
+				if(m_bContain)
 				{
 					m_nStatus=On_Inside;
 					pMapCtrl->SetCursor(cursorSizeAll);
@@ -380,7 +386,7 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 		if(m_lastmovePt!=point)
 		{
 
-			double dx ,dy;
+			double dx=0 ,dy=0;
 			pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(point.x-m_lastmovePt.x,dx);
 
 			pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(m_lastmovePt.y-point.y,dy);
@@ -389,8 +395,6 @@ void CEditFeatureTool::MouseMoveEvent (UINT nFlags, CPoint point)
 				//对每个图形进行移动
 				m_moveGeometrys[i]->Move(dx,dy);
 			}
-
-			//pMapCtrl->UpdateControl(drawGeoSelection);
 
 			DrawMovedGeometrys();
 
@@ -443,7 +447,11 @@ void CEditFeatureTool::LButtonUpEvent (UINT nFlags, CPoint point)
 
 		m_bMoved =false;
 
-
+		//将提交
+		pEdit->CommitModifyShape();
+		m_nStatus = On_None;
+		//清空选择集
+		ClearMoveGeometrys();
 
 	}
 	else if(m_nStatus == On_MoveMoreShape)
@@ -462,8 +470,6 @@ void CEditFeatureTool::LButtonUpEvent (UINT nFlags, CPoint point)
 
 			for(int i=0; i<m_moveGeometrys.size(); i++)
 			{
-				
-
 				fid =m_shpIds[i];
 				pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(m_layers[i]->GetDataObject().get());
 
@@ -492,14 +498,20 @@ void CEditFeatureTool::LButtonUpEvent (UINT nFlags, CPoint point)
 
 
 			}
-			pMapCtrl->UpdateControl(drawAll);
+			
 
 		}
 
 		m_bMoved =false;
 
+		//将提交
+		pEdit->CommitModifyShape();
+		m_nStatus = On_None;
+		//清空选择集
+		ClearMoveGeometrys();
 	}
 
+	pMapCtrl->UpdateControl(drawAll);
 }
 
 void CEditFeatureTool::LButtonDblClkEvent(UINT nFlags, CPoint point)

@@ -119,6 +119,8 @@ namespace Editor
 		Clear();
 		
 		
+		//½«Ìá½»
+		pEdit->CommitModifyShape();
 		//
 		Framework::ITool *pTool = Framework::ITool::FindTool("EditFeatureTool");
 		CEditFeatureTool *ipEditorFeatureTool = (CEditFeatureTool*)pTool;
