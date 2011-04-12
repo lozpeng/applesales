@@ -370,8 +370,8 @@ namespace Editor
 			}
 		}
 
-
-		DrawSnapCursor(pDisplay);
+		if(m_bSketch)
+		 DrawSnapCursor(pDisplay);
 
 
 		pDisplay->End();
@@ -1736,8 +1736,6 @@ namespace Editor
 
 		for(int i=0; i<m_modifyGeometrys.size(); i++)
 		{
-
-
 			fid =m_modifyShapeId[i];
 
 			pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(m_modifyLayers[i]->GetDataObject().get());

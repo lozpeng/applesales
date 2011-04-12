@@ -927,4 +927,18 @@ namespace Carto
 		}
 	}
 
+	long CMap::SelectionCount()
+	{
+		long lCnt = 0;
+		for (int i = 0 ; i < m_Layers.GetSize() ; i++ )
+		{
+			ILayerPtr pLayer = m_Layers[i];
+			if (pLayer->GetLayerType()!=FeatureLayer)
+				continue;
+			IFeatureLayerPtr pFeatureLayer = pLayer;
+			lCnt += pFeatureLayer->GetSelection()->Count();
+		}
+		return lCnt;
+	}
+
 }
