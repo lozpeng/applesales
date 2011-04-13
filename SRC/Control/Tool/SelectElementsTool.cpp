@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "SelectElementsTool.h"
 #include "MapControl.h"
-
+#include "SimpleElementProperSheet.h"
 #include "IElement.h"
-
+#include "DllResource.h"
 #include "Control.h"
 extern CControlApp theApp;
 
-//#include "CotElementProp.h"
+//#include "CElementProp.h"
 
 
 
@@ -481,14 +481,58 @@ namespace Control
 		Element::IElementPtr pElement =  pGraphicLayer->GetSelectedElement(0);
 
 
-		//CElementPropCallback callback;
-		//callback.SetMapCtrl(m_pMapCtrl);
 
-		////显示图元属性
-		//if(IDOK==otComUI::CotElementProp::ShowElementProp(pElement,m_pMap,&callback))
-		//{
-		//	m_pMapCtrl->UpdateControl((otDrawContent)(otDrawElement | otDrawEdit));
-		//}
+		switch(pElement->GetType())
+		{
+		case Element::ET_SIMPLE_POINT_ELEMENT:
+		case Element::ET_POLYLINE_ELEMENT:
+		case Element::ET_CURVE_ELEMENT:
+		case Element::ET_BEZIERCURVE_ELEMENT:
+		case Element::ET_FILL_RECTANGLE_ELEMENT:
+		case Element::ET_FILL_POLYGON_ELEMENT:
+		case Element::ET_FILL_CIRCLE_ELEMENT:
+		case Element::ET_FILL_ELLIPSE_ELEMENT:
+		case Element::ET_GROUP_ELEMENT:
+			{
+				Control::CDllResource hdll;
+
+				CSimpleElementProperSheet sheet("属性");
+				sheet.SetElement(pElement);
+				if(sheet.DoModal()==IDOK)
+				{
+					m_pMapCtrl->UpdateControl(drawEdit|drawElement);
+				}
+			}
+			break;
+		case Element::ET_SIMPLE_TEXT_ELEMENT:
+		case Element::ET_CALLOUT_TEXT_ELEMENT:
+			{
+				Control::CDllResource hdll;
+
+				/*CSimpleTextProperSheet sheet("属性");
+				sheet.SetElement(pElement);
+				if(sheet.DoModal()==IDOK)
+				{
+					m_pMapCtrl->UpdateControl(drawEdit|drawElement);
+				}*/
+			}
+			break;
+		case Element::ET_EXT_PICTURE_ELEMENT:
+			{
+				Control::CDllResource hdll;
+
+				/*CPictureElementProperSheet sheet("属性");
+				sheet.SetElement(pElement);
+				if(sheet.DoModal()==IDOK)
+				{
+					pMapCtrl->UpdateControl(drawEdit|drawElement);
+				}*/
+			}
+			break;
+
+		default:
+			break;
+		}
 
 	}
 
