@@ -33,7 +33,10 @@
 #define IDD_RASTER_PROP                 2017
 #define IDD_SYMBOL_PREVIEW_PAGE         4048
 #define IDD_PAGE_ELEMENT_SIZE_POS       5002
+#define IDC_TEXT_SYMBOL_PREVIEW         5002
+#define IDC_TEXT_SYMBOLSET              5003
 #define IDC_CHK_WH_RATIO                5004
+#define IDC_CHECK_DRAW_BG               5004
 #define IDC_EDIT_POS_X                  5102
 #define IDC_EDIT_POS_Y                  5103
 #define IDC_EDIT_WIDTH                  5104
@@ -45,7 +48,9 @@
 #define IDC_RADIO_RIGHT_TOP             5118
 #define IDC_SYMBOLSET                   5118
 #define IDC_RADIO_LEFT_CENTER           5119
+#define IDC_FILL_SYMBOL_PREVIEW         5119
 #define IDC_RADIO_CENTER_CENTER         5120
+#define IDC_FILL_SYMBOLSET              5120
 #define IDC_RADIO_RIGHT_CENTER          5121
 #define IDC_RADIO_LEFT_BOTTOM           5122
 #define IDC_RADIO_CENTER_BOTTOM         5123
@@ -54,6 +59,9 @@
 #define IDC_STATIC_UNIT2                5158
 #define IDC_STATIC_UNIT3                5159
 #define IDC_STATIC_UNIT4                5160
+#define IDD_PAGE_TEXT_CONTENT           8003
+#define IDC_EDIT_TEXT                   8075
+#define IDD_TEXT_SYMBOL_PREVIEW_PAGE    9003
 #define IDD_TRANSPARENT_ENHANCE         9004
 #define IDD_SWIPE_SHOW                  9011
 #define ID_32771                        32771

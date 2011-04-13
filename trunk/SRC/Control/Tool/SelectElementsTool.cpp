@@ -2,6 +2,7 @@
 #include "SelectElementsTool.h"
 #include "MapControl.h"
 #include "SimpleElementProperSheet.h"
+#include "SimpleTextProperSheet.h"
 #include "IElement.h"
 #include "DllResource.h"
 #include "Control.h"
@@ -509,27 +510,14 @@ namespace Control
 			{
 				Control::CDllResource hdll;
 
-				/*CSimpleTextProperSheet sheet("ÊôÐÔ");
+				CSimpleTextProperSheet sheet("ÊôÐÔ");
 				sheet.SetElement(pElement);
 				if(sheet.DoModal()==IDOK)
 				{
 					m_pMapCtrl->UpdateControl(drawEdit|drawElement);
-				}*/
+				}
 			}
 			break;
-		case Element::ET_EXT_PICTURE_ELEMENT:
-			{
-				Control::CDllResource hdll;
-
-				/*CPictureElementProperSheet sheet("ÊôÐÔ");
-				sheet.SetElement(pElement);
-				if(sheet.DoModal()==IDOK)
-				{
-					pMapCtrl->UpdateControl(drawEdit|drawElement);
-				}*/
-			}
-			break;
-
 		default:
 			break;
 		}
