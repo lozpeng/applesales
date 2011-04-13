@@ -1110,12 +1110,12 @@ afx_msg void CTDAppView::OnEditerEnd()
 			pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
 		}
-		int flagSave = MessageBox("是否保存编辑！","提示",MB_YESNO);
+		int flagSave = MessageBox("是否保存编辑！","提示",MB_YESNOCANCEL);
 		if (flagSave == 6)
 		{
 			pMap->GetEditor()->StopEdit(true);
 		}
-		else
+		else if(flagSave == 7)
 		{
 			pMap->GetEditor()->StopEdit(false);
 		}
