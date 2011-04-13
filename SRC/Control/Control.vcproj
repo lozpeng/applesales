@@ -238,6 +238,14 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\UI\TextContentPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\TextSymbolPreviewPage.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -274,6 +282,14 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\TextContentPage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\TextSymbolPreviewPage.h"
 				>
 			</File>
 		</Filter>
@@ -730,6 +746,14 @@
 			</File>
 			<File
 				RelativePath=".\UI\SimpleElementProperSheet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SimpleTextProperSheet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SimpleTextProperSheet.h"
 				>
 			</File>
 			<File
