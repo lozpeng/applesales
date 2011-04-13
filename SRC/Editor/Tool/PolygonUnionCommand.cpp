@@ -122,10 +122,7 @@ namespace Editor
 		//½«Ìá½»
 		pEdit->CommitModifyShape();
 		//
-		Framework::ITool *pTool = Framework::ITool::FindTool("EditFeatureTool");
-		CEditFeatureTool *ipEditorFeatureTool = (CEditFeatureTool*)pTool;
-		if(ipEditorFeatureTool)
-			ipEditorFeatureTool->ClearMoveGeometrys();
+		pMapCtrl->SetCurTool("EditFeatureTool");
 		pMapCtrl->UpdateControl(drawAll);
 	}
 
