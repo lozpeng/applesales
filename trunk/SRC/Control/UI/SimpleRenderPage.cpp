@@ -52,12 +52,12 @@ Carto::IRenderPtr CSimpleRenderPage::GetRender()
 void CSimpleRenderPage::OnBnClickedSrSymbolset()
 {
 	
-	/*Framework::ISymbolListCtrl *pCtrl =dynamic_cast<Framework::ISymbolListCtrl*>(otFramework::IUIObject::GetUIObjectByName(OT_SYMBOLLISTCTRL));
+	Framework::ISymbolListCtrl *pCtrl =dynamic_cast<Framework::ISymbolListCtrl*>(Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppSymbolLstCtrl));
 	if(pCtrl)
 	{
 		m_pSymbol =pCtrl->SelectSymbol(m_pSymbol);
 	}
-	m_PreviewBtn.SetSymbol(m_pSymbol.get());*/
+	m_PreviewBtn.SetSymbol(m_pSymbol.get());
 }
 
 bool CSimpleRenderPage::CreateDlg(CWnd *pParent)

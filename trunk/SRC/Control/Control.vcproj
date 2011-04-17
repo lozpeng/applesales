@@ -251,6 +251,18 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\UI\SymbollibLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolList.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolSelectDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\TextContentPage.cpp"
 				>
 			</File>
@@ -306,6 +318,18 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbollibLoader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolList.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\symbolselectdlg.h"
 				>
 			</File>
 			<File
@@ -786,6 +810,14 @@
 			</File>
 			<File
 				RelativePath=".\UI\SimpleTextProperSheet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolListCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolListCtrl.h"
 				>
 			</File>
 			<File

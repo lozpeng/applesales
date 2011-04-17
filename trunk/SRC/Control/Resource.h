@@ -35,6 +35,7 @@
 #define IDB_FEATURE_RENDER              4025
 #define IDB_RENDER_BG                   4026
 #define IDD_SIMPLE_RENDER               4027
+#define IDD_SYMBOLSEL_DLG               4028
 #define IDD_SYMBOL_PREVIEW_PAGE         4048
 #define IDD_PAGE_ELEMENT_SIZE_POS       5002
 #define IDC_TEXT_SYMBOL_PREVIEW         5002
@@ -44,6 +45,15 @@
 #define IDC_SR_PREVIEW                  5010
 #define IDC_SR_SYMBOLSET                5011
 #define IDC_RENDER_PAGE_CONTAINER       5012
+#define IDC_ADD_SYMBOLLIB               5013
+#define IDC_BTN_OVERVIEW                5014
+#define IDC_BTN_SYMBOL_EDIT             5015
+#define IDC_SYMKEY                      5016
+#define IDC_SYMBOLFIND                  5017
+#define IDC_SAVESYMBOL                  5018
+#define IDC_SYMNAME                     5019
+#define IDC_LIST_SYMBOL                 5020
+#define IDC_SYMBOLRESETTING             5021
 #define IDC_EDIT_POS_X                  5102
 #define IDC_EDIT_POS_Y                  5103
 #define IDC_EDIT_WIDTH                  5104
