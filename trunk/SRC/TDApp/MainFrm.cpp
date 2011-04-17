@@ -289,6 +289,7 @@ void CMainFrame::AddTab_MapControl()
 	CBCGPRibbonButton* pBtnClose = new CBCGPRibbonButton (ID_FOR_EXIT,_T("退出"), 2, 25);
 	pPanelSystem->Add(pBtnClose);
 }
+
 void CMainFrame::AddTab_ImageAnalyse()
 {
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
@@ -298,7 +299,7 @@ void CMainFrame::AddTab_ImageAnalyse()
 
 	//添加当前图层
 	CBCGPRibbonPanel* pPanelTargetLayer = pCategory->AddPanel (_T("显示"));
-	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,100,"图  层:");
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,100,"目标层:");
 	pPanelTargetLayer->Add(pBtnCurrLayer);
 	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 1);
 	pPanelTargetLayer->Add (pBtnShowOverView);
@@ -369,11 +370,23 @@ void CMainFrame::AddTab_Editor()
 {
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
 		_T("矢量编辑"),
-		IDB_FILELARGE,
+		IDB_EDITORSMALL,
 		IDB_EDITORLARGE);
+
+		
+
 
 	//创建编辑基本操作
 	CBCGPRibbonPanel* pPanelEditor = pCategory->AddPanel (_T("编辑工具"));
+	//添加当前图层
+	pPanelEditor->Add (new CBCGPRibbonLabel (_T("编辑目标层：")));
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO_VECTOR,FALSE,100,"");
+
+	pPanelEditor->Add(pBtnCurrLayer);
+	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 1);
+	pPanelEditor->Add (pBtnShowOverView);
+
+	pPanelEditor->AddSeparator();
 	//--------------------------
 	// 开始编辑:
 	//--------------------------

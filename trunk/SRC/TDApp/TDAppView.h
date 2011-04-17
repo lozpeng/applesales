@@ -19,6 +19,7 @@ public:
 public:
 	//获得当前图层下拉列表按钮
 	CBCGPRibbonComboBox* GetCurLyrCombox();
+	CBCGPRibbonComboBox* GetCurLyrCombox_Vector();
 // Overrides
 	public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
@@ -83,7 +84,9 @@ public:
 
 	//
 	afx_msg void OnCurrLayerCombo();
+	afx_msg void OnCurrLayerCombo_Vector();
 	Carto::ILayerPtr GetComboLayer();
+	Carto::ILayerPtr GetComboLayer_Vector();
 	void		RefreshLayerCombo();
 	bool		IsLayerComboNull();
 	void		BrightContrast(int nBright=-1,int nContrast=-1);

@@ -86,6 +86,7 @@ IDB_ZOOMBAR1            BITMAP                  "res\\zoombar1.bmp"
 IDB_ZOOMBARSMALL        BITMAP                  "res\\bmp00005.bmp"
 IDB_EDITORLARGE         BITMAP                  "res\\bmp00003.bmp"
 IDB_ChangeDetect        BITMAP                  "res\\bmp00004.bmp"
+IDB_EDITORSMALL         BITMAP                  "res\\editorla.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

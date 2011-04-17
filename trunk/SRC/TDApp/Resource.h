@@ -29,6 +29,8 @@
 #define IDD_DIG_DRAWINGEXPORT           176
 #define IDB_BITMAP_                     177
 #define IDB_ChangeDetect                177
+#define IDB_EDITORLARGE1                178
+#define IDB_EDITORSMALL                 178
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
@@ -138,9 +140,11 @@
 #define ID_MAGIC_STICK                  40510
 #define ID_EDGE_EXTRACT                 40511
 #define ID_WATER_EXTRACT                40512
-#define ID_DELETE_FEATURES				40513
-#define ID_UNION_FEATURES				40514
+#define ID_DELETE_FEATURES              40513
+#define ID_UNION_FEATURES               40514
 #define ID_CHANGE_EXPORT                40515
+#define ID_CURRLAYER_COMBO_VECTOR       40516
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

@@ -62,7 +62,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_POINT_SELECTFEATURE, OnUpdateSelectFeatureByPoint)
 
 	ON_COMMAND(ID_CURRLAYER_COMBO, OnCurrLayerCombo)
-
+	ON_COMMAND(ID_CURRLAYER_COMBO_VECTOR, OnCurrLayerCombo_Vector)
 	//µ÷Õû
 	ON_COMMAND(ID_BRIGHT_RESTORE, OnBrightRestore)
 	ON_COMMAND(ID_BRIGHT_SLIDER, OnBrightSlider)
@@ -290,7 +290,12 @@ CBCGPRibbonComboBox* CTDAppView::GetCurLyrCombox()
 	CBCGPRibbonComboBox* pCombox = (CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID(ID_CURRLAYER_COMBO);
 	return pCombox;
 }
-
+CBCGPRibbonComboBox* CTDAppView::GetCurLyrCombox_Vector()
+{
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonComboBox* pCombox = (CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID(ID_CURRLAYER_COMBO_VECTOR);
+	return pCombox;
+}
 // CTDAppView message handlers
 
 
@@ -708,8 +713,36 @@ Carto::ILayerPtr CTDAppView::GetComboLayer()
 	}
 	return NULL;
 }
+Carto::ILayerPtr CTDAppView::GetComboLayer_Vector()
+{
+	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
+	int nSel = GetCurLyrCombox_Vector()->GetCurSel();
+	if (nSel >=0 && nSel<nSize)
+	{
+		return m_MapCtrl.GetMap()->GetLayers().GetAt(nSel);
+	}
+	return NULL;
+}
 void CTDAppView::OnCurrLayerCombo()
 {
+
+}
+void CTDAppView::OnCurrLayerCombo_Vector()
+{
+	std::string curLayerName = GetCurLyrCombox_Vector()->GetItem(GetCurLyrCombox_Vector()->GetCurSel());
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		Editor::CEditor* pEditor = (Editor::CEditor*)pMap->GetEditor().get();
+		pEditor->ChangeCurLayer(curLayerName);
+	}
+	
+
 }
 void CTDAppView::OnBrightRestore()
 {
@@ -897,12 +930,19 @@ void CTDAppView::RefreshLayerCombo()
 {
 	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
 	GetCurLyrCombox()->RemoveAllItems();
+	GetCurLyrCombox_Vector()->RemoveAllItems();
 	for (int i=0; i<nSize; ++i)
 	{
 		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(i);
 		std::string strName = pLayer->GetName();
 		GetCurLyrCombox()->AddItem(strName.c_str());
+		GetCurLyrCombox_Vector()->AddItem(strName.c_str());
 	}
+	if(GetCurLyrCombox()->GetCount() > 0)
+		GetCurLyrCombox()->SelectItem(0);
+	if(GetCurLyrCombox_Vector()->GetCount() > 0)
+		GetCurLyrCombox_Vector()->SelectItem(0);
+
 }
 
 void CTDAppView::OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI)
