@@ -12,6 +12,8 @@ std::string  CommonUIName::AppLayoutControl ="AppLayoutControl";
 
 std::string  CommonUIName::AppTOCControl ="AppTOCControl";
 
+std::string  CommonUIName::AppSymbolLstCtrl = "AppSymbolLstCtrl";
+
 static std::map<std::string,IUIObject*> uiobjects;
 static std::map<std::string,IUIObject*>::iterator find_item;
 

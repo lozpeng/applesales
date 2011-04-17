@@ -5,6 +5,7 @@
 #include "IMarkerSymbol.h"
 #include "IFillSymbol.h"
 #include "TextSymbol.h"
+#include "SymbolFactory.h"
 
 namespace Display
 {
@@ -67,6 +68,13 @@ void ISymbol::SetLabel(const char* strLabel)
 ISymbolPtr ISymbol::Clone()
 {
 	ISymbolPtr pSym;
+	SYSTEM::CBinArchive ar;
+
+	serialization( ar );
+	ar.SetReadState();
+	ar.SetPosToBegin();
+	pSym = CSymbolFactory::CreateSymbolFromStream( ar );
+
 	return pSym;
 }
 

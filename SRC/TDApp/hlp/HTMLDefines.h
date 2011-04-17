@@ -102,6 +102,7 @@
 #define HID_WATER_EXTRACT                       0x19E40
 #define HID_DELETE_FEATURES                     0x19E41
 #define HID_UNION_FEATURES                      0x19E42
+#define HID_CHANGE_EXPORT                       0x19E43
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064

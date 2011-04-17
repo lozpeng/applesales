@@ -25,6 +25,8 @@ public:
 
 	//TOC¿Ø¼þ
 	static std::string AppTOCControl;
+	//
+	static std::string AppSymbolLstCtrl;
 };
 
 class FRAMEWORK_DLL IUIObject : public SYSTEM::ISerialization
