@@ -282,8 +282,8 @@ void CDlgSymbolSelect::OnSymbolMenuItemsUI(CCmdUI *pCmdUI)
 bool CDlgSymbolSelect::InstallSymbol(char * pStrName)
 {
 
-	/*m_SymList.DelListCtrl();
-	for (long i = 0 ; i < SymLibs.GetSize() ; i++)
+	m_SymList.DelListCtrl();
+	for (long i = 0 ; i < SymLibs.size() ; i++)
 	{
 		if( SymLibs[i].bVisible )
 		{
@@ -292,7 +292,7 @@ bool CDlgSymbolSelect::InstallSymbol(char * pStrName)
 			else 
 				m_SymList.AddSymbolArray( SymLibs[i].GetName() , SymLibs[i].QuerySymbols( pStrName ,m_pSymbol->GetType()));
 		}
-	}*/
+	}
 	return false;
 }
 
@@ -341,7 +341,22 @@ void CDlgSymbolSelect::OnBnClickedSymbolfind()
 
 void CDlgSymbolSelect::InitData(void)
 {
+	char szTempPath[_MAX_PATH] = "";
+	char szTemp[_MAX_PATH] = "";
+	char szDriver[_MAX_DRIVE] = "";
+	char szDir[_MAX_DIR] = "";
+	GetModuleFileName (::AfxGetApp()->m_hInstance, szTemp, MAX_PATH);
+	_splitpath(szTemp, szDriver, szDir, NULL, NULL);
+	_makepath(szTempPath, szDriver, szDir, NULL, NULL);
 
+	CString strPath(szTempPath);
+	CString strSymbol = strPath + "\\symbol\\symbol.mdb";
+	CSymbolLibLoader SymLib;
+	SymLib.OpenDatabase(strSymbol.GetBuffer());
+	SymLibs.push_back(SymLib);
+	m_SymList.SetImageSize( 50 );
+	InstallSymbol();
+	UpdateData(FALSE);
 	//SYSTEM::CXMLConfiguration::Initialize();
 	////得到程序所在路径
 	//DWORD dwRet = ::GetModuleFileName( NULL , m_cPath , 512 );
@@ -385,7 +400,6 @@ void CDlgSymbolSelect::InitData(void)
 	//m_SymbolLibMenu->CreatePopupMenu();
 	//m_SymAddMenu->CreatePopupMenu();
 
-	//m_SymList.SetImageSize( 50 );
 
 	//SYSTEM::XMLConfigurationPtr ptrParser = Display::GetSymbolRenderConfig();
 	//if(ptrParser == NULL)
@@ -451,7 +465,7 @@ void CDlgSymbolSelect::InitData(void)
 	//}
 	//if(SymLibs.GetSize() == 0)
 	//{
-	//	//如果没有符号库，创建一个默认的符号库
+		//如果没有符号库，创建一个默认的符号库
 	//	SYSTEM::IConfigItemPtr pSymbolLib = pDisplayItem->GetChildByName("SymbolLib");
 	//	SymLibs.SetSize(1);
 	//	str.Format( "%s" , pSymbolLib->GetProperties("SymbolPathName"));
