@@ -207,6 +207,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\FeatureRenderPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\IRenderSetting.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\LayoutControl.cpp"
 				>
 			</File>
@@ -216,6 +224,10 @@
 			</File>
 			<File
 				RelativePath=".\MaptreeCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SimpleRenderPage.cpp"
 				>
 			</File>
 			<File
@@ -265,6 +277,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\FeatureRenderPage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\IRenderSetting.h"
+				>
+			</File>
+			<File
 				RelativePath=".\LayoutControl.h"
 				>
 			</File>
@@ -278,6 +298,10 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SimpleRenderPage.h"
 				>
 			</File>
 			<File
@@ -300,6 +324,10 @@
 			>
 			<File
 				RelativePath=".\res\arrow.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\back.bmp"
 				>
 			</File>
 			<File
@@ -344,6 +372,10 @@
 			</File>
 			<File
 				RelativePath=".\res\Hand.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\res\icons32.bmp"
 				>
 			</File>
 			<File

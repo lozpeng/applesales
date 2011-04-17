@@ -3,6 +3,7 @@
 #include "IMapCtrl.h"
 #include "LayerBasepropPage.h"
 #include "RasterPropPage.h"
+#include "FeatureRenderPage.h"
 
 IMPLEMENT_DYNAMIC(CLayerPropSheet, CPropertySheet)
 
@@ -34,6 +35,7 @@ INT_PTR CLayerPropSheet::DoModal()
 	}
 
 	CLayerBasepropPage commonPage;
+	CFeatureRenderPage featurePage;
 	CRasterPropPage rasterPage;
 
 	commonPage.SetLayer(m_layer.get());
@@ -44,7 +46,8 @@ INT_PTR CLayerPropSheet::DoModal()
 	Carto::LAYER_TYPE layerType = m_layer->GetLayerType();
 	if (layerType == Carto::FeatureLayer)
 	{
-		
+		featurePage.SetLayer(m_layer.get());
+		AddPage(&featurePage);
 	}
 	else if (layerType == Carto::RasterLayer)
 	{
