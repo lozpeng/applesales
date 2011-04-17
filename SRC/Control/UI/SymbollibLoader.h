@@ -5,6 +5,8 @@
 #ifndef _SYMBOLLIBLOADER_H_
 #define _SYMBOLLIBLOADER_H_
 
+#include <vector>
+using namespace std;
 
 #import "C:\\Program Files\\Common Files\\System\\ado\\MSADO15.DLL" rename("EOF","adoEOF")
 #import "c:\\Program Files\\Common Files\\System\\ADO\\msadox.dll" rename_namespace("ADOX")\
@@ -37,7 +39,7 @@ public:
 	bool DelSymbol(const char* queryName, long type);
 
 	// ²éÑ¯·ûºÅ
-	//Display::ISymbolArrayPtr QuerySymbols(const char* queryName, long type);
+	vector<Display::ISymbolPtr> QuerySymbols(const char* queryName, long type);
 
 	bool IsConnection();
 

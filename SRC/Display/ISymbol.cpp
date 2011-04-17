@@ -235,29 +235,29 @@ _variant_t ISymbol::GetProperties(const char* PropertyName)
 
 void ISymbol::serialization(SYSTEM::IArchive &ar)
 { 
-	//ISerialization::serialization( ar); 
+	ISerialization::serialization( ar); 
 
-	//long Type = (long)GetType();
+	long Type = (long)GetType();
 
-	//ar & Type;
+	ar & Type;
 
-	//ar & m_lID;
+	ar & m_lID;
 
-	//ar & m_strLabel;
+	ar & m_strLabel;
 
-	//ar & m_lColor;
+	ar & m_lColor;
 
-	//if(ar.IsSave() )
-	//{
-	//	int i = m_enumUnit;
-	//	ar & (i);
-	//}
-	//else
-	//{
-	//	int i;
-	//	ar & i;
-	//	m_enumUnit = (SYSTEM::SYS_UNIT_TYPE)i;
-	//}
+	if(ar.IsSave() )
+	{
+		int i = m_enumUnit;
+		ar & (i);
+	}
+	else
+	{
+		int i;
+		ar & i;
+		m_enumUnit = (SYSTEM::SYS_UNIT_TYPE)i;
+	}
 }
 
 void ISymbol::OnUnitChanged(SYSTEM::SYS_UNIT_TYPE oldUnit , SYSTEM::SYS_UNIT_TYPE newUnit) 

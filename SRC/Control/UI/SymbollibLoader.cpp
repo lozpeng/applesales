@@ -233,13 +233,14 @@ bool CSymbolLibLoader::DelSymbol(const char* queryName, long type)
 }
 
 // ²éÑ¯·ûºÅ
-//Display::ISymbolArrayPtr CSymbolLibLoader::QuerySymbols(const char* queryName, long type)
-//{
+vector<Display::ISymbolPtr> CSymbolLibLoader::QuerySymbols(const char* queryName, long type)
+{
 	
-	/*type = type&0x2F0;
-	long complexType = type | OT_COMPLEX_SYMBOL;
-	Display::ISymbolArrayPtr pSymbolArray(new Display::CSymbolArray());
-
+	type = type&0x2F0;
+	long complexType = type | COMPLEX_SYMBOL;
+	//Display::ISymbolArrayPtr pSymbolArray(new Display::CSymbolArray());
+	
+	vector<Display::ISymbolPtr> pSymbolArray;
 	ADODB::_RecordsetPtr pRec;
 	char cSql[1024];
 	if( strlen( queryName ) == 0 )
@@ -261,17 +262,16 @@ bool CSymbolLibLoader::DelSymbol(const char* queryName, long type)
 	}
 	catch (_com_error e)
 	{
-		OTLOG(eError , (char*)e.Description());
 	}
 
 	for( ; pRec->adoEOF == VARIANT_FALSE ; pRec->MoveNext() )
 	{
-		pSymbolArray->Add( UnSerializeSymbol( pRec->Fields->GetItem(_variant_t("DATA"))->Value ) );
+		pSymbolArray.push_back( UnSerializeSymbol( pRec->Fields->GetItem(_variant_t("DATA"))->Value ) );
 	}
 	pRec->Close();
 	pRec = NULL;
-	return pSymbolArray;*/
-//}
+	return pSymbolArray;
+}
 
 CString CSymbolLibLoader::GetName(void)
 {
