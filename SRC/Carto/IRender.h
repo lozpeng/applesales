@@ -12,6 +12,7 @@
 #include "ISelectionSet.h"
 #include "IDisplay.h"
 #include "LegendInfo.h"
+#include "AffineTransform.h"
 
 namespace Geodatabase
 {
