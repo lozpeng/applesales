@@ -161,6 +161,7 @@ public:
 	afx_msg void OnUpdateEditerDel(CCmdUI *pCmdUI);
 	afx_msg void OnEditerUnion();
 	afx_msg void OnUpdateEditerUnion(CCmdUI *pCmdUI);
+	afx_msg void OnFeatureInfo();
 	//µÿÕº’˚ Œ
 	afx_msg void OnSelectFrameElement();
 	afx_msg void OnUpdateSelectFrameElement(CCmdUI* pCmdUI);

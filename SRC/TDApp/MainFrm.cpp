@@ -436,6 +436,19 @@ void CMainFrame::AddTab_Editor()
 	CBCGPRibbonButton* pBtnEditUnion = new CBCGPRibbonButton (ID_UNION_FEATURES, _T("合并要素"), 8, 8);
 	pPanelEditor->Add (pBtnEditUnion);
 
+	//--------------------------
+	// 要素属性编辑:
+	//--------------------------
+	CBCGPRibbonButton* pBtnAtiEdit = new CBCGPRibbonButton (ID_ATTRIBUTE_EDIT, _T("属性编辑"), 9, 9);
+	pPanelEditor->Add (pBtnAtiEdit);
+
+
+	//--------------------------
+	// 要素信息:
+	//--------------------------
+	CBCGPRibbonButton* pBtnFeatureInfo = new CBCGPRibbonButton (ID_FEATURES_INFO, _T("要素信息"), 10, 10);
+	pPanelEditor->Add (pBtnFeatureInfo);
+
 }
 
 void CMainFrame::AddTab_GeoInfoExtract()

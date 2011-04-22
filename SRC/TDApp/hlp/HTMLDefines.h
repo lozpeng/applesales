@@ -103,6 +103,9 @@
 #define HID_DELETE_FEATURES                     0x19E41
 #define HID_UNION_FEATURES                      0x19E42
 #define HID_CHANGE_EXPORT                       0x19E43
+#define HID_CURRLAYER_COMBO_VECTOR              0x19E44
+#define HID_FEATURES_INFO                       0x19E45
+#define HID_ATTRIBUTE_EDIT                      0x19E46
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064

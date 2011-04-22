@@ -3,27 +3,28 @@
 
 #include "ITool.h"
 
-//class CDlgFeatureInfo;
+class CDlgFeatureInfo;
 
 namespace Editor
 {
 
-class CActionFeatureInfo: public Framework::ITool
+class CFeatureInfoTool: public Framework::ITool
 {
 public:
-	CActionFeatureInfo(void);
-	virtual ~CActionFeatureInfo(void);
+	CFeatureInfoTool(void);
+	virtual ~CFeatureInfoTool(void);
 
 public:
 	//≥ı ºªØ
 	void Initialize(Framework::IUIObject *pTargetControl);
 
-	void LButtonUpEvent (UINT nFlags, CPoint point);
+	void LButtonDownEvent (UINT nFlags, CPoint point);
 
 
 private:
 
     CDlgFeatureInfo *m_dlg;
+	static int  m_SnapTol;
 };
 
 }

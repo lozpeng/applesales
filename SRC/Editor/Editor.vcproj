@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element"
+				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;EDITOR_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -67,7 +67,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Geometryd.lib"
+				AdditionalDependencies="BCGCBPRO1200d80.lib Geometryd.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				ModuleDefinitionFile=".\Editor.def"
@@ -128,7 +128,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element"
+				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;EDITOR_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -150,7 +150,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Geometry.lib"
+				AdditionalDependencies="Geometry.lib BCGCBPRO120080.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				ModuleDefinitionFile=".\Editor.def"
@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DllResource.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Editor.cpp"
 				>
 			</File>
@@ -246,6 +250,10 @@
 			</File>
 			<File
 				RelativePath=".\CreateFeatureTask.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DllResource.h"
 				>
 			</File>
 			<File
@@ -335,6 +343,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tool\FeatureInfoTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\FeatureInfoTool.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Tool\GroupShapeCommand.cpp"
 				>
 			</File>
@@ -399,11 +415,35 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="UI"
+			>
+			<File
+				RelativePath=".\UI\DlgFeatureAttriEdit.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgFeatureAttriEdit.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgFeatureInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgFeatureInfo.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
 			>
 		</File>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="Editor.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

@@ -6,7 +6,10 @@
 #include "IWorkspace.h"
 #include "resource.h"
 //#include "EditorRes.h"
+#include "DllResource.h"
 #include "Editor.h"
+#include "DlgFeatureAttriEdit.h"
+#include "DlgFeatureInfo.h"
 extern CEditorApp theApp;
 
 namespace Editor
@@ -516,24 +519,6 @@ void CEditFeatureTool::LButtonUpEvent (UINT nFlags, CPoint point)
 
 void CEditFeatureTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 {
-	if(m_nStatus == On_None)
-		return;
-
-	if(m_nStatus==On_SelectMoreShape)
-	{
-		//如果在选择图形的范围之外，双击会结束移动状态
-		if(!m_bContain)
-		{
-			m_nStatus = On_None;
-
-			//清空选择集
-			ClearMoveGeometrys();
-
-
-		}
-		return;
-	}
-
 	//获取活动地图控件
 	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
 	if(!pMapCtrl)
@@ -549,14 +534,96 @@ void CEditFeatureTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 	{
 		return ;
 	}
+	if(!pEdit->IsEditing())
+	{
+		return;
+	}
+
+	CDllResource dllRes;
+	std::vector<Carto::ILayer*> alllayers;
 
 
-	//将提交放到下面
+	Carto::CLayerArray &layers =pMap->GetLayers();
+	int num =layers.GetSize();
+	Carto::IFeatureLayerPtr pLayer;
+	Geodatabase::IFeatureClass *pFeatureClass =NULL;
+	Geodatabase::IWorkspace *pWorkspace =NULL;
 
-	pEdit->CommitModifyShape();
-	m_nStatus = On_None;
 
-	pMapCtrl->UpdateControl(drawAll);
+	//对地图中的矢量层设置编辑状态
+	for(int i=0;i<num;i++)
+	{
+		pLayer =layers.GetAt(i);
+		if(!pLayer)
+		{
+			continue;
+		}
+
+		pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(pLayer->GetDataObject().get());
+		if(!pFeatureClass)
+		{
+			continue;
+		}
+
+		pWorkspace =pFeatureClass->GetWorkspace();
+		if(!pLayer->GetSelection())
+		{
+			continue;
+		}
+		alllayers.push_back(pLayer.get());
+
+	}
+
+	CDlgFeatureAttriEdit dlg;
+	dlg.SetFeatures(alllayers);
+	dlg.DoModal();
+
+	//CDlgFeatureInfo dlgInfo;
+	//dlgInfo.SetMap(pMap.get());
+	//dlgInfo.DoModal();
+
+
+	//if(m_nStatus == On_None)
+	//	return;
+
+	//if(m_nStatus==On_SelectMoreShape)
+	//{
+	//	//如果在选择图形的范围之外，双击会结束移动状态
+	//	if(!m_bContain)
+	//	{
+	//		m_nStatus = On_None;
+
+	//		//清空选择集
+	//		ClearMoveGeometrys();
+
+
+	//	}
+	//	return;
+	//}
+
+	////获取活动地图控件
+	//Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
+	//if(!pMapCtrl)
+	//	return ;
+
+	////获取活动地区
+	//Carto::CMapPtr pMap = pMapCtrl->GetMap();
+	//if(!pMap)
+	//	return ;
+
+	//Editor::CEditorPtr pEdit =pMap->GetEditor();
+	//if(!pEdit)
+	//{
+	//	return ;
+	//}
+
+
+	////将提交放到下面
+
+	//pEdit->CommitModifyShape();
+	//m_nStatus = On_None;
+
+	//pMapCtrl->UpdateControl(drawAll);
 }
 
 void CEditFeatureTool::ClearMoveGeometrys()

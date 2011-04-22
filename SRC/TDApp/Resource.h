@@ -144,7 +144,8 @@
 #define ID_UNION_FEATURES               40514
 #define ID_CHANGE_EXPORT                40515
 #define ID_CURRLAYER_COMBO_VECTOR       40516
-
+#define ID_FEATURES_INFO				40517
+#define ID_ATTRIBUTE_EDIT				40518
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
