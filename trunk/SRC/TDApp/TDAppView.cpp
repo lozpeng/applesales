@@ -134,6 +134,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_DELETE_FEATURES, OnUpdateEditerSave)
 	ON_COMMAND(ID_UNION_FEATURES, OnEditerUnion)
 	ON_UPDATE_COMMAND_UI(ID_UNION_FEATURES, OnUpdateEditerUnion)
+	ON_COMMAND(ID_FEATURES_INFO, OnFeatureInfo)
 
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 
@@ -1271,7 +1272,16 @@ afx_msg void CTDAppView::OnUpdateEditerUnion(CCmdUI *pCmdUI)
 	}
 	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
-
+afx_msg void CTDAppView::OnFeatureInfo()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("FeatureInfoTool");
+	pTool=Framework::ITool::FindTool("FeatureInfoTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
 void CTDAppView::OnMagicStick()
 {
 	Framework::ITool* pTool = NULL;

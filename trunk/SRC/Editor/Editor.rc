@@ -105,6 +105,47 @@ IDC_VERTIX_MOVE         CURSOR                  "res\\cur00005.cur"
 IDC_ON_VERTIX           CURSOR                  "res\\cur00004.cur"
 IDC_SIZE_ALL            CURSOR                  "res\\cursor1.cur"
 IDC_ModifyShape         CURSOR                  "res\\ModifyShape.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FEATURE_ATRIEDIT DIALOGEX 0, 0, 320, 225
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "要素属性"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TREE_SELFEATURES,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | WS_BORDER | WS_TABSTOP,7,7,119,211,WS_EX_CLIENTEDGE
+    CONTROL         "",IDC_FEATURE_PROPLIST,"Static",SS_BLACKFRAME,130,7,183,211
+END
+
+IDD_FEATURE_INFOMATION DIALOGEX 0, 0, 280, 189
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "属性"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    CONTROL         "Tree1",IDC_TREE_FEATURES,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | WS_TABSTOP | 0x800,7,7,111,176,WS_EX_CLIENTEDGE
+    CONTROL         "List1",IDC_LIST_FEATURE_INFO,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,123,7,154,176,WS_EX_CLIENTEDGE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_FEATURE_INFOMATION, DIALOG
+    BEGIN
+        RIGHTMARGIN, 277
+        BOTTOMMARGIN, 183
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
