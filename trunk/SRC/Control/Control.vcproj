@@ -347,6 +347,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath=".\res\Add.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\arrow.cur"
 				>
 			</File>
@@ -360,6 +364,10 @@
 			</File>
 			<File
 				RelativePath=".\res\Control.rc2"
+				>
+			</File>
+			<File
+				RelativePath=".\res\Copy.bmp"
 				>
 			</File>
 			<File
@@ -395,6 +403,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\del.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\down.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\feature_.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\Hand.cur"
 				>
 			</File>
@@ -407,7 +427,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\Paste.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\render_b.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\stateico.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\treestate.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\up.bmp"
 				>
 			</File>
 			<File
@@ -699,11 +735,43 @@
 			Name="UI"
 			>
 			<File
+				RelativePath=".\UI\ColorPickerCB.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ColorPickerCB.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\CotSymbolList.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\CotSymbolList.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgModifyUniClass.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgModifyUniClass.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\DlgProgress.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\UI\DlgProgress.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgSelectValues.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgSelectValues.h"
 				>
 			</File>
 			<File
@@ -731,11 +799,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\EnviColorMap.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\EnviColorMap.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\GradientProgressCtrl.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\UI\GradientProgressCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\GrdintClrComboBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\GrdintClrComboBox.h"
 				>
 			</File>
 			<File
@@ -768,6 +852,22 @@
 			</File>
 			<File
 				RelativePath=".\UI\ProgressBar.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\RangeRenderList.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\RangeRenderList.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\RangeRenderPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\RangeRenderPage.h"
 				>
 			</File>
 			<File
@@ -842,6 +942,22 @@
 			</File>
 			<File
 				RelativePath=".\UI\TransparentDLG.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\UniqueRenderList.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\UniqueRenderList.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\UniqueRenderPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\UniqueRenderPage.h"
 				>
 			</File>
 		</Filter>

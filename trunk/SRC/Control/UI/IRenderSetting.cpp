@@ -87,23 +87,23 @@ Display::ISymbolPtr IRenderSetting::CreateDefaultSymbol(Geodatabase::IFeatureCla
 
 	Display::ISymbolPtr pSymbol;
 
-	/*if( ltype == GEOS_POINT || ltype == GEOS_MULTIPOINT )
+	if( ltype == GEOS_POINT || ltype == GEOS_MULTIPOINT )
 	{
-		pSymbol = Display::CSymbolFactory::CreateSymbol(OT_SIMPLE_MARKER_SYMBOL);
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_MARKER_SYMBOL);
 
 
 	}
 	else if( ltype == GEOS_LINESTRING || ltype == GEOS_MULTILINESTRING )
 	{
-		pSymbol = Display::CSymbolFactory::CreateSymbol(OT_SIMPLE_LINE_SYMBOL);
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
 
 
 	}
 	else if( ltype == GEOS_POLYGON || ltype == GEOS_MULTIPOLYGON )
 	{
-		pSymbol = Display::CSymbolFactory::CreateSymbol(OT_SIMPLE_FILL_SYMBOL);
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
 
-	}*/
+	}
 
 	return pSymbol;
 }
