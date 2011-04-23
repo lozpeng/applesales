@@ -11,23 +11,23 @@
 namespace Editor
 {
 
-	static CPolygonUnionTool gPolygonUnionCommand;
+	static CPolygonUnionCommand gPolygonUnionCommand;
 
-	CPolygonUnionTool::CPolygonUnionTool(void) : ICommand("PolygonUnionCmd")
+	CPolygonUnionCommand::CPolygonUnionCommand(void) : ICommand("PolygonUnionCmd")
 	{
 		
 	}
 
-	CPolygonUnionTool::~CPolygonUnionTool(void)
+	CPolygonUnionCommand::~CPolygonUnionCommand(void)
 	{
 
 	}
 		//初始化
-	void CPolygonUnionTool::Initialize(Framework::IUIObject *pTargetControl)
+	void CPolygonUnionCommand::Initialize(Framework::IUIObject *pTargetControl)
 	{
 		ICommand::Initialize(pTargetControl);
 	}
-	void CPolygonUnionTool::Click()
+	void CPolygonUnionCommand::Click()
 	{
 		//获取活动地图控件
 		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
@@ -126,7 +126,7 @@ namespace Editor
 		pMapCtrl->UpdateControl(drawAll);
 	}
 
-	void CPolygonUnionTool::Clear()
+	void CPolygonUnionCommand::Clear()
 	{
 		for(size_t i=0;i<m_shapes.size();i++)
 		{

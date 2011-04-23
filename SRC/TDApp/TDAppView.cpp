@@ -135,7 +135,9 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_UNION_FEATURES, OnEditerUnion)
 	ON_UPDATE_COMMAND_UI(ID_UNION_FEATURES, OnUpdateEditerUnion)
 	ON_COMMAND(ID_FEATURES_INFO, OnFeatureInfo)
-
+	ON_COMMAND(ID_ATTRIBUTE_EDIT, OnEditerAttribute)
+	ON_UPDATE_COMMAND_UI(ID_ATTRIBUTE_EDIT, OnUpdateEditerAttribute)
+	
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
@@ -1249,7 +1251,7 @@ afx_msg void CTDAppView::OnEditerUnion()
 
 		}
 		Framework::ICommand* pCommand = NULL;
-		m_MapCtrl.SetCurTool("PolygonUnionCmd");
+		//m_MapCtrl.SetCurTool("PolygonUnionCmd");
 		pCommand=Framework::ICommand::FindCommand("PolygonUnionCmd");
 		if(pCommand)
 		{
@@ -1272,6 +1274,41 @@ afx_msg void CTDAppView::OnUpdateEditerUnion(CCmdUI *pCmdUI)
 	}
 	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
+afx_msg void CTDAppView::OnEditerAttribute()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+
+	if(pMap)
+	{
+		if(!pMap->GetEditor())
+		{
+			pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+		}
+		Framework::ICommand* pCommand = NULL;
+		pCommand=Framework::ICommand::FindCommand("FeatureAtrEditCmd");
+		if(pCommand)
+		{
+			pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+			pCommand->Click();
+		}
+	}
+}
+afx_msg void CTDAppView::OnUpdateEditerAttribute(CCmdUI *pCmdUI)
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
+}
+
 afx_msg void CTDAppView::OnFeatureInfo()
 {
 	Framework::ITool* pTool = NULL;

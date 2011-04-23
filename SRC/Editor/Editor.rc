@@ -105,6 +105,7 @@ IDC_VERTIX_MOVE         CURSOR                  "res\\cur00005.cur"
 IDC_ON_VERTIX           CURSOR                  "res\\cur00004.cur"
 IDC_SIZE_ALL            CURSOR                  "res\\cursor1.cur"
 IDC_ModifyShape         CURSOR                  "res\\ModifyShape.cur"
+IDC_Arrow               CURSOR                  "res\\arrow.cur"
 
 /////////////////////////////////////////////////////////////////////////////
 //

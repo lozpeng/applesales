@@ -6,7 +6,8 @@
 #include "DllResource.h"
 #include <geometry/geom/LinearRing.h>
 #include <geometry/geom/Polygon.h>
-
+#include "Editor.h"
+extern CEditorApp theApp;
 
 namespace Editor
 {
@@ -30,6 +31,16 @@ namespace Editor
 	void CFeatureInfoTool::Initialize(Framework::IUIObject *pTargetControl)
 	{
 		ITool::Initialize(pTargetControl);
+		//初始化光标
+		if(cursorNormal == NULL)
+			cursorNormal =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_Arrow));
+		//获取活动地图控件
+		Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
+		if(!pMapCtrl)
+			return ;
+
+		pMapCtrl->SetCursor(cursorNormal);
+	
 	}
 	void CFeatureInfoTool::LButtonDownEvent(UINT nFlags, CPoint point)
 	{
