@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "SimpleMarkerSymbol.h"
-//#include "CharMarkerSymbol.h"
+#include "CharMarkerSymbol.h"
 //#include "ArrowMarkerSymbol.h"
 //#include "PicMarkerSymbol.h"
 //#include "ComplexMarkerSymbol.h"
@@ -191,7 +191,7 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbol(SYMBOL_TYPE SymboType)
 		}
 	case CHAR_MARKER_SYMBOL: 
 		{
-			//return CCharMarkerSymbolPtr(new CCharMarkerSymbol());
+			return CCharMarkerSymbolPtr(new CCharMarkerSymbol());
 		}
 	case ARROW_MARKER_SYMBOL: 
 		{

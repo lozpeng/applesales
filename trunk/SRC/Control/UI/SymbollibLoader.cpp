@@ -25,7 +25,7 @@ bool CSymbolLibLoader::AddSymbol(Display::ISymbolPtr pSymbol)
 		pRec.CreateInstance(__uuidof(ADODB::Recordset));
 		pRec->CacheSize = 10000;
 		pRec->CursorLocation = ADODB::adUseClient;
-		HRESULT hr = pRec->Open(_variant_t("OTSYMBOL"), 
+		HRESULT hr = pRec->Open(_variant_t("SYMBOL"), 
 			_variant_t((IDispatch *) m_pConnection, true),
 			ADODB::adOpenKeyset,
 			ADODB::adLockPessimistic,
@@ -59,7 +59,7 @@ bool CSymbolLibLoader::AddSymbol(Display::ISymbolPtr pSymbol)
 	}
 	catch(_com_error e)
 	{
-		//WarningLog("Open OTSYMBOL Failed！-- %s", (char*)e.Description() );
+		//WarningLog("Open SYMBOL Failed！-- %s", (char*)e.Description() );
 
 		pRec = NULL;
 		m_pConnection->RollbackTrans();
@@ -91,9 +91,9 @@ bool CSymbolLibLoader::CreateTable()
 	{
 		char BufSQL[1024];
 		_variant_t vt;
-		sprintf(BufSQL,"create table OTSYMBOL(ID long NOT NULL  , TYPE int, Name TEXT(50), DATA image)");
+		sprintf(BufSQL,"create table SYMBOL(ID long NOT NULL  , TYPE int, Name TEXT(50), DATA image)");
 		m_pConnection->Execute(BufSQL,&vt,-1);
-		sprintf(BufSQL,"alter table OTSYMBOL ADD CONSTRAINT MK primary key (TYPE, NAME )");
+		sprintf(BufSQL,"alter table SYMBOL ADD CONSTRAINT MK primary key (TYPE, NAME )");
 		m_pConnection->Execute(BufSQL,&vt,-1);
 	}
 	catch(_com_error e)
@@ -132,7 +132,7 @@ bool CSymbolLibLoader::UpdateSymbol(Display::ISymbolPtr pSymbol)
 	ADODB::_RecordsetPtr pRec;
 
 	char cSql[1024];
-	sprintf(cSql, "SELECT * FROM OTSYMBOL WHERE Name='%s'",pSymbol->GetLabel().c_str() );
+	sprintf(cSql, "SELECT * FROM SYMBOL WHERE Name='%s'",pSymbol->GetLabel().c_str() );
 	try
 	{
 		pRec.CreateInstance(__uuidof(ADODB::Recordset));
@@ -181,7 +181,7 @@ bool CSymbolLibLoader::OpenDatabase(const char *FileName)
 			::MessageBox(AfxGetApp()->GetMainWnd()->m_hWnd , "文件读取错误,可能不是Access文件" , "警告", MB_OK );
 			return false;
 		}
-		CreateTable();
+//		CreateTable();
 
 		bVisible = true;
 	}
@@ -206,7 +206,7 @@ bool CSymbolLibLoader::DelSymbol(const char* queryName, long type)
 	
 	ADODB::_RecordsetPtr pRec;
 	char cSql[1024];
-	sprintf(cSql, "SELECT DATA FROM OTSYMBOL WHERE Name='%s' AND TYPE = %ld",queryName , type );
+	sprintf(cSql, "SELECT DATA FROM SYMBOL WHERE Name='%s' AND TYPE = %ld",queryName , type );
 	try
 	{
 		pRec.CreateInstance(__uuidof(ADODB::Recordset));
@@ -244,25 +244,26 @@ vector<Display::ISymbolPtr> CSymbolLibLoader::QuerySymbols(const char* queryName
 	ADODB::_RecordsetPtr pRec;
 	char cSql[1024];
 	if( strlen( queryName ) == 0 )
-		sprintf(cSql, "SELECT DATA FROM OTSYMBOL WHERE TYPE = %ld  OR TYPE = %ld", type, complexType );
+		sprintf(cSql, "SELECT DATA FROM SYMBOL WHERE TYPE = %ld", type );
 	else
-		sprintf(cSql, "SELECT DATA FROM OTSYMBOL WHERE Name LIKE '%s%s' AND ( TYPE = %ld OR TYPE = %ld)",queryName ,"%", type, complexType );
+		sprintf(cSql, "SELECT DATA FROM SYMBOL WHERE Name LIKE '%s%s' AND ( TYPE = %ld OR TYPE = %ld)",queryName ,"%", type, complexType );
 
 	pRec.CreateInstance(__uuidof(ADODB::Recordset));
 	pRec->CacheSize = 10000;
 	pRec->CursorLocation = ADODB::adUseClient;
-	try
-	{
-		pRec->Open(_variant_t(cSql), 
+	/*try
+	{*/
+		HRESULT hr = pRec->Open(_variant_t(cSql), 
 			m_pConnection.GetInterfacePtr(),
 			ADODB::adOpenStatic,
 			ADODB::adLockOptimistic,
 			ADODB::adCmdText );
+		int i = 0;
 
-	}
+	/*}
 	catch (_com_error e)
 	{
-	}
+	}*/
 
 	for( ; pRec->adoEOF == VARIANT_FALSE ; pRec->MoveNext() )
 	{
