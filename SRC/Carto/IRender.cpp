@@ -2,8 +2,8 @@
 #include "IRender.h"
 #include "ICursor.h"
 #include "SimpleRender.h"
-//#include "UniqueRender.h"
-//#include "RangeRender.h"
+#include "UniqueRender.h"
+#include "RangeRender.h"
 
 namespace Carto
 {
@@ -95,9 +95,9 @@ SYSTEM::CSmartPtr<IRender>  IRender::CreateRender( RENDER_TYPE type , std::strin
 	case SIMPLERENDER:
 		return IRenderPtr( new CSimpleRender() );
 	case UNIQUERENDER: 
-		//return IRenderPtr( new CUniqueRender() );
+		return IRenderPtr( new CUniqueRender() );
 	case RANGERENDER:
-		//return IRenderPtr( new CRangeRender() );
+		return IRenderPtr( new CRangeRender() );
 	case MIXSIMPLERENDER:
 	case TRIANGLERENDER:
 		return NULL;

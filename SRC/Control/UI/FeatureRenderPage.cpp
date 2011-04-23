@@ -3,8 +3,8 @@
 #include "FeatureRenderPage.h"
 #include "SimpleRenderPage.h"
 #include "FeatureLayer.h"
-//#include "UniqueRenderPage.h"
-//#include "RangeRenderPage.h"
+#include "UniqueRenderPage.h"
+#include "RangeRenderPage.h"
 //#include "DotdensityRenderPage.h"
 //#include "PieRenderPage.h"
 //#include "PillarRenderPage.h"
@@ -191,21 +191,21 @@ void CFeatureRenderPage::AddImageButtons()
 	m_wndPane.AddButton (hIcon, "简单专题", 0, -1, 0);
 	::DestroyIcon (hIcon);
 
-	////唯一值图例
-	//CUniqueRenderPage *uniPage =new CUniqueRenderPage();
-	//uniPage->SetLayer(m_pLayer);
-	//m_pages.push_back(uniPage);
-	//hIcon = m_icons.ExtractIcon (1);
-	//m_wndPane.AddButton (hIcon, "唯一值专题", 0, -1, 0);
-	//::DestroyIcon (hIcon);
+	//唯一值图例
+	CUniqueRenderPage *uniPage =new CUniqueRenderPage();
+	uniPage->SetLayer(m_pLayer);
+	m_pages.push_back(uniPage);
+	hIcon = m_icons.ExtractIcon (1);
+	m_wndPane.AddButton (hIcon, "唯一值专题", 0, -1, 0);
+	::DestroyIcon (hIcon);
 
-	////范围图例
-	//CRangeRenderPage *rangePage = new CRangeRenderPage();
-	//rangePage->SetLayer(m_pLayer);
-	//m_pages.push_back(rangePage);
-	//hIcon = m_icons.ExtractIcon (1);
-	//m_wndPane.AddButton (hIcon, "范围专题", 0, -1, 0);
-	//::DestroyIcon (hIcon);
+	//范围图例
+	CRangeRenderPage *rangePage = new CRangeRenderPage();
+	rangePage->SetLayer(m_pLayer);
+	m_pages.push_back(rangePage);
+	hIcon = m_icons.ExtractIcon (1);
+	m_wndPane.AddButton (hIcon, "范围专题", 0, -1, 0);
+	::DestroyIcon (hIcon);
 
 	////点密度图例
 	//CDotDensityRenderPage *dotdensityPage = new CDotDensityRenderPage();

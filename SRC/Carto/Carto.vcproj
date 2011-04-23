@@ -241,6 +241,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RangeRender.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RasterLayer.cpp"
 				>
 			</File>
@@ -271,6 +275,10 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\UniqueRender.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
@@ -347,6 +355,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RangeRender.h"
+				>
+			</File>
+			<File
 				RelativePath=".\RasterLayer.h"
 				>
 			</File>
@@ -368,6 +380,10 @@
 			</File>
 			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UniqueRender.h"
 				>
 			</File>
 		</Filter>
