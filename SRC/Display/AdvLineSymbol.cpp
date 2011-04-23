@@ -8,7 +8,7 @@
 #include "ArrowMarkerSymbol.h"
 
 #pragma warning(disable:4996)
-otDisplay::CAdvLineSymbol::CAdvLineSymbol()
+Display::CAdvLineSymbol::CAdvLineSymbol()
 {
 		m_enumLineCapsType = EXT_ENDCAP_ROUND;			//高级线的线头类型默认为圆形
 
@@ -20,9 +20,9 @@ otDisplay::CAdvLineSymbol::CAdvLineSymbol()
 
 		m_enumCombinType = EXT_GEOMETRIC;				//高级线的结合类型,默认为几何笔
 	
-		m_enumLogBrushType = BS_SOLID;					//笔刷设置，默认为实心刷
+		m_enumLogBrushType = SOLID_BRUSH;					//笔刷设置，默认为实心刷
 
-		m_enumLOGBRUSH_HATCH = HS_HORIZONTAL;			//笔刷线型，默认为水平线
+		m_enumLOGBRUSH_HATCH = HORIZONTAL;			//笔刷线型，默认为水平线
 
 		m_enumArrowMarkerType = NOARROW;					//箭头类型,默认无装饰物
 
@@ -38,7 +38,7 @@ otDisplay::CAdvLineSymbol::CAdvLineSymbol()
 
 		m_hPenHandle = NULL;
 		
-		otDisplay::ISymbolPtr aimOfSymbol = otDisplay::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
+		Display::ISymbolPtr aimOfSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
 		aimOfSymbol->SetUnit(this->GetUnit());
 		m_pDashGroup = new CDashArray(aimOfSymbol);
 		m_pDashGroup->SetDashGroupCount(1);				//初始数组个数为0
@@ -70,12 +70,12 @@ otDisplay::CAdvLineSymbol::CAdvLineSymbol()
 		m_lOffsetLineCount = 0;
 }
 
-otDisplay::CAdvLineSymbol::CAdvLineSymbol(const otDisplay::CAdvLineSymbol& AdvLineSymbol)
+Display::CAdvLineSymbol::CAdvLineSymbol(const Display::CAdvLineSymbol& AdvLineSymbol)
 {
 	*this = AdvLineSymbol;
 }
 
-otDisplay::CAdvLineSymbol& otDisplay::CAdvLineSymbol::operator = (const otDisplay::CAdvLineSymbol & AdvLineSymbol)
+Display::CAdvLineSymbol& Display::CAdvLineSymbol::operator = (const Display::CAdvLineSymbol & AdvLineSymbol)
 {
 		this->m_bFixRotation		=		AdvLineSymbol.m_bFixRotation;
 		this->m_bFlipAll			=		AdvLineSymbol.m_bFlipAll;
@@ -94,9 +94,10 @@ otDisplay::CAdvLineSymbol& otDisplay::CAdvLineSymbol::operator = (const otDispla
 		this->storeArrowAngle		=		AdvLineSymbol.storeArrowAngle;
 		*(ILineSymbol*)this			=		*(ILineSymbol*)&AdvLineSymbol;
 		this->m_pArrowMarkerSymbol	=		AdvLineSymbol.m_pArrowMarkerSymbol->Clone();
+		return *this;
 }
 
-otDisplay::CAdvLineSymbol::~CAdvLineSymbol()
+Display::CAdvLineSymbol::~CAdvLineSymbol()
 {
 	if ( m_pDashGroup != NULL)
 	{
@@ -104,17 +105,17 @@ otDisplay::CAdvLineSymbol::~CAdvLineSymbol()
 	}
 }
 //线设置部分
-void otDisplay::CAdvLineSymbol::SetLineCapsType(EXTLINE_END_CAP enumLineCapsType)
+void Display::CAdvLineSymbol::SetLineCapsType(EXTLINE_END_CAP enumLineCapsType)
 {	
 		m_enumLineCapsType = enumLineCapsType;
 }
 
-EXTLINE_END_CAP otDisplay::CAdvLineSymbol::GetLineCapsType()
+EXTLINE_END_CAP Display::CAdvLineSymbol::GetLineCapsType()
 {
 	return m_enumLineCapsType;
 }
 
-void otDisplay::CAdvLineSymbol::SetLineJointType(EXTLINE_JOIN enumLineJointType)
+void Display::CAdvLineSymbol::SetLineJointType(EXTLINE_JOIN enumLineJointType)
 {
 		m_enumLineJointType = enumLineJointType;
 		if ( enumLineJointType == EXT_JOIN_ROUND )
@@ -125,53 +126,53 @@ void otDisplay::CAdvLineSymbol::SetLineJointType(EXTLINE_JOIN enumLineJointType)
 			m_LineJointStyle = LJSBevel;
 }
 
-EXTLINE_JOIN otDisplay::CAdvLineSymbol::GetLineJointType()
+EXTLINE_JOIN Display::CAdvLineSymbol::GetLineJointType()
 {
 	return m_enumLineJointType;
 }
 
-void otDisplay::CAdvLineSymbol::SetExtLineStyle(EXTLINE_STYLE enumLineExtStyle)
+void Display::CAdvLineSymbol::SetExtLineStyle(EXTLINE_STYLE enumLineExtStyle)
 {
 		m_enumExtLineType = enumLineExtStyle;
 }
 
-EXTLINE_STYLE otDisplay::CAdvLineSymbol::GetExtLineStyle()
+EXTLINE_STYLE Display::CAdvLineSymbol::GetExtLineStyle()
 {
 	return m_enumExtLineType;
 }
 
 /////刷子部分
-void otDisplay::CAdvLineSymbol::SetLogBrushStyle(LOGBRUSH_STYLE enumLogBrush)
+void Display::CAdvLineSymbol::SetLogBrushStyle(LOGBRUSH_STYLE enumLogBrush)
 {
 		m_enumLogBrushType = enumLogBrush;
 }
 
-LOGBRUSH_STYLE otDisplay::CAdvLineSymbol::GetLogBrushStyle()
+LOGBRUSH_STYLE Display::CAdvLineSymbol::GetLogBrushStyle()
 {
 	return m_enumLogBrushType;
 }
 
-void otDisplay::CAdvLineSymbol::SetLogBrushHatch(LOGBRUSH_HATCH enumLOGBRUSH_HATCH)
+void Display::CAdvLineSymbol::SetLogBrushHatch(LOGBRUSH_HATCH enumLOGBRUSH_HATCH)
 {
 		m_enumLOGBRUSH_HATCH = enumLOGBRUSH_HATCH;
 }
 
-LOGBRUSH_HATCH otDisplay::CAdvLineSymbol::GetLogBrushHatch()
+LOGBRUSH_HATCH Display::CAdvLineSymbol::GetLogBrushHatch()
 {
 	return m_enumLOGBRUSH_HATCH;
 }
 //////装饰符号部分
-void otDisplay::CAdvLineSymbol::SetArrowMarkerType(ARROW_DIRECTION enumArrowMarkerType)
+void Display::CAdvLineSymbol::SetArrowMarkerType(ARROW_DIRECTION enumArrowMarkerType)
 {
 		m_enumArrowMarkerType = enumArrowMarkerType;
 }
 
-ARROW_DIRECTION otDisplay::CAdvLineSymbol::GetArrowMarkerType()
+ARROW_DIRECTION Display::CAdvLineSymbol::GetArrowMarkerType()
 {
 	return m_enumArrowMarkerType;
 }
 
-void otDisplay::CAdvLineSymbol::SetArrowNum(long lArrowNum)
+void Display::CAdvLineSymbol::SetArrowNum(long lArrowNum)
 {
 
 		if( lArrowNum < 0 )
@@ -181,42 +182,42 @@ void otDisplay::CAdvLineSymbol::SetArrowNum(long lArrowNum)
 		m_lArrowNum = lArrowNum;
 }
 
-long otDisplay::CAdvLineSymbol::GetArrowNum()
+long Display::CAdvLineSymbol::GetArrowNum()
 {
 	return m_lArrowNum;
 }
 
-void otDisplay::CAdvLineSymbol::SetFixRotation(bool bFixRotation)
+void Display::CAdvLineSymbol::SetFixRotation(bool bFixRotation)
 {
 		m_bFixRotation = bFixRotation;
 }
 
-bool otDisplay::CAdvLineSymbol::GetFixRotation()
+bool Display::CAdvLineSymbol::GetFixRotation()
 {
 	return m_bFixRotation;
 }
 
-void otDisplay::CAdvLineSymbol::SetFlipFirst(bool bFlipFirst)
+void Display::CAdvLineSymbol::SetFlipFirst(bool bFlipFirst)
 {
 		m_bFlipFirst = bFlipFirst;
 }
 
-bool otDisplay::CAdvLineSymbol::GetFlipFirst()
+bool Display::CAdvLineSymbol::GetFlipFirst()
 {
 	return m_bFlipFirst;
 }
 
-void otDisplay::CAdvLineSymbol::SetFlipAll(bool bFlipAll)
+void Display::CAdvLineSymbol::SetFlipAll(bool bFlipAll)
 {
 		m_bFlipAll = bFlipAll;
 }
 
-bool otDisplay::CAdvLineSymbol::GetFlipAll()
+bool Display::CAdvLineSymbol::GetFlipAll()
 {
 	return m_bFlipAll;
 }
 
-void otDisplay::CAdvLineSymbol::SetArrowMarkerSymbol(IMarkerSymbolPtr pArrowMarkSymbol)
+void Display::CAdvLineSymbol::SetArrowMarkerSymbol(IMarkerSymbolPtr pArrowMarkSymbol)
 {
 
 		if( !pArrowMarkSymbol )
@@ -228,18 +229,18 @@ void otDisplay::CAdvLineSymbol::SetArrowMarkerSymbol(IMarkerSymbolPtr pArrowMark
 
 }
 
-otDisplay::IMarkerSymbolPtr otDisplay::CAdvLineSymbol::GetArrowMarkerSymbol()
+Display::IMarkerSymbolPtr Display::CAdvLineSymbol::GetArrowMarkerSymbol()
 {
 	return m_pArrowMarkerSymbol;
 }
 
 //
-SYMBOL_TYPE	otDisplay::CAdvLineSymbol::GetType()
+SYMBOL_TYPE	Display::CAdvLineSymbol::GetType()
 {
 	return ADV_LINE_SYMBOL;
 }
 
-void otDisplay::CAdvLineSymbol::SelectDC(otDisplay::CDC * pDC)
+void Display::CAdvLineSymbol::SelectDC(Display::CDC * pDC)
 {
 		ISymbol::SelectDC( pDC );
 
@@ -266,7 +267,7 @@ void otDisplay::CAdvLineSymbol::SelectDC(otDisplay::CDC * pDC)
 			}
 			else
 			{
-				return
+				return;
 			}
 		}
 
@@ -304,12 +305,12 @@ void otDisplay::CAdvLineSymbol::SelectDC(otDisplay::CDC * pDC)
 		}
 }
 
-void otDisplay::CAdvLineSymbol::SetReadyDraw()
+void Display::CAdvLineSymbol::SetReadyDraw()
 {
 	CDisplayCache::UseCache( m_hPenHandle , this );
 }
 
-void otDisplay::CAdvLineSymbol::Draw(void* pObject)
+void Display::CAdvLineSymbol::Draw(void* pObject)
 {
 		if( CheckNoColor(m_lColor))
 			return;
@@ -363,7 +364,7 @@ void otDisplay::CAdvLineSymbol::Draw(void* pObject)
 		CDisOptimize::free_Group(&pMarkGroup);
 
 }
-void otDisplay::CAdvLineSymbol::SetDashGroup(otDisplay::CDashArray &DashArray)
+void Display::CAdvLineSymbol::SetDashGroup(Display::CDashArray &DashArray)
 {
 
 		*m_pDashGroup = DashArray;
@@ -373,12 +374,12 @@ void otDisplay::CAdvLineSymbol::SetDashGroup(otDisplay::CDashArray &DashArray)
 			m_bDrawFlag = false;
 }
 
-otDisplay::CDashArray& otDisplay::CAdvLineSymbol::GetDashGroup()
+Display::CDashArray& Display::CAdvLineSymbol::GetDashGroup()
 {
 	return *m_pDashGroup;
 }
 
-void otDisplay::CAdvLineSymbol::DrawArrow(void* pObject)
+void Display::CAdvLineSymbol::DrawArrow(void* pObject)
 {
 		if ( m_enumArrowMarkerType == NOARROW )
 		{
@@ -509,7 +510,7 @@ void otDisplay::CAdvLineSymbol::DrawArrow(void* pObject)
 #define SETPROP2(Val,Name,VT) SETPROP( PropertyValue , Val , PropertyName , Name , VT )
 #define SETPROPEX(inVal,Val,inName,Name,VT,VT2) if( stricmp(inName,Name) == 0 ) { Val = (VT2)((VT)inVal);return; }
 #define SETPROPEX2(Val,Name,VT,VT2) SETPROPEX( PropertyValue , Val , PropertyName , Name , VT , VT2)
-void otDisplay::CAdvLineSymbol::SetProperties(const char* PropertyName,const _variant_t& PropertyValue)
+void Display::CAdvLineSymbol::SetProperties(const char* PropertyName,const _variant_t& PropertyValue)
 {
 
 		SETPROPEX2( m_enumLineCapsType , "EXTLINE_END_CAP" , long , EXTLINE_END_CAP );
@@ -538,7 +539,7 @@ void otDisplay::CAdvLineSymbol::SetProperties(const char* PropertyName,const _va
 				ar.ImportVariant( PropertyValue);
 				ar.SetReadState();
 				/*m_OutLineSymbol->serialization( ar );*/
-				m_pArrowMarkerSymbol = otDisplay::CSymbolFactory::CreateSymbolFromStream(ar);			//本想判断一下返回的符号是否是线符号。暂时不作判断了咧
+				m_pArrowMarkerSymbol = Display::CSymbolFactory::CreateSymbolFromStream(ar);			//本想判断一下返回的符号是否是线符号。暂时不作判断了咧
 				return;
 			}
 			else
@@ -547,7 +548,7 @@ void otDisplay::CAdvLineSymbol::SetProperties(const char* PropertyName,const _va
 				ar.ImportVariant( PropertyValue);
 				ar.SetReadState();
 				/*m_OutLineSymbol->serialization( ar );*/
-				m_pArrowMarkerSymbol = otDisplay::CSymbolFactory::CreateSymbolFromStream(ar);
+				m_pArrowMarkerSymbol = Display::CSymbolFactory::CreateSymbolFromStream(ar);
 				return;
 			}
 		}
@@ -558,7 +559,7 @@ void otDisplay::CAdvLineSymbol::SetProperties(const char* PropertyName,const _va
 
 #define GETPROP(inName,Name,Val,T) if( stricmp(inName,Name) == 0 ) { vt = (T)Val;return vt; }
 #define GETPROP2(Name,Val,T) GETPROP(PropertyName , Name , Val , T )
-_variant_t otDisplay::CAdvLineSymbol::GetProperties(const char* PropertyName)
+_variant_t Display::CAdvLineSymbol::GetProperties(const char* PropertyName)
 {
 
 	_variant_t vt;
@@ -605,7 +606,7 @@ _variant_t otDisplay::CAdvLineSymbol::GetProperties(const char* PropertyName)
 	return ILineSymbol::GetProperties(PropertyName);
 
 }
-void otDisplay::CAdvLineSymbol::Zoom(float rate)
+void Display::CAdvLineSymbol::Zoom(float rate)
 {
 
 		ILineSymbol::Zoom(rate);
@@ -623,7 +624,7 @@ void otDisplay::CAdvLineSymbol::Zoom(float rate)
 		}
 }
 
-void otDisplay::CAdvLineSymbol::serialization(SYSTEM::IArchive & ar)
+void Display::CAdvLineSymbol::serialization(SYSTEM::IArchive & ar)
 { 
 	ILineSymbol::serialization(ar); 
 	//序列化父类的属性
@@ -681,7 +682,7 @@ void otDisplay::CAdvLineSymbol::serialization(SYSTEM::IArchive & ar)
 	}	
 }
 
-void otDisplay::CAdvLineSymbol::ClearDC()
+void Display::CAdvLineSymbol::ClearDC()
 {
 	if( m_hPenHandle != NULL )
 	{
@@ -695,7 +696,7 @@ void otDisplay::CAdvLineSymbol::ClearDC()
 	ILineSymbol::ClearDC();
 }
 
-void otDisplay::CAdvLineSymbol::OnUnitChanged(SYSTEM::SYS_UNIT_TYPE oldUnit , SYSTEM::SYS_UNIT_TYPE newUnit)
+void Display::CAdvLineSymbol::OnUnitChanged(SYSTEM::SYS_UNIT_TYPE oldUnit , SYSTEM::SYS_UNIT_TYPE newUnit)
 {
 	ILineSymbol::OnUnitChanged(oldUnit , newUnit);
 	/*if ( m_pArrowMarkerSymbol != NULL )
@@ -704,17 +705,17 @@ void otDisplay::CAdvLineSymbol::OnUnitChanged(SYSTEM::SYS_UNIT_TYPE oldUnit , SY
 	}*/
 }
 
-void otDisplay::CAdvLineSymbol::OnChangingInSelectDC()
+void Display::CAdvLineSymbol::OnChangingInSelectDC()
 {
 	ILineSymbol::OnChangingInSelectDC();
 }
 
-void otDisplay::CAdvLineSymbol::SetLineCombinType(EXTLINE_COMBIN_TYPE enumCombinType)
+void Display::CAdvLineSymbol::SetLineCombinType(EXTLINE_COMBIN_TYPE enumCombinType)
 {
 	m_enumCombinType = enumCombinType;
 }
 
-EXTLINE_COMBIN_TYPE otDisplay::CAdvLineSymbol::GetLineCombinType()
+EXTLINE_COMBIN_TYPE Display::CAdvLineSymbol::GetLineCombinType()
 {
 	return m_enumCombinType;
 }
