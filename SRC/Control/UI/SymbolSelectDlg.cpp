@@ -33,8 +33,12 @@ CDlgSymbolSelect::~CDlgSymbolSelect()
 	{
 		delete m_SymAddMenu;
 	}
-	if( SymLibs.size() != 0 )
-		SymLibs.clear();
+	for (int i=0; i<SymLibs.size(); ++i)
+	{
+		delete SymLibs[i];
+		SymLibs[i] = NULL;
+	}
+	SymLibs.clear();
 }
 
 void CDlgSymbolSelect::DoDataExchange(CDataExchange* pDX)
@@ -285,12 +289,12 @@ bool CDlgSymbolSelect::InstallSymbol(char * pStrName)
 	m_SymList.DelListCtrl();
 	for (long i = 0 ; i < SymLibs.size() ; i++)
 	{
-		if( SymLibs[i].bVisible )
+		if( SymLibs[i]->bVisible )
 		{
 			if( pStrName == NULL )
-				m_SymList.AddSymbolArray( SymLibs[i].GetName() , SymLibs[i].QuerySymbols("",m_pSymbol->GetType()));
+				m_SymList.AddSymbolArray( SymLibs[i]->GetName() , SymLibs[i]->QuerySymbols("",m_pSymbol->GetType()));
 			else 
-				m_SymList.AddSymbolArray( SymLibs[i].GetName() , SymLibs[i].QuerySymbols( pStrName ,m_pSymbol->GetType()));
+				m_SymList.AddSymbolArray( SymLibs[i]->GetName() , SymLibs[i]->QuerySymbols( pStrName ,m_pSymbol->GetType()));
 		}
 	}
 	return false;
@@ -350,10 +354,10 @@ void CDlgSymbolSelect::InitData(void)
 	_makepath(szTempPath, szDriver, szDir, NULL, NULL);
 
 	CString strPath(szTempPath);
-	CString strSymbol = strPath + "\\symbol\\symbol.mdb";
-	CSymbolLibLoader SymLib;
-	SymLib.OpenDatabase(strSymbol.GetBuffer());
-	SymLibs.push_back(SymLib);
+	CString strSymbol = strPath + "\symbol\\symbol.mdb";
+	CSymbolLibLoader* pSymLib = new CSymbolLibLoader();
+	pSymLib->OpenDatabase(strSymbol.GetBuffer());
+	SymLibs.push_back(pSymLib);
 	m_SymList.SetImageSize( 50 );
 	InstallSymbol();
 	UpdateData(FALSE);

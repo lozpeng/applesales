@@ -82,7 +82,7 @@ private:
 	CSymbolPreviewButton m_SymButton;
 	CMenu * m_SymbolLibMenu, *m_SymAddMenu;
 	CImageList	m_cSymbolImageList;
-	vector<CSymbolLibLoader> SymLibs;
+	vector<CSymbolLibLoader*> SymLibs;
 	Display::ISymbolPtr m_pSymbol;
     Display::ISymbolPtr m_pcopySymbol;
 	int m_nSelect;

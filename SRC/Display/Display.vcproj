@@ -190,7 +190,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CharMarkerSymbol.Cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DashArray.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DIB.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DisOptimize.cpp"
 				>
 			</File>
 			<File
@@ -296,7 +308,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CharMarkerSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DashArray.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DIB.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DisOptimize.h"
 				>
 			</File>
 			<File
