@@ -86,7 +86,7 @@ int Display::CDashArray::GetDashSize()
 
 unsigned long* Display::CDashArray::GetData()
 {
-	return NULL;
+	return &m_lDashArray[0];
 	//return m_lDashArray.GetData();
 }
 

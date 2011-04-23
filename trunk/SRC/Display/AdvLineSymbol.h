@@ -10,7 +10,7 @@
 #include "CDC.h"
 #include "IArchive.h"
 
-namespace otDisplay{
+namespace Display{
 class IMarkerSymbol;
 
 class DISPLAY_DLL CAdvLineSymbol : public ILineSymbol 

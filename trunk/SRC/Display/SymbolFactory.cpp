@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "SimpleMarkerSymbol.h"
 #include "CharMarkerSymbol.h"
-//#include "ArrowMarkerSymbol.h"
+#include "ArrowMarkerSymbol.h"
 //#include "PicMarkerSymbol.h"
 //#include "ComplexMarkerSymbol.h"
 #include "SimpleLineSymbol.h"
-//#include "AdvLineSymbol.h"
+#include "AdvLineSymbol.h"
 //#include "MarkerLineSymbol.h"
 //#include "HashLineSymbol.h"
 
@@ -195,7 +195,7 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbol(SYMBOL_TYPE SymboType)
 		}
 	case ARROW_MARKER_SYMBOL: 
 		{
-			//return CArrowMarkerSymbolPtr(new CArrowMarkerSymbol());
+			return CArrowMarkerSymbolPtr(new CArrowMarkerSymbol());
 		}
 	case PIC_MARKER_SYMBOL:   
 		{
@@ -211,7 +211,7 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbol(SYMBOL_TYPE SymboType)
 		}
 	case ADV_LINE_SYMBOL:	  
 		{
-			//return IAdvLineSymbolPtr(new CAdvLineSymbol());
+			return IAdvLineSymbolPtr(new CAdvLineSymbol());
 		}
 	case MARKER_LINE_SYMBOL:	  
 		{
