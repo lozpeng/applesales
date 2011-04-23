@@ -283,6 +283,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath=".\res\arrow.cur"
+				>
+			</File>
+			<File
 				RelativePath=".\res\cur00004.cur"
 				>
 			</File>
@@ -340,6 +344,14 @@
 			</File>
 			<File
 				RelativePath=".\Tool\EditFeatureTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\FeatureAtrEditCommand.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tool\FeatureAtrEditCommand.h"
 				>
 			</File>
 			<File

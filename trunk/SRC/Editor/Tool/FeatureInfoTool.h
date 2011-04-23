@@ -23,6 +23,7 @@ public:
 
 private:
 
+	HCURSOR cursorNormal;
     CDlgFeatureInfo *m_dlg;
 	static int  m_SnapTol;
 };

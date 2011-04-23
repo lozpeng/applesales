@@ -3,6 +3,7 @@
 // Used by Editor.rc
 //
 #define IDC_ModifyShape                 1000
+#define IDC_Arrow                       2004
 #define IDC_SIZE_ALL                    2005
 #define IDC_ON_VERTIX                   2010
 #define IDC_VERTIX_MOVE                 2011

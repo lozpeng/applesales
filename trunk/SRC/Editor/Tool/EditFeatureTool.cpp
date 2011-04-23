@@ -5,7 +5,6 @@
 #include "FeatureLayer.h"
 #include "IWorkspace.h"
 #include "resource.h"
-//#include "EditorRes.h"
 #include "DllResource.h"
 #include "Editor.h"
 #include "DlgFeatureAttriEdit.h"
