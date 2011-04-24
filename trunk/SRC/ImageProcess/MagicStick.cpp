@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MagicStick.h"
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
-
+#include <geometry/simplify/DouglasPeuckerSimplifier.h>
 namespace ImageProcess
 {
 
@@ -109,7 +109,23 @@ GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,
 		delete []pBlue;
 	}
 
-    return ((GEOMETRY::geom::Polygon*)pGeometry);   
+	double dcellx,dcelly;
+	pDataset->GetCellSize(&dcellx,&dcelly);
+	//¼ò»¯Geometry
+	GEOMETRY::geom::Geometry *prg =GEOMETRY::simplify::DouglasPeuckerSimplifier::simplify(pGeometry,dcellx*10)->clone();
+
+	if(prg->PointCount()<=4)
+	{
+        delete []prg;
+		prg =pGeometry;
+	}
+	else
+	{
+        delete []pGeometry;
+	}
+	
+
+    return ((GEOMETRY::geom::Polygon*)prg);   
 }
 
 
