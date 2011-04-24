@@ -22,6 +22,7 @@ public:
 	//获得当前图层下拉列表按钮
 	CBCGPRibbonComboBox* GetCurLyrCombox();
 	CBCGPRibbonComboBox* GetCurLyrCombox_Vector();
+	CBCGPRibbonComboBox* GetMagicLayer();
 // Overrides
 	public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
@@ -175,6 +176,8 @@ public:
 
 	//魔术棒提取
 	afx_msg void OnMagicStick();
+	afx_msg void OnMagicStickLayer();
+	afx_msg void OnMagicTol();
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
