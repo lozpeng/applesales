@@ -2,6 +2,8 @@
 //
 #include "MapControl.h"
 #include "LayoutControl.h"
+#include <boost/signal.hpp>
+#include <boost/signals/connection.hpp>
 
 #pragma once
 
@@ -176,7 +178,13 @@ public:
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
+	void LayerDelEvent(Carto::ILayerPtr pLayer);
+
+	Carto::ILayerPtr FindLayerbyPointer(Carto::ILayer* pLayer);
+
 protected:
+
+    boost::signals::connection m_ConnectionMapLayerDeleted;
 	
 };
 

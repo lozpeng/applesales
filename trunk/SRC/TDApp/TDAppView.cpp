@@ -18,7 +18,8 @@
 #include "MainFrm.h"
 #include "CEditor.h"
 #include "DlgDrawingExport.h"
-
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -163,10 +164,14 @@ CString  GetAppPathName()
 
 CTDAppView::CTDAppView()
 {
+	boost::function<void (Carto::ILayerPtr)> fundl = boost::bind(&CTDAppView::LayerDelEvent,this, _1);
+
+	m_ConnectionMapLayerDeleted = Carto::CMap::RegisterDeleteLayer(fundl);
 }
 
 CTDAppView::~CTDAppView()
 {
+    m_ConnectionMapLayerDeleted.disconnect();
 }
 
 BOOL CTDAppView::PreCreateWindow(CREATESTRUCT& cs)
@@ -712,7 +717,7 @@ Carto::ILayerPtr CTDAppView::GetComboLayer()
 	int nSel = GetCurLyrCombox()->GetCurSel();
 	if (nSel >=0 && nSel<nSize)
 	{
-		return m_MapCtrl.GetMap()->GetLayers().GetAt(nSel);
+		return FindLayerbyPointer((Carto::ILayer*)GetCurLyrCombox()->GetItemData(nSel));
 	}
 	return NULL;
 }
@@ -722,7 +727,7 @@ Carto::ILayerPtr CTDAppView::GetComboLayer_Vector()
 	int nSel = GetCurLyrCombox_Vector()->GetCurSel();
 	if (nSel >=0 && nSel<nSize)
 	{
-		return m_MapCtrl.GetMap()->GetLayers().GetAt(nSel);
+		return FindLayerbyPointer((Carto::ILayer*)GetCurLyrCombox()->GetItemData(nSel));
 	}
 	return NULL;
 }
@@ -921,13 +926,25 @@ bool CTDAppView::IsLayerComboNull()
 	int nSel = GetCurLyrCombox()->GetCurSel();
 	if (nSel>=0 && nSel<nSize)
 	{
-		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(nSel);
-		if (Carto::LAYER_TYPE::RasterLayer == pLayer->GetLayerType())
-		{
-			return true;
-		}
+	    return true;	
 	}
 	return false;
+}
+
+//通过指针查找图层的智能指针
+Carto::ILayerPtr CTDAppView::FindLayerbyPointer(Carto::ILayer* pLayer)
+{
+	Carto::CLayerArray &layers =m_MapCtrl.GetMap()->GetLayers();
+	Carto::ILayerPtr pl;
+	for(int i=0;i<layers.GetSize();i++)
+	{
+        pl =layers.GetAt(i);
+		if(pl.get()==pLayer)
+		{
+			return pl;
+		}
+	}
+	return NULL;
 }
 void CTDAppView::RefreshLayerCombo()
 {
@@ -938,8 +955,19 @@ void CTDAppView::RefreshLayerCombo()
 	{
 		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(i);
 		std::string strName = pLayer->GetName();
-		GetCurLyrCombox()->AddItem(strName.c_str());
-		GetCurLyrCombox_Vector()->AddItem(strName.c_str());
+		//判断图层类型
+		if(pLayer->GetLayerType()==Carto::RasterLayer)
+		{
+           GetCurLyrCombox()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+		   
+		}
+		else if(pLayer->GetLayerType()==Carto::FeatureLayer)
+		{
+           GetCurLyrCombox_Vector()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+		   
+		}
+		
+		
 	}
 	if(GetCurLyrCombox()->GetCount() > 0)
 		GetCurLyrCombox()->SelectItem(0);
@@ -1328,4 +1356,10 @@ void CTDAppView::OnMagicStick()
 	{
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	}
+}
+
+void CTDAppView::LayerDelEvent(Carto::ILayerPtr pLayer)
+{
+	//更新图层下拉框
+	RefreshLayerCombo();
 }
