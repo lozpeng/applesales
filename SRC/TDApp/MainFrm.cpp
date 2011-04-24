@@ -501,11 +501,25 @@ void CMainFrame::AddTab_GeoInfoExtract()
 
 	//半自动提取
 	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));
-	//--------------------------
+
+	//添加当前图层
+	//CBCGPRibbonButtonsGroup* pMagicGroup = new CBCGPRibbonButtonsGroup;
+
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_MAGICSTICK_LAYER,FALSE,100,"目标层:");
+	pPanelHalfAuto->Add(pBtnCurrLayer);
+	CBCGPRibbonEdit *pEditButton =new CBCGPRibbonEdit(ID_MAGICSTICK_TOL,50,"像素阈值");
+	pEditButton->SetEditText("10");
+    pPanelHalfAuto->Add(pEditButton);
+
+//--------------------------
 	// 魔术棒
 	//--------------------------
 	CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 10, 10);
-	pPanelHalfAuto->Add (pBtnMagic);
+
+    pPanelHalfAuto->Add (pBtnMagic);
+	pPanelHalfAuto->AddSeparator();
+	
+	
 	//--------------------------
 	// 边缘提取
 	//--------------------------

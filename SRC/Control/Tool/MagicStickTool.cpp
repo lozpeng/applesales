@@ -5,9 +5,13 @@
 #include "PolygonElement.h"
 
 extern CControlApp theApp;
+static Carto::ILayer* gpLayer =NULL;
+static int gtol =10;
+
 namespace Control
 {
 
+	
 
 static CMagicStickTool gMagicStickTool;
 
@@ -42,6 +46,13 @@ void CMagicStickTool::Initialize(Framework::IUIObject *pTargetControl)
 
 }
 
+void CMagicStickTool::SetParam(int ntol,Carto::ILayer* pLayer)
+{
+	gpLayer =pLayer;
+	gtol =ntol;
+
+}
+
 void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 {
 	//获取活动地图控件
@@ -53,9 +64,13 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 	if(!pMap)
 		return;
 
-	Carto::ILayerPtr pLayer =pMap->GetLayers().GetAt(0);
+	if(gpLayer==NULL)
+	{
+		return;
+	}
+	//Carto::ILayerPtr pLayer =pMap->GetLayers().GetAt(0);
 
-	Geodatabase::IRasterDatasetPtr pRaster =pLayer->GetDataObject();
+	Geodatabase::IRasterDatasetPtr pRaster =gpLayer->GetDataObject();
 	if(!pRaster)
 	{
 		return ;

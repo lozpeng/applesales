@@ -7,7 +7,7 @@
 namespace Control
 {
 
-class  CMagicStickTool: public Framework::ITool
+class CONTROL_DLL CMagicStickTool: public Framework::ITool
 {
 public:
 	CMagicStickTool();
@@ -17,10 +17,13 @@ public:
 	void Initialize(Framework::IUIObject *pTargetControl);
 	void LButtonDownEvent (UINT nFlags, CPoint point);
 
+	static void SetParam(int ntol,Carto::ILayer* pLayer);
+
 private:
 	HCURSOR m_hCursor;
 
 	Framework::IMapCtrl *m_pMapCtrl;
+
 
 };
 

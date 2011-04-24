@@ -20,6 +20,7 @@
 #include "DlgDrawingExport.h"
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
+#include "Tool/MagicStickTool.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -140,6 +141,9 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_ATTRIBUTE_EDIT, OnUpdateEditerAttribute)
 	
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
+
+	ON_COMMAND(ID_MAGICSTICK_LAYER,OnMagicStickLayer)
+	ON_COMMAND(ID_MAGICSTICK_TOL,OnMagicTol)
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
@@ -951,6 +955,7 @@ void CTDAppView::RefreshLayerCombo()
 	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
 	GetCurLyrCombox()->RemoveAllItems();
 	GetCurLyrCombox_Vector()->RemoveAllItems();
+	GetMagicLayer()->RemoveAllItems();
 	for (int i=0; i<nSize; ++i)
 	{
 		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(i);
@@ -959,6 +964,7 @@ void CTDAppView::RefreshLayerCombo()
 		if(pLayer->GetLayerType()==Carto::RasterLayer)
 		{
            GetCurLyrCombox()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+		   GetMagicLayer()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
 		   
 		}
 		else if(pLayer->GetLayerType()==Carto::FeatureLayer)
@@ -973,6 +979,10 @@ void CTDAppView::RefreshLayerCombo()
 		GetCurLyrCombox()->SelectItem(0);
 	if(GetCurLyrCombox_Vector()->GetCount() > 0)
 		GetCurLyrCombox_Vector()->SelectItem(0);
+	if(GetMagicLayer()->GetCount() > 0)
+	{
+		GetMagicLayer()->SelectItem(0);
+	}
 
 }
 
@@ -1352,6 +1362,19 @@ void CTDAppView::OnMagicStick()
 	Framework::ITool* pTool = NULL;
 	m_MapCtrl.SetCurTool("MagicStickTool");
 	pTool=Framework::ITool::FindTool("MagicStickTool");
+
+	Carto::ILayer* pLayer =(Carto::ILayer*)GetMagicLayer()->GetItemData(GetMagicLayer()->GetCurSel());
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonEdit* pEdit = (CBCGPRibbonEdit*)pMainFrm->m_wndRibbonBar.FindByID(ID_MAGICSTICK_TOL);
+	CString strValue =pEdit->GetEditText();
+	int ntol =atoi(strValue);
+	if(ntol<=0 || ntol>50)
+	{
+		ntol =10;
+	}
+	Control::CMagicStickTool::SetParam(ntol,pLayer);
+
+	//设置目标图层和阈值
 	if(pTool)
 	{
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
@@ -1362,4 +1385,21 @@ void CTDAppView::LayerDelEvent(Carto::ILayerPtr pLayer)
 {
 	//更新图层下拉框
 	RefreshLayerCombo();
+}
+
+void CTDAppView::OnMagicStickLayer()
+{
+
+}
+
+void CTDAppView::OnMagicTol()
+{
+
+}
+
+CBCGPRibbonComboBox* CTDAppView::GetMagicLayer()
+{
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonComboBox* pCombox = (CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID(ID_MAGICSTICK_LAYER);
+	return pCombox;
 }
