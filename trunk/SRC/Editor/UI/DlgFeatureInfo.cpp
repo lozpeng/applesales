@@ -14,6 +14,7 @@ CDlgFeatureInfo::CDlgFeatureInfo(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgFeatureInfo::IDD, pParent)
 {
    m_pMap =NULL;
+   m_pMapCtrl = NULL;
 }
 
 CDlgFeatureInfo::~CDlgFeatureInfo()
@@ -82,6 +83,12 @@ void CDlgFeatureInfo::OnTvnSelchangedTreeFeatures(NMHDR *pNMHDR, LRESULT *pResul
 		return;
 	}
 
+	//иак╦
+	GEOMETRY::geom::Geometry *pGeometry = pFeature->GetShape();
+	if (m_pMapCtrl)
+	{
+		m_pMapCtrl->FlashShape(pGeometry,1,300,NULL);
+	}
 
 	long lNumFields =pFeatureClass->FieldCount();
 

@@ -2,7 +2,7 @@
 #include "Map.h"
 #include "FeatureLayer.h"
 #include "resource.h"
-
+#include "IMapCtrl.h"
 class CDlgFeatureInfo : public CDialog
 {
 	DECLARE_DYNAMIC(CDlgFeatureInfo)
@@ -39,4 +39,7 @@ public:
 	std::vector<Carto::IFeatureLayerPtr> m_layers;
 	
 	afx_msg void OnClose();
+
+
+	Framework::IMapCtrl *m_pMapCtrl;
 };

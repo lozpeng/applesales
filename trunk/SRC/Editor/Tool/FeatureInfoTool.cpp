@@ -140,8 +140,12 @@ namespace Editor
 			m_dlg = new CDlgFeatureInfo;
 			if( NULL == m_dlg )
 				return;
-			m_dlg->Create( );
+			m_dlg->Create();
+			CRect rect;
+			m_dlg->GetWindowRect(&rect);
+			m_dlg->SetWindowPos(0,400,400,rect.Width(),rect.Height(),0);
 			m_dlg->SetMap(pMap.get());
+			m_dlg->m_pMapCtrl = pMapCtrl;
 			m_dlg->Refresh();
 
 		}
