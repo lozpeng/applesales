@@ -53,10 +53,6 @@ namespace Control
 		double   m_srcScale;
 		bool m_bMouseWheel;
 
-		
-
-
-
 	public:
 		virtual BOOL PreTranslateMessage(MSG* pMsg);
 	};

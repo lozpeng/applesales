@@ -65,6 +65,8 @@ namespace Framework
 
 		static IMapCtrl* GetActiveMapCtrl();
 
+		//闪烁图形
+		void FlashShape(GEOMETRY::geom::Geometry* pShape,long nFlashes=1,long flashInterval=300,Display::ISymbol* symbol=NULL);
 
 	protected:
 		//将地理内容贴到屏幕上

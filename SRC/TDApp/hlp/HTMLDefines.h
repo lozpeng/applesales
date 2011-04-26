@@ -106,6 +106,8 @@
 #define HID_CURRLAYER_COMBO_VECTOR              0x19E44
 #define HID_FEATURES_INFO                       0x19E45
 #define HID_ATTRIBUTE_EDIT                      0x19E46
+#define HID_MAGICSTICK_LAYER                    0x19E48
+#define HID_MAGICSTICK_TOL                      0x19E49
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064
