@@ -960,6 +960,18 @@
 				RelativePath=".\UI\UniqueRenderPage.h"
 				>
 			</File>
+			<Filter
+				Name="ImgProcessUI"
+				>
+				<File
+					RelativePath=".\DlgChangeDetect.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DlgChangeDetect.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Command"
