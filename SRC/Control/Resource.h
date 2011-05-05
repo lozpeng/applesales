@@ -19,18 +19,28 @@
 #define IDC_RASTERLOC                   2006
 #define IDC_SIZE_LEFTTOP                2007
 #define IDC_EXTENT_RIGHT                2007
+#define IDC_COMBO_ORIIMG                2007
 #define IDC_SIZE_RIGHTTOP               2008
 #define IDC_EXTENT_TOP2                 2008
 #define IDC_EXTENT_BOTTOM               2008
+#define IDC_COMBO_DESTIMG               2008
 #define IDC_SIZE_TOPBOTTOM              2009
+#define IDC_EDIT1                       2009
 #define IDC_ON_VERTIX                   2010
+#define IDC_EDIT_RELSHP                 2010
 #define IDC_VERTIX_MOVE                 2011
+#define IDC_BTN_SELCHASHP               2011
 #define IDB_MAP_TREE                    2012
+#define IDC_CHECK_USEHIS                2012
 #define IDB_MAPTREE_STATE               2013
+#define IDC_CHECK_LOADCHANGE            2013
 #define IDD_PROGRESS_BAR                2014
+#define IDC_EDIT2                       2014
+#define IDC_EDIT_CHANGETHD              2014
 #define IDR_LAYER_MENU                  2015
 #define IDD_LAYERPROP_GENERAL           2016
 #define IDD_RASTER_PROP                 2017
+#define IDD_IMG_CHANGEDETECT            2018
 #define IDD_FEATURE_RENDER_SET          4024
 #define IDB_FEATURE_RENDER              4025
 #define IDB_RENDER_BG                   4026
@@ -133,9 +143,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2018
+#define _APS_NEXT_RESOURCE_VALUE        2019
 #define _APS_NEXT_COMMAND_VALUE         32777
-#define _APS_NEXT_CONTROL_VALUE         2007
+#define _APS_NEXT_CONTROL_VALUE         2014
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif
