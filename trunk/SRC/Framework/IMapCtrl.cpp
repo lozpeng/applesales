@@ -167,7 +167,7 @@ namespace Framework
 		Display::IDisplayPtr pDisplay = m_pGeoMap->GetDisplay();
 		
 		GEOMETRY::geom::GeometryTypeId type = ipGeometry->getGeometryTypeId();
-
+		Display::ISymbolPtr ipSymbol;
 
 		if (type == GEOMETRY::geom::GEOS_POINT)
 		{
@@ -178,26 +178,41 @@ namespace Framework
 			ipMarkSymbol->SetMarkerSize(10);
 			ipMarkSymbol->SetMarkerColor(RGB(255,0,0));
 			
-			Display::ISymbolPtr ipSymbol = ipMarkSymbol;
+			ipSymbol = ipMarkSymbol;
 			//ipSymbol->put_ROP2()
 			pDisplay->SetSymbol(ipSymbol.get());
 			pDisplay->Begin();
 			pDisplay->Draw(ipGeometry);
-			//::Sleep(300);
-			//pDisplay->Draw(ipGeometry);
 			pDisplay->End();
 		}
-		else if (type == GEOMETRY::geom::GEOS_LINEARRING||type == GEOMETRY::geom::GEOS_LINESTRING)
+		else if (type == GEOMETRY::geom::GEOS_LINEARRING||type == GEOMETRY::geom::GEOS_LINESTRING||type == GEOMETRY::geom::GEOS_MULTILINESTRING)
 		{
+			Display::CSimpleLineSymbolPtr ipSimpLineSymbol = Display::CSimpleLineSymbolPtr(new Display::CSimpleLineSymbol());
 
+			Display::ILineSymbolPtr ipLineSymbol = ipSimpLineSymbol;
+			ipLineSymbol->SetLineColor(RGB(255,0,0));
+			ipLineSymbol->SetLineWidth(2);
+			ipSymbol = ipLineSymbol;
+			pDisplay->SetSymbol(ipSymbol.get());
+			pDisplay->Begin();
+			pDisplay->Draw(ipGeometry);
+			pDisplay->End();
 
 		}
 		else if (type == GEOMETRY::geom::GEOS_POLYGON)
 		{
-
+			Display::CSimpleFillSymbolPtr ipSimpFillSymbol = Display::CSimpleFillSymbolPtr(new Display::CSimpleFillSymbol());
+			Display::IFillSymbolPtr ipFillSymbol = ipSimpFillSymbol;
+			ipFillSymbol->SetFillColor(RGB(255,0,0));
+			ipSymbol = ipSimpFillSymbol;
+			pDisplay->SetSymbol(ipSymbol.get());
+			pDisplay->Begin();
+			pDisplay->Draw(ipGeometry);
+			pDisplay->End();
 		}
-		pDisplay->RefreshDisplay(drawAll);
-
+		RefreshGeography();
+		::Sleep(flashInterval);
+		RefreshScreen();
 		
 	}
 

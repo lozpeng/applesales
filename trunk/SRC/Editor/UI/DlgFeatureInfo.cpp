@@ -30,8 +30,9 @@ void CDlgFeatureInfo::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgFeatureInfo, CDialog)
-	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_FEATURES, &CDlgFeatureInfo::OnTvnSelchangedTreeFeatures)
+	//ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_FEATURES, &CDlgFeatureInfo::OnTvnSelchangedTreeFeatures)
 	ON_WM_CLOSE()
+	ON_NOTIFY(NM_CLICK, IDC_TREE_FEATURES, &CDlgFeatureInfo::OnNMClickTreeFeatures)
 END_MESSAGE_MAP()
 
 
@@ -39,123 +40,6 @@ END_MESSAGE_MAP()
 
 void CDlgFeatureInfo::OnTvnSelchangedTreeFeatures(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
-	
-	HTREEITEM hCurTreeItem = pNMTreeView->itemNew.hItem;
-
-	if (m_Features.GetChildItem(hCurTreeItem))
-	{
-		*pResult = 0;
-		return;
-	}
-
-	//判断是不是根节点
-	if(m_Features.GetRootItem()==hCurTreeItem)
-	{
-		*pResult = 0;
-		return;
-	}
-
-	m_FeatureInfo.DeleteAllItems();
-	
-	int iLayer = m_Features.GetItemData(hCurTreeItem);
-	
-	long lRecNo = atol((LPCTSTR)m_Features.GetItemText(hCurTreeItem));
-
-	Carto::IFeatureLayerPtr pLayer =m_layers[iLayer];
-
-	long l = 0;
-	CString csName;
-	CString csValue;
-
-	long lFieldtype =0;
-
-	double dValue;
-	long lValue;
-
-	Geodatabase::IFeatureClassPtr pFeatureClass=pLayer->GetDataObject();
-
-	Geodatabase::CFeaturePtr pFeature =pFeatureClass->GetFeature(lRecNo);
-
-	if(!pFeature)
-	{
-		*pResult = 0;
-		return;
-	}
-
-	//闪烁
-	GEOMETRY::geom::Geometry *pGeometry = pFeature->GetShape();
-	if (m_pMapCtrl)
-	{
-		m_pMapCtrl->FlashShape(pGeometry,1,300,NULL);
-	}
-
-	long lNumFields =pFeatureClass->FieldCount();
-
-
-	for ( l = 0; l < lNumFields; l++)
-	{
-
-		//得到字段名
-		csName =pFeatureClass->GetField(l+1)->GetName().c_str();
-		//得到字段类型
-		lFieldtype =pFeatureClass->GetField(l+1)->GetType();
-
-		switch(lFieldtype)
-		{
-
-		case Geodatabase::FTYPE_STRING:    //字符型
-			{
-				csValue =pFeature->GetValue(l+1).GetasString().c_str();
-
-				csValue.TrimLeft();
-				m_FeatureInfo.InsertItem(l, csName);
-				m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, csValue, 0, 0, 0, NULL);
-
-			}
-			break;
-		case Geodatabase::FTYPE_DATE:    //日期型
-			{
-				m_FeatureInfo.InsertItem(l, csName);
-				m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, "", 0, 0, 0, NULL);
-			}
-			break;
-		case Geodatabase::FTYPE_DOUBLE:
-		case Geodatabase::FTYPE_FLOAT:    //浮点型
-			{
-				dValue =pFeature->GetValue(l+1).GetAsDouble();
-
-				csValue.Format("%.8f",dValue);
-
-				m_FeatureInfo.InsertItem(l, csName);
-				m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, csValue, 0, 0, 0, NULL);
-
-			}
-			break;
-		case Geodatabase::FTYPE_BOOL:    //逻辑型
-			{
-                
-			}
-			break;
-		case Geodatabase::FTYPE_LONG:    //整型
-			{
-				lValue =pFeature->GetValue(l+1).m_Var.iVal;
-
-				csValue.Format("%d",lValue);
-
-				m_FeatureInfo.InsertItem(l, csName);
-				m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, csValue, 0, 0, 0, NULL);
-			}
-			break;
-
-		default:
-			m_FeatureInfo.InsertItem(l, csName);
-			m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, "", 0, 0, 0, NULL);
-			break;
-		}
-
-	}
-
 	*pResult = 0;
 }
 
@@ -256,4 +140,136 @@ void CDlgFeatureInfo::OnClose()
 
 	m_layers.clear();
 	CDialog::OnClose();
+}
+
+void CDlgFeatureInfo::OnNMClickTreeFeatures(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+
+	HTREEITEM hCurTreeItem ;//= pNMTreeView->itemNew.hItem;
+
+	//if (m_Features.GetChildItem(hCurTreeItem))
+	//{
+	//	*pResult = 0;
+	//	return;
+	//}
+	DWORD   dwpos = GetMessagePos();   
+	TVHITTESTINFO ht = {0};   
+
+	ht.pt.x = GET_X_LPARAM(dwpos);
+	ht.pt.y = GET_Y_LPARAM(dwpos);
+	::MapWindowPoints(HWND_DESKTOP,pNMHDR->hwndFrom,&ht.pt,1); //把屏幕坐标转换成控件坐标
+
+	TreeView_HitTest(pNMHDR->hwndFrom,&ht);   //确定点击的是哪一项
+
+	hCurTreeItem = ht.hItem;
+
+	//判断是不是根节点
+	if(m_Features.GetRootItem()==hCurTreeItem)
+	{
+		*pResult = 0;
+		return;
+	}
+
+	m_FeatureInfo.DeleteAllItems();
+
+	int iLayer = m_Features.GetItemData(hCurTreeItem);
+
+	long lRecNo = atol((LPCTSTR)m_Features.GetItemText(hCurTreeItem));
+
+	Carto::IFeatureLayerPtr pLayer =m_layers[iLayer];
+
+	long l = 0;
+	CString csName;
+	CString csValue;
+
+	long lFieldtype =0;
+
+	double dValue;
+	long lValue;
+
+	Geodatabase::IFeatureClassPtr pFeatureClass=pLayer->GetDataObject();
+
+	Geodatabase::CFeaturePtr pFeature =pFeatureClass->GetFeature(lRecNo);
+
+	if(!pFeature)
+	{
+		*pResult = 0;
+		return;
+	}
+
+	//闪烁
+	GEOMETRY::geom::Geometry *pGeometry = pFeature->GetShape();
+	if (m_pMapCtrl)
+	{
+		m_pMapCtrl->FlashShape(pGeometry,1,300,NULL);
+	}
+
+	long lNumFields =pFeatureClass->FieldCount();
+
+
+	for ( l = 0; l < lNumFields; l++)
+	{
+
+		//得到字段名
+		csName =pFeatureClass->GetField(l+1)->GetName().c_str();
+		//得到字段类型
+		lFieldtype =pFeatureClass->GetField(l+1)->GetType();
+
+		switch(lFieldtype)
+		{
+
+		case Geodatabase::FTYPE_STRING:    //字符型
+			{
+				csValue =pFeature->GetValue(l+1).GetasString().c_str();
+
+				csValue.TrimLeft();
+				m_FeatureInfo.InsertItem(l, csName);
+				m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, csValue, 0, 0, 0, NULL);
+
+			}
+			break;
+		case Geodatabase::FTYPE_DATE:    //日期型
+			{
+				m_FeatureInfo.InsertItem(l, csName);
+				m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, "", 0, 0, 0, NULL);
+			}
+			break;
+		case Geodatabase::FTYPE_DOUBLE:
+		case Geodatabase::FTYPE_FLOAT:    //浮点型
+			{
+				dValue =pFeature->GetValue(l+1).GetAsDouble();
+
+				csValue.Format("%.8f",dValue);
+
+				m_FeatureInfo.InsertItem(l, csName);
+				m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, csValue, 0, 0, 0, NULL);
+
+			}
+			break;
+		case Geodatabase::FTYPE_BOOL:    //逻辑型
+			{
+
+			}
+			break;
+		case Geodatabase::FTYPE_LONG:    //整型
+			{
+				lValue =pFeature->GetValue(l+1).m_Var.iVal;
+
+				csValue.Format("%d",lValue);
+
+				m_FeatureInfo.InsertItem(l, csName);
+				m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, csValue, 0, 0, 0, NULL);
+			}
+			break;
+
+		default:
+			m_FeatureInfo.InsertItem(l, csName);
+			m_FeatureInfo.SetItem(l, 1, LVIF_TEXT, "", 0, 0, 0, NULL);
+			break;
+		}
+
+	}
+	*pResult = 0;
 }
