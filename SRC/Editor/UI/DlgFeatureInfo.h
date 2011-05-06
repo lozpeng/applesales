@@ -42,4 +42,5 @@ public:
 
 
 	Framework::IMapCtrl *m_pMapCtrl;
+	afx_msg void OnNMClickTreeFeatures(NMHDR *pNMHDR, LRESULT *pResult);
 };
