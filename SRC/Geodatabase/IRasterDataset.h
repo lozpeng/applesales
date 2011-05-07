@@ -10,7 +10,7 @@
 
 #include "IGeodataObject.h"
 #include "IProgress.h"
-
+#include "BlockData.h"
 namespace GEOMETRY
 {
 	namespace geom
@@ -22,6 +22,7 @@ namespace Geodatabase
 {
 
 	class IRasterCatalog;
+	class CBlockData;
 
 class GEODATABASE_DLL IRasterDataset: public IGeodataObject
 {
@@ -220,11 +221,37 @@ public:
 
 	virtual bool ReadPyramidNormal(long lLevel,long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer);
 
-	
+	/*@*****************************通过缓存访问像素********************************************@*/
+
+	//创建缓存
+	bool CreateBuffer();
+	bool FlushBuffer();
+	bool DeleteBuffer();
+    
+	bool PixelIO(long lBandIndex, long lCol, long lRow, void *pvValue, bool bRead );
 
 protected:
 
 	IRasterCatalog *m_pRasterCatalog;
+
+private:
+
+	//索引表，键值为图块在矩阵中的位置，值为图块在队列中的位置
+	BDlist<CBlockData*>::pointer *m_indexTable;  
+
+	//图块队列
+	BDlist<CBlockData*>			m_DataQueue;
+
+	//图块队列中当前空闲图块的位置，为节点的指针
+	BDlist<CBlockData*>::pointer	m_qIndex;  
+
+	//图块的大小
+	long	m_blockXSize;
+	long    m_blockYSize;    
+
+	//图像所占图块的数目
+	long	m_blockXCount;
+	long	m_blockYCount;
 };
 
 
