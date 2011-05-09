@@ -221,6 +221,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\SysPath.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\System.cpp"
 				>
 			</File>
@@ -256,6 +260,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SysPath.h"
 				>
 			</File>
 			<File
