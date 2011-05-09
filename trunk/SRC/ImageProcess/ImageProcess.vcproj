@@ -181,7 +181,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ImageClip.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ImageProcess.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ImgChangeDetect.cpp"
 				>
 			</File>
 			<File
@@ -215,7 +223,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\ImageClip.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ImageProcessDef.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ImgChangeDetect.h"
 				>
 			</File>
 			<File

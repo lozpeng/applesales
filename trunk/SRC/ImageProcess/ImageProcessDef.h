@@ -35,5 +35,11 @@ struct IntPoint
 	int y;
 };
 
+typedef struct st_Extent
+{
+	double xmin, xmax;
+	double ymin, ymax;
+}STExtent;
+
 }
 #endif
