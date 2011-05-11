@@ -87,28 +87,28 @@ inline void  CBlockData::GetPixel(long lCol, long lRow, void *pVal)
 
 	switch (m_lDataType)
 	{
-	case 0:
+	case BDT_BYTE:
 		{
 			pucVal = (unsigned char*)m_pBuffer;
 			pucVal2 = (unsigned char*)pVal;
 			*pucVal2 = *(pucVal+m_lWidth*(lRow-1)+lCol-1);
 		}
 		break;
-	case 1:
+	case BDT_USHORT:
 		{
 			pusVal = (unsigned short*)m_pBuffer;
 			pusVal2 = (unsigned short*)pVal;
 			*pusVal2 = *(pusVal+m_lWidth*(lRow-1)+lCol-1);
 		}
 		break;
-	case 2:
+	case BDT_SHORT:
 		{
 			psVal = (short *)m_pBuffer;
 			psVal2 = (short *)pVal;
 			*psVal2 = *(psVal+m_lWidth*(lRow-1)+lCol-1);
 		}
 		break;
-	case 3:
+	case BDT_FLOAT:
 		{
 			pfVal = (float *)m_pBuffer;
 			pfVal2 = (float *)pVal;
@@ -131,28 +131,28 @@ inline void CBlockData::SetPixel(long lCol, long lRow, void *pVal)
 
 	switch (m_lDataType)
 	{
-	case 0:
+	case BDT_BYTE:
 		{
 			pucVal = (unsigned char*)m_pBuffer;
 			pucVal2 = (unsigned char*)pVal;
 			*(pucVal+m_lWidth*(lRow-1)+lCol-1) =  *pucVal2 ;
 		}
 		break;
-	case 1:
+	case BDT_USHORT:
 		{
 			pusVal = (unsigned short*)m_pBuffer;
 			pusVal2 = (unsigned short*)pVal;
 			*(pusVal+m_lWidth*(lRow-1)+lCol-1) = *pusVal2 ;
 		}
 		break;
-	case 2:
+	case BDT_SHORT:
 		{
 			psVal = (short *)m_pBuffer;
 			psVal2 = (short *)pVal;
 			*(psVal+m_lWidth*(lRow-1)+lCol-1) = *psVal2 ;
 		}
 		break;
-	case 3:
+	case BDT_FLOAT:
 		{
 			pfVal = (float *)m_pBuffer;
 			pfVal2 = (float *)pVal;
