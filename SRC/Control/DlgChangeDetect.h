@@ -23,8 +23,14 @@ public:
 	CComboBox m_CmbSrc;
 	CComboBox m_CmbDest;
 	CString m_strResult;
+	//´ý¼ì²âÓ°ÏñÂ·¾¶
+	CString m_strSrc;
+	CString m_strDest;
 	BOOL m_bLoadShp;
 	afx_msg void OnBnClickedBtnSelchashp();
 	afx_msg void OnBnClickedOk();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedCheckLoadchange();
+	double m_dCor;
+	int m_nSize;
 };

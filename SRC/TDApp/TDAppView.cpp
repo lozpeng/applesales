@@ -21,6 +21,7 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include "Tool/MagicStickTool.h"
+#include "UI/ImageProcessTool.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -144,6 +145,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 
 	ON_COMMAND(ID_MAGICSTICK_LAYER,OnMagicStickLayer)
 	ON_COMMAND(ID_MAGICSTICK_TOL,OnMagicTol)
+	
+	ON_COMMAND(ID_CHANGE_DETECT,OnImgChangeDetect)
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
@@ -1402,4 +1405,9 @@ CBCGPRibbonComboBox* CTDAppView::GetMagicLayer()
 	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
 	CBCGPRibbonComboBox* pCombox = (CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID(ID_MAGICSTICK_LAYER);
 	return pCombox;
+}
+
+void CTDAppView::OnImgChangeDetect()
+{
+	Control::CImageProcessTool::ShowImgChangeDetectDlg();
 }

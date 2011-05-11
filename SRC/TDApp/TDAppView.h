@@ -179,6 +179,9 @@ public:
 	afx_msg void OnMagicStickLayer();
 	afx_msg void OnMagicTol();
 
+	//±ä»¯¼ì²â
+	afx_msg void OnImgChangeDetect();
+
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
 	void LayerDelEvent(Carto::ILayerPtr pLayer);
