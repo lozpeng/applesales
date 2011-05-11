@@ -971,6 +971,14 @@
 					RelativePath=".\DlgChangeDetect.h"
 					>
 				</File>
+				<File
+					RelativePath=".\UI\ImageProcessTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ImageProcessTool.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

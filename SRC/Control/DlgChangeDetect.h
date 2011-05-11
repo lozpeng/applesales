@@ -1,6 +1,6 @@
 #pragma once
 #include "afxwin.h"
-
+#include "resource.h"
 
 // CDlgChangeDetect ¶Ô»°¿ò
 
