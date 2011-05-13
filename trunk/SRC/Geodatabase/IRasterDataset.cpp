@@ -223,8 +223,9 @@ bool IRasterDataset::CreateBuffer()
 bool IRasterDataset::FlushBuffer()
 {
 	long lWidth,lHeight;
-	GetSize(&lWidth, &lHeight);
 	long lSCol,lSRow;
+	long m_lWidth,m_lHeight;
+    GetSize(&m_lWidth,&m_lHeight);
 
 	BDlist<CBlockData*>::pointer p=m_DataQueue.head;
 	for(long i=0;i<m_DataQueue.length;i++)
@@ -234,8 +235,8 @@ bool IRasterDataset::FlushBuffer()
 			lSCol = (p->data->m_Pos.lBlockX-1)*m_blockXSize + 1;
 			lSRow = (p->data->m_Pos.lBlockY-1)*m_blockYSize + 1;
 
-			lWidth = ((lWidth-lSCol+1)<m_blockXSize) ? (lWidth-lSCol+1) : m_blockXSize;
-			lHeight = ((lHeight-lSRow+1)<m_blockYSize) ? (lHeight-lSRow+1) : m_blockYSize;
+			lWidth = ((m_lWidth-lSCol+1)<m_blockXSize) ? (m_lWidth-lSCol+1) : m_blockXSize;
+			lHeight = ((m_lHeight-lSRow+1)<m_blockYSize) ? (m_lHeight-lSRow+1) : m_blockYSize;
 
 			if(p->data->m_bDirty)
 				DataWriteBand(p->data->m_Pos.lBand, lSCol, lSRow, lWidth, lHeight,p->data->m_pBuffer);
