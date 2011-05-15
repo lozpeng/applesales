@@ -4,6 +4,10 @@
 #include "DllResource.h"
 #include "IUIObject.h"
 
+#ifdef DEBUG
+#define new DEBUG_NEW
+#endif
+
 static CSymbolListCtrl gSymbolList;
 
 CSymbolListCtrl::CSymbolListCtrl()
