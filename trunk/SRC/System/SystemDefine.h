@@ -11,5 +11,12 @@
 #endif
 
 #include "SmartPtr.h"
+#include "Configer.h"
+#include "IArchive.h"
+#include "ISerialization.h"
+#include "SysLog.h"
+#include "SysPath.h"
+#include "alm.h"
+
 
 #endif

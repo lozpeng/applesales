@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;&quot;%(AdditionalIncludeDirectories)&quot;"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;&quot;%(AdditionalIncludeDirectories)&quot;;..\..\thirdPartyLib\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;SYSTEM_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comsuppw.lib"
+				AdditionalDependencies="comsuppw.lib xerces-c_3D.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\..\thirdPartyLib\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SYSTEM_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comsuppw.lib"
+				AdditionalDependencies="comsuppw.lib xerces-c_3.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
@@ -181,6 +181,14 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Configer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ConfigItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\dllmain.cpp"
 				>
 			</File>
@@ -221,6 +229,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\SysLog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SysPath.cpp"
 				>
 			</File>
@@ -239,11 +251,27 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\alm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Configer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ConfigItem.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Exception.h"
 				>
 			</File>
 			<File
 				RelativePath=".\IArchive.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IConfigItem.h"
 				>
 			</File>
 			<File
@@ -263,6 +291,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SysLog.h"
+				>
+			</File>
+			<File
 				RelativePath=".\SysPath.h"
 				>
 			</File>
@@ -276,6 +308,10 @@
 			</File>
 			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\xmlstring.h"
 				>
 			</File>
 		</Filter>
