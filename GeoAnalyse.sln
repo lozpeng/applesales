@@ -7,12 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "SRC\System\System
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geometry", "SRC\Geometry\build\msvc100\Geometry\Geometry.vcproj", "{108E75A3-0A92-489A-B1A9-8F071D40A108}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geodatabase", "SRC\Geodatabase\Geodatabase.vcproj", "{2B97F3A8-215F-4FDA-9696-E9689C3ECB52}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -83,10 +77,6 @@ Global
 		{9C7907B4-A771-4A53-A585-14CF33AC312A}.Debug|Win32.Build.0 = Debug|Win32
 		{9C7907B4-A771-4A53-A585-14CF33AC312A}.Release|Win32.ActiveCfg = Release|Win32
 		{9C7907B4-A771-4A53-A585-14CF33AC312A}.Release|Win32.Build.0 = Release|Win32
-		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Debug|Win32.ActiveCfg = Debug|Win32
-		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Debug|Win32.Build.0 = Debug|Win32
-		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Win32.ActiveCfg = Release|Win32
-		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Win32.Build.0 = Release|Win32
 		{2B97F3A8-215F-4FDA-9696-E9689C3ECB52}.Debug|Win32.ActiveCfg = Debug|Win32
 		{2B97F3A8-215F-4FDA-9696-E9689C3ECB52}.Debug|Win32.Build.0 = Debug|Win32
 		{2B97F3A8-215F-4FDA-9696-E9689C3ECB52}.Release|Win32.ActiveCfg = Release|Win32
