@@ -449,6 +449,12 @@ void CMainFrame::AddTab_Editor()
 	CBCGPRibbonButton* pBtnFeatureInfo = new CBCGPRibbonButton (ID_FEATURES_INFO, _T("要素信息"), 10, 10);
 	pPanelEditor->Add (pBtnFeatureInfo);
 
+	//--------------------------
+	// 要素选择:
+	//--------------------------
+	CBCGPRibbonButton* pBtnFeatureSelect = new CBCGPRibbonButton (ID_SELECTFEATURE, _T("要素选择"), 11, 11);
+	pPanelEditor->Add (pBtnFeatureSelect);
+
 }
 
 void CMainFrame::AddTab_GeoInfoExtract()

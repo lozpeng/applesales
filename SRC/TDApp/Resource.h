@@ -148,7 +148,9 @@
 #define ID_ATTRIBUTE_EDIT				40518
 #define ID_MAGICSTICK_LAYER             40520
 #define ID_MAGICSTICK_TOL               40521
-#define ID_REMOVELASTMAGIC              40522
+#define ID_SELECTFEATURE				40522
+#define ID_REMOVELASTMAGIC              40523
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
