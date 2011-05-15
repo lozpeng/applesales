@@ -112,7 +112,7 @@ GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,
 	double dcellx,dcelly;
 	pDataset->GetCellSize(&dcellx,&dcelly);
 	//¼ò»¯Geometry
-	GEOMETRY::geom::Geometry *prg =GEOMETRY::simplify::DouglasPeuckerSimplifier::simplify(pGeometry,dcellx*10)->clone();
+	GEOMETRY::geom::Geometry *prg =GEOMETRY::simplify::DouglasPeuckerSimplifier::simplify(pGeometry,dcellx*2)->clone();
 
 	if(prg->PointCount()<=4)
 	{
@@ -126,6 +126,16 @@ GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,
 	
 
     return ((GEOMETRY::geom::Polygon*)prg);   
+
+	/*if(pGeometry->PointCount()<=4)
+	{
+		delete []pGeometry;
+		return NULL;
+	}
+	
+
+
+	return ((GEOMETRY::geom::Polygon*)pGeometry);*/
 }
 
 
