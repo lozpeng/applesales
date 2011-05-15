@@ -11,6 +11,44 @@ typedef struct{
 	int Width;
 }Seed;
 
+static GEOMETRY::geom::Polygon* simple(GEOMETRY::geom::Polygon* pPoly)
+{
+   using namespace GEOMETRY::geom;
+
+   if(pPoly->PointCount()<20)
+   {
+	   return (GEOMETRY::geom::Polygon*)pPoly->clone();
+   }
+   //建立一个空的多边形要素
+   typedef std::vector<GEOMETRY::geom::Coordinate> CoordVect;
+   GEOMETRY::geom::Polygon *pPolygon =GeometryFactory::getDefaultInstance()->createPolygon();
+   Coordinate coord;
+
+   const CoordinateSequence* parray =pPoly->getExteriorRing()->getCoordinatesRO();
+   CoordVect *pcoords =new CoordVect();
+   bool bAddlast =true;
+   for(int i=0;i<parray->size();i+=2)
+   {
+       pcoords->push_back(parray->getAt(i));
+	   if(i==parray->size()-1)
+	   {
+           bAddlast =false;
+	   }
+   }
+   if(bAddlast)
+   {
+       pcoords->push_back(parray->getAt(0));
+   }
+   
+   
+   CoordinateSequence *coords = GeometryFactory::getDefaultInstance()->getCoordinateSequenceFactory()->create(pcoords);
+   LinearRing *pring = GeometryFactory::getDefaultInstance()->createLinearRing(coords);
+
+   pPolygon->AddGeometry((Geometry*)pring);
+
+   return pPolygon;
+
+}
 GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,int y,unsigned char rate)
 {
 
@@ -112,8 +150,9 @@ GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,
 	double dcellx,dcelly;
 	pDataset->GetCellSize(&dcellx,&dcelly);
 	//简化Geometry
-	GEOMETRY::geom::Geometry *prg =GEOMETRY::simplify::DouglasPeuckerSimplifier::simplify(pGeometry,dcellx*2)->clone();
-
+	//GEOMETRY::geom::Geometry *prg =GEOMETRY::simplify::DouglasPeuckerSimplifier::simplify(pGeometry,dcellx*2)->clone();
+    
+	GEOMETRY::geom::Geometry *prg =(GEOMETRY::geom::Geometry*)simple((GEOMETRY::geom::Polygon*)pGeometry);
 	if(prg->PointCount()<=4)
 	{
         delete []prg;
