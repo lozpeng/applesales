@@ -6,6 +6,10 @@
 #include "RangeRenderPage.h"
 #include "IDisplay.h"
 
+#ifdef DEBUG
+#define new DEBUG_NEW
+#endif
+
 // CRangeRenderList
 
 IMPLEMENT_DYNAMIC(CRangeRenderList, CListCtrl)

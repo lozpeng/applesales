@@ -9,6 +9,9 @@
 #include "DlgSelectValues.h"
 #include "DlgModifyUniClass.h"
 
+#ifdef DEBUG
+#define new DEBUG_NEW
+#endif
 
 #define  DEFAULTVALUE "<其它所有值>"
 
@@ -19,8 +22,8 @@ CUniqueRenderPage::CUniqueRenderPage(CWnd* pParent /*=NULL*/)
 	: CDialog(CUniqueRenderPage::IDD, pParent)
 	, m_strHeading(_T(""))
 {
-	m_bpUp.LoadBitmap(IDB_UP);
-	m_bpDown.LoadBitmap(IDB_DOWN);
+	/*m_bpUp.LoadBitmap(IDB_UP);
+	m_bpDown.LoadBitmap(IDB_DOWN);*/
 }
 
 CUniqueRenderPage::~CUniqueRenderPage()

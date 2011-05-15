@@ -7,6 +7,9 @@
 #include "IDisplay.h"
 #include "DlgModifyUniClass.h"
 
+#ifdef DEBUG
+#define new DEBUG_NEW
+#endif
 // CUniquerRenderSymbolList
 
 IMPLEMENT_DYNAMIC(CUniquerRenderSymbolList, CListCtrl)

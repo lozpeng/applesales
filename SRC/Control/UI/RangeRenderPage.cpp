@@ -8,6 +8,10 @@
 #include "DlgModifyUniClass.h"
 // CRangeRenderPage ¶Ô»°¿ò
 
+#ifdef DEBUG
+#define new DEBUG_NEW
+#endif
+
 IMPLEMENT_DYNAMIC(CRangeRenderPage, CDialog)
 
 CRangeRenderPage::CRangeRenderPage(CWnd* pParent /*=NULL*/)
