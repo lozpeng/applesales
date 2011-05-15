@@ -621,8 +621,16 @@ BOOL CMaptreeCtrl::ModifyLayersOrder(HTREEITEM  htiNew, HTREEITEM hItemDragS, HT
 		}
 		else
 		{        
-			LayerArray.RemoveAt(lIndexS);        
-			LayerArray.InsertAt(lIndexD + 1, layerPtrS);
+			LayerArray.RemoveAt(lIndexS);
+			if(lIndexD>0)
+			{
+               LayerArray.InsertAt(lIndexD - 1, layerPtrS);
+			}
+			else
+			{
+                LayerArray.InsertAt(0, layerPtrS);
+			}
+			
 		}
 
 	}
@@ -630,7 +638,8 @@ BOOL CMaptreeCtrl::ModifyLayersOrder(HTREEITEM  htiNew, HTREEITEM hItemDragS, HT
 	{
 		
 		LayerArray.RemoveAt(lIndexS);
-		LayerArray.InsertAt( 0, layerPtrS );
+		//加到最上层
+		LayerArray.Add( layerPtrS );
 	}
 
 	m_LayerItemMap.erase(hItemDragS);
@@ -917,7 +926,7 @@ void CMaptreeCtrl::AddLayer(Carto::ILayerPtr layerPtr, BOOL bExpand)
 	Carto::CLayerArray layerArray = ptrMap->GetLayers();
 	long lLocation = layerArray.FindIndex(layerPtr);
 	HTREEITEM hInsertAfter;
-	if (lLocation > 0) 
+	/*if (lLocation > 0) 
 	{	
 		Carto::ILayerPtr ptrLayerInsertAfter = layerArray[lLocation - 1];
 		hInsertAfter = SearchItemByLayer(ptrLayerInsertAfter);
@@ -930,7 +939,24 @@ void CMaptreeCtrl::AddLayer(Carto::ILayerPtr layerPtr, BOOL bExpand)
 	else
 	{
 		return;
+	}*/
+
+	if (lLocation == layerArray.GetSize()-1) 
+	{	
+		hInsertAfter = TVI_FIRST;
+	
 	}
+	else if(lLocation>=0)
+	{
+
+		Carto::ILayerPtr ptrLayerInsertAfter = layerArray[lLocation + 1];
+		hInsertAfter = SearchItemByLayer(ptrLayerInsertAfter);
+	}
+	else
+	{
+	   return;
+	}
+
 
 
 	//为RasterLayer和VectorLayer添加layer
@@ -2194,7 +2220,7 @@ void CMaptreeCtrl::RefreshFromDoc()
 			Carto::ILayerPtr ptrLayer = NULL, ptrLayerBefore = NULL;
 			ptrLayer  = layerArray[i];
 
-			if(i==0)
+			/*if(i==0)
 			{
 				hBefore = TVI_FIRST;
 			}
@@ -2202,7 +2228,9 @@ void CMaptreeCtrl::RefreshFromDoc()
 			{
 				ptrLayerBefore = layerArray[i-1];
 				hBefore = SearchItemByLayer(ptrLayerBefore);
-			}
+			}*/
+
+            hBefore = TVI_FIRST;
 
 			//为RasterLayer和VectorLayer添加layer
 			AddLayerNode( ptrLayer, hMapItem, hBefore,FALSE);		
