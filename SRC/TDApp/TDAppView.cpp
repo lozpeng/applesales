@@ -142,11 +142,15 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_ATTRIBUTE_EDIT, OnUpdateEditerAttribute)
 	
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
+	ON_UPDATE_COMMAND_UI(ID_MAGIC_STICK, OnUpdateMagicStick)
+	
 
 	ON_COMMAND(ID_MAGICSTICK_LAYER,OnMagicStickLayer)
 	ON_COMMAND(ID_MAGICSTICK_TOL,OnMagicTol)
+
+	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 	
-	ON_COMMAND(ID_CHANGE_DETECT,OnImgChangeDetect)
+	ON_COMMAND(ID_REMOVELASTMAGIC,OnDeleteLastMagic)
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
@@ -1371,9 +1375,9 @@ void CTDAppView::OnMagicStick()
 	CBCGPRibbonEdit* pEdit = (CBCGPRibbonEdit*)pMainFrm->m_wndRibbonBar.FindByID(ID_MAGICSTICK_TOL);
 	CString strValue =pEdit->GetEditText();
 	int ntol =atoi(strValue);
-	if(ntol<=0 || ntol>50)
+	if(ntol<=0 || ntol>100)
 	{
-		ntol =10;
+		ntol =20;
 	}
 	Control::CMagicStickTool::SetParam(ntol,pLayer);
 
@@ -1384,6 +1388,18 @@ void CTDAppView::OnMagicStick()
 	}
 }
 
+void CTDAppView::OnUpdateMagicStick(CCmdUI* pCmdUI)
+{
+	std::string strtool =m_MapCtrl.GetCurToolName();
+	if(strtool=="MagicStickTool")
+	{
+		pCmdUI->SetCheck(TRUE);
+	}
+	else
+	{
+		pCmdUI->SetCheck(FALSE);
+	}
+}
 void CTDAppView::LayerDelEvent(Carto::ILayerPtr pLayer)
 {
 	//更新图层下拉框
@@ -1410,4 +1426,40 @@ CBCGPRibbonComboBox* CTDAppView::GetMagicLayer()
 void CTDAppView::OnImgChangeDetect()
 {
 	Control::CImageProcessTool::ShowImgChangeDetectDlg();
+}
+
+//删除上次魔术棒提取结果
+void CTDAppView::OnDeleteLastMagic()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+
+	if(!pMap)
+	{
+		return;
+	}
+	Carto::CGraphicLayerPtr pLayer =pMap->GetGraphicLayer();
+	Element::IElementPtr pElement;
+	int count =pLayer->GetElementCount();
+	if(count<=0)
+	{
+		return;
+	}
+	for(int i=count-1;i>=0;i--)
+	{
+		pElement =pLayer->GetElement(i);
+		if(!pElement)
+		{
+			continue;
+		}
+        if(pElement->GetUserdata()==1)
+		{
+            pLayer->RemoveElement(pElement);
+			//更新视图
+			m_MapCtrl.UpdateControl(drawElement);
+			break;
+		}
+	}
+	
+	
+
 }

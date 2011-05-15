@@ -176,8 +176,11 @@ public:
 
 	//魔术棒提取
 	afx_msg void OnMagicStick();
+	afx_msg void OnUpdateMagicStick(CCmdUI* pCmdUI);
 	afx_msg void OnMagicStickLayer();
 	afx_msg void OnMagicTol();
+
+	afx_msg void OnDeleteLastMagic();
 
 	//变化检测
 	afx_msg void OnImgChangeDetect();
