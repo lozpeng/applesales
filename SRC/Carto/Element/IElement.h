@@ -62,6 +62,18 @@ public:
 	* @return _ptr_t<IElement> Element智能指针
 	*/
 	static SYSTEM::CSmartPtr<IElement> CreateElement( ELEMENT_TYPE type);
+
+
+	/**
+	* 功能描述:设置用户数据
+	* @param data long型的数据
+	*/
+	void SetUserdata(long data){m_lUserdata =data;};
+
+	/**
+	* 功能描述:获取用户数据
+	*/
+	long GetUserdata() const {return m_lUserdata;};
    
 	/**
     * 功能描述：设置Element激活
@@ -408,6 +420,9 @@ protected:
 	Display::CSimpleLineSymbolPtr m_pTrakerLineSymbol;
 
 	Display::CSimpleFillSymbolPtr m_pEnvelopeSymbol; //边界绘制符号
+
+	//用户数据
+	long m_lUserdata;
 
 };
 typedef SYSTEM::CSmartPtr<IElement> IElementPtr;
