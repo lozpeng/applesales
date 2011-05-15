@@ -71,6 +71,8 @@ IElement::IElement()
 	m_pTrakerLineSymbol->SetLineStyle(DOT);
 
 	m_pGeometry = NULL;
+
+	m_lUserdata =0;
 }
 
 IElement::IElement(const GEOMETRY::geom::Geometry& geometry)
@@ -111,6 +113,8 @@ IElement::IElement(const GEOMETRY::geom::Geometry& geometry)
 	m_pTrakerLineSymbol.reset(new Display::CSimpleLineSymbol);
 	m_pTrakerLineSymbol->SetLineColor(RGB(0,255,255));
 	m_pTrakerLineSymbol->SetLineStyle(DOT);
+
+	m_lUserdata =0;
 
 }
 
