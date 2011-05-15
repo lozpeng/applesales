@@ -1,23 +1,16 @@
-//////////////////////////////////////////////////////////////////////
-// 版权(c) 2010-2020, 天地智绘
-// 作者：  hhzhao
-// 时间：  2010/10/18
-// 描述：  符号工厂  负责所有符号的管理
-//////////////////////////////////////////////////////////////////////
+#ifndef CSYMBOLFACTORY_H
+#define CSYMBOLFACTORY_H
 
-#ifndef _CSYMBOLFACTORY_H
-#define _CSYMBOLFACTORY_H
-
-
+#include "DisplayHeader.h"
 #include "ISymbol.h"
-//#include "IExtSymbolInterFace.h"
+#include "IExtSymbolInterFace.h"
 namespace Display{
 
 typedef bool (CALLBACK *GETSYMBOLINTERFACE)();
 
-//DISPLAY_DLL SYSTEM::XMLConfigurationPtr GetSymbolRenderConfig();
-//
-//DISPLAY_DLL void ReleaseSymbolRenderConfig();
+DISPLAY_DLL SYSTEM::XMLConfigurationPtr GetSymbolRenderConfig();
+
+DISPLAY_DLL void ReleaseSymbolRenderConfig();
 
 /** 
  * 符号工厂 
@@ -32,7 +25,7 @@ public:
 	 * @param FARPROC lpfnDLLProc
 	 * @return 若注册成功返回true，否则为false
 	 */
-	//virtual BOOL RegisterExtLib(FARPROC lpfnDLLProc);
+	virtual BOOL RegisterExtLib(FARPROC lpfnDLLProc);
 
    /**
     * 根据符号类型创建简单符号
@@ -56,13 +49,13 @@ public:
 	* @param pExtSymbolInterface 扩展符号接口对象
     * @return 若注册成功返回true，否则为false
 	*/
-//	static BOOL RegisterExtSymbolInterfaceObject(std::string name, Display::IExtSymbolInterFacePtr pExtSymbolInterface );
+	static BOOL RegisterExtSymbolInterfaceObject(std::string name, Display::IExtSymbolInterFacePtr pExtSymbolInterface );
 
    /**
     * 通过名字得到显示扩展符号对象
 	* @param name 扩展符号名称
 	*/
-//	static ISymbolPtr CreateExtSymbol(std::string name);
+	static ISymbolPtr CreateExtSymbol(std::string name);
 
    /**
     * 枚举第一个符号对象的名字
@@ -70,7 +63,7 @@ public:
 	* @param Desc 第一个扩展符号的描述
 	* @return 若成功获得返回true，否则为false
 	*/
-//	static BOOL GetFirstExtSymbolName(std::string &Name, std::string &Desc);
+	static BOOL GetFirstExtSymbolName(std::string &Name, std::string &Desc);
 
 	/**
 	 * 获得下一个符号对象的名字
@@ -78,7 +71,7 @@ public:
 	 * @param Desc 下一个扩展符号的描述
 	 * @return 若成功获得返回true，否则为false
 	 */
-//	static BOOL GetNextExtSymbolName(std::string &Name, std::string &Desc);
+	static BOOL GetNextExtSymbolName(std::string &Name, std::string &Desc);
 	/**
 	* 获得符号工厂对象
 	* @return 返回符号工厂对象
@@ -89,7 +82,7 @@ public:
 public:
 	~CSymbolFactory(void);
 protected:
-//	std::map< std::string , Display::IExtSymbolInterFacePtr > m_mapExtSymbolInterFace;
+	std::map< std::string , Display::IExtSymbolInterFacePtr > m_mapExtSymbolInterFace;
 };
 
 }

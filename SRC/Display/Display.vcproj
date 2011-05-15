@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Geometry\source\headers"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Geometry\source\headers;..\Geodatabase"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;DISPLAY_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -119,7 +119,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Geometry\source\headers"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Geometry\source\headers;..\Geodatabase"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;DISPLAY_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -202,6 +202,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ComplexFillSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ComplexLineSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ComplexMarkerSymbol.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DashArray.cpp"
 				>
 			</File>
@@ -234,7 +246,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GradientFillSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\HashLineSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\IComplexSymbol.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IDisplay.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\IExtSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\IExtSymbolInterFace.cpp"
 				>
 			</File>
 			<File
@@ -251,6 +283,34 @@
 			</File>
 			<File
 				RelativePath=".\ISymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LineFillSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MarkerFillSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MarkerLineSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PicFillSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PicLineSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PicMarkerSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PropRecordIndexGroup.cpp"
 				>
 			</File>
 			<File
@@ -294,6 +354,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\SymbolArray.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SymbolFactory.cpp"
 				>
 			</File>
@@ -325,6 +389,18 @@
 			</File>
 			<File
 				RelativePath=".\CharMarkerSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ComplexFillSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ComplexLineSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ComplexMarkerSymbol.h"
 				>
 			</File>
 			<File
@@ -360,7 +436,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GradientFillSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HashLineSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IComplexSymbol.h"
+				>
+			</File>
+			<File
 				RelativePath=".\IDisplay.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IExtSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IExtSymbolInterFace.h"
 				>
 			</File>
 			<File
@@ -377,6 +473,34 @@
 			</File>
 			<File
 				RelativePath=".\ISymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LineFillSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MarkerFillSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MarkerLineSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PicFillSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PicLineSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PicMarkerSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PropRecordIndexGroup.h"
 				>
 			</File>
 			<File
@@ -401,6 +525,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SymbolArray.h"
 				>
 			</File>
 			<File

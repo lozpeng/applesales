@@ -96,10 +96,10 @@ private://类自身所需变量
 
 public:
 
-	// 函数名称   : serialization(otSystem::IArchive &ar)
+	// 函数名称   : serialization(SYSTEM::IArchive &ar)
 	// 描述       : 序列化操作
 	// 返回类型   : virtual void 
-	// 参数       : otSystem::IArchive &ar   档案文件流
+	// 参数       : SYSTEM::IArchive &ar   档案文件流
     virtual void serialization(SYSTEM::IArchive & ar);
 };
 

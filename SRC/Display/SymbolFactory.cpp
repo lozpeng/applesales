@@ -2,22 +2,27 @@
 #include "SimpleMarkerSymbol.h"
 #include "CharMarkerSymbol.h"
 #include "ArrowMarkerSymbol.h"
-//#include "PicMarkerSymbol.h"
-//#include "ComplexMarkerSymbol.h"
+#include "PicMarkerSymbol.h"
+#include "ComplexMarkerSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "AdvLineSymbol.h"
-//#include "MarkerLineSymbol.h"
-//#include "HashLineSymbol.h"
+#include "MarkerLineSymbol.h"
+#include "HashLineSymbol.h"
 
-//#include "ComplexLineSymbol.h"
+#include "ComplexLineSymbol.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleFillSymbol.h"
-//#include "MarkerFillSymbol.h"
-//#include "LineFillSymbol.h"
-//#include "PicFillSymbol.h"
-//#include "GradientFillSymbol.h"
-//#include "ComplexFillSymbol.h"
+#include "MarkerFillSymbol.h"
+#include "LineFillSymbol.h"
+#include "PicFillSymbol.h"
+#include "GradientFillSymbol.h"
+#include "ComplexFillSymbol.h"
 #include "TextSymbol.h"
+//#include "PictrueRasterSymbol.h"
+//#include "BandsRasterSymbol.h"
+//#include "FakeColorRasterSymbol.h"
+//#include "CDemReflectionRasterSymbol.h"
+//#include "NoneSymbol.h"
 #include "SymbolFactory.h"
 
 #include <sstream>
@@ -27,104 +32,105 @@ using namespace std;
 
 Display::CSymbolFactory g_SymbolFactory;
 
-//SYSTEM::XMLConfigurationPtr ptrSymbolRender = NULL;
+SYSTEM::XMLConfigurationPtr ptrSymbolRender = NULL;
 
-//static std::map< std::string , Display::IExtSymbolInterFacePtr >::iterator curItem;
+static std::map< std::string , Display::IExtSymbolInterFacePtr >::iterator curItem;
 
-//SYSTEM::XMLConfigurationPtr Display::GetSymbolRenderConfig()
-//{
-//	if(ptrSymbolRender == NULL)
-//	{
-//		ptrSymbolRender = new otSystem::CXMLConfiguration;
-//		try
-//		{
-//			boost::filesystem::path path = otSystem::CSystemPath::GetCoreSystemPath();
-//			path /= "ctColor.dll";
-//			ptrSymbolRender->Open(path.native_file_string());
-//		}
-//		catch(std::exception&)
-//		{
-//			ErrorLog("open ctColor.tbl file failed.");
-//			return NULL;
-//		}
-//	}
-//
-//	return ptrSymbolRender;
-//
-//}
-//
-//void Display::ReleaseSymbolRenderConfig()
-//{
-//	ptrSymbolRender.reset();
-//}
+SYSTEM::XMLConfigurationPtr Display::GetSymbolRenderConfig()
+{
+	if(ptrSymbolRender == NULL)
+	{
+		ptrSymbolRender = new SYSTEM::CXMLConfiguration;
+		try
+		{
+			boost::filesystem::path path = SYSTEM::CSystemPath::GetSystemPath();
+			path /= "otSymbolRender.xml";
+			ptrSymbolRender->Open(path.native_file_string());
+		}
+		catch(std::exception&)
+		{
+			ErrorLog("open otSymbolRender.xml file failed.");
+			return NULL;
+		}
+	}
 
-Display::CSymbolFactory::CSymbolFactory(void)//:SYSTEM::CLibraryMgr("GetExtSymbol", "", "ExtSymbol")
+	return ptrSymbolRender;
+
+}
+
+void Display::ReleaseSymbolRenderConfig()
+{
+	ptrSymbolRender.reset();
+}
+
+Display::CSymbolFactory::CSymbolFactory(void)//:SYSTEM//::CLibraryMgr("GetExtSymbol", "", "ExtSymbol")
 {
 //	Init();
 }
+
 Display::CSymbolFactory::~CSymbolFactory(void)
 {
 //	Uninit();
 }
 
-//BOOL Display::CSymbolFactory::RegisterExtLib(FARPROC lpfnDLLProc)
-//{
-//	// 调用初始化函数
-//	GETSYMBOLINTERFACE initFunc = (GETSYMBOLINTERFACE)lpfnDLLProc;
-//	return initFunc();
-//}
-//
-//BOOL Display::CSymbolFactory::RegisterExtSymbolInterfaceObject(std::string name, Display::IExtSymbolInterFacePtr pExtSymbolInterface )
-//{
-//	if( g_SymbolFactory.m_mapExtSymbolInterFace.find( name ) != g_SymbolFactory.m_mapExtSymbolInterFace.end() )
-//		OTFALSERETURN1(FALSE,"The Same Name Of Ext Symbol Object Is Already Exist!(%s)",(char*)name.c_str() );
-//
-//	g_SymbolFactory.m_mapExtSymbolInterFace[ name ] = pExtSymbolInterface;
-//
-//	return TRUE;
-//}
-//
-//Display::ISymbolPtr Display::CSymbolFactory::CreateExtSymbol(std::string name)
-//{
-//	std::map< std::string , Display::IExtSymbolInterFacePtr >::iterator item;
-//	item = g_SymbolFactory.m_mapExtSymbolInterFace.find( name );
-//	if( item == g_SymbolFactory.m_mapExtSymbolInterFace.end() )
-//		OTFALSERETURN1(NULL, "No Find Ext Symbol:(%s)" , (char*)name.c_str() );
-//
-//	return item->second->CreateSymbol();
-//}
-//
-//BOOL Display::CSymbolFactory::GetFirstExtSymbolName(std::string &Name, std::string &Desc)
-//{
-//	if( g_SymbolFactory.m_mapExtSymbolInterFace.size() == 0 )
-//		return FALSE;
-//
-//	curItem = g_SymbolFactory.m_mapExtSymbolInterFace.begin();
-//
-//	Name = curItem->first;
-//	Desc = curItem->second->GetDescription();
-//
-//	return TRUE;
-//}
-//
-//BOOL Display::CSymbolFactory::GetNextExtSymbolName(std::string &Name, std::string &Desc)
-//{
-//	curItem++;
-//	if ( curItem != g_SymbolFactory.m_mapExtSymbolInterFace.end() )
-//	{
-//		Name = curItem->first;
-//		Desc = curItem->second->GetDescription();
-//		return TRUE;
-//	}
-//	else
-//		return FALSE;
-//}
+BOOL Display::CSymbolFactory::RegisterExtLib(FARPROC lpfnDLLProc)
+{
+	// 调用初始化函数
+	GETSYMBOLINTERFACE initFunc = (GETSYMBOLINTERFACE)lpfnDLLProc;
+	return initFunc();
+}
+
+BOOL Display::CSymbolFactory::RegisterExtSymbolInterfaceObject(std::string name, Display::IExtSymbolInterFacePtr pExtSymbolInterface )
+{
+	if( g_SymbolFactory.m_mapExtSymbolInterFace.find( name ) != g_SymbolFactory.m_mapExtSymbolInterFace.end() )
+		return FALSE;
+
+	g_SymbolFactory.m_mapExtSymbolInterFace[ name ] = pExtSymbolInterface;
+
+	return TRUE;
+}
+
+Display::ISymbolPtr Display::CSymbolFactory::CreateExtSymbol(std::string name)
+{
+	std::map< std::string , Display::IExtSymbolInterFacePtr >::iterator item;
+	item = g_SymbolFactory.m_mapExtSymbolInterFace.find( name );
+	if( item == g_SymbolFactory.m_mapExtSymbolInterFace.end() )
+		return NULL;
+
+	return item->second->CreateSymbol();
+}
+
+BOOL Display::CSymbolFactory::GetFirstExtSymbolName(std::string &Name, std::string &Desc)
+{
+	if( g_SymbolFactory.m_mapExtSymbolInterFace.size() == 0 )
+		return FALSE;
+
+	curItem = g_SymbolFactory.m_mapExtSymbolInterFace.begin();
+
+	Name = curItem->first;
+	Desc = curItem->second->GetDescription();
+
+	return TRUE;
+}
+
+BOOL Display::CSymbolFactory::GetNextExtSymbolName(std::string &Name, std::string &Desc)
+{
+	curItem++;
+	if ( curItem != g_SymbolFactory.m_mapExtSymbolInterFace.end() )
+	{
+		Name = curItem->first;
+		Desc = curItem->second->GetDescription();
+		return TRUE;
+	}
+	else
+		return FALSE;
+}
 //////////////////////////////////////////////////////////////////////////
 
 // 函数名称   : Display::CSymbolFactory::CreateSymbolFromStream
 // 描述       : 根据一个数据流创建一个符号对象
 // 返回值     : Display::ISymbolPtr 
-// 参数       : System::IArchive &ar
+// 参数       : SYSTEM::IArchive &ar
 
 Display::ISymbolPtr Display::CSymbolFactory::CreateSymbolFromStream(SYSTEM::IArchive &ar)
 {
@@ -157,11 +163,11 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbolFromStream(SYSTEM::IArc
 			ar & extSymbolName;
 			
 			ar.GetCurrentPos() = startIndex; 
-			//pSym = CreateExtSymbol(extSymbolName);
+			pSym = CreateExtSymbol(extSymbolName);
 		}
 		catch (...)
 		{
-			//FALSERETURN2(NULL , "Error:Symobl Create False!\nSymbol Name : %s , Symbol ID : %d " , strLabel , lID)
+			return NULL;
 		}
 	}
 	else
@@ -185,6 +191,10 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbol(SYMBOL_TYPE SymboType)
 {
 	switch(SymboType)
 	{
+	//case OT_NONE_SYMBOL:
+	//	{
+	//		return CNoneSymbolPtr(new CNoneSymbol());
+	//	}
 	case SIMPLE_MARKER_SYMBOL:
 		{
 			return CSimpleMarkerSymbolPtr(new CSimpleMarkerSymbol());
@@ -199,11 +209,11 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbol(SYMBOL_TYPE SymboType)
 		}
 	case PIC_MARKER_SYMBOL:   
 		{
-			//return CPicMarkerSymbolPtr(new CPicMarkerSymbol());
+			return CPicMarkerSymbolPtr(new CPicMarkerSymbol());
 		}
 	case COMPLEX_MARKER_SYMBOL:
 		{
-			//return CComplexMarkerSymbolPtr(new CComplexMarkerSymbol());
+			return CComplexMarkerSymbolPtr(new CComplexMarkerSymbol());
 		}
 	case SIMPLE_LINE_SYMBOL:
 		{
@@ -215,15 +225,15 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbol(SYMBOL_TYPE SymboType)
 		}
 	case MARKER_LINE_SYMBOL:	  
 		{
-			//return IMarkerLineSymbolPtr(new CMarkerLineSymbol());
+			return IMarkerLineSymbolPtr(new CMarkerLineSymbol());
 		}
 	case HASH_LINE_SYMBOL:  
 		{
-			//return IHashLineSymbolPtr(new CHashLineSymbol());
+			return IHashLineSymbolPtr(new CHashLineSymbol());
 		}
 	case COMPLEX_LINE_SYMBOL:
 		{
-			//return IComplexLineSymbolPtr(new CComplexLineSymbol());
+			return IComplexLineSymbolPtr(new CComplexLineSymbol());
 		}
 	case SIMPLE_FILL_SYMBOL: 
 		{
@@ -231,28 +241,45 @@ Display::ISymbolPtr Display::CSymbolFactory::CreateSymbol(SYMBOL_TYPE SymboType)
 		}
 	case MARKER_FILL_SYMBOL:	  
 		{
-			//return IMarkerFillSymbolPtr(new CMarkerFillSymbol());
+			return IMarkerFillSymbolPtr(new CMarkerFillSymbol());
 		}
 	case LINE_FILL_SYMBOL:   
 		{
-			//return ILineFillSymbolPtr(new CLineFillSymbol());
+			return ILineFillSymbolPtr(new CLineFillSymbol());
 		}
 	case PIC_FILL_SYMBOL:   
 		{
-			//return IPicFillSymbolPtr(new CPicFillSymbol());
+			return IPicFillSymbolPtr(new CPicFillSymbol());
 		}
 	case GRADIENT_FILL_SYMBOL:   
 		{
-			//return CGradientFillSymbolPtr(new CGradientFillSymbol());
+			return CGradientFillSymbolPtr(new CGradientFillSymbol());
 		}
 	case COMPLEX_FILL_SYMBOL:
 		{
-			//return IComplexFillSymbolPtr(new CComplexFillSymbol());
+			return IComplexFillSymbolPtr(new CComplexFillSymbol());
 		}
 	case TEXT_SYMBOL:
 		{
 			return CTextSymbolPtr(new CTextSymbol());
 		}
+	/*case OT_PICRASTER_SYMBOL:
+		{
+			return IPictrueRasterSymbolPtr( new CPictrueRasterSymbol()  );
+		}
+
+	case OT_BANDRASTER_SYMBOL:
+		{
+			return IBandsRasterSymbolPtr( new CBandsRasterSymbol()  );
+		}
+	case OT_FAKECOLOR_RASTER_SYMBOL:
+		{
+			return CFakeColorRasterSymbolPtr( new CFakeColorRasterSymbol());
+		}
+	case OT_DEM_REFLACTION_SYMBOL:
+		{
+			return CDemReflectionRasterSymbolPtr( new CDemReflectionRasterSymbol());
+		}*/
 	}
 	return NULL;
 }
@@ -264,6 +291,6 @@ Display::CSymbolFactory& Display::CSymbolFactory::GetSymbolFactoryLibMgr()
 
 void Display::CSymbolFactory::Uninit()
 {
-	//m_mapExtSymbolInterFace.clear();
+	m_mapExtSymbolInterFace.clear();
 	//SYSTEM::CLibraryMgr::Uninit();
 }
