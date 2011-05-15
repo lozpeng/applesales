@@ -25,6 +25,7 @@ namespace Editor
 
 	private:
 		CPoint m_clickPt;
+		HCURSOR  cursorNormal ;
 	};
 
 }

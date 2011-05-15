@@ -140,7 +140,10 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_FEATURES_INFO, OnFeatureInfo)
 	ON_COMMAND(ID_ATTRIBUTE_EDIT, OnEditerAttribute)
 	ON_UPDATE_COMMAND_UI(ID_ATTRIBUTE_EDIT, OnUpdateEditerAttribute)
-	
+	ON_COMMAND(ID_SELECTFEATURE, OnSelectFeature)
+	ON_UPDATE_COMMAND_UI(ID_SELECTFEATURE, OnUpdateSelectFeature)
+
+
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 	ON_UPDATE_COMMAND_UI(ID_MAGIC_STICK, OnUpdateMagicStick)
 	
@@ -1073,21 +1076,30 @@ afx_msg void CTDAppView::OnEditorStart()
 afx_msg void CTDAppView::OnUpdateEditorStart(CCmdUI *pCmdUI)
 {
 	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
-	if(!pMap)
+	if(!pMap )
 	{
 		pCmdUI->Enable(FALSE);
 	}
+	
 	if(!pMap->GetEditor())
 	{
 		pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
 	}
-	pCmdUI->Enable(!pMap->GetEditor()->IsEditing());
+	if(GetCurLyrCombox_Vector()->GetCount()<1)
+		pCmdUI->Enable(FALSE);
+	else
+		pCmdUI->Enable(!pMap->GetEditor()->IsEditing());
 }
 afx_msg void CTDAppView::OnEditorSketch()
 {
 	Framework::ITool* pTool = NULL;
 	m_MapCtrl.SetCurTool("SketchTool");
+	pTool=Framework::ITool::FindTool("SketchTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
 }
 afx_msg void CTDAppView::OnUpdateEditorSketch(CCmdUI *pCmdUI)
 {
@@ -1353,6 +1365,20 @@ afx_msg void CTDAppView::OnUpdateEditerAttribute(CCmdUI *pCmdUI)
 	}
 	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
+afx_msg void CTDAppView::OnSelectFeature()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("SelectbyPoint");
+	pTool=Framework::ITool::FindTool("SelectbyPoint");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CTDAppView::OnUpdateSelectFeature(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectbyPoint");
+}
 
 afx_msg void CTDAppView::OnFeatureInfo()
 {
@@ -1426,6 +1452,9 @@ CBCGPRibbonComboBox* CTDAppView::GetMagicLayer()
 void CTDAppView::OnImgChangeDetect()
 {
 	Control::CImageProcessTool::ShowImgChangeDetectDlg();
+
+	RefreshLayerCombo();
+
 }
 
 //删除上次魔术棒提取结果
@@ -1461,5 +1490,4 @@ void CTDAppView::OnDeleteLastMagic()
 	}
 	
 	
-
 }

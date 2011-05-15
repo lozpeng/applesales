@@ -58,7 +58,7 @@ void CSelectbyPointTool::LButtonDownEvent (UINT nFlags, CPoint point)
 
 	selectBox.m_sizeMin = 0;
 
-	bool selected = selectBox.TrackRubberBand(dynamic_cast<CWnd*>(m_pMapCtrl), point, FALSE );
+	bool selected = selectBox.TrackRubberBand(dynamic_cast<CWnd*>(m_pMapCtrl), point, TRUE );
 
 	CRect rect = selectBox.m_rect;
 	rect.NormalizeRect();

@@ -2,7 +2,9 @@
 #include "SketchTool.h"
 #include "IMapCtrl.h"
 #include "CEditor.h"
+#include "Editor.h"
 #include "resource.h"
+extern CEditorApp theApp;
 
 namespace Editor
 {
@@ -11,7 +13,8 @@ static CSketchTool gSketchTool;
 
 CSketchTool::CSketchTool() : ITool("SketchTool")
 {
-	
+
+	cursorNormal = NULL;
 }
 
 CSketchTool::~CSketchTool()
@@ -23,6 +26,15 @@ CSketchTool::~CSketchTool()
 void CSketchTool::Initialize(Framework::IUIObject *pTargetControl)
 {
 	ITool::Initialize(pTargetControl);
+	
+	//获取活动地图控件
+	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
+	if(!pMapCtrl)
+		return;
+
+	cursorNormal =::LoadCursor( theApp.m_hInstance , ATL_MAKEINTRESOURCE( IDC_Arrow));
+	
+	pMapCtrl->SetCursor(cursorNormal);
 }
 
 void CSketchTool::LButtonDownEvent (UINT nFlags, CPoint point)
