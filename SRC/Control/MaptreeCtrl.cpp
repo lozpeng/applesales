@@ -616,15 +616,23 @@ BOOL CMaptreeCtrl::ModifyLayersOrder(HTREEITEM  htiNew, HTREEITEM hItemDragS, HT
 
 		if (lIndexS < lIndexD)
 		{
-			LayerArray.RemoveAt(lIndexS);        
-			LayerArray.InsertAt(lIndexD, layerPtrS);
+			LayerArray.RemoveAt(lIndexS); 
+			if(lIndexD>0)
+			{
+				LayerArray.InsertAt(lIndexD-1, layerPtrS);
+			}
+			else
+			{
+				LayerArray.InsertAt(0, layerPtrS);
+			}
+			//LayerArray.InsertAt(lIndexD, layerPtrS);
 		}
 		else
 		{        
 			LayerArray.RemoveAt(lIndexS);
 			if(lIndexD>0)
 			{
-               LayerArray.InsertAt(lIndexD - 1, layerPtrS);
+               LayerArray.InsertAt(lIndexD, layerPtrS);
 			}
 			else
 			{
