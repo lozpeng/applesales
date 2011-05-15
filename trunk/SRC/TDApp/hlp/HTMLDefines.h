@@ -108,6 +108,7 @@
 #define HID_ATTRIBUTE_EDIT                      0x19E46
 #define HID_MAGICSTICK_LAYER                    0x19E48
 #define HID_MAGICSTICK_TOL                      0x19E49
+#define HID_REMOVELASTMAGIC                     0x19E4A
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064

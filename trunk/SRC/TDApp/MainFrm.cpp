@@ -508,7 +508,7 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_MAGICSTICK_LAYER,FALSE,100,"目标层:");
 	pPanelHalfAuto->Add(pBtnCurrLayer);
 	CBCGPRibbonEdit *pEditButton =new CBCGPRibbonEdit(ID_MAGICSTICK_TOL,50,"像素阈值");
-	pEditButton->SetEditText("10");
+	pEditButton->SetEditText("20");
     pPanelHalfAuto->Add(pEditButton);
 
 //--------------------------
@@ -517,6 +517,13 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 10, 10);
 
     pPanelHalfAuto->Add (pBtnMagic);
+
+	// 删除上次魔术棒提取结果
+	//--------------------------
+	CBCGPRibbonButton* pBtnRemoveMagic = new CBCGPRibbonButton (ID_REMOVELASTMAGIC, _T("取消上次操作"), 12, 12);
+
+	pPanelHalfAuto->Add (pBtnRemoveMagic);
+
 	pPanelHalfAuto->AddSeparator();
 	
 	
