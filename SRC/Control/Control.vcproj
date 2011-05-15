@@ -735,6 +735,22 @@
 			Name="UI"
 			>
 			<File
+				RelativePath=".\UI\CharSymbolSelectDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\CharSymbolSelectDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\CharSymbolSelectListBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\CharSymbolSelectListBox.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\ColorPickerCB.cpp"
 				>
 			</File>
@@ -743,11 +759,35 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\ComplexSymbolLayerCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ComplexSymbolLayerCtrl.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\CotSymbolList.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\UI\CotSymbolList.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DashArrayDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DashArrayDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DashArrayPropListEx.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DashArrayPropListEx.h"
 				>
 			</File>
 			<File
@@ -780,6 +820,22 @@
 			</File>
 			<File
 				RelativePath=".\UI\DlgSwipeSld.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgSymbolEdit.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgSymbolEdit.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\EditDlgManageControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\EditDlgManageControl.h"
 				>
 			</File>
 			<File
@@ -823,11 +879,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\IComplexSymbolLayerCtrlInterface.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\ISymbolListCtrl.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\UI\ISymbolListCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ISymbolPropListInterface.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\isymbolproplistinterface.h"
 				>
 			</File>
 			<File
@@ -913,6 +981,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\SpinButtonCtrlEx.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SpinButtonCtrlEx.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\SymbolListCtrl.cpp"
 				>
 			</File>
@@ -934,6 +1010,14 @@
 			</File>
 			<File
 				RelativePath=".\UI\SymbolPreviewPage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolPropList.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\SymbolPropList.h"
 				>
 			</File>
 			<File

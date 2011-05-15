@@ -3,9 +3,11 @@
 
 #include "stdafx.h"
 #include "SymbolSelectdlg.h"
-//#include "DlgSymbolEdit.h"
+#include "DlgSymbolEdit.h"
 //#include "DlgTextSymbolEdit.h"
 #include "SymbolFactory.h"
+#include "IComplexSymbol.h"
+#include "IExtSymbol.h"
 // CDlgSymbolSelect ¶Ô»°¿ò
 
 IMPLEMENT_DYNAMIC(CDlgSymbolSelect, CDialog)
@@ -76,9 +78,9 @@ END_MESSAGE_MAP()
 void CDlgSymbolSelect::OnBnClickedBtnSymbolEdit()
 {
 
-	/*if(m_pSymbol->GetType() & OT_TEXT_SYMBOL)
+	if(m_pSymbol->GetType() & TEXT_SYMBOL)
 	{
-		CDlgTextSymbolEdit DlgEdit;
+	/*	CDlgTextSymbolEdit DlgEdit;
 
 		DlgEdit.SetSymbol(m_pSymbol);
 
@@ -87,14 +89,14 @@ void CDlgSymbolSelect::OnBnClickedBtnSymbolEdit()
 		if ( result == IDOK ) 
 		{
 			m_pSymbol = DlgEdit.m_pTextSymbol;
-		} 
+		} */
 	}
 	else
 	{
 		CDlgSymbolEdit DlgEdit;
 
 		m_pSymbol = DlgEdit.EditSymbol(m_pSymbol);
-		if (m_pSymbol->GetType() & OT_COMPLEX_SYMBOL)
+		if (m_pSymbol->GetType() & COMPLEX_SYMBOL)
 		{
 			Display::IComplexSymbolPtr complexSymbol = m_pSymbol;
 			if (complexSymbol != NULL)
@@ -122,7 +124,7 @@ void CDlgSymbolSelect::OnBnClickedBtnSymbolEdit()
 	m_SymButton.SetSymbol(m_pSymbol.get());
 	m_SymButton.Invalidate();
 	m_SymbolName = m_pSymbol->GetLabel().c_str();
-	UpdateData(FALSE);*/
+	UpdateData(FALSE);
 }
 
 void CDlgSymbolSelect::OnBnClickedAddSymbollib()

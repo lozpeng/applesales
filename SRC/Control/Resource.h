@@ -47,6 +47,8 @@
 #define IDD_SIMPLE_RENDER               4027
 #define IDD_SYMBOLSEL_DLG               4028
 #define IDD_SYMBOLEDIT_DIALOG           4029
+#define IDD_CHARSELECTDLG               4030
+#define IDD_DASHARRAYDLG                4031
 #define IDB_STATE                       4032
 #define IDB_ADD                         4033
 #define IDB_COPY                        4034
@@ -93,6 +95,10 @@
 #define IDC_STATIC_SYMBOLPROP           5040
 #define IDC_CR_LINE                     5041
 #define IDC_STR_LINE                    5042
+#define IDC_PROPLISTDASHARRAY           5043
+#define IDC_BUTTONADD                   5044
+#define IDC_BUTTONRMV                   5045
+#define IDC_STATICUNIT                  5046
 #define IDD_RANGE_RENDER                5050
 #define IDC_COMBO_RANGE_FIELD           5051
 #define IDC_EDIT_RANGE_NUM              5053
