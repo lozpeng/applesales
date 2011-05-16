@@ -15,6 +15,10 @@ protected: // create from serialization only
 // Attributes
 public:
 
+	afx_msg void OnOpenProject();
+	afx_msg void OnNewProject();
+	afx_msg void OnSaveProject();
+
 // Operations
 public:
 
