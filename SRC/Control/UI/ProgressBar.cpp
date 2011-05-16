@@ -50,12 +50,28 @@ void CProgressBar::Close()
 	}
 }
 
+static void HandleMessages(void)
+{
+	MSG msg;
+
+	while (PeekMessage(&msg,        /* message structure            */
+		(HWND)NULL,   /* handle of window receiving the message */
+		(UINT)0,      /* lowest message to examine          */
+		(UINT)0,      /* highest message to examine      */
+		PM_REMOVE))
+	{
+		TranslateMessage(&msg);    /* Translates virtual key codes       */
+		DispatchMessage(&msg);     /* Dispatches message to window       */
+	}
+}
+
 void CProgressBar::UpdateProgress(const char *message)
 {
 	if(m_pBar)
 	{
 		CDlgProgress *pBar =(CDlgProgress*)m_pBar;
 		pBar->UpdateSetp();
+		HandleMessages();
 	}
 }
 
