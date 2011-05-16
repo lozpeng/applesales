@@ -25,6 +25,11 @@ BEGIN_MESSAGE_MAP(CTDAppDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_OLE_EDIT_LINKS, COleDocument::OnUpdateEditLinksMenu)
 	ON_COMMAND(ID_OLE_EDIT_LINKS, COleDocument::OnEditLinks)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_OLE_VERB_FIRST, ID_OLE_VERB_LAST, COleDocument::OnUpdateObjectVerbMenu)*/
+
+	ON_COMMAND(ID_NEWMAPCLASS, OnNewProject)
+	ON_COMMAND(ID_OPENMAPCLASS, OnOpenProject)
+	ON_COMMAND(ID_SAVEMAPCLASS, OnSaveProject)
+
 END_MESSAGE_MAP()
 
 
@@ -94,6 +99,23 @@ void CTDAppDoc::Dump(CDumpContext& dc) const
 	CDocument::Dump(dc);
 }
 #endif //_DEBUG
+
+
+void CTDAppDoc::OnNewProject()
+{
+
+}
+
+void CTDAppDoc::OnOpenProject()
+{
+
+}
+
+
+void CTDAppDoc::OnSaveProject()
+{
+
+}
 
 
 // CTDAppDoc commands

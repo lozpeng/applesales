@@ -110,8 +110,6 @@ BOOL CMainFrame::CreateRibbonBar()
 	CBCGPRibbonQATDefaultState qatState;
 	qatState.AddCommand (ID_MAP_ZOOM_IN);
 	qatState.AddCommand (ID_ZOOM_OUT);
-	qatState.AddCommand (ID_FIXEDZOOM_IN);
-	qatState.AddCommand (ID_FIXEDZOOM_OUT);
 	qatState.AddCommand (ID_MAP_PAN);
 	qatState.AddCommand (ID_MAP_FULLVIEW);
 	qatState.AddCommand (ID_PRE_EXTENT);
@@ -136,7 +134,7 @@ void CMainFrame::AddMainCategory()
 	pMainPanel->Add (new CBCGPRibbonButton (ID_NEWMAPCLASS, _T("新建地图"), 0, 0));
 	pMainPanel->Add (new CBCGPRibbonButton (ID_OPENMAPCLASS, _T("打开地图"), 1, 1));
 	pMainPanel->Add (new CBCGPRibbonButton (ID_SAVEMAPCLASS, _T("保存地图"), 2, 2));
-	pMainPanel->Add (new CBCGPRibbonButton (ID_SAVEASMAPCLASS, _T("地图另存为..."), 3, 3));
+	//pMainPanel->Add (new CBCGPRibbonButton (ID_SAVEASMAPCLASS, _T("地图另存为..."), 3, 3));
 }
 
 //添加地图显示菜单
@@ -156,8 +154,8 @@ void CMainFrame::AddTab_MapControl()
 	pPanelProject->Add (pBtnOpenXTD);
 	CBCGPRibbonButton* pBtnSaveXTD = new CBCGPRibbonButton (ID_SAVEMAPCLASS, _T("保存"), 13,13);
 	pPanelProject->Add (pBtnSaveXTD);
-	CBCGPRibbonButton* pBtnSaveAsXTD = new CBCGPRibbonButton (ID_SAVEASMAPCLASS, _T("另存为"), 14,14);
-	pPanelProject->Add (pBtnSaveAsXTD);
+	/*CBCGPRibbonButton* pBtnSaveAsXTD = new CBCGPRibbonButton (ID_SAVEASMAPCLASS, _T("另存为"), 14,14);
+	pPanelProject->Add (pBtnSaveAsXTD);*/
 	//图层
 	CBCGPRibbonPanel* pPanelFile = pCategory->AddPanel (_T("文件"));
 	CBCGPRibbonComboBox* pDisplayCombo = new CBCGPRibbonComboBox (ID_DUMMY_COMBO, FALSE, 100, "比例尺:");
@@ -191,13 +189,13 @@ void CMainFrame::AddTab_MapControl()
 	//--------------------------
 	// 点放大:
 	//--------------------------
-	CBCGPRibbonButton* pBtnPZoomIn = new CBCGPRibbonButton (ID_FIXEDZOOM_IN, _T("点放大"), 2, 2);
-	pPanelMap->Add (pBtnPZoomIn);
-	//--------------------------
-	// 点缩小:
-	//--------------------------
-	CBCGPRibbonButton* pBtnPZoomOut = new CBCGPRibbonButton (ID_FIXEDZOOM_OUT, _T("点缩小"), 3, 3);
-	pPanelMap->Add (pBtnPZoomOut);
+	//CBCGPRibbonButton* pBtnPZoomIn = new CBCGPRibbonButton (ID_FIXEDZOOM_IN, _T("点放大"), 2, 2);
+	//pPanelMap->Add (pBtnPZoomIn);
+	////--------------------------
+	//// 点缩小:
+	////--------------------------
+	//CBCGPRibbonButton* pBtnPZoomOut = new CBCGPRibbonButton (ID_FIXEDZOOM_OUT, _T("点缩小"), 3, 3);
+	//pPanelMap->Add (pBtnPZoomOut);
 	//--------------------------
 	// 漫游:
 	//--------------------------
