@@ -95,6 +95,11 @@ namespace Framework
 		m_linkMapCtrl =pMapCtrl;
 	}
 
+	IMapCtrl *IDocument::GetLinkMapCtrl()
+	{
+		return m_linkMapCtrl;
+	}
+
 	void IDocument::SetLinkLayoutCtrl(ILayoutCtrl *pLayoutCtrl)
 	{
 		m_linkLayoutCtrl = pLayoutCtrl;
