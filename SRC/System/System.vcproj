@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RelativePath.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -280,6 +284,10 @@
 			</File>
 			<File
 				RelativePath=".\ISerialization.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RelativePath.h"
 				>
 			</File>
 			<File
