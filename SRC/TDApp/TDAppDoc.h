@@ -19,6 +19,12 @@ public:
 	afx_msg void OnNewProject();
 	afx_msg void OnSaveProject();
 
+	void CreateNewProject();
+
+	void ClearProject();
+
+	void SaveProject();
+
 // Operations
 public:
 
@@ -40,6 +46,9 @@ protected:
 // Generated message map functions
 protected:
 	DECLARE_MESSAGE_MAP()
+
+private:
+	CString m_prjPath;
 };
 
 

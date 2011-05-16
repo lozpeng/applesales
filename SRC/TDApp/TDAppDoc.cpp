@@ -5,6 +5,8 @@
 #include "TDApp.h"
 
 #include "TDAppDoc.h"
+#include "RelativePath.h"
+#include "IMapCtrl.h"
 //#include "CntrItem.h"
 
 #ifdef _DEBUG
@@ -73,16 +75,42 @@ void CTDAppDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{
-		// TODO: add storing code here
+		SYSTEM::CBinArchive bin;
+		bin.SetWriteState();
+
+		if(m_pActiveMap)
+		{
+			m_pActiveMap->serialization(bin);
+		}
+
+		ar << bin.GetSize();
+
+		ar.Write( bin.GetData() , bin.GetSize() );	
 	}
 	else
 	{
-		// TODO: add loading code here
+		unsigned long Size;
+		ar >> Size;
+
+		BYTE * pStart = new BYTE[Size];
+
+		ar.Read( pStart , Size );
+
+		SYSTEM::CBinArchive bin( pStart , Size );
+
+		bin.SetReadState();
+
+		//新建一个地图
+		AddNewMap();
+
+		//设置为活动地图
+		SetActiveMap(GetMap(0));
+
+        m_pActiveMap->serialization(bin);
+
+		delete[] pStart;
 	}
 
-	// Calling the base class COleDocument enables serialization
-	//  of the container document's COleClientItem objects.
-	CDocument::Serialize(ar);
 }
 
 
@@ -103,19 +131,128 @@ void CTDAppDoc::Dump(CDumpContext& dc) const
 
 void CTDAppDoc::OnNewProject()
 {
+	int returnVal = MessageBox(NULL,"是否保存当前工程？", "提示", MB_YESNOCANCEL);
+	if( returnVal == IDOK)
+	{
+		OnSaveProject();
+	}
+	else  if(returnVal == IDCANCEL)
+	{
+		return;
+	}
+	ClearProject();
+	static CString csFilter = "工程文件(*.proj)|*.proj||";
+	CFileDialog dlg(FALSE, "proj", "", OFN_HIDEREADONLY, csFilter);
+	if( IDOK == dlg.DoModal() )
+	{
+		m_prjPath = dlg.GetPathName();
+		
+	}
+	//新建一个地图
+	AddNewMap();
 
+	//设置为活动地图
+	SetActiveMap(GetMap(0));
+	OnSaveProject();
+	//刷新视图
+	m_pLinkMapTree->RefreshFromDoc();
+	m_linkMapCtrl->UpdateControl(drawAll);
+	
 }
 
 void CTDAppDoc::OnOpenProject()
 {
+	int returnVal = MessageBox(NULL,"是否保存当前工程？", "提示", MB_YESNOCANCEL);
+	if( returnVal == IDOK)
+	{
+		OnSaveProject();
+	}
+	else  if(returnVal == IDCANCEL)
+	{
+		return;
+	}
+	ClearProject();
 
+
+	CString csFileName(_T("*.proj"));
+	static CString csFilter = "工程文件(*.proj)|*.proj||";
+	CFileDialog dlg(TRUE, "proj", csFileName, OFN_HIDEREADONLY, csFilter);
+	if( IDOK == dlg.DoModal() )
+	{	
+		CString csPath = dlg.GetPathName();
+
+		if(csPath.Compare("") == 0)
+			return;
+
+		m_prjPath =csPath;
+		CFile file(m_prjPath,CFile::modeRead);
+		CArchive ar(&file,CArchive::load);
+
+		CString basePath =m_prjPath.Left(m_prjPath.ReverseFind('\\')+1);
+		//设置参考路径
+		SYSTEM::CRelativePath::SetBasePath(basePath);
+
+
+		Serialize( ar );
+
+		ar.Close ();
+		file.Close ();
+
+		//刷新视图
+		m_pLinkMapTree->RefreshFromDoc();
+		m_linkMapCtrl->UpdateControl(drawAll);
+	}
 }
 
 
 void CTDAppDoc::OnSaveProject()
 {
+    if(m_prjPath.IsEmpty())
+	{
+        //如果还没有工程文件
+		static CString csFilter = "工程文件(*.proj)|*.proj||";
 
+		CFileDialog dlg(FALSE, "proj", "", OFN_HIDEREADONLY, csFilter);
+		if( IDOK == dlg.DoModal() )
+		{
+		    m_prjPath =dlg.GetPathName();
+			SaveProject();
+		}		
+	}
+	else
+	{
+        //直接保存
+		SaveProject();
+	}
 }
 
+void CTDAppDoc::ClearProject()
+{
+	Framework::IMaptreeCtrl *pTree =GetLinkMapTree();
+	if(pTree)
+	{
+		pTree->ClearControl();
+	}
+	m_pMaps.clear();
+	SetActiveMap(NULL);
+	m_prjPath ="";
+}
+
+void CTDAppDoc::SaveProject()
+{
+	CFile file(m_prjPath,CFile::modeCreate|CFile::modeWrite);
+	CArchive ar(&file,CArchive::store);
+
+	CString basePath =m_prjPath.Left(m_prjPath.ReverseFind('\\')+1);
+	//设置参考路径
+	SYSTEM::CRelativePath::SetBasePath(basePath);
+
+	
+	Serialize( ar );
+	
+
+	ar.Close ();
+	file.Close ();
+}
 
 // CTDAppDoc commands
