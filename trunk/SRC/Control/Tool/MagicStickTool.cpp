@@ -6,7 +6,7 @@
 
 extern CControlApp theApp;
 static Carto::ILayer* gpLayer =NULL;
-static int gtol =10;
+static int gtol =20;
 
 namespace Control
 {
@@ -86,17 +86,114 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 	{
 		return;
 	}
-	//构建一个多边形图元
+	//将下面的图元删除
+	Carto::CGraphicLayerPtr pLayer =pMap->GetGraphicLayer();
+	Element::IElementPtr pElement;
+	int count =pLayer->GetElementCount();
+	
+	GEOMETRY::geom::Coordinate coord;
+	coord.x =geoCenterX;
+	coord.y =geoCenterY;
+    GEOMETRY::geom::Polygon *ppoly =NULL;
+	SYSTEM::CSmartPtr<GEOMETRY::geom::Point> pPt =GEOMETRY::geom::GeometryFactory::getDefaultInstance()->createPoint(coord);
+	for(int i=count-1;i>=0;i--)
+	{
+		pElement =pLayer->GetElement(i);
+		if(!pElement)
+		{
+			continue;
+		}
+		if(pElement->GetUserdata()==1)
+		{
+			//判断此图元的图形是否包含提取点
+			ppoly =dynamic_cast<GEOMETRY::geom::Polygon*>(pElement->GetGeometry());
+			if(ppoly==NULL)
+			{
+				continue;
+			}
+			try
+			{
+               if(ppoly->contains(pPt.get()))
+			   {
+				   pLayer->RemoveElement(pElement);
+				   break;
+			   }
+			}
+			catch(...)
+			{
+               
+			}
+			
 
-	Element::CPolygonElement *pElement =new Element::CPolygonElement(*pPolygon);
+            
+		}
+	}
+
+	std::vector<Element::IElementPtr>  removeList;
+	//新生成的多边形如果和之前的多边形相交，则将两个合并
+	for(int i=count-1;i>=0;i--)
+	{
+		pElement =pLayer->GetElement(i);
+		if(!pElement)
+		{
+			continue;
+		}
+		if(pElement->GetUserdata()==1)
+		{
+			//判断此图元的图形是否包含提取点
+			ppoly =dynamic_cast<GEOMETRY::geom::Polygon*>(pElement->GetGeometry());
+			if(ppoly==NULL)
+			{
+				continue;
+			}
+			try
+			{
+				if(ppoly->intersects(pPolygon))
+				{
+					//图形合并
+                    GEOMETRY::geom::Geometry *pResult =pPolygon->Union(ppoly);
+					if(pResult==NULL)
+					{
+						continue;
+					}
+					delete pPolygon;
+					pPolygon =dynamic_cast<GEOMETRY::geom::Polygon*>(pResult);
+					if(pPolygon==NULL)
+					{
+						continue;
+					}
+					removeList.push_back(pElement);
+					
+				}
+			}
+			catch(...)
+			{
+               int a =10;
+			}
+
+
+
+		}
+	}
+
+	for(int i=0;i<removeList.size();i++)
+	{
+		pLayer->RemoveElement(removeList[i]);
+	}
+
+	
+	//构建一个多边形图元
+	Element::CPolygonElement *ppolyElement =new Element::CPolygonElement(*pPolygon);
+
+	ppolyElement->SetUserdata(1);
 
 	//设置符号
-	Display::CSimpleFillSymbolPtr pFillSymbol =pElement->GetSymbol();
+	Display::CSimpleFillSymbolPtr pFillSymbol =ppolyElement->GetSymbol();
 	pFillSymbol->SetDrawFill(false);
-	pFillSymbol->SetOutLineWidth(2);
+	pFillSymbol->SetOutLineWidth(1);
 	pFillSymbol->SetOutLineColor(RGB(0,255,0));
 
-	pMap->GetGraphicLayer()->AddElement(pElement);
+	pMap->GetGraphicLayer()->AddElement(ppolyElement);
 
     m_pMapCtrl->UpdateControl(drawElement);
 
