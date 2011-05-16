@@ -1192,47 +1192,48 @@ void CMaptreeCtrl::DeleteAllLayers()
 //
 void CMaptreeCtrl::ClearControl()
 {
-	//HTREEITEM hItem = NULL,hRoot = NULL;
+	HTREEITEM hItem = NULL,hRoot = NULL;
 
 
-	//hItem = GetRootItem();
-	//if(!hItem)
-	//	return;
+	hItem = GetRootItem();
+	if(!hItem)
+		return;
 
-	//while(hItem)
-	//{
-	//	std::map<HTREEITEM,Carto::CMapPtr>::iterator it = m_itemToMapPtr.find(hItem);
-	//	if (it != m_itemToMapPtr.end())
-	//	{	
-	//		SelectItem(hItem);
-	//		
-	//		//删除tree中记录
-	//		Carto::CMapPtr pMap = NULL;
-	//		pMap = DeleteMap();
+	
+	while(hItem)
+	{
+		std::map<HTREEITEM,Carto::CMapPtr>::iterator it = m_itemToMapPtr.find(hItem);
+		if (it != m_itemToMapPtr.end())
+		{	
+			SelectItem(hItem);
+			
+			//删除tree中记录
+			Carto::CMapPtr pMap = NULL;
+			pMap = DeleteMap();
 
-	//		//删除MAP数组中MAP
-	//		//pMapCtrl->DeleteMap(id);
-	//		if (pMap != NULL)
-	//		{
-	//			Framework::IMapCtrl *pMapCtrl =Framework::IMapCtrl::GetActiveMapCtrl();
-	//			if(!pMapCtrl)
-	//			{
-	//				return;
-	//			}
-	//			pMapCtrl->DeleteMap(pMap);
-	//		}
+			//删除MAP数组中MAP
+			//pMapCtrl->DeleteMap(id);
+			if (pMap != NULL)
+			{
+				/*Framework::IMapCtrl *pMapCtrl =Framework::IMapCtrl::GetActiveMapCtrl();
+				if(!pMapCtrl)
+				{
+					return;
+				}*/
+				//pMapCtrl->DeleteMap(pMap);
+			}
 
-	//	}
+		}
 
-	//	hItem = GetRootItem();
-	//}
+		hItem = GetRootItem();
+	}
 
-	//Framework::IMapCtrl *pMapCtrl =Framework::IMapCtrl::GetActiveMapCtrl();
-	//if(!pMapCtrl)
-	//{
-	//	return;
-	//}
-	//pMapCtrl->ClearMapID();
+	/*Framework::IMapCtrl *pMapCtrl =Framework::IMapCtrl::GetActiveMapCtrl();
+	if(!pMapCtrl)
+	{
+		return;
+	}
+	pMapCtrl->ClearMapID();*/
 }
 
 //

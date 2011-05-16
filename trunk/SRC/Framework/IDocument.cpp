@@ -64,7 +64,7 @@ namespace Framework
 
 		CString strName;
 
-		m_index++;
+		m_index=1;
 		strName.Format("µØÍ¼ - %d",m_index);
 
 		ptrMap->SetName(std::string(strName));
