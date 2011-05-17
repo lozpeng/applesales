@@ -5,7 +5,10 @@
 #include "RasterLayer.h"
 //#include "GraphicLayer.h"
 //#include "IDataObject.h"
-//#include "GeoDataDriverManager.h"
+#include "ShapefileWorkspaceFactory.h"
+#include "RasterWSFactory.h"
+#include "RelativePath.h"
+#include "IWorkspace.h"
 namespace Carto
 {
 
@@ -82,20 +85,41 @@ void ILayer::serialization(SYSTEM::IArchive &ar)
 	{
 		if(type != GraphicLayer)
 		{
-			//m_pDataObject = CGeoDataDriverManager::GetDataObject(ar);
+			
+			std::string type;
+			ar&type;
+			if(type=="ShpDriver")
+			{
+				std::string filename;
+				ar&filename;
 
-			//std::string filename;
-			//ar&filename;
+				//通过相对路径计算绝对路径
+				filename =SYSTEM::CRelativePath::FullPath(filename.c_str());
 
-			////通过相对路径计算绝对路径
-			////filename =SYSTEM::CRelativePath::FullPath(filename.c_str());
+				Geodatabase::IWorkspace *pWorkspace =CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(filename.c_str());
+				if(pWorkspace)
+				{
+					m_pDataObject =pWorkspace->OpenFeatureClass(filename.c_str());
 
-			//Geodatabase::IWorkspace *pWorkspace =CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(filename.c_str());
-			//if(!pWorkspace)
-			//{
-			//	return NULL;
-			//}
-			//m_pDataObject =pWorkspace->OpenFeatureClass(filename.c_str());
+				}
+				
+			}
+			else if(type=="GDALDriver")
+			{
+				std::string filename;
+				ar&filename;
+
+				//通过相对路径计算绝对路径
+				filename =SYSTEM::CRelativePath::FullPath(filename.c_str());
+
+				Geodatabase::IWorkspace *pWorkspace =CRasterWSFactory::GetInstance()->OpenFromFile(filename.c_str());
+				if(pWorkspace)
+				{
+					m_pDataObject =pWorkspace->OpenRasterDataset(filename.c_str());
+				}
+				
+
+			}
 
 		}
 
@@ -148,7 +172,7 @@ ILayerPtr ILayer::CreateLayerFromStream( SYSTEM::IArchive &ar )
 
 	switch((LAYER_TYPE)type)
 	{
-	/*case  Carto::eFeatureLayer:
+	case  Carto::FeatureLayer:
 		{
 			ILayerPtr player( new CFeatureLayer() );
 			if( player == NULL )
@@ -158,7 +182,7 @@ ILayerPtr ILayer::CreateLayerFromStream( SYSTEM::IArchive &ar )
 			return player;
 		}		
 		break;
-	case Carto::eRasterLayer:
+	case Carto::RasterLayer:
 		{
 			ILayerPtr player( new CRasterLayer() );
 			if( player == NULL )
@@ -168,7 +192,7 @@ ILayerPtr ILayer::CreateLayerFromStream( SYSTEM::IArchive &ar )
 			return player;
 		}		
 		break;
-	case  Carto::eGraphicLayer:
+	case  Carto::GraphicLayer:
 		{
 			ILayerPtr player( new CGraphicLayer() );
 			if( player == NULL )
@@ -176,7 +200,7 @@ ILayerPtr ILayer::CreateLayerFromStream( SYSTEM::IArchive &ar )
 			player->serialization( ar );
 			return player;
 		}		
-		break;*/
+		break;
 
 	}
 

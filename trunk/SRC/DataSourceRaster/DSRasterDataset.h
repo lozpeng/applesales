@@ -209,6 +209,11 @@ public:
 
 	bool ReadPyramidNormal(long lLevel,long lBandlIndex, long lCol, long lRow, long lWidth, long lHeight, long lBuffSizeX, long lBuffSizeY, unsigned char *pbBuffer);
 
+	/**
+	* 序列化数据源相关信息,只存储信息到流
+	* @param ar 档案文件流
+	*/
+	virtual void serialization(SYSTEM::IArchive &ar);
 
 private:
 

@@ -2,7 +2,7 @@
 #include "DSRasterDataset.h"
 #include "RasterWorkspace.h"
 #include <geometry/geom/Envelope.h>
-
+#include "RelativePath.h"
 using namespace Geodatabase;
 
 CDSRasterDataset::CDSRasterDataset(CRasterWorkspace *pWorkspace,GDALDataset *pDataset,bool bRead,const char *name)
@@ -857,4 +857,24 @@ bool CDSRasterDataset::ComputeMinMax(long lBandIndex, long lCol, long lRow, long
 
 	
 	return true;
+}
+
+
+void CDSRasterDataset::serialization(SYSTEM::IArchive &ar)
+{
+	if(ar.IsSave())
+	{
+		std::string type ="GDALDriver";
+		ar&type;
+		//序列化工作空间
+		if(m_pWorkspace)
+		{
+			m_pWorkspace->serialization(ar);
+		}
+
+		//计算相对路径
+		std::string relPath =SYSTEM::CRelativePath::RelativePath(m_name.c_str());
+		ar&relPath;
+
+	}
 }

@@ -37,8 +37,8 @@ void CFeatureLayer::serialization(SYSTEM::IArchive &ar)
 			m_pRender = IRender::CreateRenderFromStream( ar );
 		
 		ar & bExist;
-		//if(bExist)
-		//	m_pSelSymbol = Display::CSymbolFactory::CreateSymbolFromStream(ar);
+		if(bExist)
+		m_pSelSymbol = Display::CSymbolFactory::CreateSymbolFromStream(ar);
 
 		ar & bExist;
 		if(bExist)

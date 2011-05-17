@@ -27,6 +27,55 @@ void CRasterLayer::serialization(SYSTEM::IArchive &ar)
 	if( ar.IsRead() )
 	{
 		m_pRender = IRasterRender::CreateRenderFromStream( ar );
+		Geodatabase::IRasterDataset *pRaster =dynamic_cast<Geodatabase::IRasterDataset*>(m_pDataObject.get());
+		if(!pRaster)
+		{
+			return;
+		}
+		
+
+		
+		CRasterRGBRender *pRender =dynamic_cast<CRasterRGBRender*>(m_pRender.get());
+
+		if(pRaster->GetBandCount()>=3)
+		{
+			pRender->SetRedBandIndex(1);
+			pRender->SetGreenBandIndex(2);
+			pRender->SetBlueBandIndex(3);
+			pRender->SetRGBMode(TRUE);
+
+			//计算用于显示的通道信息
+
+			PIXEL_INFO pi_r;
+			if (ExecuteStateByBand(1,pi_r))
+				pRender->SetPixelInfo(pi_r,1);
+
+			PIXEL_INFO pi_g;
+			if(ExecuteStateByBand(2,pi_g))
+				pRender->SetPixelInfo(pi_g,2);
+
+			PIXEL_INFO pi_b;
+			if(ExecuteStateByBand(3,pi_b))
+				pRender->SetPixelInfo(pi_b,3);
+
+		}
+		else
+		{
+			pRender->SetRedBandIndex(1);
+			pRender->SetGreenBandIndex(1);
+			pRender->SetBlueBandIndex(1);
+			pRender->SetRGBMode(FALSE);
+
+			PIXEL_INFO pi_r;
+			if(ExecuteStateByBand(1,pi_r))
+			{
+				pRender->SetPixelInfo(pi_r,1);
+				pRender->SetPixelInfo(pi_r,2);
+				pRender->SetPixelInfo(pi_r,3);
+			}
+
+		}
+
 	}
 	else
 	{
