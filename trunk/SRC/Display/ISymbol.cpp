@@ -84,7 +84,27 @@ ISymbolPtr ISymbol::Clone()
 */
 COLORREF ISymbol::GetColor()
 {
-	
+	if (this->GetType() & EXT_SYMBOL)
+	{
+		return m_lColor;
+	}
+
+	if ( this->GetType() & MARKER_SYMBOL || ((this->GetType() & COMPLEX_SYMBOL) == COMPLEX_MARKER_SYMBOL) )														//当是点符号
+	{
+		return (dynamic_cast<IMarkerSymbol*>(this))->GetMarkColor();
+	}
+	else if ( this->GetType() & LINE_SYMBOL || ((this->GetType() & COMPLEX_SYMBOL) == COMPLEX_LINE_SYMBOL) )													//当是线符号
+	{
+		return (dynamic_cast<ILineSymbol*>(this))->GetLineColor();
+	}
+	else if ( this->GetType() & FILL_SYMBOL || ((this->GetType() & COMPLEX_SYMBOL) == COMPLEX_FILL_SYMBOL) )													//当是面符号
+	{
+		return (dynamic_cast<IFillSymbol*>(this))->GetFillColor();
+	}
+	else if ( this->GetType() & TEXT_SYMBOL)													//当是文字符号
+	{
+		return (dynamic_cast<CTextSymbol*>(this))->GetTextColor();
+	}
 	return RGB(0 ,0 ,0);
 }
 

@@ -44,12 +44,12 @@ SYSTEM::XMLConfigurationPtr Display::GetSymbolRenderConfig()
 		try
 		{
 			boost::filesystem::path path = SYSTEM::CSystemPath::GetSystemPath();
-			path /= "otSymbolRender.xml";
+			path /= "symbol.ini";
 			ptrSymbolRender->Open(path.native_file_string());
 		}
 		catch(std::exception&)
 		{
-			ErrorLog("open otSymbolRender.xml file failed.");
+			ErrorLog("open symbol.ini file failed.");
 			return NULL;
 		}
 	}
