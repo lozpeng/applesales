@@ -14,7 +14,7 @@
 #include <boost/signal.hpp>
 #include <boost/signals/connection.hpp>
 #include "ILayer.h"
-
+#include "IFeatureClass.h"
 namespace Carto
 {
 
@@ -68,8 +68,8 @@ public:
 	void SendToBack(Element::CElementCollection pElements);
 
 	//将Element保存为shp 当前选择或者全部
-	void SaveElementAsShp(std::string filename,bool bSlected=false,long drawingType =0);
-
+	void SaveElementAsShp(std::string filename,bool bSlected=false,long drawingType =2);
+	void SaveElementAsShp(Geodatabase::IFeatureClassPtr pFeatureClass,bool bSlected,long drawingType=2);
 	/*
 	*描述			:	注册删除图元的回调函数
 	* 参数			:	boost::function fun 函数对象

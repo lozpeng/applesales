@@ -699,13 +699,46 @@ afx_msg void CTDAppView::OnDrawSaveAs()
 	if(Dlg.DoModal()==IDOK)
 	{
 		char* fileName = Dlg.m_ExportPath.GetBuffer(Dlg.m_ExportPath.GetLength());
-		ipGraphicLayer->SaveElementAsShp(fileName,!Dlg.m_bExpoertAll,Dlg.m_DrawingType);
+
+		Carto::CLayerArray &layers = ipMap->GetLayers();
+
+		Carto::ILayerPtr pLayer;
+		int index;
+		bool bfind =false;
+		for(int i=0;i<layers.GetSize();i++)
+		{
+			pLayer =layers.GetAt(i);
+			if(!pLayer)
+			{
+				continue;
+			}
+			if(pLayer->GetLayerType()==Carto::FeatureLayer)
+			{
+				if (strcmp(pLayer->GetName().c_str(),fileName) == 0)
+				{
+					break;
+				}
+			}
+		}
+		Geodatabase::IWorkspace *pWorkspace = pLayer->GetDataObject()->GetWorkspace();
+		//¿ªÊ¼±à¼­
+		bool srcState = pWorkspace->IsEditing();
+		if(srcState== false)
+			pWorkspace->StartEdit();
+		Geodatabase::IFeatureClassPtr pFeatureClass =  (Geodatabase::IFeatureClassPtr) pLayer->GetDataObject();
+		ipGraphicLayer->SaveElementAsShp(pFeatureClass,!Dlg.m_bExpoertAll,Dlg.m_DrawingType);
+
+		pWorkspace->StopEditOperation();
+		if(srcState == false)
+			pWorkspace->StopEdit(true);
+
 		if (Dlg.m_CheckAddMap)
 		{
 			this->GetDocument()->LoadShpFile(fileName);
-			m_MapCtrl.UpdateControl(drawAll);
 			RefreshLayerCombo();
 		}
+		m_MapCtrl.UpdateControl((DrawContent)(drawElement | drawAll));
+		
 	}
 
 

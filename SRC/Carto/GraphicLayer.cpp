@@ -434,13 +434,18 @@ namespace Carto
 			fdef.lshptype = GEOMETRY::geom::GEOS_POLYGON;
 		}
 
-		Geodatabase::CField *pField =new Geodatabase::CField();
-		pField->SetType(Geodatabase::FTYPE_LONG);
-		pField->SetName("UserID");
-		pField->SetLength(12);
-		fdef.FieldsDef.push_back(Geodatabase::CFieldPtr(pField));
+		Geodatabase::IFeatureClassPtr pFeatureClass = NULL;
+		pFeatureClass = pWorkspace->OpenFeatureClass(filename.c_str());
+		if(pFeatureClass == NULL)
+		{
+			Geodatabase::CField *pField =new Geodatabase::CField();
+			pField->SetType(Geodatabase::FTYPE_LONG);
+			pField->SetName("UserID");
+			pField->SetLength(12);
+			fdef.FieldsDef.push_back(Geodatabase::CFieldPtr(pField));
 
-		Geodatabase::IFeatureClassPtr pFeatureClass =pWorkspace->CreateFeatureClass(filename.c_str(),fdef);
+			pFeatureClass =pWorkspace->CreateFeatureClass(filename.c_str(),fdef);
+		}
 
 		if(!pFeatureClass)
 		{
@@ -448,7 +453,10 @@ namespace Carto
 		}
 
 		//开始编辑
-		pWorkspace->StartEdit();
+		bool srcState = pWorkspace->IsEditing();
+		if(srcState== false)
+			pWorkspace->StartEdit();
+		
 		pWorkspace->StartEditOperation();
 
 		Geodatabase::CFeaturePtr pFeature;
@@ -482,9 +490,11 @@ namespace Carto
 				//产生一个新的要素
 				pFeature =pFeatureClass->CreateFeature();
 				pFeature->SetShape( this->GetSelectedElement(i)->GetGeometry()->clone());
-
+				
 				//提交要素
 				pFeatureClass->AddFeature(pFeature.get());
+				//remove
+				this->RemoveElement(this->GetSelectedElement(i));
 			}
 		}
 		else
@@ -492,7 +502,7 @@ namespace Carto
 			for (size_t i=0;i<GetElementCount();i++)
 			{
 				elementType = this->GetElement(i)->GetType();
-				if (drawingType == 0)
+				if (drawingType == 2)
 				{
 					if (elementType!=ELEMENT_TYPE::ET_POINTELEMENT&&elementType!=ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
 					{
@@ -519,13 +529,110 @@ namespace Carto
 
 				//提交要素
 				pFeatureClass->AddFeature(pFeature.get());
+
+				//remove
+				this->RemoveElement(this->GetElement(i));
 			}
 		}
 
 
 		pWorkspace->StopEditOperation();
-		pWorkspace->StopEdit(true);
+		if(srcState == false)
+			pWorkspace->StopEdit(true);
 	}
 
+	void CGraphicLayer::SaveElementAsShp(Geodatabase::IFeatureClassPtr pFeatureClass,bool bSlected,long drawingType)
+	{
+		
+		if(!pFeatureClass)
+		{
+			return;
+		}
+		Element::ELEMENT_TYPE elementType;
 
+		Geodatabase::CFeaturePtr pFeature;
+
+		if (bSlected)
+		{
+			for (size_t i=0;i<this->GetSelectedElementCount();i++)
+			{
+				elementType = this->GetSelectedElement(i)->GetType();
+				if (drawingType == 2)
+				{
+					if (elementType!=ELEMENT_TYPE::ET_POINTELEMENT&&elementType!=ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
+					{
+						continue;
+					}
+				}
+				else if (drawingType ==1)
+				{
+					if (elementType!=ELEMENT_TYPE::ET_LINEELEMENT&&elementType!=ELEMENT_TYPE::ET_POLYLINE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_CURVE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_BEZIERCURVE_ELEMENT)
+					{
+						continue;
+					}
+				}
+				else
+				{
+					if (elementType!=ELEMENT_TYPE::ET_FILLELEMENT&&elementType!=ET_FILL_RECTANGLE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_POLYGON_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_CIRCLE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_ELLIPSE_ELEMENT)
+					{
+						continue;
+					}
+				}
+				//产生一个新的要素
+				pFeature =pFeatureClass->CreateFeature();
+				pFeature->SetShape( this->GetSelectedElement(i)->GetGeometry()->clone());
+
+				//提交要素
+				pFeatureClass->AddFeature(pFeature.get());
+				
+			}
+
+			
+			//remove
+			for (size_t i=0;i<this->GetSelectedElementCount();i++)
+			{
+				this->RemoveElement(this->GetSelectedElement(i));
+			}
+			UnselectAllElements();
+		}
+		else
+		{
+			for (size_t i=0;i<GetElementCount();i++)
+			{
+				elementType = this->GetElement(i)->GetType();
+				if (drawingType == 2)
+				{
+					if (elementType!=ELEMENT_TYPE::ET_POINTELEMENT&&elementType!=ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
+					{
+						continue;
+					}
+				}
+				else if (drawingType ==1)
+				{
+					if (elementType!=ELEMENT_TYPE::ET_LINEELEMENT&&elementType!=ELEMENT_TYPE::ET_POLYLINE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_CURVE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_BEZIERCURVE_ELEMENT)
+					{
+						continue;
+					}
+				}
+				else
+				{
+					if (elementType!=ELEMENT_TYPE::ET_FILLELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_RECTANGLE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_POLYGON_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_CIRCLE_ELEMENT&&elementType!=ELEMENT_TYPE::ET_FILL_ELLIPSE_ELEMENT)
+					{
+						continue;
+					}
+				}
+				//产生一个新的要素
+				pFeature =pFeatureClass->CreateFeature();
+				pFeature->SetShape( this->GetElement(i)->GetGeometry()->clone());
+
+				//提交要素
+				pFeatureClass->AddFeature(pFeature.get());
+
+			}
+			UnselectAllElements();
+			//remove
+			this->RemoveAllElements();
+		}
+
+	}
 }

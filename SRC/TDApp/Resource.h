@@ -41,6 +41,8 @@
 #define IDC_EDIT1                       1057
 #define IDC_CHECK_ISADD                 1059
 #define IDC_BTN_SLECTPATH               1060
+#define IDC_COMBO1                      1061
+#define IDC_COMBO_Export                1061
 #define ID_EDITNODE_ELEMENT             30030
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
@@ -144,11 +146,11 @@
 #define ID_UNION_FEATURES               40514
 #define ID_CHANGE_EXPORT                40515
 #define ID_CURRLAYER_COMBO_VECTOR       40516
-#define ID_FEATURES_INFO				40517
-#define ID_ATTRIBUTE_EDIT				40518
+#define ID_FEATURES_INFO                40517
+#define ID_ATTRIBUTE_EDIT               40518
 #define ID_MAGICSTICK_LAYER             40520
 #define ID_MAGICSTICK_TOL               40521
-#define ID_SELECTFEATURE				40522
+#define ID_SELECTFEATURE                40522
 #define ID_REMOVELASTMAGIC              40523
 
 // Next default values for new objects
@@ -157,7 +159,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        178
 #define _APS_NEXT_COMMAND_VALUE         32886
-#define _APS_NEXT_CONTROL_VALUE         1061
+#define _APS_NEXT_CONTROL_VALUE         1062
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif
