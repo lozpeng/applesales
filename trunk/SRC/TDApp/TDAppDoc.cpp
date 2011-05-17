@@ -108,6 +108,17 @@ void CTDAppDoc::Serialize(CArchive& ar)
 
         m_pActiveMap->serialization(bin);
 
+		if(m_linkMapCtrl)
+		{
+			//¸üÐÂÏÔÊ¾
+			DIS_BOUND rect;
+			rect.left = rect.top = 0;
+			rect.right = m_linkMapCtrl->GetSizeX();
+			rect.bottom = m_linkMapCtrl->GetSizeY();	
+			m_pActiveMap->SetViewBound(rect);
+		}
+		
+
 		delete[] pStart;
 	}
 
