@@ -15,7 +15,7 @@
 #include <Geometry/geom/MultiLineString.h>
 #include <Geometry/geom/Polygon.h>
 #include <Geometry/geom/LinearRing.h>
-//#include "RelativePath.h"
+#include "RelativePath.h"
 
 using namespace Geodatabase;
 using namespace std;
@@ -1630,23 +1630,19 @@ void CShapefileFeatureClass::serialization(SYSTEM::IArchive &ar)
 {
 	if(ar.IsSave())
 	{
-		std::string type ="ShpFactory";
+		std::string type ="ShpDriver";
 		ar&type;
 		//序列化工作空间
 		if(m_pWorkspace)
 		{
 			m_pWorkspace->serialization(ar);
 		}
-		//序列化数据集
-		if(m_pDataset)
-		{
-			m_pDataset->serialization(ar);
-		}
+		
 
 		//存储相对路径
 		//计算相对路径
-		//std::string relPath =SYSTEM::CRelativePath::RelativePath(m_name.c_str());
-		//ar&relPath;
+		std::string relPath =SYSTEM::CRelativePath::RelativePath(m_name.c_str());
+		ar&relPath;
 	}
 }
 

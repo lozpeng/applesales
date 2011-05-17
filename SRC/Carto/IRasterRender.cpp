@@ -19,6 +19,19 @@ IRasterRender::~IRasterRender()
 void IRasterRender::serialization(SYSTEM::IArchive &ar)
 {
 	SYSTEM::ISerialization::serialization( ar );
+	int type;
+
+	if(ar.IsRead() )
+	{
+		ar & type;
+
+		m_type = (RASTER_RENDER_TYPE)type;
+	}
+	else
+	{
+		type = (int)m_type;
+		ar & type;
+	}
 }
 
 SYSTEM::CSmartPtr<IRasterRender> IRasterRender::CreateRender(Carto::RASTER_RENDER_TYPE type, std::string RenderExtName )
@@ -26,7 +39,7 @@ SYSTEM::CSmartPtr<IRasterRender> IRasterRender::CreateRender(Carto::RASTER_RENDE
 	switch(type)
 	{
 	case RASTER_RGBRENDER:
-		//return IRasterRenderPtr( new CRasterRGBRender() );
+		return IRasterRenderPtr( new CRasterRGBRender() );
 	case RASTER_CUSTOMRENDER: 
 		return NULL;
 	default:
