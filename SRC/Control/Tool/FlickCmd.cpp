@@ -29,7 +29,8 @@ void CFlickCmd::Click()
 	if(!pMap)
 		return;
 
-	Carto::ILayerPtr pActiveLayer = pMap->GetActiveLayer();
+	//Carto::ILayerPtr pActiveLayer = pMap->GetActiveLayer();
+	Carto::ILayerPtr pActiveLayer = pMap->GetOperLayer();
 	if(!pActiveLayer)
 		return;
 

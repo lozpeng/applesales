@@ -205,6 +205,19 @@ namespace Carto
 		ILayerPtr GetActiveLayer();
 
 		/**
+		* 得到当前操作图层
+		*/
+
+		ILayerPtr GetOperLayer();
+
+		/**设置当前操作图层
+		*
+		* @param ILayerPtr ptrLayer
+		* @return 
+		*/
+		void SetOperLayer(ILayerPtr ptrLayer);
+
+		/**
 		* 获得编辑器
 		*/
 		IEditorPtr GetEditor() {return m_pEditor;};
@@ -396,6 +409,9 @@ namespace Carto
 
 		//激活图层在图层数组中的索引
 		long m_lActiveLayerId;
+
+		//当前操作图层
+		ILayerPtr		m_operLayer;
 
 	public:
 		double m_dbMapFixScale;
