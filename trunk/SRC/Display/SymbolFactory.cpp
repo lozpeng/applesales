@@ -49,7 +49,7 @@ SYSTEM::XMLConfigurationPtr Display::GetSymbolRenderConfig()
 		}
 		catch(std::exception&)
 		{
-			ErrorLog("open symbol.ini file failed.");
+			//ErrorLog("open symbol.ini file failed.");
 			return NULL;
 		}
 	}

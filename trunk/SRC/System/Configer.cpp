@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "Configer.h"
 #include "ConfigItem.h"
-#include "SysLog.h"
+//#include "SysLog.h"
 #include "Exception.h"
 #include "SysPath.h"
 #include "xmlstring.h"
@@ -155,7 +155,7 @@ void SYSTEM::CXMLConfiguration::Save()
 	DOMLSSerializer *ss = ((DOMImplementationLS*)impl)->createLSSerializer();
 	if(xmlFile.length() == 0)
 	{
-		InfoLog("Cann't save file. The file name is null");
+		//InfoLog("Cann't save file. The file name is null");
 		return;
 	}
 	XMLCh *t = XMLString::transcode(xmlFile.c_str());

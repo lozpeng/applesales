@@ -441,7 +441,7 @@ void CDlgSymbolEdit::LoadConfig(void)
 	SYSTEM::XMLConfigurationPtr pRoot = Display::GetSymbolRenderConfig();
 	if(pRoot == NULL)
 	{
-		ErrorLog("Get symbolrender node failed.");
+		//ErrorLog("Get symbolrender node failed.");
 		return;
 	}
 

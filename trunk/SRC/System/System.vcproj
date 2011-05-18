@@ -233,10 +233,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\SysLog.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\SysPath.cpp"
 				>
 			</File>
@@ -296,10 +292,6 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\SysLog.h"
 				>
 			</File>
 			<File
