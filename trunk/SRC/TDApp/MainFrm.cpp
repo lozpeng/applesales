@@ -158,7 +158,7 @@ void CMainFrame::AddTab_MapControl()
 	pPanelProject->Add (pBtnSaveAsXTD);*/
 	//图层
 	CBCGPRibbonPanel* pPanelFile = pCategory->AddPanel (_T("文件"));
-	CBCGPRibbonComboBox* pDisplayCombo = new CBCGPRibbonComboBox (ID_DUMMY_COMBO, FALSE, 100, "比例尺:");
+	CBCGPRibbonComboBox* pDisplayCombo = new CBCGPRibbonComboBox (ID_DUMMY_COMBO, FALSE, 50, "比例尺:");
 	pDisplayCombo->EnableDropDownListResize (FALSE);
 	pDisplayCombo->AddItem(_T("1:1000"));
 	pDisplayCombo->AddItem(_T("1:10000"));
@@ -297,7 +297,7 @@ void CMainFrame::AddTab_ImageAnalyse()
 
 	//添加当前图层
 	CBCGPRibbonPanel* pPanelTargetLayer = pCategory->AddPanel (_T("显示"));
-	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,100,"目标层:");
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,80,"目标层:");
 	pPanelTargetLayer->Add(pBtnCurrLayer);
 	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 1);
 	pPanelTargetLayer->Add (pBtnShowOverView);
@@ -509,9 +509,9 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//添加当前图层
 	//CBCGPRibbonButtonsGroup* pMagicGroup = new CBCGPRibbonButtonsGroup;
 
-	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_MAGICSTICK_LAYER,FALSE,100,"目标层:");
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_MAGICSTICK_LAYER,FALSE,85,"目标图层:");
 	pPanelHalfAuto->Add(pBtnCurrLayer);
-	CBCGPRibbonEdit *pEditButton =new CBCGPRibbonEdit(ID_MAGICSTICK_TOL,50,"像素阈值");
+	CBCGPRibbonEdit *pEditButton =new CBCGPRibbonEdit(ID_MAGICSTICK_TOL,100,"像素阈值:");
 	pEditButton->SetEditText("20");
     pPanelHalfAuto->Add(pEditButton);
 
