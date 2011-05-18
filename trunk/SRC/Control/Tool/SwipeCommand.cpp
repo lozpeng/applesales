@@ -84,11 +84,16 @@ void CSwipeCommand::Click()
 		pMap->GetDisplay()->SetDrawBuffer(drawTempObj);
 
 		long lMapLayerCount=m_MapLayers.GetSize();
+
 		if (lMapLayerCount>=2)
 		{
-			for (int i=0 ; i<m_MapLayers.GetSize()-1 ; i++ )
+			Carto::ILayerPtr pLayer = pMap->GetOperLayer();
+			for (int i=0 ; i<m_MapLayers.GetSize() ; i++ )
 			{
-				m_MapLayers[i]->Draw( m_display , drawGeography );
+				if (pLayer != m_MapLayers.GetAt(i))
+				{
+					m_MapLayers[i]->Draw( m_display , drawGeography );
+				}
 			}
 			//将屏幕内存DC上的图形拷贝到临时内存pTempDC2
 			::BitBlt(pTempDC2.GetSafeHdc(),0,0,m_rect.Width(), m_rect.Height(),hdc,0,0,SRCCOPY);

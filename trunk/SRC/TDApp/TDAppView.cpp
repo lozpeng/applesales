@@ -880,7 +880,7 @@ void CTDAppView::OnSwipe()
 {
 	Framework::ICommand* pCmd = NULL;
 	m_MapCtrl.SetCurTool("SwipeEnhance");
-
+	m_MapCtrl.GetMap()->SetOperLayer(GetComboLayer());
 	pCmd= Framework::ICommand::FindCommand("SwipeEnhance");
 	if(pCmd)
 	{
@@ -895,7 +895,7 @@ void CTDAppView::OnFlick()
 {
 	Framework::ICommand* pCmd = NULL;
 	m_MapCtrl.SetCurTool("Flick");
-
+	m_MapCtrl.GetMap()->SetOperLayer(GetComboLayer());
 	pCmd= Framework::ICommand::FindCommand("Flick");
 	if(pCmd)
 	{

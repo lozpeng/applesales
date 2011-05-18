@@ -45,6 +45,7 @@ namespace Carto
 
 		m_lActiveLayerId = -1;
 
+		m_operLayer = NULL;
 		//CAoiManager* pManager = new CAoiManager();
 		//m_pAoiManager.reset(pManager);
 
@@ -746,6 +747,16 @@ namespace Carto
 		else
 			return NULL;
 		//return m_activeLayer;
+	}
+	
+	ILayerPtr CMap::GetOperLayer()
+	{
+		return m_operLayer;
+	}
+
+	void CMap::SetOperLayer(ILayerPtr ptrLayer)
+	{
+		m_operLayer = ptrLayer;
 	}
 
 	CGraphicLayerPtr CMap::GetGraphicLayer()
