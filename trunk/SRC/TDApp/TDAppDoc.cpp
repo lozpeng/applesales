@@ -7,6 +7,7 @@
 #include "TDAppDoc.h"
 #include "RelativePath.h"
 #include "IMapCtrl.h"
+#include "TDAppView.h"
 //#include "CntrItem.h"
 
 #ifdef _DEBUG
@@ -168,6 +169,10 @@ void CTDAppDoc::OnNewProject()
 	//Ë¢ÐÂÊÓÍ¼
 	m_pLinkMapTree->RefreshFromDoc();
 	m_linkMapCtrl->UpdateControl(drawAll);
+
+	POSITION pos =GetFirstViewPosition();
+	CTDAppView *pView =(CTDAppView*)this->GetNextView(pos);
+	pView->RefreshLayerCombo();
 	
 }
 
@@ -213,6 +218,10 @@ void CTDAppDoc::OnOpenProject()
 		m_pLinkMapTree->RefreshFromDoc();
 		m_linkMapCtrl->UpdateControl(drawAll);
 	}
+
+	POSITION pos =GetFirstViewPosition();
+	CTDAppView *pView =(CTDAppView*)this->GetNextView(pos);
+	pView->RefreshLayerCombo();
 }
 
 
