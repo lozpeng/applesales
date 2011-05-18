@@ -14,7 +14,7 @@
 #include "Configer.h"
 #include "IArchive.h"
 #include "ISerialization.h"
-#include "SysLog.h"
+//#include "SysLog.h"
 #include "SysPath.h"
 #include "alm.h"
 

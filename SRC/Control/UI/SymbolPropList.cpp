@@ -599,7 +599,7 @@ bool CSymbolPropList::InitSymbolPropList(int SymbolType)
 	SYSTEM::IConfigItemPtr pSymCfg = GetSymbolConfigItem( SymbolType );
 	if ( pSymCfg == NULL )
 	{
-		ErrorLog("Not Found Symbol Config Item . type = "<<SymbolType);
+		//ErrorLog("Not Found Symbol Config Item . type = "<<SymbolType);
 		::MessageBox(this->GetParent()->m_hWnd , "XML文件解析失败,请重新安装！" , "错误" , MB_OK);
 		return false;
 	}
@@ -611,7 +611,7 @@ bool CSymbolPropList::InitSymbolPropList(int SymbolType)
 		SYSTEM::IConfigItemPtr pSymItemGroupCfg = pSymCfg->GetChilds(i);
 		if (pSymItemGroupCfg == NULL)
 		{
-			ErrorLog("Not Found Symbol Config child Item . type = "<<SymbolType);
+			//ErrorLog("Not Found Symbol Config child Item . type = "<<SymbolType);
 			::MessageBox(this->GetParent()->m_hWnd,"XML文件解析失败,请重新安装！" ,"错误" , MB_OK);
 			return false;
 		}
@@ -642,7 +642,7 @@ SYSTEM::IConfigItemPtr CSymbolPropList::GetSymbolConfigItem(int type)
 	SYSTEM::XMLConfigurationPtr pConfig = Display::GetSymbolRenderConfig();
 	if(pConfig == NULL)
 	{
-		ErrorLog("Get symbolrender node failed.");
+		//ErrorLog("Get symbolrender node failed.");
 		return NULL;
 	}
 
