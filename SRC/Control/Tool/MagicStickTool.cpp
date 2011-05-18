@@ -185,6 +185,9 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 	//构建一个多边形图元
 	Element::CPolygonElement *ppolyElement =new Element::CPolygonElement(*pPolygon);
 
+	delete pPolygon;
+	pPolygon =NULL;
+
 	ppolyElement->SetUserdata(1);
 
 	//设置符号

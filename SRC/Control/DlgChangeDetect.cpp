@@ -14,8 +14,8 @@ CDlgChangeDetect::CDlgChangeDetect(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgChangeDetect::IDD, pParent)
 	, m_strResult(_T(""))
 	, m_bLoadShp(TRUE)
-	, m_dCor(0.7)
-	, m_nSize(50)
+	, m_dCor(0.4)
+	, m_nSize(100)
 {
 
 }
