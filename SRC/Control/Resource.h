@@ -2,6 +2,9 @@
 // Microsoft Visual C++ generated include file.
 // Used by Control.rc
 //
+#define IDC_RADIO_EXPORT_ALL            1054
+#define IDC_RADIO_EXPOERT_SELECTED      1055
+#define IDC_COMBO_Export                1061
 #define IDC_PAN                         2000
 #define IDC_PROGRESS                    2000
 #define IDC_ZOOMIN                      2001
@@ -41,6 +44,7 @@
 #define IDD_LAYERPROP_GENERAL           2016
 #define IDD_RASTER_PROP                 2017
 #define IDD_IMG_CHANGEDETECT            2018
+#define IDD_OBJ_EXPORT                  2019
 #define IDD_FEATURE_RENDER_SET          4024
 #define IDB_FEATURE_RENDER              4025
 #define IDB_RENDER_BG                   4026
@@ -160,6 +164,7 @@
 #define ID_32774                        32774
 #define ID_REMOVE_LAYER                 32775
 #define ID_LAYER_PROP                   32776
+#define ID_OBJ_EXPORT                   32777
 #define IDC_SLIDER1                     32850
 #define IDC_RADIO_UD                    32851
 #define IDC_RADIO_LR                    32852
@@ -169,8 +174,8 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2019
-#define _APS_NEXT_COMMAND_VALUE         32777
+#define _APS_NEXT_RESOURCE_VALUE        2020
+#define _APS_NEXT_COMMAND_VALUE         32778
 #define _APS_NEXT_CONTROL_VALUE         2014
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif

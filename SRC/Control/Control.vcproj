@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DlgObjExport.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DllResource.cpp"
 				>
 			</File>
@@ -282,6 +286,10 @@
 			</File>
 			<File
 				RelativePath=".\ControlDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DlgObjExport.h"
 				>
 			</File>
 			<File

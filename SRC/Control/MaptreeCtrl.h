@@ -106,6 +106,8 @@ public:
 
 	afx_msg void OnZoomToLayer();
 
+	afx_msg void OnObjExport();
+
 	BOOL SetItemState( HTREEITEM hItem, UINT nState, UINT nStateMask, BOOL bSearch=TRUE);
 
 
