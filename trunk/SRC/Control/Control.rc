@@ -442,6 +442,21 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
 END
 
+IDD_OBJ_EXPORT DIALOGEX 0, 0, 227, 133
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "要素导出"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,43,106,50,14
+    PUSHBUTTON      "取消",IDCANCEL,128,106,50,14
+    GROUPBOX        "导出要素",IDC_STATIC,18,12,183,27
+    CONTROL         "全部",IDC_RADIO_EXPORT_ALL,"Button",BS_AUTORADIOBUTTON | WS_GROUP,32,25,33,10
+    CONTROL         "选择",IDC_RADIO_EXPOERT_SELECTED,"Button",BS_AUTORADIOBUTTON,136,24,33,10
+    GROUPBOX        "导出设置",IDC_STATIC,20,47,184,46
+    COMBOBOX        IDC_COMBO_Export,74,65,118,54,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "目标层",IDC_STATIC,30,66,27,8
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -565,6 +580,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 165
     END
+
+    IDD_OBJ_EXPORT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 220
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 126
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -581,6 +604,7 @@ BEGIN
         MENUITEM "缩放到图层",                       ID_ZOOMTO_LAYER
         MENUITEM "删除图层",                        ID_REMOVE_LAYER
         MENUITEM "图层属性",                        ID_LAYER_PROP
+        MENUITEM "目标导出",                        32777
     END
 END
 

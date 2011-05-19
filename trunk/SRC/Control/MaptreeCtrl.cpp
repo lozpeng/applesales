@@ -12,6 +12,7 @@
 #include <geometry/geom/Geometry.h>
 #include "DllResource.h"
 #include "LayerPropSheet.h"
+#include "DlgObjExport.h"
 
 #define   DRAG_DELAY   60
 
@@ -59,6 +60,7 @@ BEGIN_MESSAGE_MAP(CMaptreeCtrl, CTreeCtrl)
 	ON_COMMAND(ID_REMOVE_LAYER, &CMaptreeCtrl::OnRemoveLayer)
 	ON_COMMAND(ID_LAYER_PROP, &CMaptreeCtrl::OnLayerProp)
 	ON_COMMAND(ID_ZOOMTO_LAYER, &CMaptreeCtrl::OnZoomToLayer)
+	ON_COMMAND(ID_OBJ_EXPORT, &CMaptreeCtrl::OnObjExport)
 
 END_MESSAGE_MAP()
 
@@ -2191,7 +2193,59 @@ void CMaptreeCtrl::OnZoomToLayer()
 
 	pMapCtrl->UpdateControl(drawAll);
 }
+void CMaptreeCtrl::OnObjExport()
+{
+	HTREEITEM item =CTreeCtrl::GetSelectedItem();
+	if(!item)
+	{
+		return;
+	}
+	Framework::IMapCtrl *pMapCtrl =Framework::IMapCtrl::GetActiveMapCtrl();
+	if(!pMapCtrl)
+	{
+		return;
+	}
+	HTREEITEM layerItem,mapItem;
+	if(m_iSelectedItemType==Framework::eLayerItem)
+	{
+		layerItem =item;
+	}
+	else if(m_iSelectedItemType ==Framework::eLegendItem)
+	{
+		layerItem =GetParentItem(item);
+	}
+	mapItem =GetParentItem(layerItem);
+	std::map  <HTREEITEM, Carto::ILayerPtr>::iterator layerIter;
+	//查找图层
+	layerIter =m_LayerItemMap.find(layerItem);
+	if(layerIter ==m_LayerItemMap.end())
+	{
+		return;
+	}
+	//图层所在的地图
+	std::map<HTREEITEM, Carto::CMapPtr>::iterator mapIter;
+	mapIter = m_itemToMapPtr.find(mapItem);
+	if(mapIter ==m_itemToMapPtr.end())
+	{
+		return;
+	}
 
+	Carto::CMapPtr pMap = mapIter->second;
+	if(!pMap)
+	{
+		return;
+	}
+
+	Carto::ILayerPtr pLayer = layerIter->second;
+	if (pLayer->GetLayerType() != Carto::LAYER_TYPE::FeatureLayer)
+		return;
+
+	CDllResource hdll;
+	CDlgObjExport dlg;
+	dlg.m_SrcFeatureLayer = pLayer;
+	dlg.DoModal();
+	
+}
 
 void CMaptreeCtrl::RefreshFromDoc()
 {
