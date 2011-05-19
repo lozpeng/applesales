@@ -334,34 +334,55 @@ void CTDAppView::OnOpenVector()
 
 
 
-	// TODO: 在此添加命令处理程序代码
+	char	szBigBuf[4096] = "";
 	CString fileName ="";
 
-	CFileDialog dlg(true, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"shapefile(*.shp)|*.shp|All file(*.*)|*.*|",this);
+	CFileDialog dlg(true, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_ALLOWMULTISELECT,"shapefile(*.shp)|*.shp|All file(*.*)|*.*|",this);
+	dlg.m_ofn.lpstrFile = szBigBuf;
+	dlg.m_ofn.nMaxFile = sizeof (szBigBuf);
 	if(dlg.DoModal()==IDOK) 
-		fileName = dlg.GetPathName(); 
-	else
-		return;
+	{
+		POSITION pos = dlg.GetStartPosition();
+		while (pos != NULL)
+		{
+			fileName = dlg.GetNextPathName (pos);
+			this->GetDocument()->LoadShpFile(fileName);
 
+		}
+		m_MapCtrl.UpdateControl(drawAll);
+		RefreshLayerCombo();
+	}
 
-	this->GetDocument()->LoadShpFile(fileName);
-	m_MapCtrl.UpdateControl(drawAll);
-	RefreshLayerCombo();
+	
 }
 
 void CTDAppView::OnOpenImg()
 {
-	// TODO: 在此添加命令处理程序代码
+	char	szBigBuf[4096] = "";
+	
+
 	CString fileName("");
-	CFileDialog dlg(true, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"影像数据(*.tif;*.img;*.tiff;*.bmp)|*.tif;*.img;*.tiff;*.bmp|All Files(*.*)|*.*||",this);
+	CFileDialog dlg(true, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_ALLOWMULTISELECT,"影像数据(*.tif;*.img;*.tiff;*.bmp)|*.tif;*.img;*.tiff;*.bmp|All Files(*.*)|*.*||",this);
+	dlg.m_ofn.lpstrFile = szBigBuf;
+	dlg.m_ofn.nMaxFile = sizeof (szBigBuf);
+
 	if(dlg.DoModal()==IDOK) 
-		fileName = dlg.GetPathName(); 
-	else
-		return;
-	//Control::CProgressBar *pbar =new Control::CProgressBar();
-	this->GetDocument()->LoadImageFile(fileName);
-	m_MapCtrl.UpdateControl(drawAll);
-	RefreshLayerCombo();
+	{
+		POSITION pos = dlg.GetStartPosition();
+		while (pos != NULL)
+		{
+			fileName = dlg.GetNextPathName (pos);
+			this->GetDocument()->LoadImageFile(fileName);
+
+		}
+       
+		m_MapCtrl.UpdateControl(drawAll);
+		RefreshLayerCombo();
+
+	}
+	
+	
+	
 }
 
 
