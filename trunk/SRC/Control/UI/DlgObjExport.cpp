@@ -41,7 +41,7 @@ BOOL CDlgObjExport::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	m_bExpoertAll = false;
+	m_bExpoertAll = true;
 
 	CButton* pFusionType =(CButton*)GetDlgItem(IDC_RADIO_EXPORT_ALL);
 	pFusionType->SetCheck(1);
@@ -163,6 +163,7 @@ void CDlgObjExport::FeatureLayer2Featurelayer(Carto::IFeatureLayerPtr pSrcFeatur
 	if(srcState== false)
 		pDestWorkspace->StartEdit();
 	Geodatabase::IFeatureClassPtr pDestFeatureClass =  (Geodatabase::IFeatureClassPtr) pDestFeatureLayer->GetDataObject();
+	Geodatabase::IFeatureClassPtr pSrcFeatureClass =  (Geodatabase::IFeatureClassPtr) pSrcFeatureLayer->GetDataObject();
 
 	GEOMETRY::geom::Geometry *pGeometry;
 
@@ -173,9 +174,10 @@ void CDlgObjExport::FeatureLayer2Featurelayer(Carto::IFeatureLayerPtr pSrcFeatur
 		Geodatabase::CFeaturePtr pNewFeature;
 		
 		pSrcFeatureLayer->GetDataObject()->GetExtent(&pEnvelope);
-		Geodatabase::IFeatureClassPtr pSrcFeatureClass =  (Geodatabase::IFeatureClassPtr) pSrcFeatureLayer->GetDataObject();
-		
-		Geodatabase::ICursorPtr pCursor = pSrcFeatureClass->QueryByExtent(&pEnvelope,NULL);
+		Geodatabase::CSimpleQuery query;
+		std::string strFields =pSrcFeatureClass->ShapeFieldName();
+		query.AddField(strFields.c_str());
+		Geodatabase::ICursorPtr pCursor = pSrcFeatureClass->QueryByExtent(&pEnvelope,&query);
 		Geodatabase::IFeatureCursorPtr pFeatureCursor = pCursor;
 		while(!pFeatureCursor->IsEOF())
 		{
@@ -195,6 +197,8 @@ void CDlgObjExport::FeatureLayer2Featurelayer(Carto::IFeatureLayerPtr pSrcFeatur
 	else
 	{
 		Geodatabase::ISelctionSetPtr pSelectionSet = pSrcFeatureLayer->GetSelection();
+		if(pSelectionSet == NULL)
+			return;
 		pSelectionSet->ResetIndex();
 		long fid = 0;
 		
@@ -202,7 +206,7 @@ void CDlgObjExport::FeatureLayer2Featurelayer(Carto::IFeatureLayerPtr pSrcFeatur
 		while(!pSelectionSet->IsEOF())
 		{
 			fid =pSelectionSet->NextID();
-			pGeometry =pDestFeatureClass->GetFeatureShape(fid);
+			pGeometry =pSrcFeatureClass->GetFeatureShape(fid);
 
 			Geodatabase::CFeaturePtr pFeature;
 			//产生一个新的要素
