@@ -52,7 +52,7 @@ BOOL CDlgDrawingExport::OnInitDialog()
 	m_ComboxType.SetCurSel(0);
 	m_DrawingType = 0;
 
-	m_CheckAddMap = FALSE;
+	m_CheckAddMap = TRUE;
 	//m_ExportPath ="D:\\expoert.shp";
 	m_bExpoertAll = false;
 
@@ -96,12 +96,12 @@ void CDlgDrawingExport::OnBnClickedBtnSlectpath()
 	UpdateData();
 
 	CString     strOpenFilter = "shapefile(*.shp)|*.shp|All Files(*.*)|*.*||";
-	CFileDialog FileDlg(false, "", NULL,  OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, strOpenFilter);
+	CFileDialog FileDlg(TRUE, "", NULL,  OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, strOpenFilter);
 	if(FileDlg.DoModal()!=IDOK)
 		return;
 
 	m_Combox_Export.AddString(FileDlg.GetPathName());
-	m_Combox_Export.SetCurSel(m_Combox_Export.GetCount()-1);
+	m_Combox_Export.SetCurSel(0);
 	this->UpdateData(FALSE);
 }
 
