@@ -3,7 +3,9 @@
 #include "MagicStick.h"
 #include "Control.h"
 #include "PolygonElement.h"
-
+#include "geos_c.h"
+#include <geometry/geom/BinaryOp.h>
+#include <geometry/operation/overlay/OverlayOp.h>
 extern CControlApp theApp;
 static Carto::ILayer* gpLayer =NULL;
 static int gtol =20;
@@ -55,6 +57,9 @@ void CMagicStickTool::SetParam(int ntol,Carto::ILayer* pLayer)
 
 void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 {
+	using GEOMETRY::operation::overlay::OverlayOp;
+	using GEOMETRY::operation::overlay::overlayOp;
+
 	//获取活动地图控件
 	if(!m_pMapCtrl)
 		return;
@@ -121,7 +126,7 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 			}
 			catch(...)
 			{
-               
+                int a =10;
 			}
 			
 
@@ -129,6 +134,7 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 		}
 	}
 
+	GEOMETRY::geom::Polygon* pTempPoly =NULL;
 	std::vector<Element::IElementPtr>  removeList;
 	//新生成的多边形如果和之前的多边形相交，则将两个合并
 	for(int i=count-1;i>=0;i--)
@@ -146,30 +152,40 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 			{
 				continue;
 			}
-			try
-			{
-				if(ppoly->intersects(pPolygon))
+			/*try
+			{*/
+				if(ppoly->getEnvelopeInternal()->intersects(pPolygon->getEnvelopeInternal()))
 				{
 					//图形合并
-                    GEOMETRY::geom::Geometry *pResult =pPolygon->Union(ppoly);
+
+					/*std::auto_ptr<GEOMETRY::geom::Geometry> g3 = GEOMETRY::geom::BinaryOp(dynamic_cast<GEOMETRY::geom::Geometry*>(pPolygon),dynamic_cast<GEOMETRY::geom::Geometry*>(ppoly), overlayOp(OverlayOp::opUNION));
+					GEOMETRY::geom::Geometry *pResult = g3.release();*/
+
+					GEOMETRY::geom::Geometry *pResult =pPolygon->Union(ppoly);
+					
 					if(pResult==NULL)
 					{
 						continue;
 					}
-					delete pPolygon;
-					pPolygon =dynamic_cast<GEOMETRY::geom::Polygon*>(pResult);
-					if(pPolygon==NULL)
+					
+					pTempPoly =dynamic_cast<GEOMETRY::geom::Polygon*>(pResult);
+					if(pTempPoly==NULL)
 					{
 						continue;
+					}
+					else
+					{
+                        delete pPolygon;
+						pPolygon =pTempPoly;
 					}
 					removeList.push_back(pElement);
 					
 				}
-			}
-			catch(...)
+			//}
+			/*catch(...)
 			{
                int a =10;
-			}
+			}*/
 
 
 
