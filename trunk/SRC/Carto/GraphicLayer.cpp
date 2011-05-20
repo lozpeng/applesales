@@ -421,7 +421,7 @@ namespace Carto
 		Geodatabase::FeatureClassDef fdef;
 		fdef.hasz =false;
 
-		if (drawingType == 0)
+		if (drawingType == 2)
 		{
 			fdef.lshptype = GEOMETRY::geom::GEOS_POINT;
 		}
@@ -466,7 +466,7 @@ namespace Carto
 			for (size_t i=0;i<this->GetSelectedElementCount();i++)
 			{
 				elementType = this->GetSelectedElement(i)->GetType();
-				if (drawingType == 0)
+				if (drawingType == 2)
 				{
 					if (elementType!=ELEMENT_TYPE::ET_POINTELEMENT&&elementType!=ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
 					{
@@ -530,9 +530,11 @@ namespace Carto
 				//Ìá½»ÒªËØ
 				pFeatureClass->AddFeature(pFeature.get());
 
-				//remove
-				this->RemoveElement(this->GetElement(i));
+
 			}
+			UnselectAllElements();
+				//remove
+			this->RemoveAllElements();
 		}
 
 

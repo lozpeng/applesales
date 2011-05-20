@@ -726,6 +726,7 @@ afx_msg void CTDAppView::OnDrawSaveAs()
 		Carto::ILayerPtr pLayer;
 		int index;
 		bool bfind =false;
+		bool flag = false;
 		for(int i=0;i<layers.GetSize();i++)
 		{
 			pLayer =layers.GetAt(i);
@@ -737,26 +738,34 @@ afx_msg void CTDAppView::OnDrawSaveAs()
 			{
 				if (strcmp(pLayer->GetName().c_str(),fileName) == 0)
 				{
+					flag = true;
 					break;
 				}
 			}
 		}
-		Geodatabase::IWorkspace *pWorkspace = pLayer->GetDataObject()->GetWorkspace();
-		//开始编辑
-		bool srcState = pWorkspace->IsEditing();
-		if(srcState== false)
-			pWorkspace->StartEdit();
-		Geodatabase::IFeatureClassPtr pFeatureClass =  (Geodatabase::IFeatureClassPtr) pLayer->GetDataObject();
-		ipGraphicLayer->SaveElementAsShp(pFeatureClass,!Dlg.m_bExpoertAll,Dlg.m_DrawingType);
-
-		pWorkspace->StopEditOperation();
-		if(srcState == false)
-			pWorkspace->StopEdit(true);
-
-		if (Dlg.m_CheckAddMap)
+		if(flag)
 		{
-			this->GetDocument()->LoadShpFile(fileName);
-			RefreshLayerCombo();
+			Geodatabase::IWorkspace *pWorkspace = pLayer->GetDataObject()->GetWorkspace();
+			//开始编辑
+			bool srcState = pWorkspace->IsEditing();
+			if(srcState== false)
+				pWorkspace->StartEdit();
+			Geodatabase::IFeatureClassPtr pFeatureClass =  (Geodatabase::IFeatureClassPtr) pLayer->GetDataObject();
+			ipGraphicLayer->SaveElementAsShp(pFeatureClass,!Dlg.m_bExpoertAll,Dlg.m_DrawingType);
+
+			pWorkspace->StopEditOperation();
+			if(srcState == false)
+				pWorkspace->StopEdit(true);
+		}
+		else
+		{
+			ipGraphicLayer->SaveElementAsShp(fileName,!Dlg.m_bExpoertAll,Dlg.m_DrawingType);
+
+			if (Dlg.m_CheckAddMap)
+			{	
+				this->GetDocument()->LoadShpFile(fileName);
+				RefreshLayerCombo();
+			}
 		}
 		m_MapCtrl.UpdateControl((DrawContent)(drawElement | drawAll));
 		
