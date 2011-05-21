@@ -15,7 +15,7 @@ CDlgDrawingExport::CDlgDrawingExport(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgDrawingExport::IDD, pParent)
 	, m_ExportPath(_T(""))
 	, m_CheckAddMap(FALSE)
-	, m_bExpoertAll(false)
+	, m_bExpoertAll(true)
 {
 	
 }
@@ -54,9 +54,9 @@ BOOL CDlgDrawingExport::OnInitDialog()
 
 	m_CheckAddMap = TRUE;
 	//m_ExportPath ="D:\\expoert.shp";
-	m_bExpoertAll = false;
+	m_bExpoertAll = true;
 
-	CButton* pFusionType =(CButton*)GetDlgItem(IDC_RADIO_EXPOERT_SELECTED);
+	CButton* pFusionType =(CButton*)GetDlgItem(IDC_RADIO_EXPORT_ALL);
 	pFusionType->SetCheck(1);
 
 	this->UpdateData(false);
