@@ -172,6 +172,22 @@ public:
 
 	boost::signals::connection RegisterUpdateGeography(boost::function<void ()> fun);
 
+public:
+	//设置/获取活跃dc
+	void	get_ActiveCache(short& sIndex);
+	void	set_ActiveCache(short sIndex);
+	//添加缓存
+	void	AddCache(short& sCachId);
+	//移除缓存
+	void	RemoveCache(short sCachId);
+	//移除所有缓存
+	void	RemoveAllCaches();
+	//获取缓存个数
+	void	get_CacheCount(short& sCount);
+	//获取缓存
+	void	get_CacheMemDC(short sIndex, long* plHdc);
+	//绘制缓存
+	void	DrawCache(long lHdc, short sIndex, tagRECT& deviceRect, tagRECT& cacheRect);
 protected:
 	
 	//
