@@ -31,6 +31,8 @@
 #define IDB_ChangeDetect                177
 #define IDB_EDITORLARGE1                178
 #define IDB_EDITORSMALL                 178
+#define IDR_MENU1                       178
+#define IDR_COMMAND_MENU                178
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
@@ -100,6 +102,7 @@
 #define ID_ELEMENT_SEL                  32883
 #define ID_MAP_FULLVIEW                 32884
 #define ID_MAP_SRCVIEW                  32885
+#define ID_32886                        32886
 #define ID_MAPCTRL                      40000
 #define ID_LAYOUTCTRL                   40001
 #define ID_MAIN_BUTTON                  40002
@@ -157,8 +160,8 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        178
-#define _APS_NEXT_COMMAND_VALUE         32886
+#define _APS_NEXT_RESOURCE_VALUE        179
+#define _APS_NEXT_COMMAND_VALUE         32887
 #define _APS_NEXT_CONTROL_VALUE         1062
 #define _APS_NEXT_SYMED_VALUE           108
 #endif

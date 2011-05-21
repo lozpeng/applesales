@@ -72,34 +72,38 @@ void CSwipeCommand::Click()
 		oldBmp1 = pTempDC1.SelectObject(&bmp1);
 		oldBmp2 = pTempDC2.SelectObject(&bmp2);
 
-		//将屏幕内存DC上的图形拷贝到临时内存pTempDC1
-		pTempDC1.BitBlt(0,0,m_rect.Width(), m_rect.Height(),bakDC,0,0, SRCCOPY);
+		Carto::ILayerPtr pLayer = pMap->GetOperLayer();
 
-		//用背景色将位图清除干净，这里选择白色为背景。
-		FloodFill(pTempDC2.GetSafeHdc(), 0,0,RGB(255,255,255));
 
-		//将n-1层影像绘制到屏幕内存DC中的，drawTempObj临时位图中
-
-		//选择临时位图
-		pMap->GetDisplay()->SetDrawBuffer(drawTempObj);
-
-		long lMapLayerCount=m_MapLayers.GetSize();
-
-		if (lMapLayerCount>=2)
+		if (pLayer == pMap->GetActiveLayer())
 		{
-			Carto::ILayerPtr pLayer = pMap->GetOperLayer();
-			for (int i=0 ; i<m_MapLayers.GetSize() ; i++ )
+			//将屏幕内存DC上的图形拷贝到临时内存pTempDC1
+			pTempDC1.BitBlt(0,0,m_rect.Width(), m_rect.Height(),bakDC,0,0, SRCCOPY);
+
+			//用背景色将位图清除干净，这里选择白色为背景。
+			FloodFill(pTempDC2.GetSafeHdc(), 0,0,RGB(255,255,255));
+
+			//将n-1层影像绘制到屏幕内存DC中的，drawTempObj临时位图中
+
+			//选择临时位图
+			pMap->GetDisplay()->SetDrawBuffer(drawTempObj);
+
+			long lMapLayerCount=m_MapLayers.GetSize();
+
+			if (lMapLayerCount>=2)
 			{
-				if (pLayer != m_MapLayers.GetAt(i))
+				for (int i=0 ; i<m_MapLayers.GetSize() ; i++ )
 				{
-					m_MapLayers[i]->Draw( m_display , drawGeography );
+					if (pLayer != m_MapLayers.GetAt(i))
+					{
+						m_MapLayers[i]->Draw( m_display , drawGeography );
+					}
 				}
+				//将屏幕内存DC上的图形拷贝到临时内存pTempDC2
+				::BitBlt(pTempDC2.GetSafeHdc(),0,0,m_rect.Width(), m_rect.Height(),hdc,0,0,SRCCOPY);
 			}
-			//将屏幕内存DC上的图形拷贝到临时内存pTempDC2
-			::BitBlt(pTempDC2.GetSafeHdc(),0,0,m_rect.Width(), m_rect.Height(),hdc,0,0,SRCCOPY);
+
 		}
-
-
 		enhangceDlg->SetGeoMap(&pMap,m_display,pMapCtrl);
 		enhangceDlg->SetGeoMapDCs(&pTempDC1,&pTempDC2,m_rect,hdc);
 		enhangceDlg->DoModal();

@@ -612,4 +612,4 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 
 
-// RIBBON_APP
+
