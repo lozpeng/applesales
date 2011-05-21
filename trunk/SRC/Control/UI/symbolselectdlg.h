@@ -94,6 +94,7 @@ private:
 	CString m_SymbolName;
 	CButton m_btOk;
 	bool m_bFind;
+	CString m_strSymFile;
 public:
 	afx_msg void OnNMClickListSymbol(NMHDR *pNMHDR, LRESULT *pResult);
 };

@@ -306,11 +306,30 @@ bool CDlgSymbolSelect::InstallSymbol(char * pStrName)
 void CDlgSymbolSelect::OnBnClickedSavesymbol()
 {
 	// 保存代码到库中去
-	CRect rc;
-	GetDlgItem(IDC_SAVESYMBOL)->GetWindowRect(&rc);
-	m_SymAddMenu->TrackPopupMenu( TPM_LEFTALIGN |TPM_RIGHTBUTTON, rc.left, 
-		rc.bottom, this);
+	//CRect rc;
+	//GetDlgItem(IDC_SAVESYMBOL)->GetWindowRect(&rc);
+	//m_SymAddMenu->TrackPopupMenu( TPM_LEFTALIGN |TPM_RIGHTBUTTON, rc.left, 
+	//	rc.bottom, this);
+	CSymbolLibLoader* pSymLib = new CSymbolLibLoader();
+	pSymLib->OpenDatabase(m_strSymFile.GetBuffer());
+	if( pSymLib->AddSymbol( m_pSymbol ) )
+		::MessageBox(this->m_hWnd , "符号保存成功！" , "提示", MB_OK );
+	else
+		::MessageBox(this->m_hWnd , "符号保存失败：是否与现有符号重名？" , "警告", MB_OK );
 
+	//for (int i=0; i<SymLibs.size(); ++i)
+	//{
+	//	delete SymLibs[i];
+	//	SymLibs[i] = NULL;
+	//}
+	//SymLibs.clear();
+
+	SymLibs.push_back(pSymLib);
+
+	InstallSymbol();
+
+
+	UpdateData(FALSE);
 }
 
 void CDlgSymbolSelect::OnLvnItemchangedListSymbol(NMHDR *pNOTDR, LRESULT *pResult)
@@ -359,10 +378,12 @@ void CDlgSymbolSelect::InitData(void)
 	CString strSymbol = strPath + "\symbol\\symbol.mdb";
 	CSymbolLibLoader* pSymLib = new CSymbolLibLoader();
 	pSymLib->OpenDatabase(strSymbol.GetBuffer());
+	m_strSymFile = strSymbol;
 	SymLibs.push_back(pSymLib);
 	m_SymList.SetImageSize( 50 );
 	InstallSymbol();
 	UpdateData(FALSE);
+
 	//SYSTEM::CXMLConfiguration::Initialize();
 	////得到程序所在路径
 	//DWORD dwRet = ::GetModuleFileName( NULL , m_cPath , 512 );
