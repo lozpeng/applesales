@@ -152,8 +152,8 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 			{
 				continue;
 			}
-			/*try
-			{*/
+			try
+			{
 				if(ppoly->getEnvelopeInternal()->intersects(pPolygon->getEnvelopeInternal()))
 				{
 					//Í¼ÐÎºÏ²¢
@@ -181,11 +181,11 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 					removeList.push_back(pElement);
 					
 				}
-			//}
-			/*catch(...)
+			}
+			catch(...)
 			{
-               int a =10;
-			}*/
+               
+			}
 
 
 

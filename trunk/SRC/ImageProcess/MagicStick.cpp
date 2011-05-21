@@ -119,20 +119,20 @@ GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,
 	Geometry *pGeometry =(Geometry*)GeometryFactory::getDefaultInstance()->createPolygon();
     Coordinate coord;
 
-	CoordVect *pcoords =new CoordVect(points.size()+1);
+	CoordVect *pcoords =new CoordVect(points.size());
 	for(int i=0;i<points.size();i++)
 	{
 		pDataset->PixelToWorld(lstartx+points[i].x,lstarty+points[i].y,&coord.x,&coord.y);
 		(*pcoords)[i] =coord;
 	}
-	(*pcoords)[points.size()] =(*pcoords)[0];
+	//(*pcoords)[points.size()] =(*pcoords)[0];
 
 	CoordinateSequence *coords = GeometryFactory::getDefaultInstance()->getCoordinateSequenceFactory()->create(pcoords);
 	LinearRing *pring = GeometryFactory::getDefaultInstance()->createLinearRing(coords);
 
 	((GEOMETRY::geom::Polygon*)pGeometry)->AddGeometry((Geometry*)pring);
 
-
+    
 
 	if(pRed)
 	{
@@ -150,9 +150,10 @@ GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,
 	double dcellx,dcelly;
 	pDataset->GetCellSize(&dcellx,&dcelly);
 	//简化Geometry
-	//GEOMETRY::geom::Geometry *prg =GEOMETRY::simplify::DouglasPeuckerSimplifier::simplify(pGeometry,dcellx*2)->clone();
+	//GEOMETRY::geom::Geometry *prg =GEOMETRY::simplify::DouglasPeuckerSimplifier::simplify(pGeometry,dcellx*2).release();
     
-	GEOMETRY::geom::Geometry *prg =(GEOMETRY::geom::Geometry*)simple((GEOMETRY::geom::Polygon*)pGeometry);
+	//GEOMETRY::geom::Geometry *prg =(GEOMETRY::geom::Geometry*)simple((GEOMETRY::geom::Polygon*)pGeometry);
+	GEOMETRY::geom::Geometry *prg =pGeometry->clone();
 	if(prg->PointCount()<=4)
 	{
         delete []prg;
@@ -163,7 +164,32 @@ GEOMETRY::geom::Polygon *MagicStick(Geodatabase::IRasterDataset* pDataset,int x,
         delete []pGeometry;
 	}
 	
+    prg->normalize();
+	//简化之后的结果可能是多多边形
+    if(prg->getGeometryTypeId()==GEOS_MULTIPOLYGON)
+	{
+		MultiPolygon* pMulPoly =dynamic_cast<MultiPolygon*>(prg);
+		//取最大的多边形
+		double darea,dmax=0;
+		int index =0;
+		for(int i=0;i<pMulPoly->getNumGeometries();i++)
+		{
+			darea =pMulPoly->GetGeometry(i)->getArea();
+			if(darea>dmax)
+			{
+				dmax =darea;
+				index =i;
+			}
+		}
+		prg =pMulPoly->GetGeometry(index)->clone();
+		delete pMulPoly;
+		if(prg->getGeometryTypeId()!=GEOS_POLYGON)
+		{
+			delete prg;
+			return NULL;
+		}
 
+	}
     return ((GEOMETRY::geom::Polygon*)prg);   
 
 	/*if(pGeometry->PointCount()<=4)
@@ -496,6 +522,7 @@ bool AreaIncrease(unsigned char *pRed,unsigned char *pGreen,unsigned char *pBlue
 	//设当前点为起始格网点
 	CurPoint.x=StartPoint.x;
 	CurPoint.y=StartPoint.y;
+	points.push_back(CurPoint);
 
 	//初始扫描方向为下方
 	BeginDirect=3;
@@ -602,10 +629,11 @@ bool AreaIncrease(unsigned char *pRed,unsigned char *pGreen,unsigned char *pBlue
 
 				}
 				//记录边界点
-				RecordPt.x =drawPt%lwidth;
+				/*RecordPt.x =drawPt%lwidth;
 				RecordPt.y =drawPt/lwidth;
-				points.push_back(RecordPt);
+				points.push_back(RecordPt);*/
 
+				points.push_back(CurPoint);
 				//逆时针方向旋转1格
 				BeginDirect++;
 				if(BeginDirect==4)
