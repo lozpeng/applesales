@@ -544,6 +544,32 @@ void IDisplay::CacheBuffer(long lWidth, long lHeight)
 	m_pDC->CacheBitmap(lWidth,lHeight);
 }
 
+void IDisplay::get_ActiveCache(short& sIndex)
+{
+}
+void IDisplay::set_ActiveCache(short sIndex)
+{
+}
+void IDisplay::AddCache(short& sCachId)
+{
+}
+void IDisplay::RemoveCache(short sCachId)
+{
+}
+void IDisplay::RemoveAllCaches()
+{
+}
+void IDisplay::get_CacheCount(short& sCount)
+{
+
+}
+void IDisplay::get_CacheMemDC(short sIndex, long* plHdc)
+{
+}
+void IDisplay::DrawCache(long lHdc, short sIndex, tagRECT& deviceRect, tagRECT& cacheRect)
+{
+}
+
 void IDisplay::SetPrinting(BOOL bPrint)
 {
 	m_bPrint = bPrint;
