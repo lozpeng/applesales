@@ -187,7 +187,7 @@ void CTDAppDoc::OnOpenProject()
 	{
 		return;
 	}
-	ClearProject();
+	
 
 
 	CString csFileName(_T("*.proj"));
@@ -195,6 +195,7 @@ void CTDAppDoc::OnOpenProject()
 	CFileDialog dlg(TRUE, "proj", csFileName, OFN_HIDEREADONLY, csFilter);
 	if( IDOK == dlg.DoModal() )
 	{	
+		ClearProject();
 		CString csPath = dlg.GetPathName();
 
 		if(csPath.Compare("") == 0)
@@ -217,11 +218,12 @@ void CTDAppDoc::OnOpenProject()
 		//Ë¢ÐÂÊÓÍ¼
 		m_pLinkMapTree->RefreshFromDoc();
 		m_linkMapCtrl->UpdateControl(drawAll);
+		POSITION pos =GetFirstViewPosition();
+		CTDAppView *pView =(CTDAppView*)this->GetNextView(pos);
+		pView->RefreshLayerCombo();
 	}
 
-	POSITION pos =GetFirstViewPosition();
-	CTDAppView *pView =(CTDAppView*)this->GetNextView(pos);
-	pView->RefreshLayerCombo();
+	
 }
 
 
