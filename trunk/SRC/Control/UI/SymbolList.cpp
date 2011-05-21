@@ -46,6 +46,10 @@ void CSymbolList::AddSymbolArray(CString Name, vector<Display::ISymbolPtr>& pSym
 	CDC *dc;
 	dc = GetDC();
 	CDC MemDC;
+	if(m_Bitmap.m_hObject)
+	{
+		m_Bitmap.DeleteObject();
+	}
 	m_Bitmap.CreateCompatibleBitmap(dc,m_LegendSize*pSymbolArray.size(),m_LegendSize);
 
 	MemDC.CreateCompatibleDC(dc);
@@ -88,6 +92,7 @@ void CSymbolList::AddSymbolArray(CString Name, vector<Display::ISymbolPtr>& pSym
 	delete pDrawDC;
 
 	MemDC.SelectObject(pOldBmp);
+	MemDC.DeleteDC();
 	
 	ReleaseDC(dc);
 	m_SymbolImage->Add( &m_Bitmap, RGB(255,254,253));
@@ -98,6 +103,62 @@ void CSymbolList::AddSymbolArray(CString Name, vector<Display::ISymbolPtr>& pSym
 		int iItem = InsertItem(  oldCount+i, pSymbolArray[i]->GetLabel().c_str() , oldCount+i);
 		SetItemData( iItem , (DWORD)pSymbolArray[i].get() );
 	}
+}
+void CSymbolList::AddSymbol(CString Name, Display::ISymbolPtr pInSymbol)
+{
+	CDC *dc;
+	dc = GetDC();
+	CDC MemDC;
+	if(m_Bitmap.m_hObject)
+	{
+		m_Bitmap.DeleteObject();
+	}
+	m_Bitmap.CreateCompatibleBitmap(dc,m_LegendSize,m_LegendSize);
+
+	MemDC.CreateCompatibleDC(dc);
+	CBitmap *pOldBmp=(CBitmap *)MemDC.SelectObject(&m_Bitmap);
+	RECT rc1;
+	rc1.top=rc1.left=0;
+	rc1.right=m_LegendSize;
+	rc1.bottom=m_LegendSize;
+	CBrush brush(RGB(255,255,255));
+	MemDC.FillRect( &rc1, &brush );
+	brush.DeleteObject();
+
+	Display::CDC *pDrawDC =new Display::CDC();
+	pDrawDC->SetDC((long)MemDC.GetSafeHdc(), rc1.right, rc1.bottom);
+
+
+	DIS_RECT rc;
+	rc.top = rc.left = 0;
+	rc.right = rc.bottom = m_LegendSize;
+	HRGN hr = 0;
+
+	Display::ISymbolPtr pSymbol;
+
+	hr=CreateRectRgn(rc.left,rc.top,rc.right,rc.bottom);
+	SelectClipRgn(MemDC.GetSafeHdc(),hr);
+	pSymbol =pInSymbol->Clone() ;
+	pSymbol->SelectDC(pDrawDC);
+	pSymbol->SetReadyDraw();
+
+	//Í¨¹ý·ûºÅ»æÖÆÍ¼Àý
+	pSymbol->DrawLegend(&rc,0);
+
+	SelectClipRgn(MemDC.GetSafeHdc(),NULL);
+	if(hr!=0)
+		DeleteObject(hr);
+	delete pDrawDC;
+
+	MemDC.SelectObject(pOldBmp);
+	MemDC.DeleteDC();
+
+	ReleaseDC(dc);
+	int iImge = m_SymbolImage->Add( &m_Bitmap, RGB(255,254,253));
+
+	long lItemCont = GetItemCount();
+	int iItem = InsertItem(  lItemCont, pSymbol->GetLabel().c_str() , iImge);
+	SetItemData( iItem , (DWORD)pSymbol.get() );
 }
 
 void CSymbolList::SetImageSize(int Size)
