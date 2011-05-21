@@ -317,16 +317,16 @@ void CDlgSymbolSelect::OnBnClickedSavesymbol()
 	else
 		::MessageBox(this->m_hWnd , "符号保存失败：是否与现有符号重名？" , "警告", MB_OK );
 
-	//for (int i=0; i<SymLibs.size(); ++i)
-	//{
-	//	delete SymLibs[i];
-	//	SymLibs[i] = NULL;
-	//}
-	//SymLibs.clear();
+	for (int i=0; i<SymLibs.size(); ++i)
+	{
+		delete SymLibs[i];
+		SymLibs[i] = NULL;
+	}
+	SymLibs.clear();
 
 	SymLibs.push_back(pSymLib);
 
-	InstallSymbol();
+	m_SymList.AddSymbol(pSymLib->GetName(), m_pSymbol);
 
 
 	UpdateData(FALSE);

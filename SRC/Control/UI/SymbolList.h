@@ -16,6 +16,7 @@ public:
 public:
 
 	void AddSymbolArray(CString Name, vector<Display::ISymbolPtr>& m_pSymbolArray);
+	void AddSymbol(CString Name, Display::ISymbolPtr pSymbol);
 	void SetImageSize(int Size);
 	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 protected:
