@@ -33,7 +33,7 @@ bool CProgressBar::Create(const char *title, SYSTEM::IProgress::ProgressMode mod
 	{
 		pBar->SetProgressRange(ltotal,false);
 	}
-	
+	pBar->SetWindowText(title);
 	pBar->ShowWindow(SW_SHOW);
 	m_pBar =pBar;
 	return bSuc;

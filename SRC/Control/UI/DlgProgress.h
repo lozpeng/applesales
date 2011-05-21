@@ -28,7 +28,7 @@ public:
    void UpdateSetp();
 
 public:
-	CGradientProgressCtrl m_Progress;
+	CProgressCtrl m_Progress;
 	CString m_strTitle;
 
 	int m_nRange;
