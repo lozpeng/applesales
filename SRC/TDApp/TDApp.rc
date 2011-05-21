@@ -272,6 +272,14 @@ BEGIN
     END
 END
 
+IDR_COMMAND_MENU MENU 
+BEGIN
+    POPUP "消息菜单"
+    BEGIN
+        MENUITEM "闪烁",                          ID_RASLUT_EDIT
+    END
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -621,6 +629,11 @@ BEGIN
     ID_DRAW_MARKER          "绘制点"
     ID_DRAW_POLYGON         "绘制多边形"
     ID_DRAW_POLYLINE        "绘制折线"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_RASLUT_EDIT          "当前图层闪烁\n闪烁"
 END
 
 #endif    // 中文(中华人民共和国) resources

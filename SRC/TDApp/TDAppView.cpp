@@ -22,6 +22,7 @@
 #include <boost/bind.hpp>
 #include "Tool/MagicStickTool.h"
 #include "UI/ImageProcessTool.h"
+#include "ILayer.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -934,7 +935,7 @@ void CTDAppView::OnFlick()
 }
 void CTDAppView::OnUpdateFlick(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(IsLayerComboNull());
+	pCmdUI->Enable(IsLayerComboCurFirstVisual());
 }
 void CTDAppView::BrightContrast(int nBright,int nContrast)
 {
@@ -1008,6 +1009,37 @@ bool CTDAppView::IsLayerComboNull()
 	    return true;	
 	}
 	return false;
+}
+
+bool  CTDAppView::IsLayerComboCurFirstVisual()
+{
+	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
+	Carto::ILayerPtr pCurLyr = GetComboLayer();
+	if (NULL == pCurLyr)
+	{
+		return false;
+	}
+	BOOL bVisual = FALSE;
+	bVisual = pCurLyr->GetVisible();
+	if (!bVisual)
+	{
+		return false;
+	}
+	Carto::ILayerPtr pLyr = NULL;
+	for (int i=nSize - 1; i> -1; i--)
+	{
+		pLyr = m_MapCtrl.GetMap()->GetLayers().GetAt(i);
+		bVisual = pLyr->GetVisible();
+		if (bVisual && pLyr != pCurLyr)
+		{
+			return false;
+		}
+		else if (pLyr == pCurLyr)
+		{
+			break;
+		}
+	}
+	return true;
 }
 
 //通过指针查找图层的智能指针

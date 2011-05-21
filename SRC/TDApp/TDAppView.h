@@ -7,7 +7,7 @@
 
 #pragma once
 
-class CTDAppView : public CView
+class	 CTDAppView: public CView
 {
 protected: // create from serialization only
 	CTDAppView();
@@ -92,6 +92,7 @@ public:
 	Carto::ILayerPtr GetComboLayer_Vector();
 	void		RefreshLayerCombo();
 	bool		IsLayerComboNull();
+	bool        IsLayerComboCurFirstVisual();
 	void		BrightContrast(int nBright=-1,int nContrast=-1);
 	afx_msg void OnBrightRestore();
 	afx_msg void OnContrastRestore();

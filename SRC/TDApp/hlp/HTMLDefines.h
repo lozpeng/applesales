@@ -58,6 +58,7 @@
 #define HID_ELEMENT_SEL                         0x18073
 #define HID_MAP_FULLVIEW                        0x18074
 #define HID_MAP_SRCVIEW                         0x18075
+#define HID_32886                               0x18076
 #define HID_MAPCTRL                             0x19C40
 #define HID_LAYOUTCTRL                          0x19C41
 #define HID_MAIN_BUTTON                         0x19C42
@@ -123,6 +124,8 @@
 #define HIDR_POPUP_TOOLBAR                      0x20083
 #define HIDR_TOOLBAR_EXPLORER                   0x200A0
 #define HIDR_TOOLBAR_Drawing                    0x200A3
+#define HIDR_MENU1                              0x200B2
+#define HIDR_COMMAND_MENU                       0x200B2
  
 // Dialogs (IDD_*) 
 #define HIDD_ABOUTBOX                           0x20064
