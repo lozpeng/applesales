@@ -22,6 +22,7 @@ IDisplay::IDisplay()
 	m_bLayoutDis = FALSE;
 
 	m_bPrint = FALSE;
+	m_mapCaches.clear();
 }
 
 
@@ -32,7 +33,8 @@ IDisplay::~IDisplay()
 	{
 		delete m_pDC;
 		m_pDC = NULL;
-	}	
+	}
+	this->RemoveAllCaches();
 }
 
 SYSTEM::CSmartPtr<IDisplay> IDisplay::Clone()
@@ -542,6 +544,19 @@ void IDisplay::RefreshDisplay(long content)
 void IDisplay::CacheBuffer(long lWidth, long lHeight)
 {
 	m_pDC->CacheBitmap(lWidth,lHeight);
+
+	//重建内存位图
+	std::map<long,EP_CACHE*>::iterator it;
+	for (it=m_mapCaches.begin(); it!=m_mapCaches.end(); ++it)
+	{
+		EP_CACHE* pCache = it->second;
+		::SelectObject(pCache->hMemdc,pCache->oldBmp);
+		::DeleteObject(pCache->bmp);
+		pCache->bmp = ::CreateCompatibleBitmap(pCache->hMemdc, lWidth, lHeight); 
+		pCache->oldBmp = (HBITMAP)::SelectObject(pCache->hMemdc, pCache->bmp);
+	}
+
+
 }
 
 void IDisplay::get_ActiveCache(short& sIndex)
@@ -552,19 +567,77 @@ void IDisplay::set_ActiveCache(short sIndex)
 }
 void IDisplay::AddCache(short& sCachId)
 {
+	if (NULL == m_pDC)
+		return;
+
+	HDC hdc = (HDC)m_pDC->GetSafeHdc();
+	EP_CACHE* pCache = new EP_CACHE();
+	long lWidth = m_pDC->GetDCWidth();
+	long lHeight = m_pDC->GetDCHeight();
+
+	
+	pCache->hMemdc = ::CreateCompatibleDC(hdc);
+	pCache->bmp = ::CreateCompatibleBitmap(pCache->hMemdc, lWidth, lHeight); 
+	pCache->oldBmp = (HBITMAP)::SelectObject(pCache->hMemdc, pCache->bmp);
+
+	long id = 0;
+	int nSize = m_mapCaches.size();
+	if (nSize > 0)
+	{
+		std::map<long,EP_CACHE*>::iterator it;
+		it = m_mapCaches.end();
+		it--;
+		id = it->first + 1;
+	}
+	typedef std::pair< long , EP_CACHE*>  Cache_Pair;
+	m_mapCaches.insert(Cache_Pair(id,pCache));
+
+	sCachId = id;
 }
 void IDisplay::RemoveCache(short sCachId)
 {
+	std::map<long,EP_CACHE*>::iterator it;
+	for (it=m_mapCaches.begin(); it!=m_mapCaches.end(); ++it)
+	{
+		if (it->first == sCachId)
+		{
+			EP_CACHE* pCache = it->second;
+			::SelectObject(pCache->hMemdc,pCache->oldBmp);
+			::DeleteObject(pCache->bmp);
+			::DeleteDC(pCache->hMemdc);
+			delete pCache;
+			pCache = NULL;
+			m_mapCaches.erase(it);
+		}
+	}
+
 }
 void IDisplay::RemoveAllCaches()
 {
+	std::map<long,EP_CACHE*>::iterator it;
+	for (it=m_mapCaches.begin(); it!=m_mapCaches.end(); ++it)
+	{
+		RemoveCache(it->first);
+	}
+
 }
 void IDisplay::get_CacheCount(short& sCount)
 {
-
+	sCount = m_mapCaches.size(); 
 }
 void IDisplay::get_CacheMemDC(short sIndex, long* plHdc)
 {
+	std::map<long,EP_CACHE*>::iterator it;
+	for (it=m_mapCaches.begin(); it!=m_mapCaches.end();++it)
+	{
+		if (sIndex == it->first)
+		{
+			EP_CACHE* pCache = m_mapCaches[sIndex];
+			*plHdc = (long)pCache->hMemdc;
+		}
+	}
+	*plHdc = 0;
+
 }
 void IDisplay::DrawCache(long lHdc, short sIndex, tagRECT& deviceRect, tagRECT& cacheRect)
 {

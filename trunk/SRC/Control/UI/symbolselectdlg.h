@@ -82,7 +82,7 @@ private:
 	CSymbolPreviewButton m_SymButton;
 	CMenu * m_SymbolLibMenu, *m_SymAddMenu;
 	CImageList	m_cSymbolImageList;
-	vector<CSymbolLibLoader*> SymLibs;
+	SYSTEM::CArray<CSymbolLibLoader> SymLibs;
 	Display::ISymbolPtr m_pSymbol;
     Display::ISymbolPtr m_pcopySymbol;
 	int m_nSelect;
@@ -94,7 +94,6 @@ private:
 	CString m_SymbolName;
 	CButton m_btOk;
 	bool m_bFind;
-	CString m_strSymFile;
 public:
 	afx_msg void OnNMClickListSymbol(NMHDR *pNMHDR, LRESULT *pResult);
 };

@@ -169,6 +169,10 @@
 #define IDC_RADIO_UD                    32851
 #define IDC_RADIO_LR                    32852
 #define IDC_STATIC1                     32853
+#define ID_SYMBOLRANGSTART              32800
+#define ID_SYMBOLRANGEND                32820
+#define ID_ADDSYMBOLRANGSTART           32830
+#define ID_ADDSYMBOLRANGEND             32850
 
 // Next default values for new objects
 // 

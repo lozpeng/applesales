@@ -4,10 +4,9 @@
 #include "stdafx.h"
 #include "SymbolSelectdlg.h"
 #include "DlgSymbolEdit.h"
-//#include "DlgTextSymbolEdit.h"
-#include "SymbolFactory.h"
 #include "IComplexSymbol.h"
 #include "IExtSymbol.h"
+#include "SymbolFactory.h"
 // CDlgSymbolSelect 对话框
 
 IMPLEMENT_DYNAMIC(CDlgSymbolSelect, CDialog)
@@ -35,12 +34,8 @@ CDlgSymbolSelect::~CDlgSymbolSelect()
 	{
 		delete m_SymAddMenu;
 	}
-	for (int i=0; i<SymLibs.size(); ++i)
-	{
-		delete SymLibs[i];
-		SymLibs[i] = NULL;
-	}
-	SymLibs.clear();
+	if( SymLibs.GetSize() != 0 )
+		SymLibs.RemoveAll();
 }
 
 void CDlgSymbolSelect::DoDataExchange(CDataExchange* pDX)
@@ -62,8 +57,8 @@ BEGIN_MESSAGE_MAP(CDlgSymbolSelect, CDialog)
 	ON_BN_CLICKED(IDC_BTN_OVERVIEW, &CDlgSymbolSelect::OnBnClickedBtnOverview)
 	ON_BN_CLICKED(IDOK, &CDlgSymbolSelect::OnBnClickedOk)
 	ON_BN_KILLFOCUS(IDC_BTN_OVERVIEW, OnBnKillfocusBtnOverview)
-	/*ON_COMMAND_RANGE(ID_SYMBOLRANGSTART, ID_ADDSYMBOLRANGEND, &CDlgSymbolSelect::OnSymbolMenuItems)
-	ON_UPDATE_COMMAND_UI_RANGE(ID_SYMBOLRANGSTART, ID_ADDSYMBOLRANGEND, &CDlgSymbolSelect::OnSymbolMenuItemsUI)*/
+	ON_COMMAND_RANGE(ID_SYMBOLRANGSTART, ID_ADDSYMBOLRANGEND, &CDlgSymbolSelect::OnSymbolMenuItems)
+	ON_UPDATE_COMMAND_UI_RANGE(ID_SYMBOLRANGSTART, ID_ADDSYMBOLRANGEND, &CDlgSymbolSelect::OnSymbolMenuItemsUI)
 	ON_BN_CLICKED(IDC_SAVESYMBOL, OnBnClickedSavesymbol)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_SYMBOL, OnLvnItemchangedListSymbol)
 	ON_EN_CHANGE(IDC_SYMNAME, OnEnChangeSymname)
@@ -77,10 +72,12 @@ END_MESSAGE_MAP()
 
 void CDlgSymbolSelect::OnBnClickedBtnSymbolEdit()
 {
+	//AfxGetApp()->DoWaitCursor(-1); 
+	////调用符号编辑
 
 	if(m_pSymbol->GetType() & TEXT_SYMBOL)
 	{
-	/*	CDlgTextSymbolEdit DlgEdit;
+		/*CDlgTextSymbolEdit DlgEdit;
 
 		DlgEdit.SetSymbol(m_pSymbol);
 
@@ -175,7 +172,7 @@ void CDlgSymbolSelect::SetSymbol(Display::ISymbolPtr pSymbol)
 
 void CDlgSymbolSelect::UpdateAddSymbolMenu()
 {
-	/*for( int i = m_SymAddMenu->GetMenuItemCount()-1 ; i >= 0 ; i-- )
+	for( int i = m_SymAddMenu->GetMenuItemCount()-1 ; i >= 0 ; i-- )
 		m_SymAddMenu->RemoveMenu( i, 0 );
 
 	for( unsigned int i = 0; i < m_SymbolLibMenu->GetMenuItemCount(); i++)
@@ -186,7 +183,7 @@ void CDlgSymbolSelect::UpdateAddSymbolMenu()
 			m_SymbolLibMenu->GetMenuString( ID_SYMBOLRANGSTART+i , label , 0 );
 			m_SymAddMenu->AppendMenu( MF_STRING , ID_ADDSYMBOLRANGSTART+i ,  label );
 		}
-	}*/
+	}
 }
 
 void CDlgSymbolSelect::OnBnKillfocusBtnOverview()
@@ -195,7 +192,7 @@ void CDlgSymbolSelect::OnBnKillfocusBtnOverview()
 }
 void CDlgSymbolSelect:: OnOpenSymbolLibMenuItems(UINT nID)
 {
-	/*CFileDialog fileDlg(TRUE,"*.mdb","*.mdb");
+	CFileDialog fileDlg(TRUE,"*.mdb","*.mdb");
 
 	if( fileDlg.DoModal() != IDOK)
 		return;
@@ -220,17 +217,20 @@ void CDlgSymbolSelect:: OnOpenSymbolLibMenuItems(UINT nID)
 	SYSTEM::XMLConfigurationPtr ptrParser = Display::GetSymbolRenderConfig();
 	if(ptrParser == NULL)
 	{
+		//ErrorLog("Get symbolrender node failed.");
 		return;
 	}
 
 	SYSTEM::IConfigItemPtr pDisplayItem = ptrParser->GetChildByName("Display");
 	if( pDisplayItem == NULL ) 
 	{
+	//	ErrorLog("Get Display child failed in symbol file, maybe the file is wrong.");
 		return ;
 	}
 	SYSTEM::IConfigItemPtr pSymbolLibConfig = pDisplayItem->GetChildByName("SymbolLibConfig");
 	if( pSymbolLibConfig == NULL ) 
 	{
+	//	ErrorLog("Get SymbolLibConfig child failed in otSymbolRender.xml \n maybe the file is wrong.");
 		return ;
 	}
 
@@ -238,65 +238,65 @@ void CDlgSymbolSelect:: OnOpenSymbolLibMenuItems(UINT nID)
 	SymbolLib->AddAttribute( "Name" ,strName.GetBuffer() );
 	SymbolLib->AddAttribute( "SymbolPathName" ,strPath.GetBuffer());	
 
-	InitData();*/
+	InitData();
 
 }
 void CDlgSymbolSelect::OnAddSymbolMenuItems(UINT nID)
 {
 	// 添加符号到库
-	//long index = nID - ID_ADDSYMBOLRANGSTART;
-	// CSymbolLibLoader &slib = SymLibs[index];
-	//if( slib.AddSymbol( m_pSymbol ) )
-	//	::MessageBox(this->m_hWnd , "符号保存成功！" , "提示", MB_OK );
-	//else
-	//	::MessageBox(this->m_hWnd , "符号保存失败：是否与现有符号重名？" , "警告", MB_OK );
+	long index = nID - ID_ADDSYMBOLRANGSTART;
+	 CSymbolLibLoader &slib = SymLibs[index];
+	if( slib.AddSymbol( m_pSymbol ) )
+		::MessageBox(this->m_hWnd , "符号保存成功！" , "提示", MB_OK );
+	else
+		::MessageBox(this->m_hWnd , "符号保存失败：是否与现有符号重名？" , "警告", MB_OK );
 }
 
 void CDlgSymbolSelect::OnSymbolMenuItems(UINT nID )
 {
-	//if( nID > 0 )
-	//{
-	//	m_nMenuID = nID;
-	//}
+	if( nID > 0 )
+	{
+		m_nMenuID = nID;
+	}
 
-	//if( nID > ID_SYMBOLRANGEND )
-	//{
-	//	OnAddSymbolMenuItems( nID );
-	//	InstallSymbol();
-	//	return;
-	//}
-	//if( nID == ID_SYMBOLRANGEND )
-	//{
-	//	OnOpenSymbolLibMenuItems( nID );
-	//	return;
-	//}
-	//UINT index = nID - ID_SYMBOLRANGSTART;
-	//m_nSelect = index;
-	//InitData();
+	if( nID > ID_SYMBOLRANGEND )
+	{
+		OnAddSymbolMenuItems( nID );
+		InstallSymbol();
+		return;
+	}
+	if( nID == ID_SYMBOLRANGEND )
+	{
+		OnOpenSymbolLibMenuItems( nID );
+		return;
+	}
+	UINT index = nID - ID_SYMBOLRANGSTART;
+	m_nSelect = index;
+	InitData();
 
 }
 
 void CDlgSymbolSelect::OnSymbolMenuItemsUI(CCmdUI *pCmdUI)
 {
-	/*if( pCmdUI->m_nID > ID_SYMBOLRANGEND )
+	if( pCmdUI->m_nID > ID_SYMBOLRANGEND )
 		return;
 	if( pCmdUI->m_nID == ID_SYMBOLRANGEND )
 		return;
 
-	pCmdUI->SetCheck( SymLibs[pCmdUI->m_nIndex].bVisible );*/
+	pCmdUI->SetCheck( SymLibs[pCmdUI->m_nIndex].bVisible );
 }
 bool CDlgSymbolSelect::InstallSymbol(char * pStrName)
 {
 
 	m_SymList.DelListCtrl();
-	for (long i = 0 ; i < SymLibs.size() ; i++)
+	for (long i = 0 ; i < SymLibs.GetSize() ; i++)
 	{
-		if( SymLibs[i]->bVisible )
+		if( SymLibs[i].bVisible )
 		{
 			if( pStrName == NULL )
-				m_SymList.AddSymbolArray( SymLibs[i]->GetName() , SymLibs[i]->QuerySymbols("",m_pSymbol->GetType()));
+				m_SymList.AddSymbolArray( SymLibs[i].GetName() , SymLibs[i].QuerySymbols("",m_pSymbol->GetType()));
 			else 
-				m_SymList.AddSymbolArray( SymLibs[i]->GetName() , SymLibs[i]->QuerySymbols( pStrName ,m_pSymbol->GetType()));
+				m_SymList.AddSymbolArray( SymLibs[i].GetName() , SymLibs[i].QuerySymbols( pStrName ,m_pSymbol->GetType()));
 		}
 	}
 	return false;
@@ -306,30 +306,11 @@ bool CDlgSymbolSelect::InstallSymbol(char * pStrName)
 void CDlgSymbolSelect::OnBnClickedSavesymbol()
 {
 	// 保存代码到库中去
-	//CRect rc;
-	//GetDlgItem(IDC_SAVESYMBOL)->GetWindowRect(&rc);
-	//m_SymAddMenu->TrackPopupMenu( TPM_LEFTALIGN |TPM_RIGHTBUTTON, rc.left, 
-	//	rc.bottom, this);
-	CSymbolLibLoader* pSymLib = new CSymbolLibLoader();
-	pSymLib->OpenDatabase(m_strSymFile.GetBuffer());
-	if( pSymLib->AddSymbol( m_pSymbol ) )
-		::MessageBox(this->m_hWnd , "符号保存成功！" , "提示", MB_OK );
-	else
-		::MessageBox(this->m_hWnd , "符号保存失败：是否与现有符号重名？" , "警告", MB_OK );
+	CRect rc;
+	GetDlgItem(IDC_SAVESYMBOL)->GetWindowRect(&rc);
+	m_SymAddMenu->TrackPopupMenu( TPM_LEFTALIGN |TPM_RIGHTBUTTON, rc.left, 
+		rc.bottom, this);
 
-	for (int i=0; i<SymLibs.size(); ++i)
-	{
-		delete SymLibs[i];
-		SymLibs[i] = NULL;
-	}
-	SymLibs.clear();
-
-	SymLibs.push_back(pSymLib);
-
-	m_SymList.AddSymbol(pSymLib->GetName(), m_pSymbol);
-
-
-	UpdateData(FALSE);
 }
 
 void CDlgSymbolSelect::OnLvnItemchangedListSymbol(NMHDR *pNOTDR, LRESULT *pResult)
@@ -354,170 +335,177 @@ void CDlgSymbolSelect::OnEnChangeSymname()
 
 void CDlgSymbolSelect::OnBnClickedSymbolfind()
 {
-	/*this->GetDlgItemText( IDC_SYMKEY , m_SymKeyString );
+	this->GetDlgItemText( IDC_SYMKEY , m_SymKeyString );
 	if( m_SymKeyString.IsEmpty() )
 		::MessageBox( this->m_hWnd , "字符串不能为空" , "警告" , MB_OK );
 	int i=m_nMenuID - ID_SYMBOLRANGSTART;
 	InstallSymbol(m_SymKeyString.GetBuffer());
 	m_SymKeyString = "";
 	SetDlgItemText(IDC_SYMKEY ,m_SymKeyString );
-	m_bFind = true;*/
+	m_bFind = true;
 }
 
 void CDlgSymbolSelect::InitData(void)
 {
-	char szTempPath[_MAX_PATH] = "";
-	char szTemp[_MAX_PATH] = "";
-	char szDriver[_MAX_DRIVE] = "";
-	char szDir[_MAX_DIR] = "";
-	GetModuleFileName (::AfxGetApp()->m_hInstance, szTemp, MAX_PATH);
-	_splitpath(szTemp, szDriver, szDir, NULL, NULL);
-	_makepath(szTempPath, szDriver, szDir, NULL, NULL);
 
-	CString strPath(szTempPath);
-	CString strSymbol = strPath + "\symbol\\symbol.mdb";
-	CSymbolLibLoader* pSymLib = new CSymbolLibLoader();
-	pSymLib->OpenDatabase(strSymbol.GetBuffer());
-	m_strSymFile = strSymbol;
-	SymLibs.push_back(pSymLib);
+	SYSTEM::CXMLConfiguration::Initialize();
+	//得到程序所在路径
+	DWORD dwRet = ::GetModuleFileName( NULL , m_cPath , 512 );
+	int i;
+	for( i = strlen(m_cPath)-1 ; i >= 0 && m_cPath[i] !='\\' ; i-- );
+	m_cPath[i+1] = '\0';
+
+	if(dwRet==0)
+	{
+		::MessageBox(this->m_hWnd , "得到当前路径错误" , "警告", MB_OK );
+		return ;
+	}
+	if(dwRet > 512)
+	{
+		::MessageBox(this->m_hWnd , "路径过长，建议路径字符不超过500个字！" , "警告", MB_OK );
+		return ;
+	}
+
+	if( SymLibs.GetSize() != 0 )
+	{
+		SymLibs.RemoveAll();
+	}
+	if( m_SymbolLibMenu != NULL )
+	{
+		delete m_SymbolLibMenu;
+		m_SymbolLibMenu = new CMenu;
+	}
+	else
+	{
+		m_SymbolLibMenu = new CMenu;
+	}
+	if( m_SymAddMenu != NULL )
+	{
+		delete m_SymAddMenu;
+		m_SymAddMenu = new CMenu;
+	}
+	else
+	{
+		m_SymAddMenu = new CMenu;
+	}
+	m_SymbolLibMenu->CreatePopupMenu();
+	m_SymAddMenu->CreatePopupMenu();
+
 	m_SymList.SetImageSize( 50 );
-	InstallSymbol();
-	UpdateData(FALSE);
 
-	//SYSTEM::CXMLConfiguration::Initialize();
-	////得到程序所在路径
-	//DWORD dwRet = ::GetModuleFileName( NULL , m_cPath , 512 );
-	//int i;
-	//for( i = strlen(m_cPath)-1 ; i >= 0 && m_cPath[i] !='\\' ; i-- );
-	//m_cPath[i+1] = '\0';
+	SYSTEM::XMLConfigurationPtr ptrParser = Display::GetSymbolRenderConfig();
+	if(ptrParser == NULL)
+	{
+//		ErrorLog("Get symbolrender node failed.");
+		return;
+	}
 
-	//if(dwRet==0)
-	//{
-	//	::MessageBox(this->m_hWnd , "得到当前路径错误" , "警告", MB_OK );
-	//	return ;
-	//}
-	//if(dwRet > 512)
-	//{
-	//	::MessageBox(this->m_hWnd , "路径过长，建议路径字符不超过500个字！" , "警告", MB_OK );
-	//	return ;
-	//}
+	SYSTEM::IConfigItemPtr pDisplayItem = ptrParser->GetChildByName("Display");
+	if( pDisplayItem == NULL ) 
+	{
+//		ErrorLog("Get Display child failed in symbol file, maybe the file is wrong.");
+		return ;
+	}
+	SYSTEM::IConfigItemPtr pSymbolLibConfig = pDisplayItem->GetChildByName("SymbolLibConfig");
+	if( pSymbolLibConfig == NULL ) 
+	{
+//		ErrorLog("Get SymbolLibConfig child failed in otSymbolRender.xml \n maybe the file is wrong.");
+		return ;
+	}
 
-	//if( SymLibs.GetSize() != 0 )
-	//{
-	//	SymLibs.RemoveAll();
-	//}
-	//if( m_SymbolLibMenu != NULL )
-	//{
-	//	delete m_SymbolLibMenu;
-	//	m_SymbolLibMenu = new CMenu;
-	//}
-	//else
-	//{
-	//	m_SymbolLibMenu = new CMenu;
-	//}
-	//if( m_SymAddMenu != NULL )
-	//{
-	//	delete m_SymAddMenu;
-	//	m_SymAddMenu = new CMenu;
-	//}
-	//else
-	//{
-	//	m_SymAddMenu = new CMenu;
-	//}
-	//m_SymbolLibMenu->CreatePopupMenu();
-	//m_SymAddMenu->CreatePopupMenu();
+	SymLibs.SetSize( pSymbolLibConfig->GetChildCount() );
+	long nCount = pSymbolLibConfig->GetChildCount();
+	CString str, str1;
+	long index = 0;
+	for( long i = 0; i < nCount; i++)
+	{
+		SYSTEM::IConfigItemPtr pSymbolLibItem = pSymbolLibConfig->GetChilds(i);
+		str.Format( "%s" , pSymbolLibItem->GetProperties("SymbolPathName"));
+		int nFind = str.Find(":\\");
+		str1.Format("%s",m_cPath);
+		str1 += str;
+		if( nFind == -1 )
+		{
+			
+			if(!SymLibs[index].OpenDatabase( str1.GetBuffer() ))
+			{
+				SymLibs.RemoveAt(index);
+				continue;
+			}
+		}
+		else
+		{
+			
+			if(!SymLibs[index].OpenDatabase(pSymbolLibItem->GetProperties("SymbolPathName")))
+			{
+				SymLibs.RemoveAt(index);
+				continue;
+			}
+		}
 
+		if( m_nSelect == i )
+		{
 
-	//SYSTEM::XMLConfigurationPtr ptrParser = Display::GetSymbolRenderConfig();
-	//if(ptrParser == NULL)
-	//{
-	//	ErrorLog("Get symbolrender node failed.");
-	//	return;
-	//}
-
-	//SYSTEM::IConfigItemPtr pDisplayItem = ptrParser->GetChildByName("Display");
-	//if( pDisplayItem == NULL ) 
-	//{
-	//	ErrorLog("Get Display child failed in symbol file, maybe the file is wrong.");
-	//	return ;
-	//}
-	//SYSTEM::IConfigItemPtr pSymbolLibConfig = pDisplayItem->GetChildByName("SymbolLibConfig");
-	//if( pSymbolLibConfig == NULL ) 
-	//{
-	//	ErrorLog("Get SymbolLibConfig child failed in otSymbolRender.xml \n maybe the file is wrong.");
-	//	return ;
-	//}
-
-	//SymLibs.SetSize( pSymbolLibConfig->GetChildCount() );
-	//long nCount = pSymbolLibConfig->GetChildCount();
-	//CString str, str1;
-	//long index = 0;
-	//for( long i = 0; i < nCount; i++)
-	//{
-	//	SYSTEM::IConfigItemPtr pSymbolLibItem = pSymbolLibConfig->GetChilds(i);
-	//	str.Format( "%s" , pSymbolLibItem->GetProperties("SymbolPathName"));
-	//	int nFind = str.Find(":\\");
-	//	str1.Format("%s",m_cPath);
-	//	str1 += str;
-	//	if( nFind == -1 )
-	//	{
-	//		
-	//		if(!SymLibs[index].OpenDatabase( str1.GetBuffer() ))
-	//		{
-	//			SymLibs.RemoveAt(index);
-	//			continue;
-	//		}
-	//	}
-	//	else
-	//	{
-	//		
-	//		if(!SymLibs[index].OpenDatabase(pSymbolLibItem->GetProperties("SymbolPathName")))
-	//		{
-	//			SymLibs.RemoveAt(index);
-	//			continue;
-	//		}
-	//	}
-
-	//	if( m_nSelect == i )
-	//	{
-
-	//		m_SymbolLibMenu->AppendMenu( MF_CHECKED | MF_STRING , ID_SYMBOLRANGSTART+index , pSymbolLibItem->GetProperties("Name") );
-	//	}
-	//	else
-	//	{
-	//		m_SymbolLibMenu->AppendMenu( MF_UNCHECKED | MF_STRING , ID_SYMBOLRANGSTART+index , pSymbolLibItem->GetProperties("Name") );
-	//		SymLibs[ index ].bVisible = FALSE;
-	//	}
-	//	index++;
-	//}
-	//if(SymLibs.GetSize() == 0)
-	//{
+			m_SymbolLibMenu->AppendMenu( MF_CHECKED | MF_STRING , ID_SYMBOLRANGSTART+index , pSymbolLibItem->GetProperties("Name") );
+		}
+		else
+		{
+			m_SymbolLibMenu->AppendMenu( MF_UNCHECKED | MF_STRING , ID_SYMBOLRANGSTART+index , pSymbolLibItem->GetProperties("Name") );
+			SymLibs[ index ].bVisible = FALSE;
+		}
+		index++;
+	}
+	if(SymLibs.GetSize() == 0)
+	{
 		//如果没有符号库，创建一个默认的符号库
-	//	SYSTEM::IConfigItemPtr pSymbolLib = pDisplayItem->GetChildByName("SymbolLib");
-	//	SymLibs.SetSize(1);
-	//	str.Format( "%s" , pSymbolLib->GetProperties("SymbolPathName"));
-	//	str1.Format("%s",m_cPath);
-	//	str1 +=str;
-	//	SymLibs[0].CreateDataBase(str1);
-	//	SymLibs[0].OpenDatabase(str1);
+		SYSTEM::IConfigItemPtr pSymbolLib = pDisplayItem->GetChildByName("SymbolLib");
+		SymLibs.SetSize(1);
+		str.Format( "%s" , pSymbolLib->GetProperties("SymbolPathName"));
+		str1.Format("%s",m_cPath);
+		str1 +=str;
+		SymLibs[0].CreateDataBase(str1);
+		SymLibs[0].OpenDatabase(str1);
+		if( m_nSelect == 0 )
+		{
+			m_SymbolLibMenu->AppendMenu( MF_CHECKED | MF_STRING , ID_SYMBOLRANGSTART , pSymbolLib->GetProperties("Name"));
+		}
+		else
+		{
+			m_SymbolLibMenu->AppendMenu( MF_UNCHECKED | MF_STRING , ID_SYMBOLRANGSTART , pSymbolLib->GetProperties("Name") );
+			SymLibs[ 0 ].bVisible = FALSE;
+		}
+	}
+
+ //   CString str =m_cPath;
+	//str+="symbol\\SybLib1.mdb";
+	////加载符号库,暂时指定了一个默认的符号库
+	//SymLibs.SetSize( 1 );
+	//
+	//if(SymLibs[0].OpenDatabase(str))
+	//{
 	//	if( m_nSelect == 0 )
 	//	{
-	//		m_SymbolLibMenu->AppendMenu( MF_CHECKED | MF_STRING , ID_SYMBOLRANGSTART , pSymbolLib->GetProperties("Name"));
+
+	//		m_SymbolLibMenu->AppendMenu( MF_CHECKED | MF_STRING , ID_SYMBOLRANGSTART, "符号库" );
 	//	}
 	//	else
 	//	{
-	//		m_SymbolLibMenu->AppendMenu( MF_UNCHECKED | MF_STRING , ID_SYMBOLRANGSTART , pSymbolLib->GetProperties("Name") );
+	//		m_SymbolLibMenu->AppendMenu( MF_UNCHECKED | MF_STRING , ID_SYMBOLRANGSTART , "符号库" );
 	//		SymLibs[ 0 ].bVisible = FALSE;
 	//	}
 	//}
+	//else
+	//{
+ //        SymLibs[0].bVisible =FALSE;
+	//}
+		
+	m_SymbolLibMenu->AppendMenu( MF_SEPARATOR );
+	m_SymbolLibMenu->AppendMenu( MF_STRING , ID_SYMBOLRANGEND , "添加新符号库..." );
+	m_nMenuID =  ID_SYMBOLRANGSTART;
+	UpdateAddSymbolMenu();
 
-	//m_SymbolLibMenu->AppendMenu( MF_SEPARATOR );
-	//m_SymbolLibMenu->AppendMenu( MF_STRING , ID_SYMBOLRANGEND , "添加新符号库..." );
-	//m_nMenuID =  ID_SYMBOLRANGSTART;
-	//UpdateAddSymbolMenu();
-
-	//InstallSymbol();
-	//UpdateData(FALSE);
+	InstallSymbol();
+	UpdateData(FALSE);
 }
 
 
