@@ -534,8 +534,8 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	// 边缘提取
 	//--------------------------
-	CBCGPRibbonButton* pBtnEdge = new CBCGPRibbonButton (ID_EDGE_EXTRACT,_T("边界跟踪提取"), 0, 0);
-	pPanelHalfAuto->Add (pBtnEdge);
+	/*CBCGPRibbonButton* pBtnEdge = new CBCGPRibbonButton (ID_EDGE_EXTRACT,_T("边界跟踪提取"), 0, 0);
+	pPanelHalfAuto->Add (pBtnEdge);*/
 
 	//水体自动提取
 	CBCGPRibbonPanel* pPanelAuto = pCategory->AddPanel (_T("自动提取"));
@@ -563,8 +563,8 @@ void CMainFrame::AddTab_ChangeDetect()
 	//--------------------------
 	// 变化标识
 	//--------------------------
-	CBCGPRibbonButton* pBtnChangeRender = new CBCGPRibbonButton (ID_CHANGE_RENDER,_T("变化标识"), 9, 9);
-	pPanel->Add (pBtnChangeRender);
+	/*CBCGPRibbonButton* pBtnChangeRender = new CBCGPRibbonButton (ID_CHANGE_RENDER,_T("变化标识"), 9, 9);
+	pPanel->Add (pBtnChangeRender);*/
 
 
 	//--------------------------
