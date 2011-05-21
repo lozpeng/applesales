@@ -11,7 +11,12 @@
 namespace Display
 {
 
-	
+	struct EP_CACHE
+	{
+		HDC			hMemdc;
+		HBITMAP		bmp;
+		HBITMAP		oldBmp;
+	};
 
 class ISymbol;
 
@@ -193,7 +198,7 @@ protected:
 	//
 	bool bDraw;
 	COLORREF m_BgColor;
-
+	std::map<long,EP_CACHE*>			m_mapCaches;
 	//
 	CDisplayTransformation m_cDisplayTransformation;
 	Display::CDC* m_pDC;	
