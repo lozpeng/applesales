@@ -167,11 +167,12 @@ void CEditDlgManageControl::SetSymbol(Display::ISymbolPtr pSymbol)
 
 void CEditDlgManageControl::OnSymbolPropChanged( Display::ISymbolPtr newSymbol , CWnd *wnd )
 {
-	/*((Display::IComplexSymbolPtr)m_pComplexSymbol)->SetSymbol( m_ComplexSymbolLayerCL.GetSelect() , newSymbol );
+	((Display::IComplexSymbolPtr)m_pComplexSymbol)->SetSymbol( m_ComplexSymbolLayerCL.GetSelect() , newSymbol );
 	UpdateComplexSymbolLayerCtrl();
 
 	SetCopySymbol();
-	PostMessage( wnd->m_hWnd , WM_REPAINTLEGEND , 0 , 0 );*/
+
+	PostMessage( wnd->m_hWnd , WM_REPAINTLEGEND , 0 , 0 );
 }
 
 void CEditDlgManageControl::UpdateComplexSymbolLayerCtrl()
@@ -194,11 +195,11 @@ void CEditDlgManageControl::InitComplexSymbolLayerCtrl( void )
 
 void CEditDlgManageControl::ReSetSymboltoPropList(Display::ISymbolPtr newSymbol)
 {
-	/*SYMBOL_TYPE type = newSymbol->GetType();
+	SYMBOL_TYPE type = newSymbol->GetType();
 	PostMessage( m_pSymbolPropList->GetParent()->m_hWnd , WM_SETSYMBOLSTYLE , type , 0 );
 	PostMessage( m_pSymbolPropList->GetParent()->m_hWnd , WM_SETSYMBOLUNIT , newSymbol->GetUnit()  , 0 );
 	m_pSymbolPropList->InitSymbolPropList( type );
-	m_pSymbolPropList->SetSymbol( newSymbol );*/
+	m_pSymbolPropList->SetSymbol( newSymbol );
 }
 
 void  CEditDlgManageControl::ResetSymboltoLengend(Display::ISymbolPtr newSymbol)

@@ -387,7 +387,7 @@ void CComplexSymbolLayerCtrl::UpDataCSLC(Display::ISymbolPtr pSymbol, SYMBOL_TYP
 
 void CComplexSymbolLayerCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	/*UINT uFlags = 0;
+	UINT uFlags = 0;
 	LPNMITEMACTIVATE phdr = reinterpret_cast< LPNMITEMACTIVATE >( pNMHDR );
 	POINT 	point;
 	bool bSet;
@@ -417,7 +417,7 @@ void CComplexSymbolLayerCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 			m_IComplexSymbolLayerCtrl->SetPropList( phdr->iItem );
 		::SendMessage(GetParent()->m_hWnd , WM_REPAINTLEGEND , 0L , 0L );
 
-	}*/
+	}
 }
 
 void CComplexSymbolLayerCtrl::OnNMRclick(NMHDR *pNMHDR, LRESULT *pResult)
