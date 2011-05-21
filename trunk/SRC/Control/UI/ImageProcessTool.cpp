@@ -9,6 +9,8 @@
 #include "IMapCtrl.h"
 #include "ShapefileWorkspaceFactory.h"
 #include "IWorkspace.h"
+#include "ProgressBar.h"
+
 namespace Control
 {
 
@@ -18,8 +20,9 @@ void CImageProcessTool::ShowImgChangeDetectDlg()
 	 CDlgChangeDetect dlg;
 	 if(dlg.DoModal()==IDOK)
 	 {
+		 CProgressBar progress;
 		 ImageProcess::ImgChangeDetect detect;
-		 bool bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult,dlg.m_nSize,dlg.m_dCor);
+		 bool bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult,dlg.m_nSize,dlg.m_dCor,&progress);
 		 if(bsuc)
 		 {
              AfxMessageBox("¼ì²â³É¹¦");

@@ -1,5 +1,6 @@
 #pragma once
 #include "IRasterDataset.h"
+#include "IProgress.h"
 #include <vector>
 
 namespace ImageProcess
@@ -35,7 +36,7 @@ public:
 public:
 
 	//相关系数法
-	bool RelativeDetect(const char *strSrc,const char *strDest,const char *strResult,int nsize,double threshold);
+	bool RelativeDetect(const char *strSrc,const char *strDest,const char *strResult,int nsize,double threshold,SYSTEM::IProgress *pProgress);
 	//直方图方式
 	bool Detect_Hist         (long lIndexBand, int Num, int nIndexBlock, float* Vector);						//初次检测
 	bool Detect_Hist2        (long lIndexBand, int Num, int nIndexBlock, int nIndexSubBlock, float* Vector);
