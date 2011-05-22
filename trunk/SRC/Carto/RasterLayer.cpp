@@ -182,6 +182,16 @@ void CRasterLayer::Draw(Display::IDisplayPtr pDisplay, DRAW_CONTENT content)
 	{
 		return;
 	}
+	//Õº≤„ÀΩ”–ª∫¥Ê…Ë÷√
+	if (m_bCached)
+	{
+		if (m_sCachedId < 0)
+		{
+			pDisplay->AddCache(m_sCachedId);
+		}
+		pDisplay->set_ActiveCache(m_sCachedId);
+	}
+
 
 	//œ‘ æ±»¿˝≥ﬂ∑∂Œß
 	if (m_bScaleRange)
