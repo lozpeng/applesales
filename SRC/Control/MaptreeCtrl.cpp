@@ -1966,7 +1966,7 @@ void CMaptreeCtrl::ActiveLayer(HTREEITEM item)
 	}
 	m_hActLayerItem = layerItem;
 
-	pMapCtrl->UpdateControl(drawAll);		
+	//pMapCtrl->UpdateControl(drawAll);		
 
 }
 
