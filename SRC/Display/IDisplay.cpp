@@ -23,6 +23,7 @@ IDisplay::IDisplay()
 
 	m_bPrint = FALSE;
 	m_mapCaches.clear();
+	m_sActiveCache = 0;
 }
 
 
@@ -552,7 +553,7 @@ void IDisplay::CacheBuffer(long lWidth, long lHeight)
 		EP_CACHE* pCache = it->second;
 		::SelectObject(pCache->hMemdc,pCache->oldBmp);
 		::DeleteObject(pCache->bmp);
-		pCache->bmp = ::CreateCompatibleBitmap(pCache->hMemdc, lWidth, lHeight); 
+		pCache->bmp = ::CreateCompatibleBitmap(HDC(m_pDC->GetSafeHdc()), lWidth, lHeight); 
 		pCache->oldBmp = (HBITMAP)::SelectObject(pCache->hMemdc, pCache->bmp);
 	}
 
@@ -561,10 +562,12 @@ void IDisplay::CacheBuffer(long lWidth, long lHeight)
 
 void IDisplay::get_ActiveCache(short& sIndex)
 {
+		sIndex = m_sActiveCache;
 }
-void IDisplay::set_ActiveCache(short sIndex)
-{
-}
+	void IDisplay::set_ActiveCache(short sIndex)
+	{
+		m_sActiveCache = sIndex;
+	}
 void IDisplay::AddCache(short& sCachId)
 {
 	if (NULL == m_pDC)
@@ -577,7 +580,7 @@ void IDisplay::AddCache(short& sCachId)
 
 	
 	pCache->hMemdc = ::CreateCompatibleDC(hdc);
-	pCache->bmp = ::CreateCompatibleBitmap(pCache->hMemdc, lWidth, lHeight); 
+	pCache->bmp = ::CreateCompatibleBitmap(hdc, lWidth, lHeight); 
 	pCache->oldBmp = (HBITMAP)::SelectObject(pCache->hMemdc, pCache->bmp);
 
 	long id = 0;
@@ -636,11 +639,19 @@ void IDisplay::get_CacheMemDC(short sIndex, long* plHdc)
 			*plHdc = (long)pCache->hMemdc;
 		}
 	}
-	*plHdc = 0;
 
 }
 void IDisplay::DrawCache(long lHdc, short sIndex, tagRECT& deviceRect, tagRECT& cacheRect)
 {
+	std::map<long,EP_CACHE*>::iterator theIterator;
+	theIterator = m_mapCaches.find(sIndex);
+	if(theIterator == m_mapCaches.end())
+	{
+		return;
+	}
+	EP_CACHE* pCache = m_mapCaches[sIndex];
+	::BitBlt(HDC(lHdc), deviceRect.left,deviceRect.top,deviceRect.right-deviceRect.left,deviceRect.bottom-deviceRect.top,
+		pCache->hMemdc,cacheRect.left,cacheRect.top,SRCCOPY);
 }
 
 void IDisplay::SetPrinting(BOOL bPrint)

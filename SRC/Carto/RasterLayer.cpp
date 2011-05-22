@@ -12,6 +12,7 @@ CRasterLayer::CRasterLayer()
 {
 	m_layerType = RasterLayer;
 	m_blendDc=NULL;
+	m_bCached = true;
 
 }
 
@@ -193,6 +194,11 @@ void CRasterLayer::Draw(Display::IDisplayPtr pDisplay, DRAW_CONTENT content)
 
 		if (scaleValue > m_dScaleMax)
 			return;
+	}
+
+	if (m_bCached)
+	{
+		pDisplay->set_ActiveCache(m_sCachedId);
 	}
 
 	// Õº≤„ªÊ÷∆

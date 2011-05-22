@@ -199,6 +199,7 @@ protected:
 	bool bDraw;
 	COLORREF m_BgColor;
 	std::map<long,EP_CACHE*>			m_mapCaches;
+	short								m_sActiveCache;
 	//
 	CDisplayTransformation m_cDisplayTransformation;
 	Display::CDC* m_pDC;	

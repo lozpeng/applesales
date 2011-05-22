@@ -223,6 +223,14 @@ public:
 	*/
 	virtual CLegendInfoPtr GetLegendInfo();
 
+public:
+	
+	//获取/设置图层是否拥有自己独立的显示缓存
+	virtual void		get_Cached(bool& bCached);
+	virtual void		set_Cached(bool bCached);
+	//获取/设置图层缓存ID
+	virtual void		get_CacheId(short& sId);
+	virtual void		set_CacheId(short sId);
 
 
 protected:
@@ -257,6 +265,9 @@ protected:
 
 	//仿射变换
 	CAffineTransformPtr m_pAffineTransform;
+protected:
+	short				m_sCachedId;			//缓存ID
+	bool				m_bCached;				//图层是否拥有缓存
 
 	};
 
