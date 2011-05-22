@@ -611,6 +611,7 @@ void IDisplay::RemoveCache(short sCachId)
 			delete pCache;
 			pCache = NULL;
 			m_mapCaches.erase(it);
+			return;
 		}
 	}
 
