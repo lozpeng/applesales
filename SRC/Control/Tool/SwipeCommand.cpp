@@ -49,12 +49,13 @@ void CSwipeCommand::Click()
 
 		CRect m_rect(viewrect.left,viewrect.top,viewrect.right,viewrect.bottom);
 
-		Carto::CLayerArray m_MapLayers=pMap->GetLayers();
+		//Carto::CLayerArray m_MapLayers=pMap->GetLayers();
 
-         
-		CDC *bakDC =new CDC();//定义显示设备对象
+  //       
+		//CDC *bakDC =new CDC();//定义显示设备对象
 		HDC hdc =(HDC)pMap->GetDisplay()->GetDrawDC()->GetSafeHdc();
-		bakDC->Attach(hdc);
+		CDC* bakDC = CDC::FromHandle(hdc);
+		//bakDC->Attach(hdc);
 
 		CDC pTempDC1, pTempDC2;//定义显示设备对象
 		CBitmap bmp1,bmp2;
@@ -72,38 +73,38 @@ void CSwipeCommand::Click()
 		oldBmp1 = pTempDC1.SelectObject(&bmp1);
 		oldBmp2 = pTempDC2.SelectObject(&bmp2);
 
-		Carto::ILayerPtr pLayer = pMap->GetOperLayer();
+		//Carto::ILayerPtr pLayer = pMap->GetOperLayer();
 
 
-		if (pLayer == pMap->GetActiveLayer())
-		{
-			//将屏幕内存DC上的图形拷贝到临时内存pTempDC1
-			pTempDC1.BitBlt(0,0,m_rect.Width(), m_rect.Height(),bakDC,0,0, SRCCOPY);
+		//if (pLayer == pMap->GetActiveLayer())
+		//{
+		//	//将屏幕内存DC上的图形拷贝到临时内存pTempDC1
+		//	pTempDC1.BitBlt(0,0,m_rect.Width(), m_rect.Height(),bakDC,0,0, SRCCOPY);
 
-			//用背景色将位图清除干净，这里选择白色为背景。
-			FloodFill(pTempDC2.GetSafeHdc(), 0,0,RGB(255,255,255));
+		//	//用背景色将位图清除干净，这里选择白色为背景。
+		//	FloodFill(pTempDC2.GetSafeHdc(), 0,0,RGB(255,255,255));
 
-			//将n-1层影像绘制到屏幕内存DC中的，drawTempObj临时位图中
+		//	//将n-1层影像绘制到屏幕内存DC中的，drawTempObj临时位图中
 
-			//选择临时位图
-			pMap->GetDisplay()->SetDrawBuffer(drawTempObj);
+		//	//选择临时位图
+		//	pMap->GetDisplay()->SetDrawBuffer(drawTempObj);
 
-			long lMapLayerCount=m_MapLayers.GetSize();
+		//	long lMapLayerCount=m_MapLayers.GetSize();
 
-			if (lMapLayerCount>=2)
-			{
-				for (int i=0 ; i<m_MapLayers.GetSize() ; i++ )
-				{
-					if (pLayer != m_MapLayers.GetAt(i))
-					{
-						m_MapLayers[i]->Draw( m_display , drawGeography );
-					}
-				}
-				//将屏幕内存DC上的图形拷贝到临时内存pTempDC2
-				::BitBlt(pTempDC2.GetSafeHdc(),0,0,m_rect.Width(), m_rect.Height(),hdc,0,0,SRCCOPY);
-			}
+		//	if (lMapLayerCount>=2)
+		//	{
+		//		for (int i=0 ; i<m_MapLayers.GetSize() ; i++ )
+		//		{
+		//			if (pLayer != m_MapLayers.GetAt(i))
+		//			{
+		//				m_MapLayers[i]->Draw( m_display , drawGeography );
+		//			}
+		//		}
+		//		//将屏幕内存DC上的图形拷贝到临时内存pTempDC2
+		//		::BitBlt(pTempDC2.GetSafeHdc(),0,0,m_rect.Width(), m_rect.Height(),hdc,0,0,SRCCOPY);
+		//	}
 
-		}
+		//}
 		enhangceDlg->SetGeoMap(&pMap,m_display,pMapCtrl);
 		enhangceDlg->SetGeoMapDCs(&pTempDC1,&pTempDC2,m_rect,hdc);
 		enhangceDlg->DoModal();
@@ -111,8 +112,8 @@ void CSwipeCommand::Click()
 
 		pTempDC1.SelectObject(oldBmp1);
 		pTempDC2.SelectObject(oldBmp2);
-		//绘制完成后的清理
-       bmp1.DeleteObject();
+		////绘制完成后的清理
+		 bmp1.DeleteObject();
 		bmp2.DeleteObject();
 
 		pTempDC1.DeleteDC( );
@@ -120,8 +121,8 @@ void CSwipeCommand::Click()
 
 		pMap->GetDisplay()->SetDrawBuffer(drawAll);
   
-		bakDC->Detach();
-		delete bakDC;
+		//bakDC->Detach();
+		//delete bakDC;
 	}
 }
 }

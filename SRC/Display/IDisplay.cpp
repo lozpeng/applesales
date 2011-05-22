@@ -650,8 +650,40 @@ void IDisplay::DrawCache(long lHdc, short sIndex, tagRECT& deviceRect, tagRECT& 
 		return;
 	}
 	EP_CACHE* pCache = m_mapCaches[sIndex];
-	::BitBlt(HDC(lHdc), deviceRect.left,deviceRect.top,deviceRect.right-deviceRect.left,deviceRect.bottom-deviceRect.top,
-		pCache->hMemdc,cacheRect.left,cacheRect.top,SRCCOPY);
+	HDC pCacheDC = pCache->hMemdc;
+
+	
+		//¿½±´
+	::TransparentBlt((HDC)lHdc, deviceRect.left, deviceRect.top, deviceRect.right-deviceRect.left,
+		deviceRect.bottom-deviceRect.top, pCacheDC, cacheRect.left, cacheRect.top, cacheRect.right-cacheRect.left,
+		cacheRect.bottom-cacheRect.top, this->m_BgColor);
+
+		
+
+	/*CDC dcMask;
+		dcMask.CreateCompatibleDC( CDC::FromHandle(m_pdc) );
+		CBitmap cMaskBitmap;
+		cMaskBitmap.CreateBitmap( m_drawRect.Width(),m_drawRect.Height(),1,1,NULL );
+		CBitmap* pOldBitmap = dcMask.SelectObject( &cMaskBitmap );
+		if (pLyr != pLayer)
+		{
+			dcMask.BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCCOPY );
+			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCINVERT );
+			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),&dcMask,0,0,SRCAND );
+			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCINVERT );
+		}
+		else
+		{
+			dcMask.BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCCOPY );
+			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCINVERT );
+			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,&dcMask,startx,starty,SRCAND );
+			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCINVERT );
+		}
+		dcMask.SelectObject(pOldBitmap);
+		cMaskBitmap.DeleteObject();
+		dcMask.DeleteDC();*/
+	/*::BitBlt(HDC(lHdc), deviceRect.left,deviceRect.top,deviceRect.right-deviceRect.left,deviceRect.bottom-deviceRect.top,
+		pCache->hMemdc,cacheRect.left,cacheRect.top,SRCAND);*/
 }
 
 void IDisplay::SetPrinting(BOOL bPrint)

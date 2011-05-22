@@ -12,7 +12,7 @@
 IMPLEMENT_DYNAMIC(CEnhanceSld, CDialog)
 
 CEnhanceSld::CEnhanceSld(CWnd* pParent /*=NULL*/)
-	: CDialog(CEnhanceSld::IDD, pParent)
+: CDialog(CEnhanceSld::IDD, pParent)
 {
 	m_sldPos = 0;
 	m_enhanceName = "";
@@ -96,19 +96,55 @@ void CEnhanceSld::OnNMCustomdrawSlider(NMHDR *pNMHDR, LRESULT *pResult)
 		rectWidth2 = m_drawRect.Width();
 		rectHeight2 = starty;
 	}
-	
-	m_hdc1=m_pDC1->GetSafeHdc();
-    m_hdc2=m_pDC2->GetSafeHdc();
-	m_hClientDC=m_pMap->GetClientDC();
-	
-	::BitBlt(m_hClientDC,startx, starty, rectWidth2, rectHeight2, m_hdc1, startx, starty,SRCCOPY);
 
-	::BitBlt(m_hClientDC,0, 0, rectWidth2, rectHeight2, m_hdc2, 0, 0,SRCCOPY);
+	Carto::CMap* pMap = m_pGeoMap->get();
+	Carto::ILayerPtr pLayer = pMap->GetOperLayer();
+	
+	CDC* m_pMemDC = CDC::FromHandle(m_pdc);
+	m_pdisplay->SetDrawBuffer(drawGeography);
+	
+	m_pMemDC->FillSolidRect(m_drawRect, RGB(255,255,255));
+	Carto::CLayerArray layerArray = pMap->GetLayers();
+	for (int i=0; i<layerArray.size(); ++i)
+	{
+		Carto::ILayerPtr pLyr = layerArray.GetAt(i);
+		if (!pLyr->GetVisible())
+			continue;
 
-	UpdateData(FALSE);
+		short sId = -1;
+		pLyr->get_CacheId(sId);
+		long lDC = 0;
+		m_pdisplay->get_CacheMemDC(sId, &lDC);
+		CDC* pCacheDC = CDC::FromHandle(HDC(lDC));
+		CDC dcMask;
+		dcMask.CreateCompatibleDC( CDC::FromHandle(m_pdc) );
+		CBitmap cMaskBitmap;
+		cMaskBitmap.CreateBitmap( m_drawRect.Width(),m_drawRect.Height(),1,1,NULL );
+		CBitmap* pOldBitmap = dcMask.SelectObject( &cMaskBitmap );
+		if (pLyr != pLayer)
+		{
+			dcMask.BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCCOPY );
+			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCINVERT );
+			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),&dcMask,0,0,SRCAND );
+			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCINVERT );
+		}
+		else
+		{
+			dcMask.BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCCOPY );
+			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCINVERT );
+			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,&dcMask,startx,starty,SRCAND );
+			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCINVERT );
+		}
+		dcMask.SelectObject(pOldBitmap);
+		cMaskBitmap.DeleteObject();
+		dcMask.DeleteDC();
+	}
+	//::BitBlt(m_pdc, 0,0, m_drawRect.Width(),m_drawRect.Height(),m_hdc1,0,0,SRCCOPY);
+	m_pMap->RefreshScreen();
+	//UpdateData(FALSE);
 	pResult = 0;
 
-	
+
 }
 void CEnhanceSld::OnBnClickedRadioLr()
 {
@@ -117,7 +153,7 @@ void CEnhanceSld::OnBnClickedRadioLr()
 	cs.Format("%d%s", m_sldCtrl.GetPos(), "%");
 	m_staticPos.SetWindowText(cs);
 	m_rdLR.SetCheck(BST_CHECKED);
-	::BitBlt(m_hClientDC,0, 0, m_drawRect.Width(), m_drawRect.Height(), m_hdc1, 0, 0,SRCCOPY);
+	//::BitBlt(m_hClientDC,0, 0, m_drawRect.Width(), m_drawRect.Height(), m_hdc1, 0, 0,SRCCOPY);
 }
 void CEnhanceSld::OnBnClickedRadioUd()
 {
@@ -126,7 +162,7 @@ void CEnhanceSld::OnBnClickedRadioUd()
 	cs.Format("%d%s", m_sldCtrl.GetPos(), "%");
 	m_staticPos.SetWindowText(cs);
 	m_rdLR.SetCheck(BST_UNCHECKED);
-	::BitBlt(m_hClientDC,0, 0, m_drawRect.Width(), m_drawRect.Height(), m_hdc1, 0, 0,SRCCOPY);
+	//::BitBlt(m_hClientDC,0, 0, m_drawRect.Width(), m_drawRect.Height(), m_hdc1, 0, 0,SRCCOPY);
 }
 void CEnhanceSld::OnNMReleasedcaptureSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 {

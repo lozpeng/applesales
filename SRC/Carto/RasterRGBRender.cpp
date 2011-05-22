@@ -485,7 +485,7 @@ namespace Carto
 		RECT rc = m_pDisplay->GetDisplayTransformation().GetViewBound().GetRect();
 		if (0 != lMemDC)
 		{
-			HBRUSH hbrush = ::CreateSolidBrush(RGB(255,255,255));
+			HBRUSH hbrush = ::CreateSolidBrush(m_pDisplay->GetBgColor());
 			lDC = lMemDC;
 			::FillRect((HDC)lMemDC, &rc, hbrush);
 		}
@@ -493,7 +493,19 @@ namespace Carto
 
 		if (0 <= sId)
 		{
+			//m_pDisplay->SetDrawBuffer(drawGeography);
 			m_pDisplay->DrawCache(m_pDisplay->GetDrawDC()->GetSafeHdc(), sId, rc, rc);
+			/*HDC hDC = (HDC)m_pDisplay->GetDrawDC()->GetSafeHdc();
+			HDC dcMask = ::CreateCompatibleDC(hDC);
+			HBITMAP cMaskBitmap = ::CreateBitmap(rc.right-rc.left,rc.bottom-rc.top,1,1,NULL);
+			HGDIOBJ oldGDI = ::SelectObject(dcMask, &cMaskBitmap);
+			::BitBlt(dcMask,0,0,rc.right-rc.left,rc.bottom-rc.top,HDC(lDC),0,0, SRCCOPY);
+			::BitBlt(hDC,0,0,rc.right-rc.left,rc.bottom-rc.top,HDC(lDC),0,0, SRCINVERT);
+			::BitBlt(hDC,0,0,rc.right-rc.left,rc.bottom-rc.top,HDC(dcMask),0,0, SRCAND);
+			::BitBlt(hDC,0,0,rc.right-rc.left,rc.bottom-rc.top,HDC(lDC),0,0, SRCINVERT);
+			::SelectObject(dcMask, oldGDI);
+			::DeleteObject(cMaskBitmap);
+			::DeleteDC(dcMask);*/
 		}
 
 		return TRUE;
