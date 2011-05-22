@@ -935,7 +935,7 @@ void CTDAppView::OnFlick()
 }
 void CTDAppView::OnUpdateFlick(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(IsLayerComboCurFirstVisual());
+	pCmdUI->Enable(IsLayerComboNull());
 }
 void CTDAppView::BrightContrast(int nBright,int nContrast)
 {
