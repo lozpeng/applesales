@@ -76,6 +76,7 @@ void CEnhanceSld::OnNMCustomdrawSlider(NMHDR *pNMHDR, LRESULT *pResult)
 	int startx=0, starty=0;
 	int rectWidth1=0, rectHeight1=0;
 	int rectWidth2=0, rectHeight2=0;
+	RECT rectDest, rectCache;
 	int curPos = m_sldCtrl.GetPos();
 
 	if(m_rdLR.GetCheck()==BST_CHECKED)
@@ -86,6 +87,13 @@ void CEnhanceSld::OnNMCustomdrawSlider(NMHDR *pNMHDR, LRESULT *pResult)
 		rectHeight1=m_drawRect.Height();
 		rectWidth2=startx;
 		rectHeight2=m_drawRect.Height();
+		rectDest.left = rectCache.left = startx;
+		rectDest.top = rectCache.top = starty;
+		rectDest.right = rectDest.left + rectWidth1;
+		rectDest.bottom = rectDest.top + rectHeight1;
+		rectCache.right = rectCache.left + rectWidth1;
+		rectCache.bottom = rectCache.top + rectHeight1;
+
 	}
 	else
 	{
@@ -95,6 +103,12 @@ void CEnhanceSld::OnNMCustomdrawSlider(NMHDR *pNMHDR, LRESULT *pResult)
 		rectHeight1 = m_drawRect.Height() - curPos * m_drawRect.Height()/100 ;
 		rectWidth2 = m_drawRect.Width();
 		rectHeight2 = starty;
+		rectDest.left = rectCache.left = startx;
+		rectDest.top = rectCache.top = starty;
+		rectDest.right = rectDest.left + rectWidth1;
+		rectDest.bottom = rectDest.top + rectHeight1;
+		rectCache.right = rectCache.left + rectWidth1;
+		rectCache.bottom = rectCache.top + rectHeight1;
 	}
 
 	Carto::CMap* pMap = m_pGeoMap->get();
@@ -115,29 +129,27 @@ void CEnhanceSld::OnNMCustomdrawSlider(NMHDR *pNMHDR, LRESULT *pResult)
 		pLyr->get_CacheId(sId);
 		long lDC = 0;
 		m_pdisplay->get_CacheMemDC(sId, &lDC);
-		CDC* pCacheDC = CDC::FromHandle(HDC(lDC));
-		CDC dcMask;
-		dcMask.CreateCompatibleDC( CDC::FromHandle(m_pdc) );
-		CBitmap cMaskBitmap;
-		cMaskBitmap.CreateBitmap( m_drawRect.Width(),m_drawRect.Height(),1,1,NULL );
-		CBitmap* pOldBitmap = dcMask.SelectObject( &cMaskBitmap );
-		if (pLyr != pLayer)
+		if (0 != lDC)
 		{
-			dcMask.BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCCOPY );
-			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCINVERT );
-			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),&dcMask,0,0,SRCAND );
-			m_pMemDC->BitBlt( 0,0,m_drawRect.Width(),m_drawRect.Height(),pCacheDC,0,0,SRCINVERT );
+			if (pLyr != pLayer)
+			{
+				
+				m_pdisplay->DrawCache((long)m_pdc,sId,m_drawRect,m_drawRect);
+			
+			}
+			else
+			{
+				m_pdisplay->DrawCache((long)m_pdc,sId,rectDest,rectCache);
+			
+			}
+
 		}
 		else
 		{
-			dcMask.BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCCOPY );
-			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCINVERT );
-			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,&dcMask,startx,starty,SRCAND );
-			m_pMemDC->BitBlt( startx,starty,rectWidth1,rectHeight1,pCacheDC,startx,starty,SRCINVERT );
+			pLyr->Draw(m_pdisplay, drawGeography);
+
 		}
-		dcMask.SelectObject(pOldBitmap);
-		cMaskBitmap.DeleteObject();
-		dcMask.DeleteDC();
+		
 	}
 	//::BitBlt(m_pdc, 0,0, m_drawRect.Width(),m_drawRect.Height(),m_hdc1,0,0,SRCCOPY);
 	m_pMap->RefreshScreen();
