@@ -503,6 +503,14 @@ namespace Carto
 
 		ILayerPtr ptrLayer = m_Layers.GetAt(iIndex);
 		LAYER_TYPE iLayerType = ptrLayer->GetLayerType();
+		bool bCache = false;
+		ptrLayer->get_Cached(bCache);
+		if (bCache)
+		{
+			short sId = -1;
+			ptrLayer->get_CacheId(sId);
+			m_pDisplay->RemoveCache(sId);
+		}
 		//if (iLayerType == eFeatureLayer)
 		//{
 		//	IFeatureLayerPtr pFeatureLayer = (IFeatureLayerPtr)ptrLayer;
