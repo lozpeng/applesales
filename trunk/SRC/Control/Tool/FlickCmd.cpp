@@ -24,6 +24,8 @@ void CFlickCmd::Click()
 	if(!pMapCtrl)
 		return;
 
+	pMapCtrl->SetCursor(NULL);
+
 	//获取活动地区
 	Carto::CMapPtr pMap = pMapCtrl->GetMap();
 	if(!pMap)
