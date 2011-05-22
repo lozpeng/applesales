@@ -53,6 +53,8 @@ BOOL CTransparentDLG::OnInitDialog()
 
 	CDialog::OnInitDialog();
 
+	m_boldVisual =m_pLayer->GetVisible();
+
 	switch(m_enumType)
 	{
 	case EHC_TRANS:
@@ -175,14 +177,14 @@ void CTransparentDLG::OnDestroy()
 
 	if(m_enumType == EHC_ALTERNATE)
 	{
-		//long lNumLayer = m_pMapCtrl->GetMap()->GetLayers().GetSize();
+		long lNumLayer = m_pMapCtrl->GetMap()->GetLayers().GetSize();
 
-		//for(long i= 0; i< lNumLayer; i++)
-		//{
-		//	Carto::ILayerPtr pLayer = m_pMapCtrl->GetMap()->GetLayers().GetAt(i);
-		//	pLayer->SetVisible(true);
-		//}
-		m_pLayer->SetVisible(true);
+		/*for(long i= 0; i< lNumLayer; i++)
+		{
+			Carto::ILayerPtr pLayer = m_pMapCtrl->GetMap()->GetLayers().GetAt(i);
+			pLayer->SetVisible(true);
+		}*/
+		m_pLayer->SetVisible(m_boldVisual);
 	}
 
    	m_pMapCtrl->UpdateControl(drawGeography);
