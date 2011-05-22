@@ -485,7 +485,7 @@ namespace Carto
 		RECT rc = m_pDisplay->GetDisplayTransformation().GetViewBound().GetRect();
 		if (0 != lMemDC)
 		{
-			HBRUSH hbrush = ::CreateSolidBrush(RGB(255,255,255));//m_pDisplay->GetBgColor());
+			HBRUSH hbrush = ::CreateSolidBrush(m_pDisplay->GetBgColor());
 			lDC = lMemDC;
 			::FillRect((HDC)lMemDC, &rc, hbrush);
 		}
