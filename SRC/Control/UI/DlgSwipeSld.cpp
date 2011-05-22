@@ -104,8 +104,8 @@ void CEnhanceSld::OnNMCustomdrawSlider(NMHDR *pNMHDR, LRESULT *pResult)
 	m_pdisplay->SetDrawBuffer(drawGeography);
 	
 	m_pMemDC->FillSolidRect(m_drawRect, RGB(255,255,255));
-	Carto::CLayerArray layerArray = pMap->GetLayers();
-	for (int i=0; i<layerArray.size(); ++i)
+	Carto::CLayerArray &layerArray = pMap->GetLayers();
+	for (int i=0; i<layerArray.GetSize(); ++i)
 	{
 		Carto::ILayerPtr pLyr = layerArray.GetAt(i);
 		if (!pLyr->GetVisible())
