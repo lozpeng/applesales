@@ -48,6 +48,8 @@ private:
 	Type m_enumType;
 
 	bool bShow;
+
+	bool m_boldVisual;
 };
 
 
