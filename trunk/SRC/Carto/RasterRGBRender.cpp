@@ -475,7 +475,27 @@ namespace Carto
 
 			dib.SetImgDataBW(3,1,1,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufPro[2]);
 		}
-		dib.Draw(m_pDisplay->GetDrawDC()->GetSafeHdc(),1,1,mp_lResampleWidth,mp_lResampleHeight,m_destRect);
+
+		short sId = -1;
+		m_pDisplay->get_ActiveCache(sId);
+		long lMemDC = 0;
+		m_pDisplay->get_CacheMemDC(sId, &lMemDC);
+		long lDC = 0;
+		lDC = m_pDisplay->GetDrawDC()->GetSafeHdc();
+		RECT rc = m_pDisplay->GetDisplayTransformation().GetViewBound().GetRect();
+		if (0 != lMemDC)
+		{
+			HBRUSH hbrush = ::CreateSolidBrush(RGB(255,255,255));
+			lDC = lMemDC;
+			::FillRect((HDC)lMemDC, &rc, hbrush);
+		}
+		dib.Draw(lDC ,1,1,mp_lResampleWidth,mp_lResampleHeight,m_destRect);
+
+		if (0 <= sId)
+		{
+			m_pDisplay->DrawCache(m_pDisplay->GetDrawDC()->GetSafeHdc(), sId, rc, rc);
+		}
+
 		return TRUE;
 	}
 	bool CRasterRGBRender::UpdateBandPixelInfo(unsigned short RGBType)

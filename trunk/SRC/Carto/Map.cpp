@@ -470,6 +470,16 @@ namespace Carto
 
 		m_Layers.Add(pLayer);
 
+		//Í¼²ãË½ÓÐ»º´æÉèÖÃ
+		bool bCached = false;
+		pLayer->get_Cached(bCached);
+		if (bCached)
+		{
+			short sId = -1;
+			m_pDisplay->AddCache(sId);
+			pLayer->set_CacheId(sId);
+		}
+
 		UpdateMapExtent();
 
 		SetActiveLayer(pLayer);
