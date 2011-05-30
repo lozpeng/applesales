@@ -46,7 +46,7 @@ IFeatureClassPtr CShapefileWorkspace::OpenFeatureClass(const char *name)
 {
 	//首先判断该文件是否是这个工作空间的
 	string path =name;
-
+	m_FullName = name;
 	path =path.substr(0,path.rfind('\\'));
 
 	if(path!=m_pathname)
@@ -306,6 +306,11 @@ void CShapefileWorkspace::StartEdit()
 {
 	if(!m_bEditing)
 	{
+		//导入增量信息
+		std::string path = SYSTEM::CSystemPath::GetSystemPath();
+		path.append("\Incremental.xml");	
+		this->IncrementalImport(path.c_str());
+		
 		m_bEditing =true;
 		ClearEditCache();
 	}
@@ -313,6 +318,7 @@ void CShapefileWorkspace::StartEdit()
 
 void CShapefileWorkspace::Commit()
 {
+
     SaveEdit();
     
 	ClearEditCache();
@@ -333,6 +339,11 @@ void CShapefileWorkspace::StopEdit(bool bsave)
 	}
 	if(bsave)
 	{
+		//导出增量信息
+		std::string path = SYSTEM::CSystemPath::GetSystemPath();
+		path.append("\Incremental.xml");	
+		this->IncrementalExport(path.c_str());
+
 		SaveEdit();
 
 	}
@@ -941,9 +952,11 @@ bool CShapefileWorkspace::WriteFeature(Geodatabase::CFeature *pFeature, SHPHandl
 		{
 			type =pFeature->GetValue(iField+1).vtype;
 
+			bool bFlagNull = false;
 			//判断属性值是否空值
 			if(type ==Geodatabase::FieldValue::VT_EMPTY || type==Geodatabase::FieldValue::VT_NULL)
 			{
+				bFlagNull = true;
 				//continue; //hhzhao 注释掉，不然dbf表记录与shp记录不一致
 			}
 
@@ -970,7 +983,8 @@ bool CShapefileWorkspace::WriteFeature(Geodatabase::CFeature *pFeature, SHPHandl
 			else
 			{
 				//字符型
-				//DBFWriteStringAttribute(hdbf,Fid,iField,pFeature->GetValue(iField+1).m_Var.pstrVal->c_str());
+				if(!bFlagNull)
+					DBFWriteStringAttribute(hdbf,Fid,iField,pFeature->GetValue(iField+1).m_Var.pstrVal->c_str());
 			}
 		}
 	}
@@ -1217,4 +1231,360 @@ SHPObject *CShapefileWorkspace::Geometry2Shp(GEOMETRY::geom::Geometry *pGeometry
 
 }
 
+//增量导出、导入
+const std::string node_Incremental ="incremental";
+const std::string node_CaptureTime ="CaptureTime";
+const std::string node_PolygonFeature ="PolygonFeature";
+const std::string node_LineFeature ="LineFeature";
+const std::string node_PointFeature ="PointFeature";
+const std::string node_FlagAdd ="Add";
+const std::string node_FlagDelete ="Delete";
+const std::string node_FlagAttribute ="Attribute";
+const std::string node_FlagModify ="Modify";
+const std::string node_coordinate = "coordinate";
+const std::string node_FeatID = "FeatID";
+
+SYSTEM::XMLConfigurationPtr ipIncremenalFile = NULL;
+#include <boost/filesystem.hpp>
+void CShapefileWorkspace::IncrementalExport(std::string incrementalFile)
+{
+
+	SYSTEM::CXMLConfiguration::Initialize();
+	try
+	{
+		if(ipIncremenalFile == NULL)
+		   ipIncremenalFile = new SYSTEM::CXMLConfiguration;
+		ipIncremenalFile->Create(incrementalFile,"UTF-8",node_Incremental);
+		
+		//增加时间节点
+		SYSTEM::IConfigItemPtr ipCurTimeNode = ipIncremenalFile->AddChildNode(node_CaptureTime.c_str());
+		time_t t = time(0);    
+		char szCurTime[64];    
+		strftime( szCurTime, sizeof(szCurTime), "%Y-%m-%d %X",localtime(&t));    
+		ipCurTimeNode->SetValue(szCurTime);
+
+		FEditStep *pStep;
+		CFeature *pFeature =NULL;
+		char destBuf[1024];
+
+		//保存缓存中编辑的要素
+		EditCacheMap::iterator iter;
+		for(iter =m_EditCacheMap.begin();iter!=m_EditCacheMap.end();iter++)
+		{
+
+			CFeatureEditCache *pCache =iter->second;
+
+			CShapefileFeatureClass *pFeatureClass =(CShapefileFeatureClass*)pCache->m_pFeatureClass;
+			//要素类型
+			long shapeType = pFeatureClass->ShapeType();
+			std::string strFeatureType;
+			if( shapeType == GEOS_POINT || shapeType == GEOS_MULTIPOINT )
+			{
+				strFeatureType = node_PointFeature;
+			}
+			else if( shapeType == GEOS_LINESTRING || shapeType == GEOS_MULTILINESTRING )
+			{
+				strFeatureType = node_LineFeature;
+			}
+			else if( shapeType == GEOS_POLYGON || shapeType == GEOS_MULTIPOLYGON )
+			{
+				strFeatureType = node_PolygonFeature;
+			}
+			SYSTEM::IConfigItemPtr ipFeatureTypeNode = ipIncremenalFile->GetChildByName(strFeatureType.c_str());
+			if (ipFeatureTypeNode == NULL)
+			{
+				ipFeatureTypeNode = ipIncremenalFile->AddChildNode(strFeatureType.c_str());
+			}
+
+			//要素名称  m_pathname
+
+			std::string strFeatureClsName = pFeatureClass->Getname();
+			std::string basename =strFeatureClsName.substr(0,strFeatureClsName.find_last_of('.'));
+			basename=basename.substr(basename.find_last_of('\\')+1,basename.size()-basename.find_last_of('\\')-1);
+			SYSTEM::IConfigItemPtr ipFeatureNameNode = ipFeatureTypeNode->GetChildByName(basename.c_str());
+			if (ipFeatureNameNode == NULL)
+			{
+				strcpy(destBuf,basename.c_str());
+				ipFeatureNameNode = ipFeatureTypeNode->AddChildNode(destBuf);
+			}
+
+			//ChangeType Add、Delete、Modify、Attribute
+			//排列缓存里的要素记录
+			pCache->Arrange();
+
+			//判断缓存里的记录是不是只是修改要素
+			
+			for(int i=0;i<pCache->m_operationStack.size();i++)
+			{
+				pStep =pCache->m_operationStack[i];
+
+				if(!pStep)
+				{
+					continue;
+				}
+				if(pStep->EditType == OP_ADD)
+				{
+					SYSTEM::IConfigItemPtr ipFlagAddNode  = ipFeatureNameNode->AddChildNode(node_FlagAdd.c_str());
+					
+					//各个字段值
+					for(int j = 0;j<pFeatureClass->FieldCount();j++)
+					{	
+						//得到字段名
+						std::string fieldName = pFeatureClass->GetField(j+1)->GetName();
+						SYSTEM::IConfigItemPtr   ipFeildNode= ipFlagAddNode->AddChildNode(fieldName.c_str());
+						//得到字段值
+						std::string csValue =pStep->pFeature->GetValue(j+1).GetasString().c_str();
+						ipFeildNode->SetValue(csValue.c_str());
+					}
+					
+					//坐标值
+					SYSTEM::IConfigItemPtr   ipCoorNode= ipFlagAddNode->AddChildNode(node_coordinate.c_str());
+					GEOMETRY::geom::Geometry* pgeometry = pStep->pFeature->GetShape();
+					CoordinateSequence* pCoordinateSequence = pgeometry->getCoordinates();
+					std::string strCoordinate;
+					
+					for (int k = 0;k<pCoordinateSequence->getSize();k++)
+					{
+						double dx = pCoordinateSequence->getX(k);
+						double dy = pCoordinateSequence->getY(k);
+						gcvt(dx,10,destBuf);
+						strCoordinate.append(destBuf);
+						strCoordinate.append(",");
+						gcvt(dy,10,destBuf);
+						strCoordinate.append(destBuf);
+						if(k<pCoordinateSequence->getSize()-1)
+							strCoordinate.append(" ");
+					}
+					ipCoorNode->SetValue(strCoordinate.c_str());
+				}
+				else if (pStep->EditType == OP_UPDATE) //暂时认为update了，图行和所有属性都修改
+				{
+					bool bGeoChanged = pFeatureClass->GetFeatureShape(pStep->Fid)->compareTo(pStep->pFeature->GetShape());
+					
+
+					SYSTEM::IConfigItemPtr ipFlagModifyNode  = ipFeatureNameNode->AddChildNode(node_FlagModify.c_str());
+					
+					//FeatID 字段
+					SYSTEM::IConfigItemPtr ipChangeIndexNode  = ipFlagModifyNode->AddChildNode(node_FeatID.c_str());
+					int featID = pFeatureClass->FindField(node_FeatID.c_str());
+					if(featID >0)
+					{
+						pFeature =pCache->m_operationStack[i]->pFeature.get();
+						std::string csValue =pFeature->GetValue(featID).GetasString();
+						ipChangeIndexNode->SetValue(csValue.c_str());
+					}
+
+					//坐标值
+					SYSTEM::IConfigItemPtr   ipCoorNode= ipFlagModifyNode->AddChildNode(node_coordinate.c_str());
+					GEOMETRY::geom::Geometry* pgeometry = pStep->pFeature->GetShape();
+					CoordinateSequence* pCoordinateSequence = pgeometry->getCoordinates();
+					std::string strCoordinate;
+
+					for (int k = 0;k<pCoordinateSequence->getSize();k++)
+					{
+						double dx = pCoordinateSequence->getX(k);
+						double dy = pCoordinateSequence->getY(k);
+						gcvt(dx,10,destBuf);
+						strCoordinate.append(destBuf);
+						strCoordinate.append(",");
+						gcvt(dy,10,destBuf);
+						strCoordinate.append(destBuf);
+						if(k<pCoordinateSequence->getSize()-1)
+							strCoordinate.append(" ");
+					}
+					ipCoorNode->SetValue(strCoordinate.c_str());
+
+					SYSTEM::IConfigItemPtr ipFlagAttriNode  = ipFeatureNameNode->AddChildNode(node_FlagAttribute.c_str());
+
+					ipChangeIndexNode  = ipFlagAttriNode->AddChildNode(node_FeatID.c_str());
+					
+					if(featID >0)
+					{
+						std::string csValue =pStep->pFeature->GetValue(featID).GetasString();
+						ipChangeIndexNode->SetValue(csValue.c_str());
+					}
+
+					//各个字段值
+					for(int j = 0;j<pFeatureClass->FieldCount();j++)
+					{	
+						//得到字段名
+						std::string fieldName = pFeatureClass->GetField(j+1)->GetName();
+						if(fieldName == node_FeatID)
+							continue;
+						SYSTEM::IConfigItemPtr   ipFeildNode= ipFlagAttriNode->AddChildNode(fieldName.c_str());
+						//得到字段值
+						std::string csValue =pStep->pFeature->GetValue(j+1).GetasString().c_str();
+						ipFeildNode->SetValue(csValue.c_str());
+						
+					}
+
+
+
+				}
+				else if (pStep->EditType == OP_DELETE)
+				{
+					SYSTEM::IConfigItemPtr ipFlagDeleteNode = ipFeatureTypeNode->GetChildByName(node_FlagDelete.c_str());
+					if (ipFlagDeleteNode == NULL)
+					{
+						 ipFlagDeleteNode  = ipFeatureTypeNode->AddChildNode(node_FlagDelete.c_str());
+					}
+
+					//FeatID 字段
+					SYSTEM::IConfigItemPtr ipDeleteIndexNode  = ipFlagDeleteNode->AddChildNode(node_FeatID.c_str());
+                    int featID = pFeatureClass->FindField(node_FeatID.c_str());
+					if(featID >0)
+					{
+						pFeature =pCache->m_operationStack[i]->pFeature.get();
+						std::string csValue =pFeature->GetValue(featID).GetasString();
+						ipDeleteIndexNode->SetValue(csValue.c_str());
+					}
+
+				}
+			}
+
+		}
+
+		ipIncremenalFile->Save();
+	}
+	catch(std::exception&)
+	{
+		return ;
+	}
+	
+}
+void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
+{
+	SYSTEM::CXMLConfiguration::Initialize();
+	try
+	{
+		if(ipIncremenalFile == NULL)
+			ipIncremenalFile = new SYSTEM::CXMLConfiguration;
+		ipIncremenalFile->Open(incrementalFile);
+
+		if(ipIncremenalFile->GetName() != node_Incremental)
+			return;
+	
+		IFeatureClassPtr ipFeatureCls = this->OpenFeatureClass(m_FullName.c_str());
+		//要素类型
+		long shapeType = ipFeatureCls->ShapeType();
+		std::string strFeatureType;
+		if( shapeType == GEOS_POINT || shapeType == GEOS_MULTIPOINT )
+		{
+			strFeatureType = node_PointFeature;
+		}
+		else if( shapeType == GEOS_LINESTRING || shapeType == GEOS_MULTILINESTRING )
+		{
+			strFeatureType = node_LineFeature;
+		}
+		else if( shapeType == GEOS_POLYGON || shapeType == GEOS_MULTIPOLYGON )
+		{
+			strFeatureType = node_PolygonFeature;
+		}
+
+		for (int i = 0;i< ipIncremenalFile->GetChildCount();i++)
+		{
+			SYSTEM::IConfigItemPtr ipFeatureTypeNode = ipIncremenalFile->GetChilds(i);
+			if(ipFeatureTypeNode->GetName()!=strFeatureType)
+				continue;
+
+			std::string basename =m_FullName.substr(0,m_FullName.find_last_of('.'));
+			basename=basename.substr(basename.find_last_of('\\')+1,basename.size()-basename.find_last_of('\\')-1);
+
+			SYSTEM::IConfigItemPtr pNameItem = ipFeatureTypeNode->GetChildByName(basename.c_str());
+			if( pNameItem == NULL )
+				continue;
+
+			//具体要素处理节点
+			for (int j = 0;j< pNameItem->GetChildCount();j++)
+			{
+				SYSTEM::IConfigItemPtr pItem = pNameItem->GetChilds(j);
+				std::string strNodename = pItem->GetName();
+				if(strNodename == node_FlagAdd)
+				{
+
+					CFeaturePtr pFeature = ipFeatureCls->CreateFeature();
+					//各个字段值
+					for(int j = 0;j<ipFeatureCls->FieldCount();j++)
+					{	
+						//得到字段名
+						std::string fieldName = ipFeatureCls->GetField(j+1)->GetName();
+						
+						SYSTEM::IConfigItemPtr   ipFeildNode= pNameItem->GetChildByName(fieldName.c_str());
+						//得到字段值
+						std::string csValue = ipFeildNode->GetValue();
+
+						long lFieldtype =ipFeatureCls->GetField(j+1)->GetType();
+
+
+						switch(lFieldtype)
+						{
+
+						case Geodatabase::FTYPE_STRING:    //字符型
+							{
+								pFeature->GetValue(j+1).SetString((const char*)(csValue.c_str()));
+
+							}
+							break;
+						case Geodatabase::FTYPE_DATE:    //日期型
+							{
+
+							}
+							break;
+						case Geodatabase::FTYPE_DOUBLE:
+						case Geodatabase::FTYPE_FLOAT:    //浮点型
+							{
+								pFeature->GetValue(j+1).m_Var.dVal =atof(csValue.c_str());
+
+							}
+							break;
+						case Geodatabase::FTYPE_BOOL:    //逻辑型
+							{
+
+							}
+							break;
+						case Geodatabase::FTYPE_LONG:    //整型
+							{
+								pFeature->GetValue(j+1).m_Var.iVal =atoi(csValue.c_str());
+
+							}
+							break;
+
+						default:
+							continue;
+							break;
+						}
+
+					}
+
+					//提交feature
+					ipFeatureCls->AddFeature(pFeature.get());
+				}
+				else if (strNodename == node_FlagDelete)
+				{
+
+				}
+				else if (strNodename == node_FlagModify)
+				{
+
+				}
+				else if (strNodename == node_FlagAttribute)
+				{
+
+				}	
+				
+				
+			}
+		}
+
+
+		
+
+		
+	}
+	catch(std::exception&)
+	{
+		return;
+	}
+
+}
 

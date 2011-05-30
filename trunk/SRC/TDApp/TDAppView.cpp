@@ -67,6 +67,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 
 	ON_COMMAND(ID_CURRLAYER_COMBO, OnCurrLayerCombo)
 	ON_COMMAND(ID_CURRLAYER_COMBO_VECTOR, OnCurrLayerCombo_Vector)
+	ON_UPDATE_COMMAND_UI(ID_CURRLAYER_COMBO_VECTOR,OnUpdateCurrlayerCombo_Vector)
 	//µ÷Õû
 	ON_COMMAND(ID_BRIGHT_RESTORE, OnBrightRestore)
 	ON_COMMAND(ID_BRIGHT_SLIDER, OnBrightSlider)
@@ -830,7 +831,21 @@ void CTDAppView::OnCurrLayerCombo_Vector()
 		pEditor->ChangeCurLayer(curLayerName);
 	}
 	
+}
+void CTDAppView::OnUpdateCurrlayerCombo_Vector(CCmdUI* pCmdUI)
+{
+	
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
 
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
 void CTDAppView::OnBrightRestore()
 {
