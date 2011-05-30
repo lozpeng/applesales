@@ -411,6 +411,14 @@ namespace Carto
 			//	m_pCrossLine->Draw((long)m_pDisplay->GetDrawDC()->GetSafeHdc());
 
 			//}
+
+			for(int i=0;i<m_ExtendDrawList.size();i++)
+			{
+				if(m_ExtendDrawList[i])
+				{
+					m_ExtendDrawList[i]->Draw(m_pDisplay);
+				}
+			}
 		}
 
 		OnAfterDraw(content);
@@ -958,6 +966,34 @@ namespace Carto
 			lCnt += pFeatureLayer->GetSelection()->Count();
 		}
 		return lCnt;
+	}
+
+	void CMap::AddOtherDraw(IOtherDraw *pExtend)
+	{
+		m_ExtendDrawList.push_back(pExtend);
+	}
+
+	void CMap::RemoveOtherDraw(IOtherDraw *pExtend)
+	{
+		for(int i=0;i<m_ExtendDrawList.size();i++)
+		{
+			if(pExtend ==m_ExtendDrawList[i])
+			{
+				m_ExtendDrawList.erase(m_ExtendDrawList.begin()+i);
+			}
+		}
+	}
+
+	bool CMap::IsDrawInlist(Carto::IOtherDraw *pExtend)
+	{
+		for(int i=0;i<m_ExtendDrawList.size();i++)
+		{
+			if(pExtend ==m_ExtendDrawList[i])
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

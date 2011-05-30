@@ -20,6 +20,8 @@
 //#include "CrossLine.h"
 //#include "ElementOperationStack.h"
 #include "Feature.h"
+#include "IOtherdDraw.h"
+
 namespace Carto
 {
 
@@ -218,6 +220,21 @@ namespace Carto
 		void SetOperLayer(ILayerPtr ptrLayer);
 
 		/**
+		* 将临时绘制内容加入到地图绘制过程中
+		* @param pExtend 临时绘制内容指针
+		*/
+		void AddOtherDraw(IOtherDraw *pExtend);
+
+		/**
+		* 将临时绘制内容从地图绘制过程中移除
+		* @param pExtend 临时绘制内容指针
+		*/
+		void RemoveOtherDraw(IOtherDraw *pExtend);
+
+
+		bool IsDrawInlist(IOtherDraw *pExtend);
+
+		/**
 		* 获得编辑器
 		*/
 		IEditorPtr GetEditor() {return m_pEditor;};
@@ -401,11 +418,7 @@ namespace Carto
 
 
 
-		//十字丝
-		//CCrossLine* m_pCrossLine;
-
-		//管理AOI
-		//CAoiManagerPtr     m_pAoiManager;
+		std::vector<IOtherDraw*>  m_ExtendDrawList;
 
 		//激活图层在图层数组中的索引
 		long m_lActiveLayerId;

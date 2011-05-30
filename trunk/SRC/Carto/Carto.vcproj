@@ -213,6 +213,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IOtherDraw.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IRasterRender.cpp"
 				>
 			</File>
@@ -320,6 +324,10 @@
 			</File>
 			<File
 				RelativePath=".\ImgProFunction.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IOtherdDraw.h"
 				>
 			</File>
 			<File
