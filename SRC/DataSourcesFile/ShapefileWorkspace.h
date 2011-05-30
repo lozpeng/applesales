@@ -102,7 +102,9 @@ private:
 
 	SHPObject *Geometry2Shp(GEOMETRY::geom::Geometry* pGeometry,int nSHPType);
 
-
+	//增量导出、导入
+	void IncrementalExport(std::string incrementalFile);
+	void IncrementalImport(std::string incrementalFile);
 private:
 
 	typedef std::map<std::string,Geodatabase::CFeatureEditCache*> EditCacheMap;
@@ -122,6 +124,7 @@ private:
 	//是否开始了一个新的编辑操作
 	bool m_bStartOp;
 
+	std::string  m_FullName;
 
 };
 

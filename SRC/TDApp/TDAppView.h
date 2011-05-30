@@ -88,6 +88,7 @@ public:
 	//
 	afx_msg void OnCurrLayerCombo();
 	afx_msg void OnCurrLayerCombo_Vector();
+	afx_msg void OnUpdateCurrlayerCombo_Vector(CCmdUI* pCmdUI);
 	Carto::ILayerPtr GetComboLayer();
 	Carto::ILayerPtr GetComboLayer_Vector();
 	void		RefreshLayerCombo();

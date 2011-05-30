@@ -138,7 +138,7 @@ void CFeatureEditCache::DeleteFeature(long Fid)
 
 	pnewStep->EditType =OP_DELETE;
 
-
+	pnewStep->pFeature  = this->m_pFeatureClass->GetFeature(Fid);
 	//将编辑操作添加到堆栈中
 	m_operationStack.push_back(pnewStep);
 
