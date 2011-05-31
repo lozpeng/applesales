@@ -15,6 +15,7 @@
 #include "shapefil.h"
 
 class CShapefileWorkspaceFactory;
+class CShapefileFeatureClass;
 
 class DSFile_DLL CShapefileWorkspace: public Geodatabase::IWorkspace
 {
@@ -125,7 +126,7 @@ private:
 	bool m_bStartOp;
 
 	std::string  m_FullName;
-	IFeatureClassPtr m_FeatureClass;
+	CShapefileFeatureClass* m_FeatureClass;
 
 };
 
