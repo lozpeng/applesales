@@ -233,6 +233,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\stringOperate.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SysPath.cpp"
 				>
 			</File>
@@ -292,6 +296,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\stringOperate.h"
 				>
 			</File>
 			<File

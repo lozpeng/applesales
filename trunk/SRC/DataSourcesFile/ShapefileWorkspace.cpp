@@ -9,6 +9,7 @@
 #include <Geometry/geom/Polygon.h>
 #include <Geometry/geom/LinearRing.h>
 #include <geometry/geom/MultiPolygon.h>
+#include "stringOperate.h"
 
 using namespace Geodatabase;
 using namespace GEOMETRY::geom;
@@ -42,6 +43,7 @@ IFeatureDatasetPtr CShapefileWorkspace::OpenFeatureDataset(const char *name)
 	return NULL;
 }
 
+
 IFeatureClassPtr CShapefileWorkspace::OpenFeatureClass(const char *name)
 {
 	//首先判断该文件是否是这个工作空间的
@@ -71,6 +73,7 @@ IFeatureClassPtr CShapefileWorkspace::OpenFeatureClass(const char *name)
 	
 	CShapefileFeatureClass *pFeatureClass =new CShapefileFeatureClass(this,hshp,hdbf,name,true);
 
+	m_FeatureClass = IFeatureClassPtr(pFeatureClass);
 	return IFeatureClassPtr(pFeatureClass);
 
 }
@@ -306,13 +309,14 @@ void CShapefileWorkspace::StartEdit()
 {
 	if(!m_bEditing)
 	{
+
+		m_bEditing =true;
+		ClearEditCache();
+
 		//导入增量信息
 		std::string path = SYSTEM::CSystemPath::GetSystemPath();
 		path.append("\Incremental.xml");	
 		this->IncrementalImport(path.c_str());
-		
-		m_bEditing =true;
-		ClearEditCache();
 	}
 }
 
@@ -1464,7 +1468,8 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 		if(ipIncremenalFile->GetName() != node_Incremental)
 			return;
 	
-		IFeatureClassPtr ipFeatureCls = this->OpenFeatureClass(m_FullName.c_str());
+		IFeatureClassPtr ipFeatureCls = m_FeatureClass;//this->OpenFeatureClass(m_FullName.c_str());
+		
 		//要素类型
 		long shapeType = ipFeatureCls->ShapeType();
 		std::string strFeatureType;
@@ -1475,11 +1480,13 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 		else if( shapeType == GEOS_LINESTRING || shapeType == GEOS_MULTILINESTRING )
 		{
 			strFeatureType = node_LineFeature;
+		
 		}
 		else if( shapeType == GEOS_POLYGON || shapeType == GEOS_MULTIPOLYGON )
 		{
 			strFeatureType = node_PolygonFeature;
 		}
+
 
 		for (int i = 0;i< ipIncremenalFile->GetChildCount();i++)
 		{
@@ -1501,12 +1508,141 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 				std::string strNodename = pItem->GetName();
 				if(strNodename == node_FlagAdd)
 				{
-
 					CFeaturePtr pFeature = ipFeatureCls->CreateFeature();
-					//shape
+				
+					//解析坐标
+					std::vector<std::string> vecCoord;
+					const std::string spCoord = " ";
+					std::vector<std::string> vecXY;
+					const std::string spXY = ",";
 					SYSTEM::IConfigItemPtr   ipCoordNode= pNameItem->GetChildByName(node_coordinate.c_str());
-					std::string strCoordinate =  ipCoordNode->GetValue();
-					strCoordinate.
+					
+					const char* itemVal = ipCoordNode->GetValue();
+					if(itemVal == NULL)
+						continue;
+					std::string strCoordinate = itemVal;
+
+					vecCoord= SYSTEM::split(strCoordinate,spCoord);
+
+
+					GEOMETRY::geom::Geometry* m_pGeometry = NULL;
+					switch(shapeType)
+					{
+						//点
+					case GEOMETRY::geom::GEOS_POINT:
+						m_pGeometry=(Geometry*)GeometryFactory::getDefaultInstance()->createPoint();
+						for (int k = 0;k< vecCoord.size();k++)
+						{
+							vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+							GEOMETRY::geom::Coordinate coord;
+							coord.x = atof(vecXY[0].c_str());
+							coord.y = atof(vecXY[1].c_str());
+							m_pGeometry->AddPoint(coord);
+
+						}
+						break;
+						//线
+					case GEOMETRY::geom::GEOS_LINESTRING:
+
+						m_pGeometry =(Geometry*) GeometryFactory::getDefaultInstance()->createLineString();
+						for (int k = 0;k< vecCoord.size();k++)
+						{
+							vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+							GEOMETRY::geom::Coordinate coord;
+							coord.x = atof(vecXY[0].c_str());
+							coord.y = atof(vecXY[1].c_str());
+							m_pGeometry->AddPoint(coord);
+							
+						}
+
+						break;
+						//线圈
+					case GEOMETRY::geom::GEOS_LINEARRING:
+
+						m_pGeometry =(Geometry*) GeometryFactory::getDefaultInstance()->createLinearRing();
+						break;
+
+						//多线
+					case GEOMETRY::geom::GEOS_MULTILINESTRING:
+						{
+							m_pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createMultiLineString();
+
+							Geometry *pg =(Geometry*) GeometryFactory::getDefaultInstance()->createLineString();
+							for (int k = 0;k< vecCoord.size();k++)
+							{
+								vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+								GEOMETRY::geom::Coordinate coord;
+								coord.x = atof(vecXY[0].c_str());
+								coord.y = atof(vecXY[1].c_str());
+								//m_pGeometry->AddPoint(coord);
+								pg->AddPoint(coord);
+							}
+
+							((MultiLineString*)m_pGeometry)->AddGeometry(pg);
+							break;
+						}
+
+
+						//多边形
+					case GEOMETRY::geom::GEOS_POLYGON:
+						{
+							m_pGeometry =(Geometry*) GeometryFactory::getDefaultInstance()->createPolygon();
+							//多边形比较特殊,要加入两个点
+							GEOMETRY::geom::Geometry *pg =((GEOMETRY::geom::Polygon*)m_pGeometry)->GetGeometry(0);
+
+							for (int k = 0;k< vecCoord.size();k++)
+							{
+								vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+								GEOMETRY::geom::Coordinate coord;
+								coord.x = atof(vecXY[0].c_str());
+								coord.y = atof(vecXY[1].c_str());
+								//((GEOMETRY::geom::Polygon*)m_pGeometry)->AddPoint(coord);
+								if(pg->PointCount()==0)
+									pg->AddPoint(coord);
+								else if(pg->PointCount()==1)
+									pg->AddPoint(coord);
+								else
+									pg->InsertPoint(pg->PointCount()-1,coord);
+
+							}
+
+							break;
+						}
+
+
+						//多点
+					case GEOMETRY::geom::GEOS_MULTIPOINT:
+
+						m_pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createMultiPoint();
+						for (int k = 0;k< vecCoord.size();k++)
+						{
+							vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+							GEOMETRY::geom::Coordinate coord;
+							coord.x = atof(vecXY[0].c_str());
+							coord.y = atof(vecXY[1].c_str());
+							m_pGeometry->AddPoint(coord);
+
+						}
+						break;
+
+						//多多边形
+					case GEOMETRY::geom::GEOS_MULTIPOLYGON:
+
+						m_pGeometry =(Geometry*) GeometryFactory::getDefaultInstance()->createMultiPolygon();
+						break;
+
+					default:
+						m_pGeometry =NULL;
+						break;
+
+					}
+
+					pFeature->SetShape(m_pGeometry->clone());
 
 					//各个字段值
 					for(int j = 0;j<ipFeatureCls->FieldCount();j++)
@@ -1515,8 +1651,13 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 						std::string fieldName = ipFeatureCls->GetField(j+1)->GetName();
 						
 						SYSTEM::IConfigItemPtr   ipFeildNode= pNameItem->GetChildByName(fieldName.c_str());
+						if(ipFeildNode == NULL)
+							continue;
 						//得到字段值
-						std::string csValue = ipFeildNode->GetValue();
+						const char* itemVal = ipFeildNode->GetValue();
+						if(itemVal == NULL)
+							continue;
+						std::string csValue = itemVal;
 
 						long lFieldtype =ipFeatureCls->GetField(j+1)->GetType();
 

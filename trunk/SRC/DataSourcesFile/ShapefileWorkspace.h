@@ -125,6 +125,7 @@ private:
 	bool m_bStartOp;
 
 	std::string  m_FullName;
+	IFeatureClassPtr m_FeatureClass;
 
 };
 
