@@ -1503,6 +1503,11 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 				{
 
 					CFeaturePtr pFeature = ipFeatureCls->CreateFeature();
+					//shape
+					SYSTEM::IConfigItemPtr   ipCoordNode= pNameItem->GetChildByName(node_coordinate.c_str());
+					std::string strCoordinate =  ipCoordNode->GetValue();
+					strCoordinate.
+
 					//¸÷¸ö×Ö¶ÎÖµ
 					for(int j = 0;j<ipFeatureCls->FieldCount();j++)
 					{	
@@ -1514,7 +1519,6 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 						std::string csValue = ipFeildNode->GetValue();
 
 						long lFieldtype =ipFeatureCls->GetField(j+1)->GetType();
-
 
 						switch(lFieldtype)
 						{
