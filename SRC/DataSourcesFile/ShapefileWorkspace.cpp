@@ -73,7 +73,7 @@ IFeatureClassPtr CShapefileWorkspace::OpenFeatureClass(const char *name)
 	
 	CShapefileFeatureClass *pFeatureClass =new CShapefileFeatureClass(this,hshp,hdbf,name,true);
 
-	m_FeatureClass = IFeatureClassPtr(pFeatureClass);
+	m_FeatureClass =pFeatureClass;
 	return IFeatureClassPtr(pFeatureClass);
 
 }
@@ -1464,11 +1464,13 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 		if(ipIncremenalFile == NULL)
 			ipIncremenalFile = new SYSTEM::CXMLConfiguration;
 		ipIncremenalFile->Open(incrementalFile);
+		if (ipIncremenalFile == NULL)
+			return;
 
 		if(ipIncremenalFile->GetName() != node_Incremental)
 			return;
 	
-		IFeatureClassPtr ipFeatureCls = m_FeatureClass;//this->OpenFeatureClass(m_FullName.c_str());
+		CShapefileFeatureClass* ipFeatureCls = m_FeatureClass;//this->OpenFeatureClass(m_FullName.c_str());
 		
 		//ÒªËØÀàÐÍ
 		long shapeType = ipFeatureCls->ShapeType();

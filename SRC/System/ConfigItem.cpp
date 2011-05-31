@@ -97,6 +97,8 @@ const char * SYSTEM::CConfigItem::GetName()
 {	
 	if( m_curValue != NULL )
 		XMLString::release( &m_curValue );
+	if(itemElement == NULL)
+		return "";
 	m_curValue = XMLString::transcode(((DOMElement*)itemElement)->getNodeName());
 	return m_curValue;
 }
