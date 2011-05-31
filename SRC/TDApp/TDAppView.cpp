@@ -1183,6 +1183,7 @@ afx_msg void CTDAppView::OnEditorStart()
 
 		}
 		pMap->GetEditor()->StartEdit();
+		m_MapCtrl.UpdateControl(drawAll);
 	}
 }
 afx_msg void CTDAppView::OnUpdateEditorStart(CCmdUI *pCmdUI)
