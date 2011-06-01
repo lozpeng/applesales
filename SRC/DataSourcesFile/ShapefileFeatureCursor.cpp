@@ -61,6 +61,9 @@ CFeaturePtr CShapefileFeatureCursor::NextFeature()
 
 
 	//将上一次的值清理掉
+	if(m_pFeature == NULL)
+		return NULL;
+
 	m_pFeature->SetEmpty();
 
 	CShapefileFeatureClass *pFeatureClass =(CShapefileFeatureClass*)m_pTable;

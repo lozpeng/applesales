@@ -363,12 +363,7 @@ void CDlgFeatureAttriEdit::SavePreAttribute()
 
 		case Geodatabase::FTYPE_STRING:    //字符型
 			{
-
-
 				pFeature->GetValue(lfieldindex).SetString((const char*)((_bstr_t)(value)));
-				
-
-
 			}
 			break;
 		case Geodatabase::FTYPE_DATE:    //日期型
@@ -379,7 +374,7 @@ void CDlgFeatureAttriEdit::SavePreAttribute()
 		case Geodatabase::FTYPE_DOUBLE:
 		case Geodatabase::FTYPE_FLOAT:    //浮点型
 			{
-				pFeature->GetValue(lfieldindex).m_Var.dVal =(double)(value);
+				pFeature->GetValue(lfieldindex).SetDouble(double(value));
 				
 			}
 			break;
@@ -388,9 +383,10 @@ void CDlgFeatureAttriEdit::SavePreAttribute()
 
 			}
 			break;
+		case Geodatabase::FTYPE_SHORT:    //整型
 		case Geodatabase::FTYPE_LONG:    //整型
 			{
-				pFeature->GetValue(lfieldindex).m_Var.iVal =(int)(value);
+				pFeature->GetValue(lfieldindex).SetInt((int)(value));
 			
 			}
 			break;

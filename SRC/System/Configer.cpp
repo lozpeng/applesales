@@ -74,13 +74,13 @@ void SYSTEM::CXMLConfiguration::Create(std::string  xmlpath , std::string  charC
 	Open(xmlpath);
 }
 
-void SYSTEM::CXMLConfiguration::Open(std::string xmlpath)
+bool SYSTEM::CXMLConfiguration::Open(std::string xmlpath)
 {
 	// 配置解析规则
 	static const XMLCh gLS[] = { chLatin_L, chLatin_S, chNull };
 	impl = DOMImplementationRegistry::getDOMImplementation(gLS);
 	if(!impl)
-		return;
+		return false;
 //		throw CException(GET_TEXT(ERR_XML_DOM_IMPLEMENTATION));
 	if(parser == NULL)
 		parser = new XercesDOMParser;
@@ -98,10 +98,11 @@ void SYSTEM::CXMLConfiguration::Open(std::string xmlpath)
 	if(doc) 
 		itemElement = ((XERCES_CPP_NAMESPACE_QUALIFIER DOMDocument*)doc)->getDocumentElement();	//赋予根节点
 	else
-		return;
+		return false;
 		//throw CException(boost::str(boost::format(GET_TEXT(ERR_PARSE_CONFIG_FILE)) % xmlpath));
 
 	xmlFile = xmlpath;
+	return true;
 }
 
 void SYSTEM::CXMLConfiguration::Parse(std::string xmlcontent)
