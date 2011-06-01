@@ -106,6 +106,11 @@ public:
 public:
 	void SetString(const char *str){vtype =VT_STR;m_Var.pstrVal =new std::string; *m_Var.pstrVal =str;}
 
+	void SetInt(int value){vtype =VT_INT;m_Var.iVal = value;}
+
+	void SetDouble(double value){vtype =VT_DOUBLE;m_Var.dVal = value;}
+
+
 	std::string GetasString()
 	{
 

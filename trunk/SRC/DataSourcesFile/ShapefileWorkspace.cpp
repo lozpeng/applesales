@@ -1258,10 +1258,16 @@ void CShapefileWorkspace::IncrementalExport(std::string incrementalFile)
 	{
 		if(ipIncremenalFile == NULL)
 		   ipIncremenalFile = new SYSTEM::CXMLConfiguration;
-		ipIncremenalFile->Create(incrementalFile,"UTF-8",node_Incremental);
+		bool bFlagOpen = ipIncremenalFile->Open(incrementalFile);
+		if (!bFlagOpen||ipIncremenalFile->GetName() != node_Incremental)
+			ipIncremenalFile->Create(incrementalFile,"UTF-8",node_Incremental);
 		
 		//增加时间节点
-		SYSTEM::IConfigItemPtr ipCurTimeNode = ipIncremenalFile->AddChildNode(node_CaptureTime.c_str());
+		SYSTEM::IConfigItemPtr ipCurTimeNode = ipIncremenalFile->GetChildByName(node_CaptureTime.c_str());
+		if (ipCurTimeNode == NULL)
+		{
+		  ipCurTimeNode = ipIncremenalFile->AddChildNode(node_CaptureTime.c_str());
+		}
 		time_t t = time(0);    
 		char szCurTime[64];    
 		strftime( szCurTime, sizeof(szCurTime), "%Y-%m-%d %X",localtime(&t));    
@@ -1427,12 +1433,8 @@ void CShapefileWorkspace::IncrementalExport(std::string incrementalFile)
 				}
 				else if (pStep->EditType == OP_DELETE)
 				{
-					SYSTEM::IConfigItemPtr ipFlagDeleteNode = ipFeatureTypeNode->GetChildByName(node_FlagDelete.c_str());
-					if (ipFlagDeleteNode == NULL)
-					{
-						 ipFlagDeleteNode  = ipFeatureTypeNode->AddChildNode(node_FlagDelete.c_str());
-					}
-
+					SYSTEM::IConfigItemPtr ipFlagDeleteNode  = ipFeatureNameNode->AddChildNode(node_FlagDelete.c_str());
+					
 					//FeatID 字段
 					SYSTEM::IConfigItemPtr ipDeleteIndexNode  = ipFlagDeleteNode->AddChildNode(node_FeatID.c_str());
                     int featID = pFeatureClass->FindField(node_FeatID.c_str());
@@ -1463,8 +1465,8 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 	{
 		if(ipIncremenalFile == NULL)
 			ipIncremenalFile = new SYSTEM::CXMLConfiguration;
-		ipIncremenalFile->Open(incrementalFile);
-		if (ipIncremenalFile == NULL)
+		bool bFlagOpen = ipIncremenalFile->Open(incrementalFile);
+		if (!bFlagOpen)
 			return;
 
 		if(ipIncremenalFile->GetName() != node_Incremental)
@@ -1517,7 +1519,7 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 					const std::string spCoord = " ";
 					std::vector<std::string> vecXY;
 					const std::string spXY = ",";
-					SYSTEM::IConfigItemPtr   ipCoordNode= pNameItem->GetChildByName(node_coordinate.c_str());
+					SYSTEM::IConfigItemPtr   ipCoordNode= pItem->GetChildByName(node_coordinate.c_str());
 					
 					const char* itemVal = ipCoordNode->GetValue();
 					if(itemVal == NULL)
@@ -1652,7 +1654,7 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 						//得到字段名
 						std::string fieldName = ipFeatureCls->GetField(j+1)->GetName();
 						
-						SYSTEM::IConfigItemPtr   ipFeildNode= pNameItem->GetChildByName(fieldName.c_str());
+						SYSTEM::IConfigItemPtr   ipFeildNode= pItem->GetChildByName(fieldName.c_str());
 						if(ipFeildNode == NULL)
 							continue;
 						//得到字段值
@@ -1680,7 +1682,7 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 						case Geodatabase::FTYPE_DOUBLE:
 						case Geodatabase::FTYPE_FLOAT:    //浮点型
 							{
-								pFeature->GetValue(j+1).m_Var.dVal =atof(csValue.c_str());
+								pFeature->GetValue(j+1).SetDouble(atof(csValue.c_str()));
 
 							}
 							break;
@@ -1691,7 +1693,7 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 							break;
 						case Geodatabase::FTYPE_LONG:    //整型
 							{
-								pFeature->GetValue(j+1).m_Var.iVal =atoi(csValue.c_str());
+								pFeature->GetValue(j+1).SetInt(atoi(csValue.c_str()));
 
 							}
 							break;
@@ -1708,10 +1710,179 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 				}
 				else if (strNodename == node_FlagDelete)
 				{
-
+					SYSTEM::IConfigItemPtr ipFeatIDNode = pItem->GetChildByName(node_FeatID.c_str());
+			
+					const char* itemVal = ipFeatIDNode->GetValue();
+					if(itemVal == NULL)
+						continue;
+					std::string strFeatID = itemVal;
+					Geodatabase::CSimpleQuery queryfilter;
+					queryfilter.AddField(node_FeatID.c_str());
+					std::string strWhere = node_FeatID;
+					strWhere.append(" = ");
+					strWhere.append(strFeatID);
+					queryfilter.SetWhereString(strWhere.c_str());
+					Geodatabase::ICursorPtr pCursor = m_FeatureClass->SimpleQuery(&queryfilter,false);
+					if (pCursor)
+					{
+						Geodatabase::IRowPtr prow;
+						while(!pCursor->IsEOF())
+						{
+							prow =pCursor->NextRow();
+							if(!prow)
+								continue;
+							ipFeatureCls->DeleteFeature(prow->GetId());
+						}
+					}
 				}
 				else if (strNodename == node_FlagModify)
 				{
+					SYSTEM::IConfigItemPtr ipFeatIDNode = pItem->GetChildByName(node_FeatID.c_str());
+
+					const char* itemVal = ipFeatIDNode->GetValue();
+					if(itemVal == NULL)
+						continue;
+					std::string strFeatID = itemVal;
+
+					//解析坐标
+					std::vector<std::string> vecCoord;
+					const std::string spCoord = " ";
+					std::vector<std::string> vecXY;
+					const std::string spXY = ",";
+					SYSTEM::IConfigItemPtr   ipCoordNode= pItem->GetChildByName(node_coordinate.c_str());
+
+					itemVal = ipCoordNode->GetValue();
+					if(itemVal == NULL)
+						continue;
+					std::string strCoordinate = itemVal;
+
+					vecCoord= SYSTEM::split(strCoordinate,spCoord);
+
+
+					GEOMETRY::geom::Geometry* m_pGeometry = NULL;
+					switch(shapeType)
+					{
+						//点
+					case GEOMETRY::geom::GEOS_POINT:
+						break;
+						//线
+					case GEOMETRY::geom::GEOS_LINESTRING:
+
+						m_pGeometry =(Geometry*) GeometryFactory::getDefaultInstance()->createLineString();
+						for (int k = 0;k< vecCoord.size();k++)
+						{
+							vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+							GEOMETRY::geom::Coordinate coord;
+							coord.x = atof(vecXY[0].c_str());
+							coord.y = atof(vecXY[1].c_str());
+							m_pGeometry->AddPoint(coord);
+
+						}
+
+						break;
+						//线圈
+					case GEOMETRY::geom::GEOS_LINEARRING:
+
+						m_pGeometry =(Geometry*) GeometryFactory::getDefaultInstance()->createLinearRing();
+						break;
+
+						//多线
+					case GEOMETRY::geom::GEOS_MULTILINESTRING:
+						{
+							m_pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createMultiLineString();
+
+							Geometry *pg =(Geometry*) GeometryFactory::getDefaultInstance()->createLineString();
+							for (int k = 0;k< vecCoord.size();k++)
+							{
+								vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+								GEOMETRY::geom::Coordinate coord;
+								coord.x = atof(vecXY[0].c_str());
+								coord.y = atof(vecXY[1].c_str());
+								//m_pGeometry->AddPoint(coord);
+								pg->AddPoint(coord);
+							}
+
+							((MultiLineString*)m_pGeometry)->AddGeometry(pg);
+							break;
+						}
+
+
+						//多边形
+					case GEOMETRY::geom::GEOS_POLYGON:
+						{
+							m_pGeometry =(Geometry*) GeometryFactory::getDefaultInstance()->createPolygon();
+							//多边形比较特殊,要加入两个点
+							GEOMETRY::geom::Geometry *pg =((GEOMETRY::geom::Polygon*)m_pGeometry)->GetGeometry(0);
+
+							for (int k = 0;k< vecCoord.size();k++)
+							{
+								vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+								GEOMETRY::geom::Coordinate coord;
+								coord.x = atof(vecXY[0].c_str());
+								coord.y = atof(vecXY[1].c_str());
+								//((GEOMETRY::geom::Polygon*)m_pGeometry)->AddPoint(coord);
+								if(pg->PointCount()==0)
+									pg->AddPoint(coord);
+								else if(pg->PointCount()==1)
+									pg->AddPoint(coord);
+								else
+									pg->InsertPoint(pg->PointCount()-1,coord);
+
+							}
+
+							break;
+						}
+
+
+						//多点
+					case GEOMETRY::geom::GEOS_MULTIPOINT:
+
+						m_pGeometry = (Geometry*)GeometryFactory::getDefaultInstance()->createMultiPoint();
+						for (int k = 0;k< vecCoord.size();k++)
+						{
+							vecXY= SYSTEM::split(vecCoord[k],spXY);
+
+							GEOMETRY::geom::Coordinate coord;
+							coord.x = atof(vecXY[0].c_str());
+							coord.y = atof(vecXY[1].c_str());
+							m_pGeometry->AddPoint(coord);
+
+						}
+						break;
+
+						//多多边形
+					case GEOMETRY::geom::GEOS_MULTIPOLYGON:
+
+						m_pGeometry =(Geometry*) GeometryFactory::getDefaultInstance()->createMultiPolygon();
+						break;
+
+					default:
+						m_pGeometry =NULL;
+						break;
+
+					}
+
+					Geodatabase::CSimpleQuery queryfilter;
+					std::string strWhere = node_FeatID;
+					strWhere.append(" = ");
+					strWhere.append(strFeatID);
+					queryfilter.SetWhereString(strWhere.c_str());
+					Geodatabase::ICursorPtr pCursor = m_FeatureClass->SimpleQuery(&queryfilter,false);
+					if (pCursor)
+					{
+						Geodatabase::IRowPtr prow;
+						while(!pCursor->IsEOF())
+						{
+							prow =pCursor->NextRow();
+							if(!prow)
+								continue;
+							ipFeatureCls->GetFeature(prow->GetId())->SetShape(m_pGeometry->clone());
+						}
+					}
+
 
 				}
 				else if (strNodename == node_FlagAttribute)

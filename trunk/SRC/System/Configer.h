@@ -37,7 +37,7 @@ public:
 	// 函数名称   : Open(std::string xmlpath)
 	// 描述       : 打开指定的XML文件
 	// 返回类型   : void 
-	virtual void Open(std::string xmlpath);
+	virtual bool Open(std::string xmlpath);
 
 	// 函数名称   : Parse(std:string xmlcontent)
 	// 描述       : 解析xml文件流
