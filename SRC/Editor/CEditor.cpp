@@ -19,6 +19,7 @@
 //#include "DlgFeatureAttriEdit.h"
 //#include "DlgKeyboardinput.h"
 //#include "DlgInputSketchCoord.h"
+#include "ShapefileWorkspace.h"
 
 #include <geometry/geom/MultiLineString.h>
 #include <Geometry/geom/Polygon.h>
@@ -105,6 +106,16 @@ namespace Editor
 			//工作空间开始编辑状态
 			pWorkspace->StartEdit();
 
+			int flagSave = MessageBox(0,"是否导入数据增量信息！","提示",MB_YESNO);
+			if (flagSave == 6)
+			{
+				//导入增量信息
+				std::string path = SYSTEM::CSystemPath::GetSystemPath();
+				path.append("\Incremental.xml");	
+				CShapefileWorkspace* pShapefileWorkspace = dynamic_cast<CShapefileWorkspace*>(pWorkspace);
+				pShapefileWorkspace->IncrementalImport(path.c_str());
+			}
+		
 			names.push_back(pLayer->GetName());
 
 			m_EditLayers.push_back(pLayer.get());
@@ -171,6 +182,17 @@ namespace Editor
 			}
 
 			pWorkspace =pFeatureClass->GetWorkspace();
+
+			int flagSave = MessageBox(0,"是否导出数据增量信息！","提示",MB_YESNO);
+			if (flagSave == 6)
+			{
+				//导入增量信息
+				std::string path = SYSTEM::CSystemPath::GetSystemPath();
+				path.append("\Incremental.xml");	
+				CShapefileWorkspace* pShapefileWorkspace = dynamic_cast<CShapefileWorkspace*>(pWorkspace);
+				pShapefileWorkspace->IncrementalExport(path.c_str());
+			}
+
 			//目前只支持对文件进行编辑
 			/*if(pWorkspace->GetType()!=Geodatabase::WT_FileSystem)
 			{

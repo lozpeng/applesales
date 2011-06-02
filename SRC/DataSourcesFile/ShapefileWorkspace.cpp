@@ -312,11 +312,6 @@ void CShapefileWorkspace::StartEdit()
 
 		m_bEditing =true;
 		ClearEditCache();
-
-		//导入增量信息
-		std::string path = SYSTEM::CSystemPath::GetSystemPath();
-		path.append("\Incremental.xml");	
-		this->IncrementalImport(path.c_str());
 	}
 }
 
@@ -343,11 +338,6 @@ void CShapefileWorkspace::StopEdit(bool bsave)
 	}
 	if(bsave)
 	{
-		//导出增量信息
-		std::string path = SYSTEM::CSystemPath::GetSystemPath();
-		path.append("\Incremental.xml");	
-		this->IncrementalExport(path.c_str());
-
 		SaveEdit();
 
 	}
