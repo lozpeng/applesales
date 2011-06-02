@@ -1,0 +1,8 @@
+; workflowWizard.def : 声明 DLL 的模块参数。
+
+LIBRARY      "workflowWizard"
+
+EXPORTS
+    ; 此处可以是显式导出
+    
+    DeletePages @ 1

@@ -458,6 +458,24 @@ BEGIN
     PUSHBUTTON      "重置",IDC_SYMBOLRESETTING,188,228,32,14,NOT WS_VISIBLE
 END
 
+IDD_DISTILL_STEP1 DIALOGEX 0, 0, 266, 156
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,31,124,50,14
+    PUSHBUTTON      "取消",IDCANCEL,165,124,50,14
+END
+
+IDD_DISTILL_STEP2 DIALOGEX 0, 0, 245, 130
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog2"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,18,109,50,14
+    PUSHBUTTON      "取消",IDCANCEL,165,109,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -587,6 +605,22 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 242
     END
+
+    IDD_DISTILL_STEP1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 259
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_DISTILL_STEP2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 238
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 123
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -634,6 +668,16 @@ BEGIN
     0
 END
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_STEP1               ICON                    "res\\step2.ico"
+IDI_STEP2               ICON                    "res\\step1.ico"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 

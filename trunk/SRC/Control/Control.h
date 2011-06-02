@@ -8,7 +8,8 @@
 #endif
 
 #include "resource.h"		// 主符号
-
+#include "TreePropSheetEx.h"
+#include <vector>
 
 // CControlApp
 // 有关此类实现的信息，请参阅 Control.cpp
@@ -24,4 +25,9 @@ public:
 	virtual BOOL InitInstance();
 
 	DECLARE_MESSAGE_MAP()
+	virtual int ExitInstance();
+public:
+	std::vector<TreePropSheet::CTreePropSheetEx*> m_manageSheet;
+	std::vector<CResizablePage*>  m_manageSheetPage;
 };
+extern CControlApp theApp;

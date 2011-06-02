@@ -45,6 +45,11 @@
 #define IDD_RASTER_PROP                 2017
 #define IDD_IMG_CHANGEDETECT            2018
 #define IDD_OBJ_EXPORT                  2019
+#define IDD_DISTILL_STEP1               2020
+#define IDD_DISTILL_STEP2               2021
+#define IDI_STEP1                       2022
+#define IDI_ICON2                       2023
+#define IDI_STEP2                       2023
 #define IDD_FEATURE_RENDER_SET          4024
 #define IDB_FEATURE_RENDER              4025
 #define IDB_RENDER_BG                   4026
@@ -165,20 +170,20 @@
 #define ID_REMOVE_LAYER                 32775
 #define ID_LAYER_PROP                   32776
 #define ID_OBJ_EXPORT                   32777
-#define IDC_SLIDER1                     32850
-#define IDC_RADIO_UD                    32851
-#define IDC_RADIO_LR                    32852
-#define IDC_STATIC1                     32853
 #define ID_SYMBOLRANGSTART              32800
 #define ID_SYMBOLRANGEND                32820
 #define ID_ADDSYMBOLRANGSTART           32830
+#define IDC_SLIDER1                     32850
 #define ID_ADDSYMBOLRANGEND             32850
+#define IDC_RADIO_UD                    32851
+#define IDC_RADIO_LR                    32852
+#define IDC_STATIC1                     32853
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2020
+#define _APS_NEXT_RESOURCE_VALUE        2024
 #define _APS_NEXT_COMMAND_VALUE         32778
 #define _APS_NEXT_CONTROL_VALUE         2014
 #define _APS_NEXT_SYMED_VALUE           2000

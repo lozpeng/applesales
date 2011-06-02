@@ -67,6 +67,24 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageProcess", "SRC\ImagePr
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "workflowWizard", "SRC\workflowWizard\workflowWizard.vcproj", "{5099350E-CCF5-4E3D-A287-9B8E6429AB19}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BCGStyle", "SRC\BCGStyle\BCGStyle.vcproj", "{99FFD532-1032-4FEC-9F50-44DE6CA8B892}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DisasterFlow", "SRC\DisasterFlow\DisasterFlow.vcproj", "{DB75E403-8ACB-4CA9-859E-840365E1EBAD}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -117,6 +135,18 @@ Global
 		{FEB13D5A-F1B7-4A98-A0DA-99F598D23C3A}.Debug|Win32.Build.0 = Debug|Win32
 		{FEB13D5A-F1B7-4A98-A0DA-99F598D23C3A}.Release|Win32.ActiveCfg = Release|Win32
 		{FEB13D5A-F1B7-4A98-A0DA-99F598D23C3A}.Release|Win32.Build.0 = Release|Win32
+		{5099350E-CCF5-4E3D-A287-9B8E6429AB19}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5099350E-CCF5-4E3D-A287-9B8E6429AB19}.Debug|Win32.Build.0 = Debug|Win32
+		{5099350E-CCF5-4E3D-A287-9B8E6429AB19}.Release|Win32.ActiveCfg = Release|Win32
+		{5099350E-CCF5-4E3D-A287-9B8E6429AB19}.Release|Win32.Build.0 = Release|Win32
+		{99FFD532-1032-4FEC-9F50-44DE6CA8B892}.Debug|Win32.ActiveCfg = Debug|Win32
+		{99FFD532-1032-4FEC-9F50-44DE6CA8B892}.Debug|Win32.Build.0 = Debug|Win32
+		{99FFD532-1032-4FEC-9F50-44DE6CA8B892}.Release|Win32.ActiveCfg = Release|Win32
+		{99FFD532-1032-4FEC-9F50-44DE6CA8B892}.Release|Win32.Build.0 = Release|Win32
+		{DB75E403-8ACB-4CA9-859E-840365E1EBAD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DB75E403-8ACB-4CA9-859E-840365E1EBAD}.Debug|Win32.Build.0 = Debug|Win32
+		{DB75E403-8ACB-4CA9-859E-840365E1EBAD}.Release|Win32.ActiveCfg = Release|Win32
+		{DB75E403-8ACB-4CA9-859E-840365E1EBAD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

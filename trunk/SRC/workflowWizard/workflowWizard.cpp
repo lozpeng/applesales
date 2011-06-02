@@ -1,8 +1,8 @@
-// Control.cpp : 定义 DLL 的初始化例程。
+// workflowWizard.cpp : 定义 DLL 的初始化例程。
 //
 
 #include "stdafx.h"
-#include "Control.h"
+#include "workflowWizard.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -34,57 +34,31 @@
 //
 
 
-// CControlApp
+// CworkflowWizardApp
 
-BEGIN_MESSAGE_MAP(CControlApp, CWinApp)
+BEGIN_MESSAGE_MAP(CworkflowWizardApp, CWinApp)
 END_MESSAGE_MAP()
 
 
-// CControlApp 构造
+// CworkflowWizardApp 构造
 
-CControlApp::CControlApp()
+CworkflowWizardApp::CworkflowWizardApp()
 {
 	// TODO: 在此处添加构造代码，
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
 
-// 唯一的一个 CControlApp 对象
+// 唯一的一个 CworkflowWizardApp 对象
 
-CControlApp theApp;
+CworkflowWizardApp theApp;
 
 
-// CControlApp 初始化
+// CworkflowWizardApp 初始化
 
-BOOL CControlApp::InitInstance()
+BOOL CworkflowWizardApp::InitInstance()
 {
 	CWinApp::InitInstance();
 
 	return TRUE;
-}
-
-int CControlApp::ExitInstance()
-{
-	// TODO: 在此添加专用代码和/或调用基类
-	for(int i=0; i<(int)m_manageSheet.size(); i++)
-	{
-		if(NULL != m_manageSheet[i])
-		{
-			delete m_manageSheet[i];
-			m_manageSheet[i] = NULL;
-		}
-	}
-	m_manageSheet.clear();
-
-	for(int i=0; i<(int)m_manageSheetPage.size(); i++)
-	{
-		if(NULL != m_manageSheetPage[i])
-		{
-			delete m_manageSheetPage[i];
-			m_manageSheetPage[i] = NULL;
-		}
-	}
-	m_manageSheetPage.clear();
-
-	return CWinApp::ExitInstance();
 }
