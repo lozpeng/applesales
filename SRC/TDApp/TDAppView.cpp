@@ -1566,6 +1566,8 @@ void CTDAppView::OnImgChangeDetect()
 {
 	Control::CImageProcessTool::ShowImgChangeDetectDlg();
 
+	//Control::CImageProcessTool::ShowDistillWaterSheet();
+
 	RefreshLayerCombo();
 
 }

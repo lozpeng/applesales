@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi"
+				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi;..\workflowWizard"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;CONTROL_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -67,7 +67,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Geometryd.lib"
+				AdditionalDependencies="Geometryd.lib workflowWizard.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				ModuleDefinitionFile=".\Control.def"
@@ -128,7 +128,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi"
+				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi;..\workflowWizard"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;CONTROL_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -150,7 +150,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Geometry.lib"
+				AdditionalDependencies="Geometry.lib workflowWizard.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				ModuleDefinitionFile=".\Control.def"
@@ -200,6 +200,14 @@
 			</File>
 			<File
 				RelativePath=".\Control.def"
+				>
+			</File>
+			<File
+				RelativePath=".\DistillStep1.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DistillStep2.cpp"
 				>
 			</File>
 			<File
@@ -282,6 +290,14 @@
 			</File>
 			<File
 				RelativePath=".\ControlDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DistillStep1.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DistillStep2.h"
 				>
 			</File>
 			<File
@@ -436,6 +452,14 @@
 			</File>
 			<File
 				RelativePath=".\res\stateico.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\step1.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\res\step2.ico"
 				>
 			</File>
 			<File

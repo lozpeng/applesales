@@ -11,24 +11,29 @@
 #include "IWorkspace.h"
 #include "ProgressBar.h"
 
+//流程向导相关
+#include "TreePropSheetEx.h"
+#include "DistillStep1.h"
+#include "DistillStep2.h"
+#include "Control.h"
 namespace Control
 {
 
-void CImageProcessTool::ShowImgChangeDetectDlg()
-{
-     CDllResource hdll;
-	 CDlgChangeDetect dlg;
-	 if(dlg.DoModal()==IDOK)
-	 {
-		 CProgressBar progress;
-		 ImageProcess::ImgChangeDetect detect;
-		 bool bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult,dlg.m_nSize,dlg.m_dCor,&progress);
-		 if(bsuc)
+	void CImageProcessTool::ShowImgChangeDetectDlg()
+	{
+		CDllResource hdll;
+		CDlgChangeDetect dlg;
+		if(dlg.DoModal()==IDOK)
+		{
+			CProgressBar progress;
+			ImageProcess::ImgChangeDetect detect;
+			bool bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult,dlg.m_nSize,dlg.m_dCor,&progress);
+			if(bsuc)
 		 {
-             AfxMessageBox("检测成功");
+			 AfxMessageBox("检测成功");
 			 if(dlg.m_bLoadShp)
 			 {
-                 Framework::IDocument *pDoc =(Framework::IDocument*)Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppDocument);
+				 Framework::IDocument *pDoc =(Framework::IDocument*)Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppDocument);
 				 //pDoc->LoadShpFile(dlg.m_strResult);
 
 				 CString csDataSourceTmp=dlg.m_strResult;
@@ -57,18 +62,37 @@ void CImageProcessTool::ShowImgChangeDetectDlg()
 				 pDoc->GetActiveMap()->AddLayer(pLayer);
 
 				 pDoc->GetLinkMapTree()->AddLayer(pLayer);
-				 
-
-				 
-
-				 
 			 }
 		 }
-		 else
+			else
 		 {
 			 AfxMessageBox("检测失败");
 		 }
-	 }
-}
+		}
+	}
+	void CImageProcessTool::ShowDistillWaterSheet()
+	{
+		CDllResource hdll;
+		TreePropSheet::CTreePropSheetEx* pFlowSheet = new TreePropSheet::CTreePropSheetEx("水体信息提取");
+		pFlowSheet->SetTreeViewMode( TRUE, TRUE, TRUE);
+		pFlowSheet->SetIsResizable( true );
+		pFlowSheet->SetTreeWidth( 150 );  
+		pFlowSheet->SetPaneMinimumSizes( 150, 180 );
+		pFlowSheet->SetMinSize( CSize( 500, 400 ) );	
+		pFlowSheet->SetAutoExpandTree(true);
+
+		CDistillStep1* pStep1 = new CDistillStep1();
+		CDistillStep2* pStep2 = new CDistillStep2();
+		pFlowSheet->AddPage(pStep1);
+		pFlowSheet->AddPage(pStep2);
+
+		pFlowSheet->Create(NULL, WS_POPUP|WS_SYSMENU|WS_CAPTION|WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_VISIBLE, 0 );
+		pFlowSheet->Invalidate( TRUE );
+
+		theApp.m_manageSheet.push_back(pFlowSheet);
+
+		theApp.m_manageSheetPage.push_back(pStep1);
+		theApp.m_manageSheetPage.push_back(pStep2);
+	}
 
 }
