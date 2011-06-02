@@ -103,6 +103,7 @@ private:
 
 	SHPObject *Geometry2Shp(GEOMETRY::geom::Geometry* pGeometry,int nSHPType);
 
+public:
 	//增量导出、导入
 	void IncrementalExport(std::string incrementalFile);
 	void IncrementalImport(std::string incrementalFile);
