@@ -1729,8 +1729,14 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 						while(!pCursor->IsEOF())
 						{
 							prow =pCursor->NextRow();
+							
 							if(prow)
-								ipFeatureCls->DeleteFeature(prow->GetId());
+							{
+								CFeaturePtr pFeature = ipFeatureCls->GetFeature(prow->GetId());
+								pFeature->Delete();
+								//pFeature->Update();
+								//ipFeatureCls->DeleteFeature(prow->GetId());
+							}
 						}
 					}
 				}
@@ -1876,10 +1882,12 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 						while(!pCursor->IsEOF())
 						{
 							prow =pCursor->NextRow();
+							CFeaturePtr pFeature = ipFeatureCls->GetFeature(prow->GetId());
 							if(prow)
 							{
-								ipFeatureCls->GetFeature(prow->GetId())->SetShape(m_pGeometry->clone());
-								ipFeatureCls->GetFeature(prow->GetId())->Update();
+								pFeature->SetShape(m_pGeometry);
+								pFeature->Update();
+								
 							}
 						}
 					}
@@ -1895,36 +1903,38 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 						continue;
 					std::string strFeatID = itemVal;
 
-					//解析属性
-					
-					SYSTEM::IConfigItemPtr   ipSiblingNode= ipFeatIDNode->GetNextSibling();
-					while(ipSiblingNode)
+					Geodatabase::CSimpleQuery queryfilter;
+					std::string strWhere = node_FeatID;
+					strWhere.append(" = ");
+					strWhere.append(strFeatID);
+					queryfilter.SetWhereString(strWhere.c_str());
+					Geodatabase::ICursorPtr pCursor = m_FeatureClass->SimpleQuery(&queryfilter,false);
+					if (pCursor)
 					{
-						int lfieldindex = ipFeatureCls->FindField(ipSiblingNode->GetName());
-						itemVal = ipSiblingNode->GetValue();
-						if(itemVal == NULL|| lfieldindex<0)
+						Geodatabase::IRowPtr prow;
+						while(!pCursor->IsEOF())
 						{
-							ipSiblingNode= ipFeatIDNode->GetNextSibling();
-							continue;
-						}
-						std::string csValue = itemVal;
-
-						Geodatabase::CSimpleQuery queryfilter;
-						std::string strWhere = node_FeatID;
-						strWhere.append(" = ");
-						strWhere.append(strFeatID);
-						queryfilter.SetWhereString(strWhere.c_str());
-						Geodatabase::ICursorPtr pCursor = m_FeatureClass->SimpleQuery(&queryfilter,false);
-						if (pCursor)
-						{
-							Geodatabase::IRowPtr prow;
-							while(!pCursor->IsEOF())
+							prow =pCursor->NextRow();
+							if(prow)
 							{
-								prow =pCursor->NextRow();
-								if(prow)
+
+								//解析属性
+								CFeaturePtr pFeature = ipFeatureCls->GetFeature(prow->GetId());
+								SYSTEM::IConfigItemPtr   ipSiblingNode= ipFeatIDNode->GetNextSibling();
+								while(ipSiblingNode)
 								{
+									int lfieldindex = ipFeatureCls->FindField(ipSiblingNode->GetName());
+									itemVal = ipSiblingNode->GetValue();
+									if(itemVal == NULL|| lfieldindex<0)
+									{
+										ipSiblingNode= ipSiblingNode->GetNextSibling();
+										continue;
+									}
+									std::string csValue = itemVal;
+
+
 									long lFieldtype =ipFeatureCls->GetField(lfieldindex)->GetType();
-									CFeaturePtr pFeature = ipFeatureCls->GetFeature(prow->GetId());
+									
 									switch(lFieldtype)
 									{
 
@@ -1962,15 +1972,20 @@ void CShapefileWorkspace::IncrementalImport(std::string incrementalFile)
 										continue;
 										break;
 									}
+
 									
-									pFeature->Update();
+
+
+									ipSiblingNode= ipSiblingNode->GetNextSibling();
 								}
+
+								pFeature->Update();
 							}
+
+								
 						}
-
-
-						ipSiblingNode= ipFeatIDNode->GetNextSibling();
 					}
+
 					
 				}	
 				
