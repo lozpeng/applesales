@@ -56,6 +56,8 @@ private:
 
 	std::vector<GEOMETRY::geom::Coordinate> m_seedPoints;
 
+	std::vector<GEOMETRY::geom::Coordinate> m_tempPoints;
+
 	//»­±Ê
 	Display::CGeometrySketchPtr m_pSketch;
 };

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "EdgeTrackTool.h"
 #include "ILayer.h"
+#include "PolylineElement.h"
 namespace Control
 {
 static CEdgeTrackTool gCEdgeTrackTool;
@@ -13,7 +14,7 @@ CEdgeTrackTool::CEdgeTrackTool() : Framework::ITool("EdgeTrackTool")
 
 	Display::CSimpleLineSymbolPtr pLineSymbol =new Display::CSimpleLineSymbol;
 	pLineSymbol->SetLineColor(RGB(0,255,0));
-	
+	pLineSymbol->SetLineWidth(1.5);
 	
 	m_pSymbol =pLineSymbol;
 
@@ -150,6 +151,7 @@ void CEdgeTrackTool::LButtonDownEvent (UINT nFlags, CPoint point)
 		m_seedPoints.push_back(coord);
 		mp_lSeedPointCount++;
 
+		m_tempPoints.clear();
 		m_pMapCtrl->UpdateControl(drawTempObj);
 	    
 		break;
@@ -189,6 +191,8 @@ void CEdgeTrackTool::MouseMoveEvent(UINT nFlags, CPoint point)
 			m_cEdge.SetCurPoint( coord );
 			m_cEdge.GetOptimalPath( &mp_lPixelTempCount, &m_pTempPathPoint);
 
+			long low =0;
+
 			//如果这条路径长度大于截断路径，则记录下来此段路径
 			if(mp_lPixelTempCount > mg_lSeedBreakCount + mg_lSeedBreakCount * 0.3)
 			{
@@ -197,6 +201,7 @@ void CEdgeTrackTool::MouseMoveEvent(UINT nFlags, CPoint point)
 					m_pDataset->PixelToWorld(m_pTempPathPoint[mp_lPixelTempCount-i-1].x,m_pTempPathPoint[mp_lPixelTempCount-i-1].y,&pt.x,&pt.y);
 					m_pSketch->AddPoint(pt);
 				}
+				low =mg_lSeedBreakCount-1;
 				
 				m_cEdge.SetSeedPoint(pt);
 				//记录下种子点
@@ -204,6 +209,15 @@ void CEdgeTrackTool::MouseMoveEvent(UINT nFlags, CPoint point)
 				mp_lSeedPointCount++;
 
 				mp_lSeedPointCount++;
+			}
+
+			m_tempPoints.clear();
+			//ASSERT(mp_lPixelTempCount<=500);
+			for(;low<mp_lPixelTempCount;low++)
+			{
+				m_pDataset->PixelToWorld(m_pTempPathPoint[mp_lPixelTempCount-low-1].x,m_pTempPathPoint[mp_lPixelTempCount-low-1].y,&pt.x,&pt.y);
+				m_tempPoints.push_back(pt);
+				
 			}
 
 			mg_mouseLocation = coord;
@@ -229,8 +243,58 @@ void CEdgeTrackTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 	{
 		return;
 	}
+    
+	if(!m_pSketch->IsEmpty())
+	{
+		Element::CPolylineElement *ppolyElement =new Element::CPolylineElement(*m_pSketch->GetGeometry());
+
+		//设置符号
+		Display::CSimpleLineSymbolPtr pLineSymbol =ppolyElement->GetSymbol();
+		pLineSymbol->SetLineColor(RGB(0,255,0));
+		pLineSymbol->SetLineWidth(2.0);
+
+		pMap->GetGraphicLayer()->AddElement(ppolyElement);
+	}
+	
 
 	EndTrack();
+
+	m_pMapCtrl->UpdateControl(drawAll);
+}
+
+static void DrawEditPolyline(Display::IDisplayPtr &pDisplay,INT_POINT *pts,long num)
+{
+	Display::CDC *pDC =pDisplay->GetDrawDC();
+
+	int i;
+	DIS_LINE *pline;
+
+	//构造一个线对象 
+	CreateDisplayLine(pline,num);
+	for(i=0;i<num;i++)
+	{
+		pline->ps[i] =pts[i];
+	}
+
+	LINE_STYLE ls;				//设置画笔
+	memset( &ls , 0 , sizeof(ls) );
+	ls.eStyle = SOLID;
+	ls.lColor = RGB(0,255,0);
+	ls.lWidth = 1;
+
+	DISPLAY_HANDLE hPen = pDC->CreatePen(ls);
+
+	DISPLAY_HANDLE pOld =pDC->SelectObject(hPen);
+
+	//先画线
+	pDC->DrawPolyLines(*pline);
+
+	pDC->SelectObject(pOld);
+	pDC->RemoveHandle(hPen);
+
+	FreeDisplayObj(pline);
+
+	
 }
 
 void CEdgeTrackTool::Draw(Display::IDisplayPtr pDisplay)
@@ -240,6 +304,67 @@ void CEdgeTrackTool::Draw(Display::IDisplayPtr pDisplay)
 		if(!m_pSketch->IsEmpty())
 		{
            m_pSketch->Draw(pDisplay);
+		}
+		if(m_tempPoints.size()>1)
+		{
+			long lNumPoints =m_tempPoints.size()+1;
+			//绘制随鼠标变化的线
+			INT_POINT*	pPoints = NULL;
+
+			pPoints = new INT_POINT[lNumPoints];
+			INT_POINT pt;
+
+			//将线的种子点加入
+			pDisplay->GetDisplayTransformation().ConvertGeoToDisplay(m_seedPoints.back().x,m_seedPoints.back().y,pt.x,pt.y);
+			pPoints[0] = pt;
+			//构造一个线
+			for( int j = 1;j < lNumPoints;j++ )
+			{
+				
+				pDisplay->GetDisplayTransformation().ConvertGeoToDisplay(m_tempPoints[j-1].x,m_tempPoints[j-1].y,pt.x,pt.y);
+				pPoints[j] = pt;	
+
+			}
+
+
+			DrawEditPolyline(pDisplay,pPoints,lNumPoints);
+
+			delete []pPoints;
+
+		}
+
+		//绘制种子点
+		if(!m_seedPoints.empty())
+		{
+			Display::CDC *pDC =pDisplay->GetDrawDC();
+			BRUSH_STYLE bs;
+			bs.lColor = RGB(255,0,0);
+			bs.Style = SOLID_BRUSH;
+			DISPLAY_HANDLE pnewBrush =pDC->CreateBrush(bs);
+	
+			int nSize =5;
+			DIS_RECT rect;
+
+			DISPLAY_HANDLE pOld =pDC->SelectObject(pnewBrush);
+
+            INT_POINT pt;
+
+			for( int i = 0;i < m_seedPoints.size();i++ )
+			{
+				pDisplay->GetDisplayTransformation().ConvertGeoToDisplay(m_seedPoints[i].x,m_seedPoints[i].y,pt.x,pt.y);
+				
+				rect.left = pt.x - nSize;
+				rect.right = pt.x + nSize;
+				rect.top = pt.y - nSize;
+				rect.bottom = pt.y + nSize;
+				pDC->Circle(rect);
+
+			}
+	
+
+			pDC->SelectObject(pOld);
+			pDC->RemoveHandle(pnewBrush);
+			
 		}
 		
 	}
@@ -278,11 +403,15 @@ void CEdgeTrackTool::BeginTrack()
 
 void CEdgeTrackTool::EndTrack()
 {
+	Carto::CMapPtr pMap = m_pMapCtrl->GetMap();
+	pMap->RemoveOtherDraw(this);
     m_pDataset.reset();
 
 	m_pSketch->SetEmpty();
 
 	m_seedPoints.clear();
+
+	m_tempPoints.clear();
 
 	m_lPointNum=0;
 
