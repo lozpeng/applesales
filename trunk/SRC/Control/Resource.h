@@ -40,6 +40,8 @@
 #define IDD_PROGRESS_BAR                2014
 #define IDC_EDIT2                       2014
 #define IDC_EDIT_CHANGETHD              2014
+#define IDC_BUTTON1                     2014
+#define IDC_BUTTON_POLYGON              2014
 #define IDR_LAYER_MENU                  2015
 #define IDD_LAYERPROP_GENERAL           2016
 #define IDD_RASTER_PROP                 2017
@@ -185,7 +187,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        2024
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         2014
+#define _APS_NEXT_CONTROL_VALUE         2015
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif

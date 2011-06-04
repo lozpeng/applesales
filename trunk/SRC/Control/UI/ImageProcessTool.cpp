@@ -70,7 +70,7 @@ namespace Control
 		 }
 		}
 	}
-	void CImageProcessTool::ShowDistillWaterSheet()
+	void CImageProcessTool::ShowDistillWaterSheet(Control::CMapControl* mapControl)
 	{
 		CDllResource hdll;
 		TreePropSheet::CTreePropSheetEx* pFlowSheet = new TreePropSheet::CTreePropSheetEx("水体信息提取");
@@ -82,6 +82,7 @@ namespace Control
 		pFlowSheet->SetAutoExpandTree(true);
 
 		CDistillStep1* pStep1 = new CDistillStep1();
+		pStep1->SetMapControl(mapControl);
 		CDistillStep2* pStep2 = new CDistillStep2();
 		pFlowSheet->AddPage(pStep1);
 		pFlowSheet->AddPage(pStep2);
