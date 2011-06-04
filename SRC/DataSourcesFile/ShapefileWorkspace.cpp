@@ -312,6 +312,15 @@ void CShapefileWorkspace::StartEdit()
 
 		m_bEditing =true;
 		ClearEditCache();
+
+		int flagSave = MessageBox(0,"是否导入数据增量信息！","提示",MB_YESNO);
+		if (flagSave == 6)
+		{
+			//导入增量信息
+			std::string path = SYSTEM::CSystemPath::GetSystemPath();
+			path.append("\Incremental.xml");	
+			IncrementalImport(path.c_str());
+		}
 	}
 }
 
@@ -338,6 +347,15 @@ void CShapefileWorkspace::StopEdit(bool bsave)
 	}
 	if(bsave)
 	{
+		int flagSave = MessageBox(0,"是否导出数据增量信息！","提示",MB_YESNO);
+		if (flagSave == 6)
+		{
+			//导出增量信息
+			std::string path = SYSTEM::CSystemPath::GetSystemPath();
+			path.append("\Incremental.xml");	
+			IncrementalExport(path.c_str());
+		}
+
 		SaveEdit();
 
 	}
