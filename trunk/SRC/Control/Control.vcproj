@@ -746,6 +746,22 @@
 				Name="ExtractInfo"
 				>
 				<File
+					RelativePath=".\Tool\EdgeTracking.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\EdgeTracking.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\EdgeTrackTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\EdgeTrackTool.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Tool\MagicStickTool.cpp"
 					>
 				</File>
