@@ -563,7 +563,7 @@ void CMainFrame::AddTab_ChangeDetect()
 	//--------------------------
 	// 变化标识
 	//--------------------------
-	CBCGPRibbonButton* pBtnChangeRender = new CBCGPRibbonButton (ID_CHANGE_RENDER,_T("变化标识"), 9, 9);
+	CBCGPRibbonButton* pBtnChangeRender = new CBCGPRibbonButton (ID_CHANGE_RENDER,_T("提取样本"), 9, 9);
 	pPanel->Add (pBtnChangeRender);
 
 
