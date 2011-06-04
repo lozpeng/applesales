@@ -126,8 +126,8 @@ void CEdgeTracking::GetOptimalPath(long *lCount,POINT **pPathPixel)
 	float fCurCost = 0;
 	CPoint cSeedPoint;
 	CPoint cCurPoint;
-	m_pDataset->WorldToPixel( SeedPoint.x, SeedPoint.y, &cSeedPoint.y, &cSeedPoint.x );
-	m_pDataset->WorldToPixel( CurPoint.x, CurPoint.y, &cCurPoint.y, &cCurPoint.x );
+	m_pDataset->WorldToPixel( SeedPoint.x, SeedPoint.y, &cSeedPoint.x, &cSeedPoint.y );
+	m_pDataset->WorldToPixel( CurPoint.x, CurPoint.y, &cCurPoint.x, &cCurPoint.y );
 	PixelToResample( &cSeedPoint );
 	PixelToResample( &cCurPoint );
 	
@@ -670,8 +670,8 @@ void CEdgeTracking::ReadThemeData(const GEOMETRY::geom::Envelope& stDrawWorldExt
 	
 	stScreenWorldExtent = stDrawWorldExtent;
 	ScreenRect = rect;
-	m_pDataset->WorldToPixel(stDrawWorldExtent.getMinX(), stDrawWorldExtent.getMaxY(), &mp_lRow1, &mp_lCol1);
-	m_pDataset->WorldToPixel(stDrawWorldExtent.getMaxX(), stDrawWorldExtent.getMinY(), &mp_lRow2, &mp_lCol2);
+	m_pDataset->WorldToPixel(stDrawWorldExtent.getMinX(), stDrawWorldExtent.getMaxY(), &mp_lCol1, &mp_lRow1);
+	m_pDataset->WorldToPixel(stDrawWorldExtent.getMaxX(), stDrawWorldExtent.getMinY(), &mp_lCol2, &mp_lRow2);
 	
 	mp_lSrcWidth = mp_lCol2 - mp_lCol1 + 1;
 	mp_lSrcHeight = mp_lRow2 - mp_lRow1 + 1;
