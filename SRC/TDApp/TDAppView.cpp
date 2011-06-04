@@ -1577,6 +1577,14 @@ void CTDAppView::OnImgChangeDetect()
 void CTDAppView::OnImgChangeRender()
 {
 	Control::CImageProcessTool::ShowDistillWaterSheet(&m_MapCtrl);
+	//Framework::ITool* pTool = NULL;
+	//m_MapCtrl.SetCurTool("DiTillTool");
+	//pTool=Framework::ITool::FindTool("DiTillTool");
+	////设置目标图层和阈值
+	//if(pTool)
+	//{
+	//	pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	//}
 }
 
 //删除上次魔术棒提取结果
