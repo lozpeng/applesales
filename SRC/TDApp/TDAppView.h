@@ -186,6 +186,8 @@ public:
 	afx_msg void OnMagicTol();
 
 	afx_msg void OnDeleteLastMagic();
+	//边缘提取
+	afx_msg void OnEdgeTrack();
 
 	//变化检测
 	afx_msg void OnImgChangeDetect();

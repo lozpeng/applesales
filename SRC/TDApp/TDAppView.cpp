@@ -159,6 +159,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 	
 	ON_COMMAND(ID_REMOVELASTMAGIC,OnDeleteLastMagic)
+	
+	ON_COMMAND(ID_EDGE_EXTRACT,OnEdgeTrack)
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
@@ -1610,4 +1612,15 @@ void CTDAppView::OnDeleteLastMagic()
 	}
 	
 	
+}
+
+void CTDAppView::OnEdgeTrack()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("EdgeTrackTool");
+	pTool=Framework::ITool::FindTool("EdgeTrackTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
 }
