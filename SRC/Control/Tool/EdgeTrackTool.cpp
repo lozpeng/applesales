@@ -11,11 +11,11 @@ CEdgeTrackTool::CEdgeTrackTool() : Framework::ITool("EdgeTrackTool")
 
 	m_hCursor =NULL;
 
-	Display::CSimpleFillSymbolPtr pFillSymbol =new Display::CSimpleFillSymbol;
-	pFillSymbol->SetDrawFill(false);
-	pFillSymbol->SetOutLineWidth(1);
-	pFillSymbol->SetOutLineColor(RGB(0,255,0));
-	m_pSymbol =pFillSymbol;
+	Display::CSimpleLineSymbolPtr pLineSymbol =new Display::CSimpleLineSymbol;
+	pLineSymbol->SetLineColor(RGB(0,255,0));
+	
+	
+	m_pSymbol =pLineSymbol;
 
 	m_lPointNum =0;
 
@@ -115,8 +115,8 @@ void CEdgeTrackTool::LButtonDownEvent (UINT nFlags, CPoint point)
 		{
 			return;
 		}
-		//初始化
-		m_lPointNum =0;
+		BeginTrack();
+		
 	}
 
 	switch(m_lPointNum)
@@ -137,7 +137,7 @@ void CEdgeTrackTool::LButtonDownEvent (UINT nFlags, CPoint point)
         //将上段路径保留
 		
 		GEOMETRY::geom::Coordinate pt;
-		for(long i=0;i<mp_lPixelTempCount;i++)
+		for(long i=mp_lPixelTempCount-1;i>=0;i--)
 		{
 			m_pDataset->PixelToWorld(m_pTempPathPoint[i].x,m_pTempPathPoint[i].y,&pt.x,&pt.y);
 			m_pSketch->AddPoint(pt);
@@ -145,7 +145,7 @@ void CEdgeTrackTool::LButtonDownEvent (UINT nFlags, CPoint point)
 		mp_lPixelTempCount=-1;
 
 		m_cEdge.SetSeedPoint(coord);
-		m_pSketch->AddPoint(coord);
+		//m_pSketch->AddPoint(coord);
 		//记录下种子点
 		m_seedPoints.push_back(coord);
 		mp_lSeedPointCount++;
@@ -161,6 +161,10 @@ void CEdgeTrackTool::LButtonDownEvent (UINT nFlags, CPoint point)
 
 void CEdgeTrackTool::MouseMoveEvent(UINT nFlags, CPoint point)
 {
+	if(!m_pDataset)
+	{
+		return;
+	}
 	//获取活动地图控件
 	if(!m_pMapCtrl)
 		return;
@@ -169,6 +173,8 @@ void CEdgeTrackTool::MouseMoveEvent(UINT nFlags, CPoint point)
 	Carto::CMapPtr pMap = m_pMapCtrl->GetMap();
 	if(!pMap)
 		return;
+
+
 
 	GEOMETRY::geom::Coordinate coord;
 	pMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo
@@ -188,7 +194,7 @@ void CEdgeTrackTool::MouseMoveEvent(UINT nFlags, CPoint point)
 			{
 				for(long i=0;i<mg_lSeedBreakCount;i++)
 				{
-					m_pDataset->PixelToWorld(m_pTempPathPoint[i].x,m_pTempPathPoint[i].y,&pt.x,&pt.y);
+					m_pDataset->PixelToWorld(m_pTempPathPoint[mp_lPixelTempCount-i-1].x,m_pTempPathPoint[mp_lPixelTempCount-i-1].y,&pt.x,&pt.y);
 					m_pSketch->AddPoint(pt);
 				}
 				
@@ -211,7 +217,20 @@ void CEdgeTrackTool::MouseMoveEvent(UINT nFlags, CPoint point)
 
 void CEdgeTrackTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 {
+	if(!m_pMapCtrl)
+		return;
 
+	//获取活动地区
+	Carto::CMapPtr pMap = m_pMapCtrl->GetMap();
+	if(!pMap)
+		return;
+
+	if(!m_pDataset)
+	{
+		return;
+	}
+
+	EndTrack();
 }
 
 void CEdgeTrackTool::Draw(Display::IDisplayPtr pDisplay)
@@ -226,5 +245,53 @@ void CEdgeTrackTool::Draw(Display::IDisplayPtr pDisplay)
 	}
 }
 
+void CEdgeTrackTool::BeginTrack()
+{
+	if(!m_pMapCtrl)
+		return;
+
+	//获取活动地区
+	Carto::CMapPtr pMap = m_pMapCtrl->GetMap();
+	if(!pMap)
+		return;
+
+	//注册扩展绘制
+	if(!pMap->IsDrawInlist(this))
+	{
+       pMap->AddOtherDraw(this);
+	}
+	//初始化
+	m_lPointNum =0;
+
+	long lwidth,lheight;
+	m_pDataset->GetSize(&lwidth,&lheight);
+	RECT rect;
+	rect.left =1;
+	rect.top =1;
+	rect.bottom =lheight;
+	rect.right =lwidth;
+	GEOMETRY::geom::Envelope extent;
+	m_pDataset->GetExtent(&extent);
+
+	m_cEdge.InitRasData(m_pDataset.get(),1,extent,rect);
+}
+
+void CEdgeTrackTool::EndTrack()
+{
+    m_pDataset.reset();
+
+	m_pSketch->SetEmpty();
+
+	m_seedPoints.clear();
+
+	m_lPointNum=0;
+
+	mp_lSeedPointCount=-1;
+
+	//释放内存
+	m_cEdge.ReleaseMemory();
+
+
+}
 
 }

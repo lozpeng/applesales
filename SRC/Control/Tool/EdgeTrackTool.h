@@ -26,7 +26,9 @@ public:
 
 	virtual void Draw(Display::IDisplayPtr pDisplay);
 
-
+private:
+	void BeginTrack();
+	void EndTrack();
 private:
 	HCURSOR m_hCursor;
 
