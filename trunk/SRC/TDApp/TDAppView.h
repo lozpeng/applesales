@@ -189,6 +189,7 @@ public:
 
 	//±ä»¯¼ì²â
 	afx_msg void OnImgChangeDetect();
+	afx_msg void OnImgChangeRender();
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 

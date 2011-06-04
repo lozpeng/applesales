@@ -148,6 +148,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 
 	
 	ON_COMMAND(ID_CHANGE_DETECT, OnImgChangeDetect)
+	ON_COMMAND(ID_CHANGE_RENDER, OnImgChangeRender)
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 	ON_UPDATE_COMMAND_UI(ID_MAGIC_STICK, OnUpdateMagicStick)
 	
@@ -1570,6 +1571,10 @@ void CTDAppView::OnImgChangeDetect()
 
 	RefreshLayerCombo();
 
+}
+void CTDAppView::OnImgChangeRender()
+{
+	Control::CImageProcessTool::ShowDistillWaterSheet();
 }
 
 //删除上次魔术棒提取结果
