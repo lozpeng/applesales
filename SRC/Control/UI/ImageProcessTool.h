@@ -1,6 +1,8 @@
 #ifndef _IMG_PROCESSTOOL_
 #define _IMG_PROCESSTOOL_
 
+#include "MapControl.h"
+
 namespace Control
 {
 class CONTROL_DLL CImageProcessTool
@@ -10,7 +12,7 @@ public:
 	static void ShowImgChangeDetectDlg();
 
 	//水体提取流程
-	static void ShowDistillWaterSheet();
+	static void ShowDistillWaterSheet(Control::CMapControl* mapControl);
 };
 
 }

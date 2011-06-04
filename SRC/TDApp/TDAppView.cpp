@@ -1576,7 +1576,7 @@ void CTDAppView::OnImgChangeDetect()
 }
 void CTDAppView::OnImgChangeRender()
 {
-	Control::CImageProcessTool::ShowDistillWaterSheet();
+	Control::CImageProcessTool::ShowDistillWaterSheet(&m_MapCtrl);
 }
 
 //删除上次魔术棒提取结果

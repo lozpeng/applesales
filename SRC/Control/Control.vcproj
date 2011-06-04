@@ -746,6 +746,14 @@
 				Name="ExtractInfo"
 				>
 				<File
+					RelativePath=".\DitillTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DitillTool.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Tool\EdgeTracking.cpp"
 					>
 				</File>

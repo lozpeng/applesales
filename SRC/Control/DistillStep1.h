@@ -1,6 +1,8 @@
 #pragma once
 #include "workflowWizardInclude.h"
 
+#include "MapControl.h"
+
 // CDistillStep1 对话框
 
 class CDistillStep1 : public CResizablePage,
@@ -19,4 +21,10 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedButtonPolygon();
+public:
+	void	SetMapControl(Control::CMapControl* pMapControl){m_pMapControl = pMapControl;};
+protected:
+	Control::CMapControl*			m_pMapControl;
 };
