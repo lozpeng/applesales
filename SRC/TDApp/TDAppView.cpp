@@ -149,6 +149,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	
 	ON_COMMAND(ID_CHANGE_DETECT, OnImgChangeDetect)
 	ON_COMMAND(ID_CHANGE_RENDER, OnImgChangeRender)
+	ON_COMMAND(ID_WATER_EXTRACT, OnWaterExtract)
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 	ON_UPDATE_COMMAND_UI(ID_MAGIC_STICK, OnUpdateMagicStick)
 	
@@ -1584,6 +1585,11 @@ void CTDAppView::OnImgChangeRender()
 	//{
 	//	pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	//}
+}
+void CTDAppView::OnWaterExtract()
+{
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	Control::CImageProcessTool::ShowDistillWaterSheet(&m_MapCtrl, pMainFrm);
 }
 
 //删除上次魔术棒提取结果
