@@ -391,12 +391,20 @@ void CEdgeTrackTool::BeginTrack()
 	long lwidth,lheight;
 	m_pDataset->GetSize(&lwidth,&lheight);
 	RECT rect;
-	rect.left =1;
+	/*rect.left =1;
 	rect.top =1;
 	rect.bottom =lheight;
-	rect.right =lwidth;
+	rect.right =lwidth;*/
+
+	DIS_BOUND bound =pMap->GetDisplay()->GetDisplayTransformation().GetViewBound();
+
+	rect.left =bound.left;
+	rect.top =bound.top;
+	rect.bottom =bound.bottom;
+	rect.right =bound.right;
 	GEOMETRY::geom::Envelope extent;
-	m_pDataset->GetExtent(&extent);
+	pMap->GetDisplay()->GetDisplayTransformation().GetGeoBound(extent);
+	//m_pDataset->GetExtent(&extent);
 
 	m_cEdge.InitRasData(m_pDataset.get(),1,extent,rect);
 }
