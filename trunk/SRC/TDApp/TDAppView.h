@@ -192,6 +192,7 @@ public:
 	//±ä»¯¼ì²â
 	afx_msg void OnImgChangeDetect();
 	afx_msg void OnImgChangeRender();
+	afx_msg void OnWaterExtract();
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 

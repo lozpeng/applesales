@@ -116,7 +116,12 @@ namespace Control
 
 		m_pPolygon.reset();
 
-		IDrawElementTool::LButtonDblClkEvent(nFlags, point);
+		//¸üÐÂ»æÖÆ
+		m_pMapCtrl->UpdateControl((DrawContent)(drawElement));
+
+		ReleaseCapture();
+
+		//IDrawElementTool::LButtonDblClkEvent(nFlags, point);
 
 	}
 }
