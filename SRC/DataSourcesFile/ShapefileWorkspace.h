@@ -127,7 +127,7 @@ private:
 	bool m_bStartOp;
 
 	std::string  m_FullName;
-	CShapefileFeatureClass* m_FeatureClass;
+	std::vector<CShapefileFeatureClass* > m_FeatureDataset;
 
 };
 

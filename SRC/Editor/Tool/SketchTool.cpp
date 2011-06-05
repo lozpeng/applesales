@@ -4,6 +4,7 @@
 #include "CEditor.h"
 #include "Editor.h"
 #include "resource.h"
+#include "Featurelayer.h"
 extern CEditorApp theApp;
 
 namespace Editor
@@ -114,6 +115,36 @@ void CSketchTool::MouseMoveEvent (UINT nFlags, CPoint point)
 void CSketchTool::LButtonUpEvent (UINT nFlags, CPoint point)
 {
 
+	//绘制点要素 结束
+	//结束绘制
+	//获取活动地图控件
+	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
+	if(!pMapCtrl)
+		return;
+
+	//获取活动地区
+	Carto::CMapPtr pMap = pMapCtrl->GetMap();
+	if(!pMap)
+		return;
+
+	Editor::CEditorPtr pEdit =pMap->GetEditor();
+	if(!pEdit&&!pEdit->GetCurLayer())
+	{
+		return;
+	}
+	if(Carto::LAYER_TYPE::FeatureLayer == pEdit->GetCurLayer()->GetLayerType())
+	{
+		Carto::CFeatureLayer* pFeatureLayer = (Carto::CFeatureLayer*)pEdit->GetCurLayer();
+		long iFeatureType = pFeatureLayer->GetFeatureType();
+		if(iFeatureType== GEOMETRY::geom::GEOS_POINT)
+		{
+			pEdit->FinishSketch();
+
+			m_clickPt.x =-1;
+			m_clickPt.y =-1;
+		}
+
+	}
 
 }
 
