@@ -203,14 +203,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DistillStep1.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DistillStep2.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\DllResource.cpp"
 				>
 			</File>
@@ -290,14 +282,6 @@
 			</File>
 			<File
 				RelativePath=".\ControlDefine.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DistillStep1.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DistillStep2.h"
 				>
 			</File>
 			<File
@@ -1103,6 +1087,22 @@
 			<Filter
 				Name="ImgProcessUI"
 				>
+				<File
+					RelativePath=".\DistillStep1.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DistillStep1.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DistillStep2.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DistillStep2.h"
+					>
+				</File>
 				<File
 					RelativePath=".\DlgChangeDetect.cpp"
 					>

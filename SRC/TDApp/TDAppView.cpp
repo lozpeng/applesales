@@ -1569,14 +1569,13 @@ void CTDAppView::OnImgChangeDetect()
 {
 	Control::CImageProcessTool::ShowImgChangeDetectDlg();
 
-	//Control::CImageProcessTool::ShowDistillWaterSheet();
-
 	RefreshLayerCombo();
 
 }
 void CTDAppView::OnImgChangeRender()
 {
-	Control::CImageProcessTool::ShowDistillWaterSheet(&m_MapCtrl);
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	Control::CImageProcessTool::ShowDistillWaterSheet(&m_MapCtrl, pMainFrm);
 	//Framework::ITool* pTool = NULL;
 	//m_MapCtrl.SetCurTool("DiTillTool");
 	//pTool=Framework::ITool::FindTool("DiTillTool");

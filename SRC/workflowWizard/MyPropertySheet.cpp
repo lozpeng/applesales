@@ -86,14 +86,16 @@ BOOL CMyPropertySheet::OnInitDialog()
 	GetDlgItem(IDOK)->GetWindowRect(rect);
 	ScreenToClient(rect);
 	width = rect.Width();
-	rect.left = rect.left - 2*width -16;//tabrect.left;
-	rect.right = rect.left + width;
+	//rect.left = rect.left - 2*width -16;//tabrect.left;
+	//rect.right = rect.left + width;
 	prevButton->Create(_T(PREVCAPTION),BS_PUSHBUTTON|WS_CHILD|WS_VISIBLE|WS_TABSTOP,
 						rect,this,IDC_BTN_PREV);
 	prevButton->SetFont(GetFont());
 	//
-	rect.left = rect.right + 8;
-	rect.right = rect.left + width;
+	//rect.left = rect.right + 8;
+	//rect.right = rect.left + width;
+	GetDlgItem(IDCANCEL)->GetWindowRect(rect);
+	ScreenToClient(rect);
 	nextButton->Create(_T(NEXTCAPTION),BS_PUSHBUTTON|WS_CHILD|WS_VISIBLE|WS_TABSTOP,
 						rect,this,IDC_BTN_NEXT);
 	nextButton->SetFont(GetFont());
@@ -106,10 +108,15 @@ BOOL CMyPropertySheet::OnInitDialog()
 	//创建取消按钮
 	GetDlgItem(IDCANCEL)->GetWindowRect(rect);
 	ScreenToClient(rect);
+
+	GetDlgItem(ID_APPLY_NOW)->GetWindowRect(rect);
+	ScreenToClient(rect);
 	cancelButton->Create(_T(CANCELCAPTION),BS_PUSHBUTTON|WS_CHILD|WS_VISIBLE|WS_TABSTOP,
 						rect,this,IDC_BTN_CANCEL);
 	cancelButton->SetFont(GetFont());
 	cancelButton->MoveWindow(rect);
+
+
 	//创建帮助按钮
 	GetDlgItem(ID_APPLY_NOW)->GetWindowRect(rect);
 	ScreenToClient(rect);
@@ -122,15 +129,14 @@ BOOL CMyPropertySheet::OnInitDialog()
 	GetDlgItem(IDOK)->ShowWindow(SW_HIDE);
 	GetDlgItem(ID_APPLY_NOW)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDCANCEL)->ShowWindow(SW_HIDE);
-	//prevButton->EnableWindow();
 
 	SetBCGButtonStyle(*prevButton, EnumApplyBtn::LEFTBUTTON, "上一步");
 	SetBCGButtonStyle(*nextButton, EnumApplyBtn::RIGHTBUTTON, "下一步");
 	SetBCGButtonStyle(*cancelButton, EnumApplyBtn::CANCELBUTTON, "取消");
 	SetBCGButtonStyle(*helpButton, EnumApplyBtn::HELPBUTTON, "帮助");
-	////隐藏“确定”、“应用”按钮
-	//GetDlgItem(IDOK)->ShowWindow(SW_HIDE);
-	//GetDlgItem(ID_APPLY_NOW)->ShowWindow(SW_HIDE);
+
+	GetDlgItem(IDC_BTN_HELP)->ShowWindow(SW_HIDE);
+	GetDlgItem(IDHELP)->ShowWindow(SW_HIDE);
 
 	
 	return result;

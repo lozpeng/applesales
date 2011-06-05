@@ -5,6 +5,7 @@
 #include "TDApp.h"
 
 #include "MainFrm.h"
+#include "ImageProcessTool.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -26,6 +27,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPFrameWnd)
 	ON_COMMAND(ID_HELP, CBCGPFrameWnd::OnHelp)
 	ON_COMMAND(ID_CONTEXT_HELP, CBCGPFrameWnd::OnContextHelp)
 	ON_COMMAND(ID_DEFAULT_HELP, CBCGPFrameWnd::OnHelpFinder)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -609,7 +611,9 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 
 // CMainFrame message handlers
-
-
-
-
+void CMainFrame::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	Control::CImageProcessTool::ReleaseSheets();
+	CBCGPFrameWnd::OnClose();
+}

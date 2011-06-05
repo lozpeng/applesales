@@ -8,7 +8,6 @@
 #endif
 
 #include "resource.h"		// Ö÷·ûºÅ
-#include "TreePropSheetEx.h"
 #include <vector>
 
 // CControlApp
@@ -26,8 +25,5 @@ public:
 
 	DECLARE_MESSAGE_MAP()
 	virtual int ExitInstance();
-public:
-	std::vector<TreePropSheet::CTreePropSheetEx*> m_manageSheet;
-	std::vector<CResizablePage*>  m_manageSheetPage;
 };
 extern CControlApp theApp;
