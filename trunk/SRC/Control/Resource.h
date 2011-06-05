@@ -49,9 +49,9 @@
 #define IDD_OBJ_EXPORT                  2019
 #define IDD_DISTILL_STEP1               2020
 #define IDD_DISTILL_STEP2               2021
-#define IDI_STEP1                       2022
+#define IDI_STEP2                       2022
 #define IDI_ICON2                       2023
-#define IDI_STEP2                       2023
+#define IDI_STEP1                       2023
 #define IDD_FEATURE_RENDER_SET          4024
 #define IDB_FEATURE_RENDER              4025
 #define IDB_RENDER_BG                   4026

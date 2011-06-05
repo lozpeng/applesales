@@ -66,25 +66,6 @@ BOOL CControlApp::InitInstance()
 int CControlApp::ExitInstance()
 {
 	// TODO: 在此添加专用代码和/或调用基类
-	for(int i=0; i<(int)m_manageSheet.size(); i++)
-	{
-		if(NULL != m_manageSheet[i])
-		{
-			delete m_manageSheet[i];
-			m_manageSheet[i] = NULL;
-		}
-	}
-	m_manageSheet.clear();
-
-	for(int i=0; i<(int)m_manageSheetPage.size(); i++)
-	{
-		if(NULL != m_manageSheetPage[i])
-		{
-			delete m_manageSheetPage[i];
-			m_manageSheetPage[i] = NULL;
-		}
-	}
-	m_manageSheetPage.clear();
 
 	return CWinApp::ExitInstance();
 }

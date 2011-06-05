@@ -15,10 +15,12 @@
 #include "TreePropSheetEx.h"
 #include "DistillStep1.h"
 #include "DistillStep2.h"
+#include "TreePropSheetEx.h"
 #include "Control.h"
 namespace Control
 {
-
+	std::vector<TreePropSheet::CTreePropSheetEx*> CImageProcessTool::m_manageSheet;
+	std::vector<CResizablePage*>  CImageProcessTool::m_manageSheetPage;
 	void CImageProcessTool::ShowImgChangeDetectDlg()
 	{
 		CDllResource hdll;
@@ -70,7 +72,7 @@ namespace Control
 		 }
 		}
 	}
-	void CImageProcessTool::ShowDistillWaterSheet(Control::CMapControl* mapControl)
+	void CImageProcessTool::ShowDistillWaterSheet(Control::CMapControl* mapControl, CWnd* pParent)
 	{
 		CDllResource hdll;
 		TreePropSheet::CTreePropSheetEx* pFlowSheet = new TreePropSheet::CTreePropSheetEx("水体信息提取");
@@ -87,13 +89,39 @@ namespace Control
 		pFlowSheet->AddPage(pStep1);
 		pFlowSheet->AddPage(pStep2);
 
-		pFlowSheet->Create(NULL, WS_POPUP|WS_SYSMENU|WS_CAPTION|WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_VISIBLE, 0 );
+		pFlowSheet->Create(pParent, /*WS_POPUP|*/WS_SYSMENU|WS_CAPTION|WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_VISIBLE, 0 );
 		pFlowSheet->Invalidate( TRUE );
 
-		theApp.m_manageSheet.push_back(pFlowSheet);
+		m_manageSheet.push_back(pFlowSheet);
 
-		theApp.m_manageSheetPage.push_back(pStep1);
-		theApp.m_manageSheetPage.push_back(pStep2);
+		m_manageSheetPage.push_back(pStep1);
+		m_manageSheetPage.push_back(pStep2);
 	}
+	void CImageProcessTool::ReleaseSheets()
+	{
+		for(int i=0; i<(int)m_manageSheet.size(); i++)
+		{
+			if(NULL != m_manageSheet[i])
+			{
+				if(m_manageSheet[i]->m_hWnd)
+				{
+					m_manageSheet[i]->EnableWindow();
+					m_manageSheet[i]->DestroyWindow();
+				}
+				delete m_manageSheet[i];
+				m_manageSheet[i] = NULL;
+			}
+		}
+		m_manageSheet.clear();
 
+		for(int i=0; i<(int)m_manageSheetPage.size(); i++)
+		{
+			if(NULL != m_manageSheetPage[i])
+			{
+				delete m_manageSheetPage[i];
+				m_manageSheetPage[i] = NULL;
+			}
+		}
+		m_manageSheetPage.clear();
+	}
 }

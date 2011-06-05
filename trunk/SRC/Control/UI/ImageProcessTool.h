@@ -2,7 +2,12 @@
 #define _IMG_PROCESSTOOL_
 
 #include "MapControl.h"
-
+#include <vector>
+namespace TreePropSheet
+{
+	class CTreePropSheetEx;
+}
+class CResizablePage;
 namespace Control
 {
 class CONTROL_DLL CImageProcessTool
@@ -12,7 +17,13 @@ public:
 	static void ShowImgChangeDetectDlg();
 
 	//水体提取流程
-	static void ShowDistillWaterSheet(Control::CMapControl* mapControl);
+	static void ShowDistillWaterSheet(Control::CMapControl* mapControl, CWnd* pParen = NULL);
+
+	//释放流程向导申请的内存
+	static void ReleaseSheets();
+private:
+	static std::vector<TreePropSheet::CTreePropSheetEx*> m_manageSheet;
+	static std::vector<CResizablePage*>  m_manageSheetPage;
 };
 
 }
