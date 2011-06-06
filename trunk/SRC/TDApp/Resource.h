@@ -33,6 +33,8 @@
 #define IDB_EDITORSMALL                 178
 #define IDR_MENU1                       178
 #define IDR_COMMAND_MENU                178
+#define IDD_DLG_IncrementalExport       179
+#define IDD_DIG_IncrementalImport       180
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
@@ -155,12 +157,12 @@
 #define ID_MAGICSTICK_TOL               40521
 #define ID_SELECTFEATURE                40522
 #define ID_REMOVELASTMAGIC              40523
-
+#define ID_IncrementalImport            40524
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        179
+#define _APS_NEXT_RESOURCE_VALUE        181
 #define _APS_NEXT_COMMAND_VALUE         32887
 #define _APS_NEXT_CONTROL_VALUE         1062
 #define _APS_NEXT_SYMED_VALUE           108

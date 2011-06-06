@@ -111,6 +111,7 @@
 #define HID_MAGICSTICK_TOL                      0x19E49
 #define HID_SELECTFEATURE                       0x19E4A
 #define HID_REMOVELASTMAGIC                     0x19E4B
+#define HID_IncrementalImport                   0x19E4C
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064
@@ -130,6 +131,8 @@
 // Dialogs (IDD_*) 
 #define HIDD_ABOUTBOX                           0x20064
 #define HIDD_DIG_DRAWINGEXPORT                  0x200B0
+#define HIDD_DLG_IncrementalExport              0x200B3
+#define HIDD_DIG_IncrementalImport              0x200B4
  
 // Frame Controls (IDW_*) 
 // This is a part of the Microsoft Foundation Classes C++ library.
