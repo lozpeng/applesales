@@ -128,7 +128,7 @@ void CSketchTool::LButtonUpEvent (UINT nFlags, CPoint point)
 		return;
 
 	Editor::CEditorPtr pEdit =pMap->GetEditor();
-	if(!pEdit&&!pEdit->GetCurLayer())
+	if(!pEdit||!pEdit->GetCurLayer())
 	{
 		return;
 	}
