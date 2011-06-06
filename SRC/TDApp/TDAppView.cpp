@@ -144,7 +144,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_ATTRIBUTE_EDIT, OnUpdateEditerAttribute)
 	ON_COMMAND(ID_SELECTFEATURE, OnSelectFeature)
 	ON_UPDATE_COMMAND_UI(ID_SELECTFEATURE, OnUpdateSelectFeature)
-
+	ON_COMMAND(ID_IncrementalImport, OnIncrementalImport)
+	ON_UPDATE_COMMAND_UI(ID_IncrementalImport, OnUpdateID_IncrementalImport)
 
 	
 	ON_COMMAND(ID_CHANGE_DETECT, OnImgChangeDetect)
@@ -1116,6 +1117,12 @@ void CTDAppView::OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectbyPoint");
 }
+
+void CTDAppView::OnIncrementalImport()
+{
+}
+void CTDAppView::OnUpdateID_IncrementalImport(CCmdUI* pCmdUI)
+{}
 
 
 //map”Îlayout÷Æº‰«–ªª
