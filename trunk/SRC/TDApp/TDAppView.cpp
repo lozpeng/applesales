@@ -1117,12 +1117,29 @@ void CTDAppView::OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectbyPoint");
 }
-
+#include "DlgIncrementalImport.h"
 void CTDAppView::OnIncrementalImport()
 {
+	CDlgIncrementalImport Dlg;
+	if(Dlg.DoModal()==IDOK)
+	{
+		std::string szIncrementalPath = Dlg.m_IncrementalPath;
+	}
 }
 void CTDAppView::OnUpdateID_IncrementalImport(CCmdUI* pCmdUI)
-{}
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+	if(!pMap)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	if(!pMap->GetEditor())
+	{
+		pMap->SetEditor(new Editor::CEditor(pMap.get()));
+
+	}
+	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
+}
 
 
 //map”Îlayout÷Æº‰«–ªª
