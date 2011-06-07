@@ -19,4 +19,9 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
 	DECLARE_MESSAGE_MAP()
+public:
+	double m_dTol;
+	int m_nMinArea;
+	virtual BOOL OnApply();
+	virtual void OnOK();
 };
