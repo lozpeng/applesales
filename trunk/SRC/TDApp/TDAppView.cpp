@@ -23,6 +23,8 @@
 #include "Tool/MagicStickTool.h"
 #include "UI/ImageProcessTool.h"
 #include "ILayer.h"
+#include "DlgIncrementalExport.h"
+#include "DlgIncrementalImport.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -145,7 +147,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_SELECTFEATURE, OnSelectFeature)
 	ON_UPDATE_COMMAND_UI(ID_SELECTFEATURE, OnUpdateSelectFeature)
 	ON_COMMAND(ID_IncrementalImport, OnIncrementalImport)
-	ON_UPDATE_COMMAND_UI(ID_IncrementalImport, OnUpdateID_IncrementalImport)
+	ON_UPDATE_COMMAND_UI(ID_IncrementalImport, OnUpdateIncrementalImport)
 
 	
 	ON_COMMAND(ID_CHANGE_DETECT, OnImgChangeDetect)
@@ -1117,16 +1119,64 @@ void CTDAppView::OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "SelectbyPoint");
 }
-#include "DlgIncrementalImport.h"
+
 void CTDAppView::OnIncrementalImport()
 {
+	Carto::CMapPtr m_pGeoMap =m_MapCtrl.GetMap();
+
+	if(!m_pGeoMap->GetEditor())
+	{
+		m_pGeoMap->SetEditor(new Editor::CEditor(m_pGeoMap.get()));
+
+	}
+
 	CDlgIncrementalImport Dlg;
 	if(Dlg.DoModal()==IDOK)
 	{
 		std::string szIncrementalPath = Dlg.m_IncrementalPath;
+
+		Carto::CLayerArray &layers =m_pGeoMap->GetLayers();
+		int num =layers.GetSize();
+		Carto::ILayerPtr pLayer;
+		Geodatabase::IFeatureClass *pFeatureClass =NULL;
+		Geodatabase::IWorkspace *pWorkspace =NULL;
+
+
+		bool bImport = false;
+		//结束编辑
+		for(int i=0;i<num;i++)
+		{
+			pLayer =layers.GetAt(i);
+			if(pLayer->GetLayerType()!=Carto::FeatureLayer)
+			{
+				continue;
+			}
+
+			pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(pLayer->GetDataObject().get());
+			if(!pFeatureClass)
+			{
+				continue;
+			}
+
+			pWorkspace =pFeatureClass->GetWorkspace();
+			if(bImport)
+			{
+				return;
+			}
+
+			CShapefileWorkspace* pShapeWS = dynamic_cast<CShapefileWorkspace* >(pWorkspace);
+			//导出增量信息
+			if(pShapeWS)
+			{
+				pShapeWS->IncrementalImport(szIncrementalPath.c_str());
+				bImport =true;
+			}
+
+		}
+		m_MapCtrl.UpdateControl(drawAll);
 	}
 }
-void CTDAppView::OnUpdateID_IncrementalImport(CCmdUI* pCmdUI)
+void CTDAppView::OnUpdateIncrementalImport(CCmdUI* pCmdUI)
 {
 	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
 	if(!pMap)
@@ -1199,6 +1249,7 @@ void CTDAppView::OnUpdateDrawMapFrameElement(CCmdUI *pCmdUI)
 	//pCmdUI->Enable(m_bLayout);
 }
 //编辑工具
+
 afx_msg void CTDAppView::OnEditorStart()
 {
 	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
@@ -1211,6 +1262,56 @@ afx_msg void CTDAppView::OnEditorStart()
 
 		}
 		pMap->GetEditor()->StartEdit();
+		int flagSave = MessageBox("是否导出数据编辑增量信息？\n若导出，编辑将被保存到增量文件","提示",MB_YESNO);
+		if (flagSave == 6)
+		{
+			CDlgIncrementalExport Dlg;
+			if(Dlg.DoModal()==IDOK)
+			{
+				std::string szIncrementalPath = Dlg.m_IncrementalPath;
+				Carto::CLayerArray &layers =pMap->GetLayers();
+				int num =layers.GetSize();
+				Carto::ILayerPtr pLayer;
+				Geodatabase::IFeatureClass *pFeatureClass =NULL;
+				Geodatabase::IWorkspace *pWorkspace =NULL;
+
+
+				bool bImport = false;
+				//结束编辑
+				for(int i=0;i<num;i++)
+				{
+					pLayer =layers.GetAt(i);
+					if(pLayer->GetLayerType()!=Carto::FeatureLayer)
+					{
+						continue;
+					}
+
+					pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(pLayer->GetDataObject().get());
+					if(!pFeatureClass)
+					{
+						continue;
+					}
+
+					pWorkspace =pFeatureClass->GetWorkspace();
+					if(bImport)
+					{
+						return;
+					}
+
+					CShapefileWorkspace* pShapeWS = dynamic_cast<CShapefileWorkspace* >(pWorkspace);
+					//导出增量信息
+					if(pShapeWS)
+					{
+						pShapeWS->m_IncrementalPath = szIncrementalPath;
+						pShapeWS->m_bEditIncremental = true;
+						bImport =true;
+					}
+
+				}
+
+			}
+
+		}
 		m_MapCtrl.UpdateControl(drawAll);
 	}
 }
@@ -1221,7 +1322,7 @@ afx_msg void CTDAppView::OnUpdateEditorStart(CCmdUI *pCmdUI)
 	{
 		pCmdUI->Enable(FALSE);
 	}
-	
+
 	if(!pMap->GetEditor())
 	{
 		pMap->SetEditor(new Editor::CEditor(pMap.get()));

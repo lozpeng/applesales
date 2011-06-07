@@ -173,7 +173,7 @@ public:
 	afx_msg void OnSelectFeature();
 	afx_msg void OnUpdateSelectFeature(CCmdUI *pCmdUI);
 	afx_msg void OnIncrementalImport();
-	afx_msg void OnUpdateID_IncrementalImport(CCmdUI*);
+	afx_msg void OnUpdateIncrementalImport(CCmdUI*);
 
 	//µÿÕº’˚ Œ
 	afx_msg void OnSelectFrameElement();

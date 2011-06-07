@@ -128,6 +128,9 @@ private:
 
 	std::string  m_FullName;
 	std::vector<CShapefileFeatureClass* > m_FeatureDataset;
+public:
+	bool m_bEditIncremental;
+	std::string m_IncrementalPath;
 
 };
 

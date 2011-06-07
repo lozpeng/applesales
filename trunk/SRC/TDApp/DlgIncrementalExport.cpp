@@ -48,7 +48,7 @@ void CDlgIncrementalExport::OnBnClickedBtnSlectpath()
 	UpdateData();
 
 	CString     strOpenFilter = "Incrementalfile(*.xml)|*.xml|All Files(*.*)|*.*||";
-	CFileDialog FileDlg(FALSE, "", NULL,  OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, strOpenFilter);
+	CFileDialog FileDlg(FALSE, "", NULL,  OFN_HIDEREADONLY, strOpenFilter);
 	if(FileDlg.DoModal()!=IDOK)
 		return;
 
