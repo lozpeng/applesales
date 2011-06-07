@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "MyPropertySheet.h"
+#include "MyPropertyPage.h"
 #include "wizardResource.h"
 #include "BCGStyleHeader.h"
 #include "resource.h"
@@ -160,6 +161,7 @@ void CMyPropertySheet::OnBnClickedNext()
 		OnClose();//Ö±½Ó¹Ø±Õ
 		return;
 	}
+
 	DoNext();
 }
 void CMyPropertySheet::OnBnClickedPrev()
