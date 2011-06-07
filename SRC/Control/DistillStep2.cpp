@@ -19,6 +19,7 @@ CDistillStep2::CDistillStep2(CWnd* pParent /*=NULL*/)
 	m_psp.dwFlags |= PSP_USEHICON;
 	HICON hIconTab = AfxGetApp()->LoadIcon(IDI_STEP2);
 	m_psp.hIcon = hIconTab;
+	m_pTargetLyr = NULL;
 }
 
 CDistillStep2::~CDistillStep2()

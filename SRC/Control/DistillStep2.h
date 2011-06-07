@@ -1,6 +1,6 @@
 #pragma once
 #include "workflowWizardInclude.h"
-
+#include "ILayer.h"
 // CDistillStep2 ¶Ô»°¿ò
 
 class CDistillStep2: public CResizablePage,
@@ -22,6 +22,8 @@ protected:
 public:
 	double m_dTol;
 	int m_nMinArea;
+	Carto::ILayerPtr m_pTargetLyr;
+	void SetTargetLyr(Carto::ILayerPtr pLyr){m_pTargetLyr = pLyr;};
 	virtual BOOL OnApply();
 	virtual void OnOK();
 };

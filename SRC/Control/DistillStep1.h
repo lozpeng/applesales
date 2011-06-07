@@ -2,6 +2,9 @@
 #include "workflowWizardInclude.h"
 
 #include "MapControl.h"
+#include "afxwin.h"
+#include <map>
+#include <string>
 
 // CDistillStep1 ¶Ô»°¿ò
 
@@ -26,5 +29,10 @@ public:
 public:
 	void	SetMapControl(Control::CMapControl* pMapControl){m_pMapControl = pMapControl;};
 protected:
-	Control::CMapControl*			m_pMapControl;
+	Control::CMapControl*			     m_pMapControl;
+	std::map<int, Carto::ILayerPtr>      m_mapIndexLyrs;
+public:
+	CComboBox m_ctlComboLyr;
+	virtual BOOL OnInitDialog();
+	int DoWork();
 };

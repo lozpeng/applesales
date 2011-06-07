@@ -40,6 +40,7 @@
 #include "TreePropSheetTreeCtrl.h"
 #include "HighColorTab.hpp"
 #include "TreePropSheetUtil.hpp"
+#include "MyPropertyPage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -1662,7 +1663,7 @@ int CTreePropSheetBase::DoSkip()
 }
 int CTreePropSheetBase::DoCustomNext()
 {
-	return 0;
+	return ((CMyPropertyPage*)GetActivePage())->DoWork();
 }
 int CTreePropSheetBase::DoCustomPrev()
 {
