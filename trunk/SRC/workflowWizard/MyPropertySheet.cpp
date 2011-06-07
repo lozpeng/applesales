@@ -100,10 +100,10 @@ BOOL CMyPropertySheet::OnInitDialog()
 						rect,this,IDC_BTN_NEXT);
 	nextButton->SetFont(GetFont());
 
-	prevButton->MoveWindow(rect);
-	GetDlgItem(IDOK)->GetWindowRect(rect);
-	ScreenToClient(rect);
-	nextButton->MoveWindow(rect);
+	//prevButton->MoveWindow(rect);
+	//GetDlgItem(IDOK)->GetWindowRect(rect);
+	//ScreenToClient(rect);
+	//nextButton->MoveWindow(rect);
 
 	//创建取消按钮
 	GetDlgItem(IDCANCEL)->GetWindowRect(rect);
