@@ -185,6 +185,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GeoObjectExtract.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ImageClip.cpp"
 				>
 			</File>
@@ -228,6 +232,10 @@
 			>
 			<File
 				RelativePath=".\DistanceClassify.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GeoObjectExtract.h"
 				>
 			</File>
 			<File
