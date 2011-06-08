@@ -24,8 +24,8 @@ public:
 	int m_nMinArea;
 	Carto::ILayerPtr m_pTargetLyr;
 	void SetTargetLyr(Carto::ILayerPtr pLyr){m_pTargetLyr = pLyr;};
-	int DoWork();
 
 
 	virtual int DoWork(); 
+	virtual void OnOK();
 };
