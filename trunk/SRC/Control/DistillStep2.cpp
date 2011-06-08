@@ -40,18 +40,8 @@ BEGIN_MESSAGE_MAP(CDistillStep2, CResizablePage)
 END_MESSAGE_MAP()
 
 
-// CDistillStep2 消息处理程序
-
-BOOL CDistillStep2::OnApply()
+int CDistillStep2::DoWork()
 {
-	// TODO: 在此添加专用代码和/或调用基类
-
-	return __super::OnApply();
-}
-
-void CDistillStep2::OnOK()
-{
-	// TODO: 在此添加专用代码和/或调用基类
-
-	__super::OnOK();
+	//响应完成事件
+	return 1;
 }
