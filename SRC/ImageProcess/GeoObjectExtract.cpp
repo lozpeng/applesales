@@ -77,7 +77,9 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
 	}
 	IRasterDatasetPtr rasDestDS =pdestWS->OpenRasterDataset(tempfile.c_str(),false);
 
-
+	GEOMETRY::geom::Envelope extent;
+	pSrcRS->GetExtent(&extent);
+    rasDestDS->SetCoordinateExtent(extent);
 	if(!rasDestDS)
 	{
 		return false;
@@ -275,74 +277,71 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
 	bool bWater;
 	long bandid;
 	bool binSample,btemp;
-	//计算每种类别的标准差
+	
 	for(i =1;i<=lFileHeight;i++)
 	{
 		for(j=1;j<=lFileWidth;j++)
 		{
 			binSample =false;
-
+            bWater =false;
 			//判断像素在哪个样区内
 			for(k=0;k<nclass;k++)
 			{
-				if (PtInRegion(rgns[k], j, i))
+				btemp =false;
+				for( bandid=0;bandid<lband;bandid++)
 				{
+					switch((BANDDATATYPE)lDataType)
+					{
+					case BDT_BYTE:
+						{
+							pSrcRS->PixelIO(bandid+1,j,i,&byValue,true);
+							dValue =byValue;
 
-					binSample =true;
+						}
+						break;
+					case BDT_SHORT:
+						{
+							pSrcRS->PixelIO(bandid+1,j,i,&sValue,true);
+							dValue =sValue;
+
+
+						}
+						break;
+					case BDT_USHORT:
+						{
+							pSrcRS->PixelIO(bandid+1,j,i,&usValue,true);
+							dValue =usValue;
+
+						}
+						break;
+					case BDT_FLOAT:
+						{
+							pSrcRS->PixelIO(bandid+1,j,i,&fValue,true);
+							dValue =fValue;
+						}
+						break;
+					default:
+						break;
+					}
+					//判断像素值和平均值的差距是否小于标准差两倍
+					if((abs(dValue-sinfos[k].mean[bandid]))<(sinfos[k].stdval[bandid]*2))
+					{
+						bWater =true;
+					}
+					else
+					{
+						bWater =false;
+						break;
+					}
+				}
+				if(bWater)
+				{
 					break;
 				}
 			}
-			if(!binSample)
-			{
-				continue;
-			}
-			bWater =false;
-			for( bandid=0;bandid<lband;bandid++)
-			{
-				switch((BANDDATATYPE)lDataType)
-				{
-				case BDT_BYTE:
-					{
-						pSrcRS->PixelIO(bandid+1,j,i,&byValue,true);
-						dValue =byValue;
-
-					}
-					break;
-				case BDT_SHORT:
-					{
-						pSrcRS->PixelIO(bandid+1,j,i,&sValue,true);
-						dValue =sValue;
-
-
-					}
-					break;
-				case BDT_USHORT:
-					{
-						pSrcRS->PixelIO(bandid+1,j,i,&usValue,true);
-						dValue =usValue;
-
-					}
-					break;
-				case BDT_FLOAT:
-					{
-						pSrcRS->PixelIO(bandid+1,j,i,&fValue,true);
-						dValue =fValue;
-					}
-					break;
-				default:
-					break;
-				}
-				//判断像素值和平均值的差距是否小于标准差两倍
-				if((abs(dValue-sinfos[k].mean[bandid]))<(sinfos[k].stdval[bandid]*2))
-				{
-					bWater =true;
-				}
-				else
-				{
-					bWater =false;
-					break;
-				}
-			}
+			
+			
+			
 			if(bWater)
 			{
 				byValue =1;
