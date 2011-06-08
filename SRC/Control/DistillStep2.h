@@ -26,4 +26,6 @@ public:
 	void SetTargetLyr(Carto::ILayerPtr pLyr){m_pTargetLyr = pLyr;};
 	int DoWork();
 
+
+	virtual int DoWork(); 
 };
