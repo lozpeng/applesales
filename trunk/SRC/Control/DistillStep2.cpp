@@ -4,7 +4,8 @@
 #include "stdafx.h"
 #include "Control.h"
 #include "DistillStep2.h"
-
+#include "GeoObjectExtract.h"
+#include "IMapCtrl.h"
 
 // CDistillStep2 对话框
 
@@ -42,20 +43,6 @@ END_MESSAGE_MAP()
 
 // CDistillStep2 消息处理程序
 
-BOOL CDistillStep2::OnApply()
-{
-	// TODO: 在此添加专用代码和/或调用基类
-
-	return __super::OnApply();
-}
-
-
-void CDistillStep2::OnOK()
-{
-	// TODO: 在此添加专用代码和/或调用基类
-
-	__super::OnOK();
-}
 
 int CDistillStep2::DoWork()
 {
@@ -63,8 +50,54 @@ int CDistillStep2::DoWork()
 	if(m_nMinArea<1)
 	{
         MessageBox("阈值不能小于1","提示",MB_OK);
-		return 0;
+		return 1;
 	}
-    return 1;
+    if(!m_pTargetLyr)
+	{
+		MessageBox("请选择目标层","提示",MB_OK);
+		return 1;
+	}
 
+	Carto::CMapPtr pMap =Framework::IMapCtrl::GetActiveMapCtrl()->GetMap();
+
+	if(!pMap)
+	{
+		return 1;
+	}
+
+	Carto::CGraphicLayerPtr pLayer =pMap->GetGraphicLayer();
+	Element::IElementPtr pElement;
+	int count =pLayer->GetElementCount();
+	if(count<=0)
+	{
+		return 1;
+	}
+	std::vector<GEOMETRY::geom::Polygon*> samples;
+	for(int i=count-1;i>=0;i--)
+	{
+		pElement =pLayer->GetElement(i);
+		if(!pElement)
+		{
+			continue;
+		}
+		if(pElement->GetUserdata()==2)
+		{
+			samples.push_back(dynamic_cast<GEOMETRY::geom::Polygon*>(pElement->GetGeometry()));
+			
+		
+		}
+	}
+
+
+	ImageProcess::WaterExtract(m_pTargetLyr->GetDataObject()->Getname().c_str(),"aaa",samples);
+
+    return 0;
+
+}
+
+void CDistillStep2::OnOK()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+    
+	__super::OnOK();
 }
