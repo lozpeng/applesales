@@ -40,8 +40,31 @@ BEGIN_MESSAGE_MAP(CDistillStep2, CResizablePage)
 END_MESSAGE_MAP()
 
 
+// CDistillStep2 消息处理程序
+
+BOOL CDistillStep2::OnApply()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	return __super::OnApply();
+}
+
+
+void CDistillStep2::OnOK()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	__super::OnOK();
+}
+
 int CDistillStep2::DoWork()
 {
-	//响应完成事件
-	return 1;
+	UpdateData();
+	if(m_nMinArea<1)
+	{
+        MessageBox("阈值不能小于1","提示",MB_OK);
+		return 0;
+	}
+    return 1;
+
 }
