@@ -41,5 +41,11 @@ typedef struct st_Extent
 	double ymin, ymax;
 }STExtent;
 
+//种子，用来标记位置
+typedef struct{
+	int Height;
+	int Width;
+}Seed;
+
 }
 #endif

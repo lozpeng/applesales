@@ -5,11 +5,7 @@
 namespace ImageProcess
 {
 
-//种子，用来标记位置
-typedef struct{
-	int Height;
-	int Width;
-}Seed;
+
 
 static GEOMETRY::geom::Polygon* simple(GEOMETRY::geom::Polygon* pPoly)
 {

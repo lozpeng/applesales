@@ -50,7 +50,9 @@
 #define IDC_COMBO1                      2016
 #define IDC_COMBO_RS_LYR                2016
 #define IDD_RASTER_PROP                 2017
+#define IDC_EDIT_EXWATERSHP             2017
 #define IDD_IMG_CHANGEDETECT            2018
+#define IDC_BTN_SELEXSHP                2018
 #define IDD_OBJ_EXPORT                  2019
 #define IDD_DISTILL_STEP1               2020
 #define IDD_DISTILL_STEP2               2021
@@ -192,7 +194,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        2024
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         2017
+#define _APS_NEXT_CONTROL_VALUE         2019
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif
