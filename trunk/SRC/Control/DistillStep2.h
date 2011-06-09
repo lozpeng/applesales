@@ -28,4 +28,6 @@ public:
 
 	virtual int DoWork(); 
 	virtual void OnOK();
+	CString m_shpfile;
+	afx_msg void OnBnClickedBtnSelexshp();
 };

@@ -14,7 +14,7 @@ namespace ImageProcess
 	* @return 若是成功返回true，否则返回true 
 	*/
 IMP_DLL bool WaterExtract(const char *InputFileName, 
-		const char *OutputFileName,std::vector<GEOMETRY::geom::Polygon*> &samples);
+		const char *OutputFileName,std::vector<GEOMETRY::geom::Polygon*> &samples,int nminsize);
 
 }
 
