@@ -82,6 +82,7 @@ void CProgressBar::UpdateProgress(const char *message, double percent)
 	{
 		CDlgProgress *pBar =(CDlgProgress*)m_pBar;
 		pBar->SetPercent(percent);
+		HandleMessages();
 	}
 }
 

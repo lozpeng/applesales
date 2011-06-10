@@ -103,8 +103,9 @@ int CDistillStep2::DoWork()
 		}
 	}
 
+	Control::CProgressBar progress;
 
-	bool bret =ImageProcess::WaterExtract(m_pTargetLyr->GetDataObject()->Getname().c_str(),m_shpfile,samples,m_nMinArea);
+	bool bret =ImageProcess::WaterExtract(m_pTargetLyr->GetDataObject()->Getname().c_str(),m_shpfile,samples,m_nMinArea,&progress);
 
 	//将样本删除
 	for(int i=count-1;i>=0;i--)
@@ -155,6 +156,7 @@ int CDistillStep2::DoWork()
 	}
 	else
 	{
+		progress.Close();
 		MessageBox("提取失败","提示",MB_OK);
 	}
     return 0;

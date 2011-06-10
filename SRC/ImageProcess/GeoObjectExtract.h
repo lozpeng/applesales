@@ -3,7 +3,7 @@
 
 #include "IRasterDataset.h"
 #include "ImageProcessDef.h"
-
+#include "IProgress.h"
 namespace ImageProcess
 {
 	/**
@@ -14,7 +14,7 @@ namespace ImageProcess
 	* @return 若是成功返回true，否则返回true 
 	*/
 IMP_DLL bool WaterExtract(const char *InputFileName, 
-		const char *OutputFileName,std::vector<GEOMETRY::geom::Polygon*> &samples,int nminsize);
+		const char *OutputFileName,std::vector<GEOMETRY::geom::Polygon*> &samples,int nminsize,SYSTEM::IProgress *pProgress);
 
 }
 
