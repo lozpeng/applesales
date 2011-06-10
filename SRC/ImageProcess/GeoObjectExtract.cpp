@@ -47,6 +47,8 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 
 	
 	pDataset->CreateBuffer();
+
+	
     
     long lwidth,lheight;
 	pDataset->GetSize(&lwidth,&lheight);
@@ -66,6 +68,8 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 	//标志位
 	boost::dynamic_bitset<> sbitset;
 	boost::dynamic_bitset<> processbitset;
+	boost::dynamic_bitset<> srcbitset;
+	srcbitset.resize(nPixelCount);
 	sbitset.resize(nPixelCount);
 	processbitset.resize(nPixelCount);
 
@@ -99,16 +103,30 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 	long ltotal;
 	std::vector<IntPoint> points;
 
+	//将二值图转换为掩码图
+	for(j=0;j<lheight;j++)
+	{
+		for(i=0;i<lwidth;i++)
+		{
+            pDataset->PixelIO(1,i+1,j+1,&pixel,true);
+			if(pixel==1)
+			{
+				srcbitset.set(lwidth*j+i);
+			}
+		}
+	}
+	pDataset->DeleteBuffer();
 	long ltotalProgress =lwidth*lheight;
+	int m,n;
 	gCurProgress=0;
 	for(j=0;j<lheight;j++)
 	{
 		for(i=0;i<lwidth;i++)
 		{
 			//读取该点像素值
-             pDataset->PixelIO(1,i+1,j+1,&pixel,true);
+             //pDataset->PixelIO(1,i+1,j+1,&pixel,true);
 			 //如果该点没有处理，则作为种子点
-			 if(pixel==1 && (!processbitset.test(lwidth*j+i)))
+			 if(srcbitset.test(lwidth*j+i) && (!processbitset.test(lwidth*j+i)))
 			 {
  
 				 ltotal =1;
@@ -127,9 +145,10 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 					 iCurrentPixely = Seeds[StackPoint].Height;
 					 StackPoint--;
 
+					 processbitset.set(lwidth*j+i);
                   
 					 //取得当前指针处的像素值
-					  pDataset->PixelIO(1,iCurrentPixelx,iCurrentPixely,&pixel,true);
+					  /*pDataset->PixelIO(1,iCurrentPixelx,iCurrentPixely,&pixel,true);*/
 					 
 					 //判断左面的点，如果在范围内，并且没有入过栈，则压入堆栈
 
@@ -137,15 +156,17 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 					 {
 						 if(!sbitset.test(lwidth * (iCurrentPixely-1) + iCurrentPixelx-2))
 						 {
-							 pDataset->PixelIO(1,iCurrentPixelx-1,iCurrentPixely,&pixel,true);
 							 
-							 if (pixel ==1)
+							 //pDataset->PixelIO(1,iCurrentPixelx-1,iCurrentPixely,&pixel,true);
+							 
+							 if (srcbitset.test(lwidth * (iCurrentPixely-1) + iCurrentPixelx-2))
 							 {
 								 StackPoint++;
 								 Seeds[StackPoint].Height = iCurrentPixely;
 								 Seeds[StackPoint].Width = iCurrentPixelx - 1;
 								 //标志位设为1
 								 sbitset.set(lwidth * (iCurrentPixely-1) + iCurrentPixelx-2);
+								 processbitset.set(lwidth * (iCurrentPixely-1) + iCurrentPixelx-2);
 
 								 ltotal++;
 
@@ -159,10 +180,10 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 					 {
 						 if(!sbitset.test(lwidth * (iCurrentPixely-2) + iCurrentPixelx-1))
 						 {
-							 pDataset->PixelIO(1,iCurrentPixelx,iCurrentPixely-1,&pixel,true);
+							// pDataset->PixelIO(1,iCurrentPixelx,iCurrentPixely-1,&pixel,true);
 							
 
-							 if (pixel ==1)
+							 if (srcbitset.test(lwidth * (iCurrentPixely-2) + iCurrentPixelx-1))
 							 {
 								 StackPoint++;
 								 Seeds[StackPoint].Height = iCurrentPixely-1;
@@ -170,6 +191,7 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 								 //标志位设为1
 								 sbitset.set(lwidth * (iCurrentPixely-2) + iCurrentPixelx-1);
 
+								 processbitset.set(lwidth * (iCurrentPixely-2) + iCurrentPixelx-1);
 								 ltotal++;
 
 							 }
@@ -182,15 +204,16 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 					 {
 						 if(!sbitset.test(lwidth * (iCurrentPixely-1) + iCurrentPixelx))
 						 {
-							 pDataset->PixelIO(1,iCurrentPixelx+1,iCurrentPixely,&pixel,true);
+							// pDataset->PixelIO(1,iCurrentPixelx+1,iCurrentPixely,&pixel,true);
 							
-							 if (pixel ==1)
+							 if (srcbitset.test(lwidth * (iCurrentPixely-1) + iCurrentPixelx))
 							 {
 								 StackPoint++;
 								 Seeds[StackPoint].Height = iCurrentPixely;
 								 Seeds[StackPoint].Width = iCurrentPixelx +1;
 								 //标志位设为1
 								 sbitset.set(lwidth * (iCurrentPixely-1) + iCurrentPixelx);
+								 processbitset.set(lwidth * (iCurrentPixely-1) + iCurrentPixelx);
 
 								 ltotal++;
 
@@ -205,15 +228,16 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 					 {
 						 if(!sbitset.test(lwidth * iCurrentPixely + iCurrentPixelx-1))
 						 {
-							 pDataset->PixelIO(1,iCurrentPixelx,iCurrentPixely+1,&pixel,true);
+							 //pDataset->PixelIO(1,iCurrentPixelx,iCurrentPixely+1,&pixel,true);
 							
-							 if (pixel ==1)
+							 if (srcbitset.test(lwidth * iCurrentPixely + iCurrentPixelx-1))
 							 {
 								 StackPoint++;
 								 Seeds[StackPoint].Height = iCurrentPixely+1;
 								 Seeds[StackPoint].Width = iCurrentPixelx ;
 								 //标志位设为1
 								 sbitset.set(lwidth * iCurrentPixely + iCurrentPixelx-1);
+								 processbitset.set(lwidth * iCurrentPixely + iCurrentPixelx-1);
 
 								 ltotal++;
 
@@ -227,7 +251,7 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 				 if(ltotal>=nminSize)
 				 {
 					 bStartPoint =false;
-					 int m,n;
+					 
 					 //将这区域矢量化
 					 points.clear();
 					 //找到左上角的一个边界点
@@ -421,13 +445,13 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 					
 
 				 //将区域的点标志为已经处理
-                 for(int k=0;k<nPixelCount;k++)
+                /* for(int k=0;k<nPixelCount;k++)
 				 {
 					 if(sbitset.test(k))
 					 {
                          processbitset.set(k);
 					 }
-				 }
+				 }*/
 			 }
 
              if(pProgress)
@@ -449,7 +473,7 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 	}
 	
 
-	pDataset->DeleteBuffer();
+	
 	return true;
 }
 
