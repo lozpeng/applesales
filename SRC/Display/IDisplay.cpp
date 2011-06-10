@@ -621,8 +621,14 @@ void IDisplay::RemoveAllCaches()
 	std::map<long,EP_CACHE*>::iterator it;
 	for (it=m_mapCaches.begin(); it!=m_mapCaches.end(); ++it)
 	{
-		RemoveCache(it->first);
+		EP_CACHE* pCache = it->second;
+		::SelectObject(pCache->hMemdc,pCache->oldBmp);
+		::DeleteObject(pCache->bmp);
+		::DeleteDC(pCache->hMemdc);
+		delete pCache;
+		pCache = NULL;
 	}
+	m_mapCaches.clear();
 
 }
 void IDisplay::get_CacheCount(short& sCount)
