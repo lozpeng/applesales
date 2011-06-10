@@ -477,6 +477,61 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 	return true;
 }
 
+static bool ResampleImage(Geodatabase::IRasterDataset* pdataset,const char *outfile,long ldestwidth,long ldestheight)
+{
+	using namespace Geodatabase;
+	
+	//分采样类后的影像路径
+	std::string path =outfile;
+
+	//删除存在的临时文件
+	_unlink(outfile);
+
+	path =path.substr(0,path.rfind('\\'));
+	Geodatabase::IWorkspace *pdestWS =CRasterWSFactory::GetInstance()->OpenFolder(path.c_str());
+	if(!pdestWS)
+	{
+		return false;
+	}
+
+	long lband =pdataset->GetBandCount();
+	//分类影像建立
+	Geodatabase::RasFileInfo rasfileInfoDes;
+	rasfileInfoDes.lWidth = ldestwidth;			//图像的宽度
+	rasfileInfoDes.lHeight = ldestheight;			//图像的高度
+	rasfileInfoDes.lChannelNum = lband;	//图像的通道数
+	rasfileInfoDes.lDataType = (long)Geodatabase::BDT_BYTE;
+
+	if(!pdestWS->CreateRasterDataset(outfile,&rasfileInfoDes))
+	{
+		return false;
+	}
+	IRasterDatasetPtr rasDestDS =pdestWS->OpenRasterDataset(outfile,false);
+
+	if(!rasDestDS)
+	{
+		return false;
+	}
+	GEOMETRY::geom::Envelope extent;
+	pdataset->GetExtent(&extent);
+	rasDestDS->SetCoordinateExtent(extent);
+	
+	long lwidth,lheight;
+	pdataset->GetSize(&lwidth,&lheight);
+
+	unsigned char *pbuffer =new unsigned char[ldestwidth*ldestheight];
+
+	double dmin,dmax;
+	for(long i=1;i<=lband;i++)
+	{
+		pdataset->GetBandMinMaxValue(i,&dmax,&dmin);
+		pdataset->DataReadBandNormalize(i,1,1,lwidth,lheight,ldestwidth,ldestheight,pbuffer,dmin,dmax);
+		rasDestDS->DataWriteBand(i,1,1,ldestwidth,ldestheight,pbuffer);
+	}
+
+	delete []pbuffer;
+	return true;
+}
 bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vector<GEOMETRY::geom::Polygon*> &samples,int nminsize,SYSTEM::IProgress *pProgress)
 {
 	using namespace Geodatabase;
@@ -521,6 +576,56 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
 
 	long lFileWidth,lFileHeight;
 	pSrcRS->GetSize(&lFileWidth,&lFileHeight);
+
+	if(max(lFileWidth,lFileHeight)>2000)
+	{
+        //进行重采样
+		long lReadwidth =lFileWidth,lReadheight =lFileHeight;
+		
+		//计算需要读数据的大小
+		while(true)
+		{
+			lReadwidth/=2;
+			lReadheight/=2;
+			nminsize/=4;
+			if(max(lReadwidth,lReadheight)<=2000)
+			{
+				break;
+			}
+		}
+        
+        
+		if(nminsize<2)
+		{
+			nminsize =2;
+		}
+
+		std::string syspath =SYSTEM::CSystemPath::GetSystemPath();
+		syspath+="temp";
+		std::string tempfile =syspath+"\\sample.tif";
+
+        if(!ResampleImage(pSrcRS.get(),tempfile.c_str(),lReadwidth,lReadheight))
+		{
+			return false;
+		}
+        
+		pSrcWp =CRasterWSFactory::GetInstance()->OpenFromFile(tempfile.c_str());
+		if(!pSrcWp)
+		{
+			return false;
+		}
+		//打开原文件
+		pSrcRS =pSrcWp->OpenRasterDataset(tempfile.c_str());
+		if(!pSrcRS)
+		{
+			return false;
+		}
+
+		
+        pSrcRS->GetSize(&lFileWidth,&lFileHeight);
+		      
+        
+	}
 
 	std::string syspath =SYSTEM::CSystemPath::GetSystemPath();
 	syspath+="temp";
@@ -860,7 +965,7 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
 	}
 	if(pProgress)
 	{
-		pProgress->UpdateProgress("",0.1);
+		pProgress->UpdateProgress("",0.3);
 	}
     //生成shp
     bool bret =CreateShpResult(rasDestDS.get(),OutputFileName,nminsize,pProgress);
