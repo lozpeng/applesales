@@ -1161,6 +1161,7 @@ void CTDAppView::OnIncrementalImport()
 			pWorkspace =pFeatureClass->GetWorkspace();
 			if(bImport)
 			{
+				m_MapCtrl.UpdateControl(drawAll);
 				return;
 			}
 
