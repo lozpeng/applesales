@@ -153,6 +153,9 @@ int CDistillStep2::DoWork()
 		pDoc->GetActiveMap()->AddLayer(pLayer);
 
 		pDoc->GetLinkMapTree()->AddLayer(pLayer);
+        
+		Framework::IMapCtrl::GetActiveMapCtrl()->UpdateControl(drawAll);
+
 	}
 	else
 	{
