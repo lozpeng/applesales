@@ -9,8 +9,9 @@
 namespace ImageProcess
 {
 
+static long gCurProgress;
 //将提取结果转化为矢量
-static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *OutputFileName,int nminSize)
+static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *OutputFileName,int nminSize,SYSTEM::IProgress *pProgress)
 {
 	using namespace GEOMETRY::geom;
 
@@ -97,6 +98,9 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 	long i,j;
 	long ltotal;
 	std::vector<IntPoint> points;
+
+	long ltotalProgress =lwidth*lheight;
+	gCurProgress=0;
 	for(j=0;j<lheight;j++)
 	{
 		for(i=0;i<lwidth;i++)
@@ -426,7 +430,13 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 				 }
 			 }
 
-
+             if(pProgress)
+			 {
+				 gCurProgress++;
+				 
+				pProgress->UpdateProgress("",0.3+0.7*(double(gCurProgress))/(double)ltotalProgress);
+				 
+			 }
 			 
 		}
 	}
@@ -443,7 +453,7 @@ static bool CreateShpResult(Geodatabase::IRasterDataset* pDataset,const char *Ou
 	return true;
 }
 
-bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vector<GEOMETRY::geom::Polygon*> &samples,int nminsize)
+bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vector<GEOMETRY::geom::Polygon*> &samples,int nminsize,SYSTEM::IProgress *pProgress)
 {
 	using namespace Geodatabase;
 
@@ -477,7 +487,13 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
 		return false;
 	}
 
+	//建立进度条
+	if(pProgress)
+	{
+		pProgress->Create("处理中",SYSTEM::IProgress::Percent,100);
+		pProgress->UpdateProgress("",0.01);
 
+	}
 
 	long lFileWidth,lFileHeight;
 	pSrcRS->GetSize(&lFileWidth,&lFileHeight);
@@ -578,6 +594,9 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
     
 	BANDDATATYPE lDataType =pSrcRS->GetBandDataType(1);
 
+	long ltotalProgress =lband*lFileHeight*lFileHeight;
+    gCurProgress =0;
+
 	for(long bandid=0;bandid<lband;bandid++)
 	{
 		//计算每种类别的标准差
@@ -628,9 +647,16 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
 						break;
 					}
 				}
+                
 
 			}
 		}
+	}
+
+	
+	if(pProgress)
+	{
+		pProgress->UpdateProgress("",0.1);
 	}
 
 	//计算样本平均值
@@ -707,6 +733,11 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
             sinfos[k].stdval[bandid] =dstd;
 
 		}
+	}
+
+	if(pProgress)
+	{
+		pProgress->UpdateProgress("",0.2);
 	}
 
 	bool bWater;
@@ -803,8 +834,18 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
 	{
 		::DeleteObject(rgns[i]);
 	}
+	if(pProgress)
+	{
+		pProgress->UpdateProgress("",0.1);
+	}
     //生成shp
-    bool bret =CreateShpResult(rasDestDS.get(),OutputFileName,nminsize);
+    bool bret =CreateShpResult(rasDestDS.get(),OutputFileName,nminsize,pProgress);
+
+	if(pProgress)
+	{
+		pProgress->UpdateProgress("",1.0);
+		pProgress->Close();
+	}
 
 	return bret;
 }
