@@ -83,7 +83,7 @@ namespace Editor
 		}
 
 		CDlgFeatureAttriEdit dlg;
-		dlg.SetFeatures(alllayers);
+		dlg.SetFeatures(alllayers,pEdit.get());
 		dlg.DoModal();
 
 
