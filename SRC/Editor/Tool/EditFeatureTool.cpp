@@ -574,7 +574,7 @@ void CEditFeatureTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 	}
 
 	CDlgFeatureAttriEdit dlg;
-	dlg.SetFeatures(alllayers);
+	dlg.SetFeatures(alllayers,pEdit.get());
 	dlg.DoModal();
 
 	//CDlgFeatureInfo dlgInfo;

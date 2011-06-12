@@ -14,6 +14,7 @@ CDlgFeatureAttriEdit::CDlgFeatureAttriEdit(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgFeatureAttriEdit::IDD, pParent)
 {
     m_hpreTreeItem =NULL;
+	m_pEditor =NULL;
 }
 
 CDlgFeatureAttriEdit::~CDlgFeatureAttriEdit()
@@ -33,6 +34,8 @@ BEGIN_MESSAGE_MAP(CDlgFeatureAttriEdit, CDialog)
 	ON_NOTIFY(TVN_SELCHANGING, IDC_TREE_SELFEATURES, &CDlgFeatureAttriEdit::OnTvnSelchangingTreeSelfeatures)
 	ON_NOTIFY(NM_CLICK, IDC_TREE_SELFEATURES, &CDlgFeatureAttriEdit::OnNMClickTreeSelfeatures)
 	ON_REGISTERED_MESSAGE(BCGM_PROPERTY_CHANGED, OnPropertyChanged)
+	ON_BN_CLICKED(IDOK, &CDlgFeatureAttriEdit::OnBnClickedOk)
+	ON_BN_CLICKED(IDCANCEL, &CDlgFeatureAttriEdit::OnBnClickedCancel)
 END_MESSAGE_MAP()
 
 
@@ -219,6 +222,14 @@ void CDlgFeatureAttriEdit::OnOK()
 
 	//将属性写入文件
     SavePreAttribute();
+
+	if(!m_ModifyLayers.empty())
+	{
+		if(m_pEditor)
+		{
+			m_pEditor->AddToCircle(m_ModifyLayers);
+		}
+	}
     
 	CDialog::OnOK();
 }
@@ -243,9 +254,10 @@ void CDlgFeatureAttriEdit::OnNMClickTreeSelfeatures(NMHDR *pNMHDR, LRESULT *pRes
 
 using namespace Geodatabase;
 //设置选择的要素
-void CDlgFeatureAttriEdit::SetFeatures(vector<Carto::ILayer*> &allLayers)
+void CDlgFeatureAttriEdit::SetFeatures(vector<Carto::ILayer*> &allLayers,Editor::CEditor *pEditor)
 {
 	 m_allLayers =allLayers;
+	 m_pEditor =pEditor;
 }
 
 //刷新属性表和要素选择树形控件
@@ -401,6 +413,8 @@ void CDlgFeatureAttriEdit::SavePreAttribute()
 	pFeature->Update();
 	pWorkspace->StopEditOperation();
 
+	m_ModifyLayers.push_back(pLayer);
+
 
 	
 }
@@ -414,3 +428,26 @@ LRESULT CDlgFeatureAttriEdit::OnPropertyChanged(WPARAM wParam, LPARAM lParam)
 	return 1;
 }
 
+
+void CDlgFeatureAttriEdit::OnBnClickedOk()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	OnOK();
+}
+
+void CDlgFeatureAttriEdit::OnBnClickedCancel()
+{
+	if(!m_ModifyLayers.empty())
+	{
+		for(int i=0;i<m_ModifyLayers.size();i++)
+		{
+			Carto::ILayer* pLayer =m_ModifyLayers[i];
+			IFeatureClass* pFeatureClass =dynamic_cast<IFeatureClass*>(pLayer->GetDataObject().get());
+			IWorkspace *pWorkspace =pFeatureClass->GetWorkspace();
+			pWorkspace->UndoEdit();
+
+		}
+
+	}
+	OnCancel();
+}

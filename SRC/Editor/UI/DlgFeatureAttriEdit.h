@@ -3,6 +3,7 @@
 #include "resource.h"
 #include "ILayer.h"
 #include "BCGPPropList.h"
+#include "CEditor.h"
 using std::vector;
 
 class CDlgFeatureAttriEdit : public CDialog
@@ -34,7 +35,7 @@ public:
 	virtual void OnOK();
 public:
 	//设置选择的要素
-	void SetFeatures(vector<Carto::ILayer*> &allLayers);
+	void SetFeatures(vector<Carto::ILayer*> &allLayers,Editor::CEditor *pEditor);
 
 	void Refresh();
 
@@ -55,4 +56,12 @@ private:
 
 	CTreeCtrl m_SelFeatureTree;
 
+	//做过修改的图层，用来记录回退
+	vector<Carto::ILayer*>   m_ModifyLayers;
+
+	Editor::CEditor *m_pEditor;
+
+public:
+	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedCancel();
 };
