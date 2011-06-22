@@ -510,6 +510,11 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 8);
 	pPanelLabel->Add (pBtnElementSaveAs);
+	//--------------------------
+	//将标绘要素保存为shp
+	//--------------------------
+	CBCGPRibbonButton* pBtnElementExport = new CBCGPRibbonButton(ID_DRAW_Export, _T("增量导出"), -1, 8);
+	pPanelLabel->Add (pBtnElementExport);
 
 	//半自动提取
 	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));

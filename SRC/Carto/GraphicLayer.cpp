@@ -456,7 +456,7 @@ namespace Carto
 		bool srcState = pWorkspace->IsEditing();
 		if(srcState== false)
 			pWorkspace->StartEdit();
-		
+
 		pWorkspace->StartEditOperation();
 
 		Geodatabase::CFeaturePtr pFeature;
@@ -490,7 +490,7 @@ namespace Carto
 				//产生一个新的要素
 				pFeature =pFeatureClass->CreateFeature();
 				pFeature->SetShape( this->GetSelectedElement(i)->GetGeometry()->clone());
-				
+
 				//提交要素
 				pFeatureClass->AddFeature(pFeature.get());
 				//remove
@@ -533,7 +533,7 @@ namespace Carto
 
 			}
 			UnselectAllElements();
-				//remove
+			//remove
 			this->RemoveAllElements();
 		}
 
@@ -545,7 +545,7 @@ namespace Carto
 
 	void CGraphicLayer::SaveElementAsShp(Geodatabase::IFeatureClassPtr pFeatureClass,bool bSlected,long drawingType)
 	{
-		
+
 		if(!pFeatureClass)
 		{
 			return;
@@ -586,10 +586,10 @@ namespace Carto
 
 				//提交要素
 				pFeatureClass->AddFeature(pFeature.get());
-				
+
 			}
 
-			
+
 			//remove
 			for (size_t i=0;i<this->GetSelectedElementCount();i++)
 			{
@@ -637,4 +637,121 @@ namespace Carto
 		}
 
 	}
+	//增量导出、导入
+	const std::string node_Incremental ="incremental";
+	const std::string node_CaptureTime ="CaptureTime";
+	const std::string node_PolygonFeature ="PolygonFeature";
+	const std::string node_LineFeature ="LineFeature";
+	const std::string node_PointFeature ="PointFeature";
+	const std::string node_FlagAdd ="Add";
+	const std::string node_FlagDelete ="Delete";
+	const std::string node_FlagAttribute ="Attribute";
+	const std::string node_FlagModify ="Modify";
+	const std::string node_coordinate = "coordinate";
+	const std::string node_FeatID = "FeatID";
+
+	SYSTEM::XMLConfigurationPtr ipIncremenalFile = NULL;
+
+	
+	void CGraphicLayer::IncrementalExport(std::string incrementalFile)
+	{
+
+		SYSTEM::CXMLConfiguration::Initialize();
+		try
+		{
+			if(ipIncremenalFile == NULL)
+				ipIncremenalFile = new SYSTEM::CXMLConfiguration;
+			bool bFlagOpen = ipIncremenalFile->Open(incrementalFile);
+			if (!bFlagOpen||ipIncremenalFile->GetName() != node_Incremental)
+				ipIncremenalFile->Create(incrementalFile,"UTF-8",node_Incremental);
+
+			//增加时间节点
+			SYSTEM::IConfigItemPtr ipCurTimeNode = ipIncremenalFile->GetChildByName(node_CaptureTime.c_str());
+			if (ipCurTimeNode == NULL)
+			{
+				ipCurTimeNode = ipIncremenalFile->AddChildNode(node_CaptureTime.c_str());
+			}
+			time_t t = time(0);    
+			char szCurTime[64];    
+			strftime( szCurTime, sizeof(szCurTime), "%Y-%m-%d %X",localtime(&t));    
+			ipCurTimeNode->SetValue(szCurTime);
+			char destBuf[1024];
+			std::string layerName = "polygonlayer";
+			Element::ELEMENT_TYPE elementType;
+			
+			std::string strFeatureType = node_PolygonFeature;
+			for (size_t i=0;i<GetElementCount();i++)
+			{
+				elementType = this->GetElement(i)->GetType();
+
+				if (elementType==ELEMENT_TYPE::ET_POINTELEMENT||elementType==ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
+				{
+					strFeatureType = node_PointFeature;
+					layerName = "pointlayer";
+				}
+			
+
+				if (elementType==ET_LINEELEMENT||elementType==ET_POLYLINE_ELEMENT||elementType==ET_CURVE_ELEMENT||elementType==ET_BEZIERCURVE_ELEMENT)
+				{
+					strFeatureType = node_LineFeature;
+					layerName = "polylinelayer";
+				}
+
+				if (elementType==ET_FILLELEMENT||elementType==ET_FILL_RECTANGLE_ELEMENT||elementType==ET_FILL_POLYGON_ELEMENT
+					||elementType==ET_FILL_CIRCLE_ELEMENT||elementType==ET_FILL_ELLIPSE_ELEMENT)
+				{
+					strFeatureType = node_PolygonFeature;
+					layerName = "polygonlayer";
+				}
+
+				//类型
+				SYSTEM::IConfigItemPtr ipFeatureTypeNode = ipIncremenalFile->GetChildByName(strFeatureType.c_str());
+				if (ipFeatureTypeNode == NULL)
+				{
+					ipFeatureTypeNode = ipIncremenalFile->AddChildNode(strFeatureType.c_str());
+				}
+
+				//名称
+				SYSTEM::IConfigItemPtr ipFeatureNameNode = ipFeatureTypeNode->GetChildByName(layerName.c_str());
+				if (ipFeatureNameNode == NULL)
+				{
+					ipFeatureNameNode = ipFeatureTypeNode->AddChildNode(layerName.c_str());
+				}
+
+				SYSTEM::IConfigItemPtr ipFlagAddNode  = ipFeatureNameNode->AddChildNode(node_FlagAdd.c_str());
+
+				//坐标值
+				SYSTEM::IConfigItemPtr   ipCoorNode= ipFlagAddNode->AddChildNode(node_coordinate.c_str());
+				GEOMETRY::geom::Geometry* pgeometry = this->GetElement(i)->GetGeometry()->clone();
+				CoordinateSequence* pCoordinateSequence = pgeometry->getCoordinates();
+				std::string strCoordinate;
+
+				for (int k = 0;k<pCoordinateSequence->getSize();k++)
+				{
+					double dx = pCoordinateSequence->getX(k);
+					double dy = pCoordinateSequence->getY(k);
+					gcvt(dx,10,destBuf);
+					strCoordinate.append(destBuf);
+					strCoordinate.append(",");
+					gcvt(dy,10,destBuf);
+					strCoordinate.append(destBuf);
+					if(k<pCoordinateSequence->getSize()-1)
+						strCoordinate.append(" ");
+				}
+				ipCoorNode->SetValue(strCoordinate.c_str());
+
+			}
+			UnselectAllElements();
+			//remove
+			this->RemoveAllElements();
+
+			ipIncremenalFile->Save();
+		}
+		catch(...)
+		{
+			return ;
+		}
+
+	}
+
 }

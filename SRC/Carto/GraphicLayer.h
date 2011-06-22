@@ -15,6 +15,7 @@
 #include <boost/signals/connection.hpp>
 #include "ILayer.h"
 #include "IFeatureClass.h"
+#include <boost/filesystem.hpp>
 namespace Carto
 {
 
@@ -70,6 +71,10 @@ public:
 	//将Element保存为shp 当前选择或者全部
 	void SaveElementAsShp(std::string filename,bool bSlected=false,long drawingType =2);
 	void SaveElementAsShp(Geodatabase::IFeatureClassPtr pFeatureClass,bool bSlected,long drawingType=2);
+	
+	//将图元增量文件保存
+	void IncrementalExport(std::string incrementalFile);
+
 	/*
 	*描述			:	注册删除图元的回调函数
 	* 参数			:	boost::function fun 函数对象

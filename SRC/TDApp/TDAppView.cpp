@@ -121,6 +121,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_HANDLINE, OnUpdateDrawFreeHandline)
 	ON_COMMAND(ID_DRAW_SAVEAS, OnDrawSaveAs)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_SAVEAS, OnUpdateDrawSaveAs)
+	ON_COMMAND(ID_DRAW_Export, OnDrawExport)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_Export, OnUpdateDrawExport)
 	//编辑工具
 	
 	ON_COMMAND(ID_EDITOR_START, OnEditorStart)
@@ -786,7 +788,34 @@ afx_msg void CTDAppView::OnUpdateDrawSaveAs(CCmdUI* pCmdUI)
 {
 
 }
+afx_msg void CTDAppView::OnDrawExport()
+{
+	//element 转成shp
 
+	Carto::CMapPtr ipMap = m_MapCtrl.GetMap();
+	Carto::CGraphicLayerPtr ipGraphicLayer = ipMap->GetGraphicLayer();
+	long lElementCnt = ipGraphicLayer->GetElementCount();
+	if(lElementCnt <1)
+		return;
+
+	CString     strOpenFilter = "Incrementalfile(*.xml)|*.xml|All Files(*.*)|*.*||";
+	CFileDialog FileDlg(FALSE, "", NULL,  OFN_HIDEREADONLY, strOpenFilter);
+	if(FileDlg.DoModal()!=IDOK)
+		return;
+
+	CString strIncrementalPath = FileDlg.GetPathName();
+	ipGraphicLayer->IncrementalExport(strIncrementalPath.GetBuffer(strIncrementalPath.GetLength()));
+	strIncrementalPath.ReleaseBuffer();
+	m_MapCtrl.UpdateControl((DrawContent)(drawElement | drawAll));
+
+	
+
+
+}
+afx_msg void CTDAppView::OnUpdateDrawExport(CCmdUI* pCmdUI)
+{
+
+}
 
 void CTDAppView::OnSelectFeatureByPoint()
 {

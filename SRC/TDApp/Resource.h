@@ -158,6 +158,7 @@
 #define ID_SELECTFEATURE                40522
 #define ID_REMOVELASTMAGIC              40523
 #define ID_IncrementalImport            40524
+#define ID_DRAW_Export					40525
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
