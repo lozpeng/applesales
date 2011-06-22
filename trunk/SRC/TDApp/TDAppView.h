@@ -147,6 +147,9 @@ public:
 
 	afx_msg void OnDrawSaveAs();
 	afx_msg void OnUpdateDrawSaveAs(CCmdUI* pCmdUI);
+	
+	afx_msg void OnDrawExport();
+	afx_msg void OnUpdateDrawExport(CCmdUI* pCmdUI);
 	//±à¼­¹¤¾ß
 	afx_msg void OnEditorStart();
 	afx_msg void OnUpdateEditorStart(CCmdUI *pCmdUI);
