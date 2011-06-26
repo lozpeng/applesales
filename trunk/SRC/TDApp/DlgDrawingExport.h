@@ -32,4 +32,5 @@ public:
 	afx_msg void OnBnClickedRadioExpoertSelected();
 	afx_msg void OnBnClickedOk();
 	CComboBox m_Combox_Export;
+	afx_msg void OnCbnSelchangeComboDrawingtype();
 };

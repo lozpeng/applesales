@@ -652,8 +652,8 @@ namespace Carto
 
 	SYSTEM::XMLConfigurationPtr ipIncremenalFile = NULL;
 
-	
-	void CGraphicLayer::IncrementalExport(std::string incrementalFile)
+
+	void CGraphicLayer::IncrementalExport(std::string incrementalFile,std::string tagertLayerName,int geoType,bool bExportAll)
 	{
 
 		SYSTEM::CXMLConfiguration::Initialize();
@@ -678,72 +678,166 @@ namespace Carto
 			char destBuf[1024];
 			std::string layerName = "polygonlayer";
 			Element::ELEMENT_TYPE elementType;
+			layerName = tagertLayerName;
+
+			//
 			
+			std::vector<Element::IElementPtr>  removeList;
 			std::string strFeatureType = node_PolygonFeature;
-			for (size_t i=0;i<GetElementCount();i++)
+			if(bExportAll)
 			{
-				elementType = this->GetElement(i)->GetType();
-
-				if (elementType==ELEMENT_TYPE::ET_POINTELEMENT||elementType==ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
+				for (size_t i=0;i<GetElementCount();i++)
 				{
-					strFeatureType = node_PointFeature;
-					layerName = "pointlayer";
-				}
-			
+					elementType = this->GetElement(i)->GetType();
 
-				if (elementType==ET_LINEELEMENT||elementType==ET_POLYLINE_ELEMENT||elementType==ET_CURVE_ELEMENT||elementType==ET_BEZIERCURVE_ELEMENT)
+					if (elementType==ELEMENT_TYPE::ET_POINTELEMENT||elementType==ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
+					{
+						if(geoType !=2)
+							continue;
+						strFeatureType = node_PointFeature;
+
+					}
+					else if (elementType==ET_LINEELEMENT||elementType==ET_POLYLINE_ELEMENT||elementType==ET_CURVE_ELEMENT||elementType==ET_BEZIERCURVE_ELEMENT)
+					{
+						if(geoType !=1)
+							continue;
+						strFeatureType = node_LineFeature;
+
+					}
+
+					else if (elementType==ET_FILLELEMENT||elementType==ET_FILL_RECTANGLE_ELEMENT||elementType==ET_FILL_POLYGON_ELEMENT
+						||elementType==ET_FILL_CIRCLE_ELEMENT||elementType==ET_FILL_ELLIPSE_ELEMENT)
+					{
+						if(geoType !=0)
+							continue;
+						strFeatureType = node_PolygonFeature;
+					}
+
+					//类型
+					SYSTEM::IConfigItemPtr ipFeatureTypeNode = ipIncremenalFile->GetChildByName(strFeatureType.c_str());
+					if (ipFeatureTypeNode == NULL)
+					{
+						ipFeatureTypeNode = ipIncremenalFile->AddChildNode(strFeatureType.c_str());
+					}
+
+					//名称
+					SYSTEM::IConfigItemPtr ipFeatureNameNode = ipFeatureTypeNode->GetChildByName(layerName.c_str());
+					if (ipFeatureNameNode == NULL)
+					{
+						ipFeatureNameNode = ipFeatureTypeNode->AddChildNode(layerName.c_str());
+					}
+
+					SYSTEM::IConfigItemPtr ipFlagAddNode  = ipFeatureNameNode->AddChildNode(node_FlagAdd.c_str());
+
+					//坐标值
+					SYSTEM::IConfigItemPtr   ipCoorNode= ipFlagAddNode->AddChildNode(node_coordinate.c_str());
+					GEOMETRY::geom::Geometry* pgeometry = this->GetElement(i)->GetGeometry()->clone();
+					CoordinateSequence* pCoordinateSequence = pgeometry->getCoordinates();
+					std::string strCoordinate;
+
+					for (int k = 0;k<pCoordinateSequence->getSize();k++)
+					{
+						double dx = pCoordinateSequence->getX(k);
+						double dy = pCoordinateSequence->getY(k);
+						gcvt(dx,10,destBuf);
+						strCoordinate.append(destBuf);
+						strCoordinate.append(",");
+						gcvt(dy,10,destBuf);
+						strCoordinate.append(destBuf);
+						if(k<pCoordinateSequence->getSize()-1)
+							strCoordinate.append(" ");
+					}
+					ipCoorNode->SetValue(strCoordinate.c_str());
+					//
+					removeList.push_back(GetElement(i));
+					
+				}
+
+				//remove
+				for(int j = 0;j< removeList.size();j++)
 				{
-					strFeatureType = node_LineFeature;
-					layerName = "polylinelayer";
+					this->RemoveElement(removeList[j]);
 				}
-
-				if (elementType==ET_FILLELEMENT||elementType==ET_FILL_RECTANGLE_ELEMENT||elementType==ET_FILL_POLYGON_ELEMENT
-					||elementType==ET_FILL_CIRCLE_ELEMENT||elementType==ET_FILL_ELLIPSE_ELEMENT)
-				{
-					strFeatureType = node_PolygonFeature;
-					layerName = "polygonlayer";
-				}
-
-				//类型
-				SYSTEM::IConfigItemPtr ipFeatureTypeNode = ipIncremenalFile->GetChildByName(strFeatureType.c_str());
-				if (ipFeatureTypeNode == NULL)
-				{
-					ipFeatureTypeNode = ipIncremenalFile->AddChildNode(strFeatureType.c_str());
-				}
-
-				//名称
-				SYSTEM::IConfigItemPtr ipFeatureNameNode = ipFeatureTypeNode->GetChildByName(layerName.c_str());
-				if (ipFeatureNameNode == NULL)
-				{
-					ipFeatureNameNode = ipFeatureTypeNode->AddChildNode(layerName.c_str());
-				}
-
-				SYSTEM::IConfigItemPtr ipFlagAddNode  = ipFeatureNameNode->AddChildNode(node_FlagAdd.c_str());
-
-				//坐标值
-				SYSTEM::IConfigItemPtr   ipCoorNode= ipFlagAddNode->AddChildNode(node_coordinate.c_str());
-				GEOMETRY::geom::Geometry* pgeometry = this->GetElement(i)->GetGeometry()->clone();
-				CoordinateSequence* pCoordinateSequence = pgeometry->getCoordinates();
-				std::string strCoordinate;
-
-				for (int k = 0;k<pCoordinateSequence->getSize();k++)
-				{
-					double dx = pCoordinateSequence->getX(k);
-					double dy = pCoordinateSequence->getY(k);
-					gcvt(dx,10,destBuf);
-					strCoordinate.append(destBuf);
-					strCoordinate.append(",");
-					gcvt(dy,10,destBuf);
-					strCoordinate.append(destBuf);
-					if(k<pCoordinateSequence->getSize()-1)
-						strCoordinate.append(" ");
-				}
-				ipCoorNode->SetValue(strCoordinate.c_str());
+				UnselectAllElements();
 
 			}
-			UnselectAllElements();
-			//remove
-			this->RemoveAllElements();
+			else
+			{
+
+				for (size_t i=0;i<this->GetSelectedElementCount();i++)
+				{
+					elementType = this->GetSelectedElement(i)->GetType();
+
+					if (elementType==ELEMENT_TYPE::ET_POINTELEMENT||elementType==ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
+					{
+						if(geoType !=2)
+							continue;
+						strFeatureType = node_PointFeature;
+
+					}
+					else if (elementType==ET_LINEELEMENT||elementType==ET_POLYLINE_ELEMENT||elementType==ET_CURVE_ELEMENT||elementType==ET_BEZIERCURVE_ELEMENT)
+					{
+						if(geoType !=1)
+							continue;
+						strFeatureType = node_LineFeature;
+
+					}
+
+					else if (elementType==ET_FILLELEMENT||elementType==ET_FILL_RECTANGLE_ELEMENT||elementType==ET_FILL_POLYGON_ELEMENT
+						||elementType==ET_FILL_CIRCLE_ELEMENT||elementType==ET_FILL_ELLIPSE_ELEMENT)
+					{
+						if(geoType !=0)
+							continue;
+						strFeatureType = node_PolygonFeature;
+					}
+
+					//类型
+					SYSTEM::IConfigItemPtr ipFeatureTypeNode = ipIncremenalFile->GetChildByName(strFeatureType.c_str());
+					if (ipFeatureTypeNode == NULL)
+					{
+						ipFeatureTypeNode = ipIncremenalFile->AddChildNode(strFeatureType.c_str());
+					}
+
+					//名称
+					SYSTEM::IConfigItemPtr ipFeatureNameNode = ipFeatureTypeNode->GetChildByName(layerName.c_str());
+					if (ipFeatureNameNode == NULL)
+					{
+						ipFeatureNameNode = ipFeatureTypeNode->AddChildNode(layerName.c_str());
+					}
+
+					SYSTEM::IConfigItemPtr ipFlagAddNode  = ipFeatureNameNode->AddChildNode(node_FlagAdd.c_str());
+
+					//坐标值
+					SYSTEM::IConfigItemPtr   ipCoorNode= ipFlagAddNode->AddChildNode(node_coordinate.c_str());
+					GEOMETRY::geom::Geometry* pgeometry = this->GetSelectedElement(i)->GetGeometry()->clone();
+					CoordinateSequence* pCoordinateSequence = pgeometry->getCoordinates();
+					std::string strCoordinate;
+
+					for (int k = 0;k<pCoordinateSequence->getSize();k++)
+					{
+						double dx = pCoordinateSequence->getX(k);
+						double dy = pCoordinateSequence->getY(k);
+						gcvt(dx,10,destBuf);
+						strCoordinate.append(destBuf);
+						strCoordinate.append(",");
+						gcvt(dy,10,destBuf);
+						strCoordinate.append(destBuf);
+						if(k<pCoordinateSequence->getSize()-1)
+							strCoordinate.append(" ");
+					}
+					ipCoorNode->SetValue(strCoordinate.c_str());
+
+					removeList.push_back(GetSelectedElement(i));
+				}
+
+				//remove
+								//remove
+				for(int j = 0;j< removeList.size();j++)
+				{
+					this->RemoveElement(removeList[j]);
+				}
+				UnselectAllElements();
+			}
 
 			ipIncremenalFile->Save();
 		}

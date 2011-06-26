@@ -35,6 +35,7 @@
 #define IDR_COMMAND_MENU                178
 #define IDD_DLG_IncrementalExport       179
 #define IDD_DIG_IncrementalImport       180
+#define IDD_DIG_Drawing_IncrExport      181
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
@@ -43,10 +44,13 @@
 #define IDC_RADIO_EXPOERT_SELECTED      1055
 #define IDC_COMBO_DRAWINGTYPE           1056
 #define IDC_EDIT1                       1057
+#define IDC_COMBO_TargetLayer           1057
 #define IDC_CHECK_ISADD                 1059
 #define IDC_BTN_SLECTPATH               1060
 #define IDC_COMBO1                      1061
 #define IDC_COMBO_Export                1061
+#define IDC_EDIT2                       1062
+#define IDC_EDIT_Export                 1062
 #define ID_EDITNODE_ELEMENT             30030
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
@@ -158,14 +162,15 @@
 #define ID_SELECTFEATURE                40522
 #define ID_REMOVELASTMAGIC              40523
 #define ID_IncrementalImport            40524
-#define ID_DRAW_Export					40525
+#define ID_DRAW_Export                  40525
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        181
+#define _APS_NEXT_RESOURCE_VALUE        182
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1062
+#define _APS_NEXT_CONTROL_VALUE         1063
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

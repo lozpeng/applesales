@@ -7,6 +7,7 @@
 #include "MainFrm.h"
 #include "IDocument.h"
 #include "ILayer.h"
+#include "FeatureLayer.h"
 // CDlgDrawingExport 对话框
 
 IMPLEMENT_DYNAMIC(CDlgDrawingExport, CDialog)
@@ -39,6 +40,7 @@ BEGIN_MESSAGE_MAP(CDlgDrawingExport, CDialog)
 	ON_BN_CLICKED(IDC_RADIO_EXPORT_ALL, &CDlgDrawingExport::OnBnClickedRadioExportAll)
 	ON_BN_CLICKED(IDC_RADIO_EXPOERT_SELECTED, &CDlgDrawingExport::OnBnClickedRadioExpoertSelected)
 	ON_BN_CLICKED(IDOK, &CDlgDrawingExport::OnBnClickedOk)
+	ON_CBN_SELCHANGE(IDC_COMBO_DRAWINGTYPE, &CDlgDrawingExport::OnCbnSelchangeComboDrawingtype)
 END_MESSAGE_MAP()
 
 
@@ -78,7 +80,13 @@ BOOL CDlgDrawingExport::OnInitDialog()
 		}
 		if(pLayer->GetLayerType()==Carto::FeatureLayer)
 		{
-			index= m_Combox_Export.AddString(pLayer->GetName().c_str());
+			Carto::IFeatureLayerPtr pFeatureLayer = pLayer;
+			if(pFeatureLayer->GetFeatureType() == GEOS_POLYGON || pFeatureLayer->GetFeatureType() == GEOS_MULTIPOLYGON)
+			{
+				index= m_Combox_Export.AddString(pLayer->GetName().c_str());
+			}
+
+			//index= m_Combox_Export.AddString(pLayer->GetName().c_str());
 			//m_Combox_Export.SetItemData(index,DWORD_PTR(pLayer.get()));
 		}
 	}
@@ -138,4 +146,57 @@ void CDlgDrawingExport::OnBnClickedOk()
 	m_Combox_Export.GetLBText(m_Combox_Export.GetCurSel(),m_ExportPath); 
 
 	OnOK();
+}
+
+void CDlgDrawingExport::OnCbnSelchangeComboDrawingtype()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	this->UpdateData();
+
+	m_DrawingType = m_ComboxType.GetCurSel();
+
+	m_Combox_Export.ResetContent();
+
+	
+	Framework::IDocument *pDoc =(Framework::IDocument*)Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppDocument);
+	Carto::CMapPtr pMap =pDoc->GetActiveMap();
+
+	Carto::CLayerArray &layers =pMap->GetLayers();
+
+	Carto::ILayerPtr pLayer;
+	int index;
+	bool bfind =false;
+	for(int i=0;i<layers.GetSize();i++)
+	{
+		pLayer =layers.GetAt(i);
+		if(!pLayer)
+		{
+			continue;
+		}
+		if(pLayer->GetLayerType()==Carto::FeatureLayer)
+		{
+			Carto::IFeatureLayerPtr pFeatureLayer = pLayer;
+			if(pFeatureLayer->GetFeatureType() == GEOS_POLYGON || pFeatureLayer->GetFeatureType() == GEOS_MULTIPOLYGON)
+			{
+				if(m_DrawingType ==0)
+					index= m_Combox_Export.AddString(pLayer->GetName().c_str());
+			}
+			else if(pFeatureLayer->GetFeatureType() == GEOS_LINESTRING || pFeatureLayer->GetFeatureType() == GEOS_MULTILINESTRING)
+			{
+				if(m_DrawingType ==1)
+					index= m_Combox_Export.AddString(pLayer->GetName().c_str());
+			}
+			else if(pFeatureLayer->GetFeatureType() == GEOS_POINT || pFeatureLayer->GetFeatureType() == GEOS_MULTIPOINT)
+			{
+				if(m_DrawingType ==2)
+					index= m_Combox_Export.AddString(pLayer->GetName().c_str());
+			}
+
+		}
+	}
+	if(m_Combox_Export.GetCount() > 0)
+		m_Combox_Export.SetCurSel(0);
+
+	this->UpdateData(FALSE);
+
 }

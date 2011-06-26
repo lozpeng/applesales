@@ -73,7 +73,7 @@ public:
 	void SaveElementAsShp(Geodatabase::IFeatureClassPtr pFeatureClass,bool bSlected,long drawingType=2);
 	
 	//将图元增量文件保存
-	void IncrementalExport(std::string incrementalFile);
+	void IncrementalExport(std::string incrementalFile,std::string tagertLayerName,int geoType,bool bExportAll);
 
 	/*
 	*描述			:	注册删除图元的回调函数

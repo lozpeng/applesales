@@ -432,11 +432,11 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
+				RelativePath=".\res\viewToolbar.bmp"
 				>
 			</File>
 			<File
-				RelativePath=".\res\viewToolbar.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
 				>
 			</File>
 			<File
@@ -473,6 +473,14 @@
 			</File>
 			<File
 				RelativePath=".\DlgIncrementalImport.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DrawingIncrExport.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DrawingIncrExport.h"
 				>
 			</File>
 		</Filter>
