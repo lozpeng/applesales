@@ -788,6 +788,7 @@ afx_msg void CTDAppView::OnUpdateDrawSaveAs(CCmdUI* pCmdUI)
 {
 
 }
+#include "DrawingIncrExport.h"
 afx_msg void CTDAppView::OnDrawExport()
 {
 	//element ×ª³Éshp
@@ -797,15 +798,17 @@ afx_msg void CTDAppView::OnDrawExport()
 	long lElementCnt = ipGraphicLayer->GetElementCount();
 	if(lElementCnt <1)
 		return;
-
-	CString     strOpenFilter = "Incrementalfile(*.xml)|*.xml|All Files(*.*)|*.*||";
-	CFileDialog FileDlg(FALSE, "", NULL,  OFN_HIDEREADONLY, strOpenFilter);
-	if(FileDlg.DoModal()!=IDOK)
+	CDrawingIncrExport dlg;
+	if(dlg.DoModal()!=IDOK)
 		return;
 
-	CString strIncrementalPath = FileDlg.GetPathName();
-	ipGraphicLayer->IncrementalExport(strIncrementalPath.GetBuffer(strIncrementalPath.GetLength()));
+	CString targetLayerName = dlg.m_TargetLayerName;
+	
+	CString strIncrementalPath = dlg.m_ExportPath;
+	ipGraphicLayer->IncrementalExport(strIncrementalPath.GetBuffer(strIncrementalPath.GetLength()),
+		targetLayerName.GetBuffer(targetLayerName.GetLength()),dlg.m_DrawingType,dlg.m_bExpoertAll);
 	strIncrementalPath.ReleaseBuffer();
+	targetLayerName.ReleaseBuffer();
 	m_MapCtrl.UpdateControl((DrawContent)(drawElement | drawAll));
 
 	
