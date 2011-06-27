@@ -653,7 +653,7 @@ namespace Carto
 	SYSTEM::XMLConfigurationPtr ipIncremenalFile = NULL;
 
 
-	void CGraphicLayer::IncrementalExport(std::string incrementalFile,std::string tagertLayerName,int geoType,bool bExportAll)
+	void CGraphicLayer::IncrementalExport(std::string incrementalFile,std::string tagertLayerName_P,std::string tagertLayerName_L,std::string tagertLayerName_A,bool bExportAll)
 	{
 
 		SYSTEM::CXMLConfiguration::Initialize();
@@ -678,7 +678,7 @@ namespace Carto
 			char destBuf[1024];
 			std::string layerName = "polygonlayer";
 			Element::ELEMENT_TYPE elementType;
-			layerName = tagertLayerName;
+			
 
 			//
 			
@@ -692,25 +692,28 @@ namespace Carto
 
 					if (elementType==ELEMENT_TYPE::ET_POINTELEMENT||elementType==ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
 					{
-						if(geoType !=2)
+						if(tagertLayerName_P.empty()||tagertLayerName_P.length()<1)
 							continue;
 						strFeatureType = node_PointFeature;
+						layerName = tagertLayerName_P;
 
 					}
 					else if (elementType==ET_LINEELEMENT||elementType==ET_POLYLINE_ELEMENT||elementType==ET_CURVE_ELEMENT||elementType==ET_BEZIERCURVE_ELEMENT)
 					{
-						if(geoType !=1)
+						if(tagertLayerName_L.empty()||tagertLayerName_L.length()<1)
 							continue;
 						strFeatureType = node_LineFeature;
+						layerName = tagertLayerName_L;
 
 					}
 
 					else if (elementType==ET_FILLELEMENT||elementType==ET_FILL_RECTANGLE_ELEMENT||elementType==ET_FILL_POLYGON_ELEMENT
 						||elementType==ET_FILL_CIRCLE_ELEMENT||elementType==ET_FILL_ELLIPSE_ELEMENT)
 					{
-						if(geoType !=0)
+						if(tagertLayerName_A.empty()||tagertLayerName_A.length()<1)
 							continue;
 						strFeatureType = node_PolygonFeature;
+						layerName = tagertLayerName_A;
 					}
 
 					//类型
@@ -770,25 +773,28 @@ namespace Carto
 
 					if (elementType==ELEMENT_TYPE::ET_POINTELEMENT||elementType==ELEMENT_TYPE::ET_SIMPLE_POINT_ELEMENT)
 					{
-						if(geoType !=2)
+						if(tagertLayerName_P.empty()||tagertLayerName_P.length()<1)
 							continue;
 						strFeatureType = node_PointFeature;
+						layerName = tagertLayerName_P;
 
 					}
 					else if (elementType==ET_LINEELEMENT||elementType==ET_POLYLINE_ELEMENT||elementType==ET_CURVE_ELEMENT||elementType==ET_BEZIERCURVE_ELEMENT)
 					{
-						if(geoType !=1)
+						if(tagertLayerName_L.empty()||tagertLayerName_L.length()<1)
 							continue;
 						strFeatureType = node_LineFeature;
+						layerName = tagertLayerName_L;
 
 					}
 
 					else if (elementType==ET_FILLELEMENT||elementType==ET_FILL_RECTANGLE_ELEMENT||elementType==ET_FILL_POLYGON_ELEMENT
 						||elementType==ET_FILL_CIRCLE_ELEMENT||elementType==ET_FILL_ELLIPSE_ELEMENT)
 					{
-						if(geoType !=0)
+						if(tagertLayerName_A.empty()||tagertLayerName_A.length()<1)
 							continue;
 						strFeatureType = node_PolygonFeature;
+						layerName = tagertLayerName_A;
 					}
 
 					//类型

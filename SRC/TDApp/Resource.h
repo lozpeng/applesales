@@ -45,7 +45,11 @@
 #define IDC_COMBO_DRAWINGTYPE           1056
 #define IDC_EDIT1                       1057
 #define IDC_COMBO_TargetLayer           1057
+#define IDC_COMBO_TargetLayer_L         1057
+#define IDC_COMBO_TargetLayer_P         1058
 #define IDC_CHECK_ISADD                 1059
+#define IDC_COMBO_TargetLayer_L2        1059
+#define IDC_COMBO_TargetLayer_A         1059
 #define IDC_BTN_SLECTPATH               1060
 #define IDC_COMBO1                      1061
 #define IDC_COMBO_Export                1061

@@ -20,6 +20,9 @@ CDrawingIncrExport::CDrawingIncrExport(CWnd* pParent /*=NULL*/)
 	, m_ExportPath(_T(""))
 {
 
+	m_TargetLayerName_P="";
+	m_TargetLayerName_L="";
+	m_TargetLayerName_A="";
 }
 
 CDrawingIncrExport::~CDrawingIncrExport()
@@ -29,10 +32,13 @@ CDrawingIncrExport::~CDrawingIncrExport()
 void CDrawingIncrExport::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_COMBO_DRAWINGTYPE, m_ComboxType);
+	//DDX_Control(pDX, IDC_COMBO_DRAWINGTYPE, m_ComboxType);
 	//DDX_Radio(pDX, IDC_RADIO_EXPORT_ALL, m_bExpoertAll);
-	DDX_Control(pDX, IDC_COMBO_TargetLayer, m_Combo_TagertLayer);
+	//DDX_Control(pDX, IDC_COMBO_TargetLayer, m_Combo_TagertLayer);
 	DDX_Text(pDX, IDC_EDIT_Export, m_ExportPath);
+	DDX_Control(pDX, IDC_COMBO_TargetLayer_P, m_Combox_Export_P);
+	DDX_Control(pDX, IDC_COMBO_TargetLayer_L, m_Combox_Export_L);
+	DDX_Control(pDX, IDC_COMBO_TargetLayer_A, m_Combox_Export_A);
 }
 
 
@@ -51,11 +57,11 @@ BOOL CDrawingIncrExport::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	
-	m_ComboxType.AddString("面");
-	m_ComboxType.AddString("线");
-	m_ComboxType.AddString("点");
-	m_ComboxType.SetCurSel(0);
-	m_DrawingType = 0;
+	//m_ComboxType.AddString("面");
+	//m_ComboxType.AddString("线");
+	//m_ComboxType.AddString("点");
+	//m_ComboxType.SetCurSel(0);
+	//m_DrawingType = 0;
 
 	
 	m_ExportPath ="D:\\expoert.xml";
@@ -86,13 +92,24 @@ BOOL CDrawingIncrExport::OnInitDialog()
 			Carto::IFeatureLayerPtr pFeatureLayer = pLayer;
 			if(pFeatureLayer->GetFeatureType() == GEOS_POLYGON || pFeatureLayer->GetFeatureType() == GEOS_MULTIPOLYGON)
 			{
-				index= m_Combo_TagertLayer.AddString(pLayer->GetName().c_str());
+				index= m_Combox_Export_A.AddString(pLayer->GetName().c_str());
+			}
+			else if(pFeatureLayer->GetFeatureType() == GEOS_LINESTRING || pFeatureLayer->GetFeatureType() == GEOS_MULTILINESTRING)
+			{
+				index= m_Combox_Export_L.AddString(pLayer->GetName().c_str());
+			}
+			else if(pFeatureLayer->GetFeatureType() == GEOS_POINT || pFeatureLayer->GetFeatureType() == GEOS_MULTIPOINT)
+			{
+				index= m_Combox_Export_P.AddString(pLayer->GetName().c_str());
 			}
 		}
 	}
-	if(m_Combo_TagertLayer.GetCount() > 0)
-		m_Combo_TagertLayer.SetCurSel(0);
-
+	if(m_Combox_Export_P.GetCount() > 0)
+		m_Combox_Export_P.SetCurSel(0);
+	if(m_Combox_Export_L.GetCount() > 0)
+		m_Combox_Export_L.SetCurSel(0);
+	if(m_Combox_Export_A.GetCount() > 0)
+		m_Combox_Export_A.SetCurSel(0);
 	//if( GetFeatureType() == GEOS_POINT || GetFeatureType() == GEOS_MULTIPOINT )
 	//else if( GetFeatureType() == GEOS_LINESTRING || GetFeatureType() == GEOS_MULTILINESTRING )
 	
@@ -117,13 +134,13 @@ void CDrawingIncrExport::OnBnClickedOk()
 {
 	this->UpdateData();
 
-	m_DrawingType = m_ComboxType.GetCurSel();
+	//m_DrawingType = m_ComboxType.GetCurSel();
 
-	if(m_Combo_TagertLayer.GetCurSel() < 0)
-	{
-		MessageBox("请选择导出要素层！");
-		return;
-	}
+	//if(m_Combo_TagertLayer.GetCurSel() < 0)
+	//{
+	//	MessageBox("请选择导出要素层！");
+	//	return;
+	//}
 
 	if(m_ExportPath.GetLength()<1)
 	{
@@ -131,7 +148,13 @@ void CDrawingIncrExport::OnBnClickedOk()
 		return;
 	}
 
-	m_Combo_TagertLayer.GetLBText(m_Combo_TagertLayer.GetCurSel(),m_TargetLayerName); 
+	if(m_Combox_Export_P.GetCount() > 0)
+		m_Combox_Export_P.GetLBText(m_Combox_Export_P.GetCurSel(),m_TargetLayerName_P); 
+	if(m_Combox_Export_L.GetCount() > 0)
+		m_Combox_Export_L.GetLBText(m_Combox_Export_L.GetCurSel(),m_TargetLayerName_L); 
+	if(m_Combox_Export_A.GetCount() > 0)
+		m_Combox_Export_A.GetLBText(m_Combox_Export_A.GetCurSel(),m_TargetLayerName_A); 
+
 	OnOK();
 }
 
