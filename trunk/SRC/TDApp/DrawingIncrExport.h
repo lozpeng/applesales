@@ -27,7 +27,7 @@ public:
 	BOOL m_bExpoertAll;
 	CComboBox m_Combo_TagertLayer;
 	CString m_ExportPath;
-	CString m_TargetLayerName;
+	CString m_TargetLayerName_P,m_TargetLayerName_L,m_TargetLayerName_A;
 	int m_DrawingType;
 	afx_msg void OnBnClickedBtnSlectpath();
 	afx_msg void OnBnClickedOk();
@@ -35,4 +35,7 @@ public:
 	afx_msg void OnBnClickedRadioExportAll();
 	afx_msg void OnBnClickedRadioExpoertSelected();
 	afx_msg void OnCbnSelchangeComboDrawingtype();
+	CComboBox m_Combox_Export_P;
+	CComboBox m_Combox_Export_L;
+	CComboBox m_Combox_Export_A;
 };

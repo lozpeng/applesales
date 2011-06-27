@@ -802,13 +802,20 @@ afx_msg void CTDAppView::OnDrawExport()
 	if(dlg.DoModal()!=IDOK)
 		return;
 
-	CString targetLayerName = dlg.m_TargetLayerName;
-	
+	CString targetLayerName_P = dlg.m_TargetLayerName_P;
+	CString targetLayerName_L = dlg.m_TargetLayerName_L;
+	CString targetLayerName_A = dlg.m_TargetLayerName_A;
+
 	CString strIncrementalPath = dlg.m_ExportPath;
 	ipGraphicLayer->IncrementalExport(strIncrementalPath.GetBuffer(strIncrementalPath.GetLength()),
-		targetLayerName.GetBuffer(targetLayerName.GetLength()),dlg.m_DrawingType,dlg.m_bExpoertAll);
+		targetLayerName_P.GetBuffer(targetLayerName_P.GetLength()),
+		targetLayerName_L.GetBuffer(targetLayerName_L.GetLength()),
+		targetLayerName_A.GetBuffer(targetLayerName_A.GetLength()),
+		dlg.m_bExpoertAll);
 	strIncrementalPath.ReleaseBuffer();
-	targetLayerName.ReleaseBuffer();
+	targetLayerName_P.ReleaseBuffer();
+	targetLayerName_L.ReleaseBuffer();
+	targetLayerName_A.ReleaseBuffer();
 	m_MapCtrl.UpdateControl((DrawContent)(drawElement | drawAll));
 
 	
