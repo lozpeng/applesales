@@ -167,6 +167,7 @@
 #define ID_REMOVELASTMAGIC              40523
 #define ID_IncrementalImport            40524
 #define ID_DRAW_Export                  40525
+#define ID_CHANGE_SETSYMBOL             40530
 
 // Next default values for new objects
 // 

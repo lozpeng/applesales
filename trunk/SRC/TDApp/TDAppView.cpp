@@ -168,6 +168,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	
 	ON_COMMAND(ID_EDGE_EXTRACT,OnEdgeTrack)
 
+	ON_COMMAND(ID_CHANGE_SETSYMBOL,OnChangeSetSymbol)
+
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
 
@@ -1801,4 +1803,9 @@ void CTDAppView::OnEdgeTrack()
 	{
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	}
+}
+
+void CTDAppView::OnChangeSetSymbol()
+{
+	Control::CImageProcessTool::ShowChangeSymbolDlg();
 }

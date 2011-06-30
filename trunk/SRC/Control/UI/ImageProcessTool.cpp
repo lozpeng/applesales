@@ -10,7 +10,7 @@
 #include "ShapefileWorkspaceFactory.h"
 #include "IWorkspace.h"
 #include "ProgressBar.h"
-
+#include "DlgSetChangeSymbol.h"
 //流程向导相关
 #include "TreePropSheetEx.h"
 #include "DistillStep1.h"
@@ -21,9 +21,37 @@ namespace Control
 {
 	std::vector<TreePropSheet::CTreePropSheetEx*> CImageProcessTool::m_manageSheet;
 	std::vector<CResizablePage*>  CImageProcessTool::m_manageSheetPage;
+
+	Display::IFillSymbolPtr CImageProcessTool::m_pChangeSymbol;
+
+
+	void CImageProcessTool::InitSymbol()
+	{
+		if(!m_pChangeSymbol)
+		{
+			//设置符号
+			Display::CSimpleFillSymbol *pSymbol =new Display::CSimpleFillSymbol();
+			pSymbol->SetDrawFill(false);
+			pSymbol->SetOutLineWidth(1.5);
+			pSymbol->SetOutLineColor(RGB(255,0,0));
+
+			m_pChangeSymbol =pSymbol;
+		}
+	}
+	
 	void CImageProcessTool::ShowImgChangeDetectDlg()
 	{
 		CDllResource hdll;
+		if(!m_pChangeSymbol)
+		{
+			//设置符号
+			Display::CSimpleFillSymbol *pSymbol =new Display::CSimpleFillSymbol();
+			pSymbol->SetDrawFill(false);
+			pSymbol->SetOutLineWidth(1.5);
+			pSymbol->SetOutLineColor(RGB(255,0,0));
+
+			m_pChangeSymbol =pSymbol;
+		}
 		CDlgChangeDetect dlg;
 		if(dlg.DoModal()==IDOK)
 		{
@@ -56,14 +84,17 @@ namespace Control
 				 Carto::CSimpleRenderPtr pRender =pFeatureLayer->GetFeatureRender();
 
 				 //设置符号
-				 Display::CSimpleFillSymbolPtr pFillSymbol =pRender->GetSymbol();
+				 pRender->SetSymbol(m_pChangeSymbol);
+				/* Display::CSimpleFillSymbolPtr pFillSymbol =pRender->GetSymbol();
 				 pFillSymbol->SetDrawFill(false);
 				 pFillSymbol->SetOutLineWidth(1.5);
-				 pFillSymbol->SetOutLineColor(RGB(255,0,0));
+				 pFillSymbol->SetOutLineColor(RGB(255,0,0));*/
 
 				 pDoc->GetActiveMap()->AddLayer(pLayer);
 
 				 pDoc->GetLinkMapTree()->AddLayer(pLayer);
+
+				 pDoc->GetLinkMapCtrl()->UpdateControl(drawAll);
 			 }
 		 }
 			else
@@ -71,6 +102,14 @@ namespace Control
 			 AfxMessageBox("检测失败");
 		 }
 		}
+	}
+
+	void CImageProcessTool::ShowChangeSymbolDlg()
+	{
+        CDllResource hdll;
+		CDlgSetChangeSymbol dlg;
+		dlg.DoModal();
+        
 	}
 	void CImageProcessTool::ShowDistillWaterSheet(Control::CMapControl* mapControl, CWnd* pParent)
 	{

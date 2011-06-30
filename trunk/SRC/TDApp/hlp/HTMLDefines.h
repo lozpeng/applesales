@@ -113,6 +113,7 @@
 #define HID_REMOVELASTMAGIC                     0x19E4B
 #define HID_IncrementalImport                   0x19E4C
 #define HID_DRAW_Export                         0x19E4D
+#define HID_CHANGE_SETSYMBOL                    0x19E52
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064
