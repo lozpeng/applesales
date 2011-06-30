@@ -583,7 +583,7 @@ void CMainFrame::AddTab_ChangeDetect()
 	//--------------------------
 	// 变化结果导出
 	//--------------------------
-	CBCGPRibbonButton* pBtnChangeExport = new CBCGPRibbonButton (ID_CHANGE_EXPORT,_T("检测结果导出"), -1, 8);
+	CBCGPRibbonButton* pBtnChangeExport = new CBCGPRibbonButton (ID_CHANGE_SETSYMBOL,_T("变化标识"), -1, 8);
 	pPanel->Add (pBtnChangeExport);
 	
 

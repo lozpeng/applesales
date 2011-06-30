@@ -42,6 +42,7 @@
 #define IDC_EDIT_CHANGETHD              2014
 #define IDC_BUTTON1                     2014
 #define IDC_BUTTON_POLYGON              2014
+#define IDC_BTN_SHOWSYMBOL              2014
 #define IDR_LAYER_MENU                  2015
 #define IDC_EDIT_MINAREA                2015
 #define IDD_LAYERPROP_GENERAL           2016
@@ -54,11 +55,13 @@
 #define IDD_IMG_CHANGEDETECT            2018
 #define IDC_BTN_SELEXSHP                2018
 #define IDD_OBJ_EXPORT                  2019
+#define IDC_BTN_CHASYMBOL               2019
 #define IDD_DISTILL_STEP1               2020
 #define IDD_DISTILL_STEP2               2021
 #define IDI_STEP2                       2022
 #define IDI_ICON2                       2023
 #define IDI_STEP1                       2023
+#define IDD_SET_CHANSYMBOL              2024
 #define IDD_FEATURE_RENDER_SET          4024
 #define IDB_FEATURE_RENDER              4025
 #define IDB_RENDER_BG                   4026
@@ -192,9 +195,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2024
+#define _APS_NEXT_RESOURCE_VALUE        2025
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         2019
+#define _APS_NEXT_CONTROL_VALUE         2020
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif

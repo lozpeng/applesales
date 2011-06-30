@@ -16,6 +16,10 @@ public:
 	//变化检测窗口
 	static void ShowImgChangeDetectDlg();
 
+	static void ShowChangeSymbolDlg();
+
+	static void InitSymbol();
+
 	//水体提取流程
 	static void ShowDistillWaterSheet(Control::CMapControl* mapControl, CWnd* pParen = NULL);
 
@@ -24,6 +28,9 @@ public:
 private:
 	static std::vector<TreePropSheet::CTreePropSheetEx*> m_manageSheet;
 	static std::vector<CResizablePage*>  m_manageSheetPage;
+public:
+	//变化结果的标识符号
+	static Display::IFillSymbolPtr m_pChangeSymbol;
 };
 
 }
