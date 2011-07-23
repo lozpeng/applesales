@@ -79,6 +79,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BCGStyle", "SRC\BCGStyle\BC
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlueToothComm", "SRC\BlueToothComm\BlueToothComm.vcproj", "{66C2CE7C-9944-4F58-9123-937D7E9C6FEB}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -137,6 +143,10 @@ Global
 		{99FFD532-1032-4FEC-9F50-44DE6CA8B892}.Debug|Win32.Build.0 = Debug|Win32
 		{99FFD532-1032-4FEC-9F50-44DE6CA8B892}.Release|Win32.ActiveCfg = Release|Win32
 		{99FFD532-1032-4FEC-9F50-44DE6CA8B892}.Release|Win32.Build.0 = Release|Win32
+		{66C2CE7C-9944-4F58-9123-937D7E9C6FEB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{66C2CE7C-9944-4F58-9123-937D7E9C6FEB}.Debug|Win32.Build.0 = Debug|Win32
+		{66C2CE7C-9944-4F58-9123-937D7E9C6FEB}.Release|Win32.ActiveCfg = Release|Win32
+		{66C2CE7C-9944-4F58-9123-937D7E9C6FEB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
