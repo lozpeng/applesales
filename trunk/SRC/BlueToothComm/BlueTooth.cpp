@@ -17,6 +17,9 @@ DEFINE_GUID(g_guidServiceClass, 0xb62c4e8d, 0x62cc, 0x404b, 0xbb, 0xbf, 0xbf, 0x
 CBlueTooth::CBlueTooth(void):m_bConnected(false)
 {
 	m_socket =INVALID_SOCKET;
+
+	WSADATA		WSAData = {0};
+	WSAStartup(MAKEWORD(2, 2), &WSAData);
 }
 
 CBlueTooth::~CBlueTooth(void)
@@ -281,18 +284,22 @@ bool CBlueTooth::Connect(const char *remote)
 			}
 
 			
-			//
-			// Connect the socket (pSocket) to a given remote socket represented by address (pServerAddr)
-			//
-			if ( SOCKET_ERROR == connect(m_socket,
+			int retcode =connect(m_socket,
 				(struct sockaddr *) &SockAddrBthServer,
-				sizeof(SOCKADDR_BTH)) ) 
+				sizeof(SOCKADDR_BTH));
+			if ( 0 == retcode ) 
 			{
-					closesocket(m_socket);
-					m_socket =INVALID_SOCKET;
-					return false;
 					
+				//连接成功
+				break;
 			}
+			else
+			{
+				closesocket(m_socket);
+				m_socket =INVALID_SOCKET;
+				return false;
+			}
+
 
 	}	
 
