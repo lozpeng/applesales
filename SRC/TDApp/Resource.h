@@ -36,6 +36,7 @@
 #define IDD_DLG_IncrementalExport       179
 #define IDD_DIG_IncrementalImport       180
 #define IDD_DIG_Drawing_IncrExport      181
+#define IDD_BLUETOOTH_FILE              182
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
@@ -47,6 +48,7 @@
 #define IDC_COMBO_TargetLayer           1057
 #define IDC_COMBO_TargetLayer_L         1057
 #define IDC_COMBO_TargetLayer_P         1058
+#define IDC_SFILENAME                   1058
 #define IDC_CHECK_ISADD                 1059
 #define IDC_COMBO_TargetLayer_L2        1059
 #define IDC_COMBO_TargetLayer_A         1059
@@ -55,6 +57,9 @@
 #define IDC_COMBO_Export                1061
 #define IDC_EDIT2                       1062
 #define IDC_EDIT_Export                 1062
+#define IDC_TEST_CONNECT                1063
+#define IDC_BUTTON2                     1064
+#define IDC_SELSFILE                    1064
 #define ID_EDITNODE_ELEMENT             30030
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_CUSTOMIZE               32770
@@ -173,9 +178,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        182
+#define _APS_NEXT_RESOURCE_VALUE        183
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1063
+#define _APS_NEXT_CONTROL_VALUE         1065
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

@@ -136,6 +136,7 @@
 #define HIDD_DLG_IncrementalExport              0x200B3
 #define HIDD_DIG_IncrementalImport              0x200B4
 #define HIDD_DIG_Drawing_IncrExport             0x200B5
+#define HIDD_BLUETOOTH_FILE                     0x200B6
  
 // Frame Controls (IDW_*) 
 // This is a part of the Microsoft Foundation Classes C++ library.

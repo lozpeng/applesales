@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor;..\BlueToothComm"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor;..\BlueToothComm"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
@@ -216,6 +216,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\DlgBlueTooth.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.cpp"
 				>
 			</File>
@@ -269,6 +273,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\DlgBlueTooth.h"
+				>
+			</File>
 			<File
 				RelativePath=".\MainFrm.h"
 				>
@@ -432,11 +440,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\res\viewToolbar.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
+				RelativePath=".\res\viewToolbar.bmp"
 				>
 			</File>
 			<File
