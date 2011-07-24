@@ -318,18 +318,26 @@ bool CBlueTooth::SendFile(const char *filename)
 	{
 		return false;
 	}
-	std::string str ="abcdefg";
-	char *pszData =new char[str.length()+1];
-	strcpy(pszData,str.c_str());
-	pszData[str.length()] =0;
+
+	std::string strfile =filename;
+
+	//文件名的长度
+	int length =strfile.size();
 
 	if ( SOCKET_ERROR == send(m_socket,
-		pszData,
-		str.length()+1,
+		(const char*)&length,
+		sizeof(int),
 		0) ) 
 	{
 			return false;
 	}
+
+	//发送文件名
+	if ( SOCKET_ERROR == send(m_socket,strfile.c_str(),length,0) ) 
+	{
+		return false;
+	}
+
 	return true;
 }
 
