@@ -114,6 +114,7 @@
 #define HID_IncrementalImport                   0x19E4C
 #define HID_DRAW_Export                         0x19E4D
 #define HID_CHANGE_SETSYMBOL                    0x19E52
+#define HID_SEND_BLUEFILE                       0x19E53
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064
