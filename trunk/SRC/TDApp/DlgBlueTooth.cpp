@@ -55,6 +55,7 @@ void CDlgBlueTooth::OnBnClickedSelsfile()
 
 void CDlgBlueTooth::OnBnClickedTestConnect()
 {
+	UpdateData();
 	if(m_bluetooth.IsConnect())
 	{
 		//先关闭连接
@@ -74,6 +75,7 @@ void CDlgBlueTooth::OnBnClickedTestConnect()
 
 void CDlgBlueTooth::OnBnClickedOk()
 {
+	UpdateData();
 	if(m_BluetoothName.IsEmpty())
 	{
 		MessageBox("蓝牙设备名称不能为空","提示");

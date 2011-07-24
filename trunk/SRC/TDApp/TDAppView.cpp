@@ -25,6 +25,7 @@
 #include "ILayer.h"
 #include "DlgIncrementalExport.h"
 #include "DlgIncrementalImport.h"
+#include "DlgBlueTooth.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -169,6 +170,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_EDGE_EXTRACT,OnEdgeTrack)
 
 	ON_COMMAND(ID_CHANGE_SETSYMBOL,OnChangeSetSymbol)
+
+	ON_COMMAND(ID_SEND_BLUEFILE,OnSendBlueToothFile)
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
@@ -1808,4 +1811,10 @@ void CTDAppView::OnEdgeTrack()
 void CTDAppView::OnChangeSetSymbol()
 {
 	Control::CImageProcessTool::ShowChangeSymbolDlg();
+}
+
+void CTDAppView::OnSendBlueToothFile()
+{
+    CDlgBlueTooth dlg;
+	dlg.DoModal();
 }

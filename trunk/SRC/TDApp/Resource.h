@@ -173,6 +173,7 @@
 #define ID_IncrementalImport            40524
 #define ID_DRAW_Export                  40525
 #define ID_CHANGE_SETSYMBOL             40530
+#define ID_SEND_BLUEFILE                40531
 
 // Next default values for new objects
 // 

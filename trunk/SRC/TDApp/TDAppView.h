@@ -200,6 +200,8 @@ public:
 	afx_msg void OnWaterExtract();
 	afx_msg void OnChangeSetSymbol();
 
+	afx_msg void OnSendBlueToothFile();
+
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
 	void LayerDelEvent(Carto::ILayerPtr pLayer);
