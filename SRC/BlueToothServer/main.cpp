@@ -47,9 +47,78 @@ int  main(int argc, char *argv[])
 int ReciveFile(SOCKET ClientSocket,const char *path)
 {
 	int nLength;
+	int iLengthReceived;
 	char filename[256];
-    
 
+    memset(filename,0,256);
+
+	//用来接收长度
+	
+	iLengthReceived = recv(ClientSocket,(char*)&nLength,sizeof(int),0);
+
+	cout<<"文件名长度:"<<nLength<<endl;
+
+    iLengthReceived =recv(ClientSocket,filename,nLength,0);
+
+	cout<<"文件名:"<<filename<<endl;
+
+	iLengthReceived = recv(ClientSocket,(char*)&nLength,sizeof(int),0);
+
+	if(iLengthReceived==sizeof(int))
+	{
+        cout<<"文件长度为:"<<nLength<<endl;
+	}
+	else 
+	{
+
+        return 0;
+	}
+	std::string sname =path;
+	sname+="\\";
+	sname+=filename;
+
+    FILE *file =fopen(sname.c_str(),"wb");
+	if(!file)
+	{
+		cout<<"创建文件失败"<<endl;
+		return 0;
+	}
+    
+	char *buffer =new char[nLength];
+
+	bool bContinue =true;
+	int uiTotalLengthReceived =0;
+	//循环接收数据
+	while ( bContinue && uiTotalLengthReceived < nLength) 
+	{
+		
+		iLengthReceived = recv(ClientSocket,
+			buffer,
+			(nLength - uiTotalLengthReceived),
+			0);
+
+		switch ( iLengthReceived ) {
+			case 0: // socket connection has been closed gracefully
+				bContinue = false;
+				break;
+
+			case SOCKET_ERROR:
+				
+				bContinue = false;
+				break;
+
+			default: // most cases when data is being read
+				
+				uiTotalLengthReceived += iLengthReceived;
+				fwrite(buffer,1,iLengthReceived,file);
+				break;
+		}
+	}
+
+
+
+	delete []buffer;
+	fclose(file);
     return 0;
 }
 
