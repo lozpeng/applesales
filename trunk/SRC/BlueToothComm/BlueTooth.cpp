@@ -5,7 +5,7 @@
 #include <winsock2.h>
 #include <ws2bth.h>
 #include <strsafe.h>
-
+#include <io.h>
 namespace BlueToothComm
 {
 
@@ -321,6 +321,9 @@ bool CBlueTooth::SendFile(const char *filename)
 
 	std::string strfile =filename;
 
+	int npos =strfile.rfind('\\');
+	strfile =strfile.substr(npos+1,strfile.size()-npos-1);
+
 	//文件名的长度
 	int length =strfile.size();
 
@@ -337,6 +340,41 @@ bool CBlueTooth::SendFile(const char *filename)
 	{
 		return false;
 	}
+    FILE *file =fopen(filename,"rb");
+    if(!file)
+	{
+		return false;
+	}
+	length =filelength(fileno(file));
+	//发送文件长度
+	if ( SOCKET_ERROR == send(m_socket,
+		(const char*)&length,
+		sizeof(int),
+		0) ) 
+	{
+		fclose(file);
+		return false;
+	}
+    
+	char *buffer =new char[length];
+
+	fread(buffer,1,length,file);
+
+	if ( SOCKET_ERROR == send(m_socket,
+		buffer,
+		length,
+		0) ) 
+	{
+		delete []buffer;
+		fclose(file);
+		return false;
+	}
+
+
+
+	delete []buffer;
+    fclose(file);
+
 
 	return true;
 }
