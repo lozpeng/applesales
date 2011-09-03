@@ -1307,55 +1307,61 @@ afx_msg void CTDAppView::OnEditorStart()
 
 		}
 		pMap->GetEditor()->StartEdit();
+
+		CShapefileWorkspace* pShapeWS = NULL;
+		Carto::CLayerArray &layers =pMap->GetLayers();
+		int num =layers.GetSize();
+		Carto::ILayerPtr pLayer;
+		Geodatabase::IFeatureClass *pFeatureClass =NULL;
+		Geodatabase::IWorkspace *pWorkspace =NULL;
+
+		bool bImport = false;
+		//结束编辑
+		for(int i=0;i<num;i++)
+		{
+			pLayer =layers.GetAt(i);
+			if(pLayer->GetLayerType()!=Carto::FeatureLayer)
+			{
+				continue;
+			}
+
+			pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(pLayer->GetDataObject().get());
+			if(!pFeatureClass)
+			{
+				continue;
+			}
+
+			pWorkspace =pFeatureClass->GetWorkspace();
+			if(bImport)
+			{
+				return;
+			}
+
+			pShapeWS = dynamic_cast<CShapefileWorkspace* >(pWorkspace);
+
+		}
+
+		if(pShapeWS==NULL)
+			return;
+
 		int flagSave = MessageBox("是否导出数据编辑增量信息？\n若导出，编辑将被保存到增量文件","提示",MB_YESNO);
 		if (flagSave == 6)
 		{
+			//导出增量信息
 			CDlgIncrementalExport Dlg;
 			if(Dlg.DoModal()==IDOK)
 			{
 				std::string szIncrementalPath = Dlg.m_IncrementalPath;
-				Carto::CLayerArray &layers =pMap->GetLayers();
-				int num =layers.GetSize();
-				Carto::ILayerPtr pLayer;
-				Geodatabase::IFeatureClass *pFeatureClass =NULL;
-				Geodatabase::IWorkspace *pWorkspace =NULL;
-
-
-				bool bImport = false;
-				//结束编辑
-				for(int i=0;i<num;i++)
-				{
-					pLayer =layers.GetAt(i);
-					if(pLayer->GetLayerType()!=Carto::FeatureLayer)
-					{
-						continue;
-					}
-
-					pFeatureClass =dynamic_cast<Geodatabase::IFeatureClass*>(pLayer->GetDataObject().get());
-					if(!pFeatureClass)
-					{
-						continue;
-					}
-
-					pWorkspace =pFeatureClass->GetWorkspace();
-					if(bImport)
-					{
-						return;
-					}
-
-					CShapefileWorkspace* pShapeWS = dynamic_cast<CShapefileWorkspace* >(pWorkspace);
-					//导出增量信息
-					if(pShapeWS)
-					{
-						pShapeWS->m_IncrementalPath = szIncrementalPath;
-						pShapeWS->m_bEditIncremental = true;
-						bImport =true;
-					}
-
-				}
-
+				pShapeWS->m_IncrementalPath = szIncrementalPath;
+				pShapeWS->m_bEditIncremental = true;
+				bImport =true;
 			}
 
+		}
+		else
+		{
+			pShapeWS->m_bEditIncremental = false;
+			bImport =false;
 		}
 		m_MapCtrl.UpdateControl(drawAll);
 	}
