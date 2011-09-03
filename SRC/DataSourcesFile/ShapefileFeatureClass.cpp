@@ -571,6 +571,8 @@ ISelctionSetPtr CShapefileFeatureClass::SelectByRect(const double &xmin,const do
 
 			if(pCache)
 			{
+				for(int k=0;k<ltotal;k++)
+					pSelectionSet->m_flags[k] = true;
 				pCache->QueryByExtent(&QueryEnvelop,pSelectionSet->m_flags);
 			}
 		}
@@ -894,6 +896,9 @@ ICursorPtr CShapefileFeatureClass::QueryByExtent(GEOMETRY::geom::Envelope *pEnve
 
 			if(pCache)
 			{
+				for(int k=0;k<ltotal;k++)
+					pCursor->m_flags[k] = true;
+
 				pCache->QueryByExtent(pEnvelop,pCursor->m_flags);
 			}
 		}

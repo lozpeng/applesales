@@ -1461,8 +1461,11 @@ void CShapefileWorkspace::IncrementalExport(std::string incrementalFile)
 					else
 					{
 						pFeature =pCache->m_operationStack[i]->pFeature.get();
-						ltoa(pFeature->GetId(),destBuf,10);
-						ipDeleteIndexNode->SetValue(destBuf);
+						if(pFeature)
+						{
+							ltoa(pFeature->GetId(),destBuf,10);
+							ipDeleteIndexNode->SetValue(destBuf);
+						}
 					}
 
 				}
