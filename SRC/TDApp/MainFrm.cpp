@@ -284,7 +284,7 @@ void CMainFrame::AddTab_MapControl()
 	CBCGPRibbonPanel* pPanelSystem = pCategory->AddPanel (_T("系统"));
 	CBCGPRibbonButton* pBtnSetting = new CBCGPRibbonButton (ID_SETTING,_T("设置"), 3, 22);
 	pPanelSystem->Add(pBtnSetting);
-	CBCGPRibbonButton* pBtnHelp = new CBCGPRibbonButton (ID_FOR_HELP,_T("帮助"), 1, 22);
+	CBCGPRibbonButton* pBtnHelp = new CBCGPRibbonButton (ID_FOR_HELP,_T("帮助"), 1, 26);
 	pPanelSystem->Add(pBtnHelp);
 	CBCGPRibbonButton* pBtnClose = new CBCGPRibbonButton (ID_FOR_EXIT,_T("退出"), 2, 25);
 	pPanelSystem->Add(pBtnClose);

@@ -173,6 +173,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 
 	ON_COMMAND(ID_SEND_BLUEFILE,OnSendBlueToothFile)
 
+	ON_COMMAND(ID_FOR_HELP,OnOpenHelp)
+
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
 
@@ -1823,4 +1825,52 @@ void CTDAppView::OnSendBlueToothFile()
 {
     CDlgBlueTooth dlg;
 	dlg.DoModal();
+}
+
+CString GetExePath()
+{
+	char szFullPath[_MAX_PATH];
+	char szDriver[_MAX_DRIVE];
+	char szDir[_MAX_DIR];
+	char szExePath[_MAX_DIR];
+
+	GetModuleFileName(AfxGetApp()->m_hInstance, szFullPath, MAX_PATH);
+	_splitpath(szFullPath, szDriver, szDir, NULL, NULL);
+	_makepath(szExePath, szDriver, szDir, NULL, NULL);
+
+	CString  exepath= szExePath;
+	return exepath;
+}
+
+void CTDAppView::OnOpenHelp()
+{
+	//获得要启动的程序所在路径
+	CString strCurrentPath = GetExePath();
+	strCurrentPath +="help\\";
+	TCHAR szOldPath[MAX_PATH] = {0};
+	::GetCurrentDirectory(MAX_PATH, szOldPath);
+	//kdk,设置当前文件夹路径，可以执行chm文件
+	bool bsuc =::SetCurrentDirectory(strCurrentPath);
+
+	CString strExeName ="help.doc";
+	UINT flag =(UINT)ShellExecute(NULL,"open",strExeName,NULL,NULL,SW_NORMAL);
+	if (flag <= 31)
+	{
+		switch (flag)
+		{
+	
+		case ERROR_BAD_FORMAT:
+			MessageBox("可执行文件已经损坏","提示");
+			break;
+		case ERROR_FILE_NOT_FOUND:
+			MessageBox("没有找到可执行的文件","提示");
+			break;
+		case ERROR_PATH_NOT_FOUND:
+			MessageBox("指定的执行文件路径没有找到","提示");
+			break;
+		default:
+			break;
+		}
+	}
+	::SetCurrentDirectory(szOldPath);
 }

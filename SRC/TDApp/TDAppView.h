@@ -202,6 +202,9 @@ public:
 
 	afx_msg void OnSendBlueToothFile();
 
+	//´ò¿ª°ïÖú
+	afx_msg void OnOpenHelp();
+
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
 	void LayerDelEvent(Carto::ILayerPtr pLayer);
