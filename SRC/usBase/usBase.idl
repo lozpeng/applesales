@@ -1,0 +1,18 @@
+// usBase.idl : usBase 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(usBase.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(9ECBBD3E-AC42-4A91-80B0-278DBFB072F8),
+	version(1.0),
+	helpstring("usBase 1.0 类型库")
+]
+library usBaseLib
+{
+	importlib("stdole2.tlb");
+};

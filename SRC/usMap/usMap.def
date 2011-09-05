@@ -1,0 +1,9 @@
+; usMap.def : 定义模块参数。
+
+LIBRARY      "usMap.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

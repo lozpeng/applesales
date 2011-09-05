@@ -1,0 +1,18 @@
+// usGeometry.idl : usGeometry 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(usGeometry.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(A9A0E451-288E-4D67-B329-55A887B99E18),
+	version(1.0),
+	helpstring("usGeometry 1.0 类型库")
+]
+library usGeometryLib
+{
+	importlib("stdole2.tlb");
+};

@@ -1,0 +1,18 @@
+// usDataEngine.idl : usDataEngine 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(usDataEngine.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(6B06ECD1-168E-4A91-9F7C-2D922971B869),
+	version(1.0),
+	helpstring("usDataEngine 1.0 类型库")
+]
+library usDataEngineLib
+{
+	importlib("stdole2.tlb");
+};

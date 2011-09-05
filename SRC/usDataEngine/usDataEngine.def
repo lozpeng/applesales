@@ -1,0 +1,9 @@
+; usDataEngine.def : 定义模块参数。
+
+LIBRARY      "usDataEngine.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

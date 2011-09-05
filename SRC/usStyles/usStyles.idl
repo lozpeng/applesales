@@ -1,0 +1,18 @@
+// usStyles.idl : usStyles 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(usStyles.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(97CC20CB-00D3-4BC3-89B5-2254CBDE6236),
+	version(1.0),
+	helpstring("usStyles 1.0 类型库")
+]
+library usStylesLib
+{
+	importlib("stdole2.tlb");
+};
