@@ -1,0 +1,18 @@
+// usLayout.idl : usLayout 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(usLayout.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(99A29765-5BB2-4F8C-8D3E-BE5DFC1CE1FC),
+	version(1.0),
+	helpstring("usLayout 1.0 类型库")
+]
+library usLayoutLib
+{
+	importlib("stdole2.tlb");
+};

@@ -91,6 +91,60 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlueToothServer", "SRC\Blue
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UniSpatialCore", "UniSpatialCore", "{31152ACA-5040-4A6A-AC60-BE909B25AA03}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usBase", "SRC\usBase\usBase.vcproj", "{258AB12B-2570-4EA8-859C-13CD573BD2B9}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usGeometry", "SRC\usGeometry\usGeometry.vcproj", "{913C4903-1701-448E-B437-115F7D04967C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usDataEngine", "SRC\usDataEngine\usDataEngine.vcproj", "{FFBD98EF-7884-4DB5-8F9F-A69FC18BB60B}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usStyles", "SRC\usStyles\usStyles.vcproj", "{9F59E56F-01B4-4730-9F3C-0902AAB1D51D}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usMap", "SRC\usMap\usMap.vcproj", "{9DD0EEA7-F3A1-4594-AC86-E4729AA7CA1E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usLayout", "SRC\usLayout\usLayout.vcproj", "{F2C8D9EE-BA69-4096-9268-B7128EAFF4B6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usMapControl", "SRC\usMapControl\usMapControl.vcproj", "{795509AF-EC8C-4657-AC95-CB7128D2333E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "usLayoutControl", "SRC\usLayoutControl\usLayoutControl.vcproj", "{B4D752B7-E91B-4390-9092-E92A70EE1997}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -157,8 +211,50 @@ Global
 		{047F0BF1-9627-4E13-BBE3-AABDDBC654D1}.Debug|Win32.Build.0 = Debug|Win32
 		{047F0BF1-9627-4E13-BBE3-AABDDBC654D1}.Release|Win32.ActiveCfg = Release|Win32
 		{047F0BF1-9627-4E13-BBE3-AABDDBC654D1}.Release|Win32.Build.0 = Release|Win32
+		{258AB12B-2570-4EA8-859C-13CD573BD2B9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{258AB12B-2570-4EA8-859C-13CD573BD2B9}.Debug|Win32.Build.0 = Debug|Win32
+		{258AB12B-2570-4EA8-859C-13CD573BD2B9}.Release|Win32.ActiveCfg = Release|Win32
+		{258AB12B-2570-4EA8-859C-13CD573BD2B9}.Release|Win32.Build.0 = Release|Win32
+		{913C4903-1701-448E-B437-115F7D04967C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{913C4903-1701-448E-B437-115F7D04967C}.Debug|Win32.Build.0 = Debug|Win32
+		{913C4903-1701-448E-B437-115F7D04967C}.Release|Win32.ActiveCfg = Release|Win32
+		{913C4903-1701-448E-B437-115F7D04967C}.Release|Win32.Build.0 = Release|Win32
+		{FFBD98EF-7884-4DB5-8F9F-A69FC18BB60B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FFBD98EF-7884-4DB5-8F9F-A69FC18BB60B}.Debug|Win32.Build.0 = Debug|Win32
+		{FFBD98EF-7884-4DB5-8F9F-A69FC18BB60B}.Release|Win32.ActiveCfg = Release|Win32
+		{FFBD98EF-7884-4DB5-8F9F-A69FC18BB60B}.Release|Win32.Build.0 = Release|Win32
+		{9F59E56F-01B4-4730-9F3C-0902AAB1D51D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9F59E56F-01B4-4730-9F3C-0902AAB1D51D}.Debug|Win32.Build.0 = Debug|Win32
+		{9F59E56F-01B4-4730-9F3C-0902AAB1D51D}.Release|Win32.ActiveCfg = Release|Win32
+		{9F59E56F-01B4-4730-9F3C-0902AAB1D51D}.Release|Win32.Build.0 = Release|Win32
+		{9DD0EEA7-F3A1-4594-AC86-E4729AA7CA1E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9DD0EEA7-F3A1-4594-AC86-E4729AA7CA1E}.Debug|Win32.Build.0 = Debug|Win32
+		{9DD0EEA7-F3A1-4594-AC86-E4729AA7CA1E}.Release|Win32.ActiveCfg = Release|Win32
+		{9DD0EEA7-F3A1-4594-AC86-E4729AA7CA1E}.Release|Win32.Build.0 = Release|Win32
+		{F2C8D9EE-BA69-4096-9268-B7128EAFF4B6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F2C8D9EE-BA69-4096-9268-B7128EAFF4B6}.Debug|Win32.Build.0 = Debug|Win32
+		{F2C8D9EE-BA69-4096-9268-B7128EAFF4B6}.Release|Win32.ActiveCfg = Release|Win32
+		{F2C8D9EE-BA69-4096-9268-B7128EAFF4B6}.Release|Win32.Build.0 = Release|Win32
+		{795509AF-EC8C-4657-AC95-CB7128D2333E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{795509AF-EC8C-4657-AC95-CB7128D2333E}.Debug|Win32.Build.0 = Debug|Win32
+		{795509AF-EC8C-4657-AC95-CB7128D2333E}.Release|Win32.ActiveCfg = Release|Win32
+		{795509AF-EC8C-4657-AC95-CB7128D2333E}.Release|Win32.Build.0 = Release|Win32
+		{B4D752B7-E91B-4390-9092-E92A70EE1997}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B4D752B7-E91B-4390-9092-E92A70EE1997}.Debug|Win32.Build.0 = Debug|Win32
+		{B4D752B7-E91B-4390-9092-E92A70EE1997}.Release|Win32.ActiveCfg = Release|Win32
+		{B4D752B7-E91B-4390-9092-E92A70EE1997}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{258AB12B-2570-4EA8-859C-13CD573BD2B9} = {31152ACA-5040-4A6A-AC60-BE909B25AA03}
+		{913C4903-1701-448E-B437-115F7D04967C} = {31152ACA-5040-4A6A-AC60-BE909B25AA03}
+		{FFBD98EF-7884-4DB5-8F9F-A69FC18BB60B} = {31152ACA-5040-4A6A-AC60-BE909B25AA03}
+		{9F59E56F-01B4-4730-9F3C-0902AAB1D51D} = {31152ACA-5040-4A6A-AC60-BE909B25AA03}
+		{9DD0EEA7-F3A1-4594-AC86-E4729AA7CA1E} = {31152ACA-5040-4A6A-AC60-BE909B25AA03}
+		{F2C8D9EE-BA69-4096-9268-B7128EAFF4B6} = {31152ACA-5040-4A6A-AC60-BE909B25AA03}
+		{795509AF-EC8C-4657-AC95-CB7128D2333E} = {31152ACA-5040-4A6A-AC60-BE909B25AA03}
+		{B4D752B7-E91B-4390-9092-E92A70EE1997} = {31152ACA-5040-4A6A-AC60-BE909B25AA03}
 	EndGlobalSection
 EndGlobal

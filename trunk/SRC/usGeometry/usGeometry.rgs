@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'usGeometry'
+		'usGeometry.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

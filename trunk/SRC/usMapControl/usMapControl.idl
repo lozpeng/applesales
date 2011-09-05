@@ -1,0 +1,52 @@
+// usMapControl.idl : ActiveX 控件项目的类型库源。
+
+// 此文件将由 MIDL 编译器工具处理以
+// 产生类型库(usMapControl.tlb)，该类型库将成为
+// usMapControl.ocx 中的资源。
+
+#include <olectl.h>
+#include <idispids.h>
+
+[ uuid(E2C24107-110E-4076-9B00-859C576463B4), version(1.0),
+  helpfile("usMapControl.hlp"),
+  helpstring("usMapControl ActiveX 控件模块"),
+  control ]
+library usMapControlLib
+{
+	importlib(STDOLE_TLB);
+
+	//  CusMapCtrl 的主调度接口
+
+	[ uuid(68B41220-C2AB-44BE-ACB7-9D7211135B56),
+	  helpstring("usMapControl 控件 的调度接口")]
+	dispinterface _DusMapControl
+	{
+		properties:
+		methods:
+
+			[id(DISPID_ABOUTBOX)] void AboutBox();
+	};
+
+	//  CusMapCtrl 的事件调度接口
+
+	[ uuid(0C1D0682-3FE2-4567-B481-982D6C49ED63),
+	  helpstring("usMapControl 控件 的事件接口") ]
+	dispinterface _DusMapControlEvents
+	{
+		properties:
+			//  事件接口没有任何属性
+
+		methods:
+	};
+
+	//  CusMapCtrl 的类信息
+
+	[ uuid(A9E92766-EA71-429D-B233-80BC20F9D67B),
+	  helpstring("usMapControl 控件"), control ]
+	coclass usMapControl
+	{
+		[default] dispinterface _DusMapControl;
+		[default, source] dispinterface _DusMapControlEvents;
+	};
+
+};

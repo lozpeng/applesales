@@ -1,0 +1,52 @@
+// usLayoutControl.idl : ActiveX 控件项目的类型库源。
+
+// 此文件将由 MIDL 编译器工具处理以
+// 产生类型库(usLayoutControl.tlb)，该类型库将成为
+// usLayoutControl.ocx 中的资源。
+
+#include <olectl.h>
+#include <idispids.h>
+
+[ uuid(0118B851-9465-48C9-BB8C-9B9BA63D2845), version(1.0),
+  helpfile("usLayoutControl.hlp"),
+  helpstring("usLayoutControl ActiveX 控件模块"),
+  control ]
+library usLayoutControlLib
+{
+	importlib(STDOLE_TLB);
+
+	//  CusLayoutCtrl 的主调度接口
+
+	[ uuid(2A2508B5-E59A-40B5-8C23-909C2F8F65AF),
+	  helpstring("usLayoutControl Control 的调度接口")]
+	dispinterface _DusLayoutControl
+	{
+		properties:
+		methods:
+
+			[id(DISPID_ABOUTBOX)] void AboutBox();
+	};
+
+	//  CusLayoutCtrl 的事件调度接口
+
+	[ uuid(5EF20983-2A99-49E8-B5C7-F7DECFD1781A),
+	  helpstring("usLayoutControl Control 的事件接口") ]
+	dispinterface _DusLayoutControlEvents
+	{
+		properties:
+			//  事件接口没有任何属性
+
+		methods:
+	};
+
+	//  CusLayoutCtrl 的类信息
+
+	[ uuid(6729DE6C-B113-441E-9CC1-C6760AA501E6),
+	  helpstring("usLayoutControl Control"), control ]
+	coclass usLayoutControl
+	{
+		[default] dispinterface _DusLayoutControl;
+		[default, source] dispinterface _DusLayoutControlEvents;
+	};
+
+};
