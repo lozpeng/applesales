@@ -559,12 +559,12 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	pPanelAuto->Add (pBtnWater);
 
 	//蓝牙
-	CBCGPRibbonPanel* pPanelBlueTooth = pCategory->AddPanel (_T("文件发送"));
+	//CBCGPRibbonPanel* pPanelBlueTooth = pCategory->AddPanel (_T("文件发送"));
 	//--------------------------
 	// 蓝牙传送
 	//--------------------------
-	CBCGPRibbonButton* pBtnBlue = new CBCGPRibbonButton (ID_SEND_BLUEFILE, _T("蓝牙传送"), 13, 13);
-	pPanelBlueTooth->Add (pBtnBlue);
+	/*CBCGPRibbonButton* pBtnBlue = new CBCGPRibbonButton (ID_SEND_BLUEFILE, _T("蓝牙传送"), 13, 13);
+	pPanelBlueTooth->Add (pBtnBlue);*/
 }
 
 void CMainFrame::AddTab_ChangeDetect()
