@@ -1729,12 +1729,43 @@ void CTDAppView::LayerDelEvent(Carto::ILayerPtr pLayer)
 
 void CTDAppView::OnMagicStickLayer()
 {
+	Framework::ITool* pTool = NULL;
 
+	pTool=Framework::ITool::FindTool("MagicStickTool");
+
+	Carto::ILayer* pLayer =(Carto::ILayer*)GetMagicLayer()->GetItemData(GetMagicLayer()->GetCurSel());
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonEdit* pEdit = (CBCGPRibbonEdit*)pMainFrm->m_wndRibbonBar.FindByID(ID_MAGICSTICK_TOL);
+	CString strValue =pEdit->GetEditText();
+	int ntol =atoi(strValue);
+	if(ntol<=0 || ntol>100)
+	{
+		ntol =20;
+	}
+	//设置目标图层和阈值
+	Control::CMagicStickTool::SetParam(ntol,pLayer);
+
+	
+	
 }
 
 void CTDAppView::OnMagicTol()
 {
+	Framework::ITool* pTool = NULL;
 
+	pTool=Framework::ITool::FindTool("MagicStickTool");
+
+	Carto::ILayer* pLayer =(Carto::ILayer*)GetMagicLayer()->GetItemData(GetMagicLayer()->GetCurSel());
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonEdit* pEdit = (CBCGPRibbonEdit*)pMainFrm->m_wndRibbonBar.FindByID(ID_MAGICSTICK_TOL);
+	CString strValue =pEdit->GetEditText();
+	int ntol =atoi(strValue);
+	if(ntol<=0 || ntol>100)
+	{
+		ntol =20;
+	}
+	//设置目标图层和阈值
+	Control::CMagicStickTool::SetParam(ntol,pLayer);
 }
 
 CBCGPRibbonComboBox* CTDAppView::GetMagicLayer()
