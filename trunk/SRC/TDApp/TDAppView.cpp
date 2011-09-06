@@ -1786,6 +1786,7 @@ void CTDAppView::OnDeleteLastMagic()
 	{
 		return;
 	}
+	long ldata;
 	for(int i=count-1;i>=0;i--)
 	{
 		pElement =pLayer->GetElement(i);
@@ -1793,7 +1794,8 @@ void CTDAppView::OnDeleteLastMagic()
 		{
 			continue;
 		}
-        if(pElement->GetUserdata()==1)
+        ldata =pElement->GetUserdata();
+        if(ldata==1 ||ldata ==3 ||ldata==2)
 		{
             pLayer->RemoveElement(pElement);
 			//¸üĞÂÊÓÍ¼
