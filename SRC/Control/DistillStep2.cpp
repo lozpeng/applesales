@@ -21,7 +21,7 @@ IMPLEMENT_DYNAMIC(CDistillStep2, CResizablePage)
 CDistillStep2::CDistillStep2(CWnd* pParent /*=NULL*/)
 : CResizablePage(CDistillStep2::IDD)
 , m_dTol(0.2)
-, m_nMinArea(10)
+, m_nMinArea(100)
 , m_shpfile(_T(""))
 {
 	//m_psp.dwFlags &= (~PSP_HASHELP);
@@ -41,7 +41,7 @@ void CDistillStep2::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_TOLL, m_dTol);
 	DDV_MinMaxDouble(pDX, m_dTol, 0, 1);
 	DDX_Text(pDX, IDC_EDIT_MINAREA, m_nMinArea);
-	DDV_MinMaxInt(pDX, m_nMinArea, 1, 100000000);
+	DDV_MinMaxInt(pDX, m_nMinArea, 20, 100000000);
 	DDX_Text(pDX, IDC_EDIT_EXWATERSHP, m_shpfile);
 }
 
@@ -57,9 +57,9 @@ END_MESSAGE_MAP()
 int CDistillStep2::DoWork()
 {
 	UpdateData();
-	if(m_nMinArea<1)
+	if(m_nMinArea<20)
 	{
-        MessageBox("阈值不能小于1","提示",MB_OK);
+        MessageBox("阈值不能小于20","提示",MB_OK);
 		return 1;
 	}
     if(!m_pTargetLyr)

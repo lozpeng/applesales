@@ -248,6 +248,7 @@ void CEdgeTrackTool::LButtonDblClkEvent(UINT nFlags, CPoint point)
 	{
 		Element::CPolylineElement *ppolyElement =new Element::CPolylineElement(*m_pSketch->GetGeometry());
 
+		ppolyElement->SetUserdata(3);
 		//ÉèÖÃ·ûºÅ
 		Display::CSimpleLineSymbolPtr pLineSymbol =ppolyElement->GetSymbol();
 		pLineSymbol->SetLineColor(RGB(0,255,0));
