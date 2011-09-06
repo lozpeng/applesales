@@ -149,6 +149,8 @@ namespace Editor
 
 	void CEditor::StopEdit(bool bSave)
 	{
+		CommitModifyShape();
+
 		Carto::CLayerArray &layers =m_pGeoMap->GetLayers();
 		int num =layers.GetSize();
 		Carto::ILayerPtr pLayer;

@@ -42,6 +42,7 @@ CEditFeatureTool::CEditFeatureTool() : ITool("EditFeatureTool")
 CEditFeatureTool::~CEditFeatureTool()
 {
    ClearMoveGeometrys();
+   m_nStatus = On_None;
 }
 
 void CEditFeatureTool::Initialize(Framework::IUIObject *pTargetControl)
