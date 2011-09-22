@@ -205,6 +205,8 @@ public:
 	//´ò¿ª°ïÖú
 	afx_msg void OnOpenHelp();
 
+	afx_msg void OnDelAll();
+
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
 	void LayerDelEvent(Carto::ILayerPtr pLayer);

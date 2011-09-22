@@ -479,6 +479,13 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	CBCGPRibbonButton* pBtnSelected = new CBCGPRibbonButton(ID_DRAW_SELECT, _T("选择"), -1, 2);
 	pPanelLabel->Add (pBtnSelected);
+
+	//--------------------------
+	// 删除全部:
+	//--------------------------
+	CBCGPRibbonButton* pBtnDelAll = new CBCGPRibbonButton(ID_DEL_ALL, _T("删除全部"), -1, 14);
+	pPanelLabel->Add (pBtnDelAll);
+
 	//--------------------------
 	// 矢量要素:
 	//--------------------------
