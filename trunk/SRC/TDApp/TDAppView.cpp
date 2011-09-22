@@ -94,6 +94,8 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 
 	ON_COMMAND(ID_DRAW_SELECT, OnDrawSelect)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_SELECT, OnUpdateDrawSelect)
+    
+	ON_COMMAND(ID_DEL_ALL, OnDelAll)
 
 	ON_COMMAND(ID_DRAW_RECT, OnDrawRect)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_RECT, OnUpdateDrawRect)
@@ -1906,4 +1908,21 @@ void CTDAppView::OnOpenHelp()
 		}
 	}
 	::SetCurrentDirectory(szOldPath);
+}
+
+void CTDAppView::OnDelAll()
+{
+	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+
+	if(!pMap)
+	{
+		return;
+	}
+	Carto::CGraphicLayerPtr pLayer =pMap->GetGraphicLayer();
+	
+	pLayer->UnselectAllElements();
+	pLayer->RemoveAllElements();
+	//¸üĞÂÊÓÍ¼
+	m_MapCtrl.UpdateControl(drawAll);
+	
 }
