@@ -25,6 +25,9 @@ library usMapControlLib
 		methods:
 
 			[id(DISPID_ABOUTBOX)] void AboutBox();
+			
+			[id(1), helpstring("方法AddShpfile")] void AddShpfile(BSTR filename);
+			[id(2), helpstring("方法Refresh")] void Refresh(void);
 	};
 
 	//  CusMapCtrl 的事件调度接口
