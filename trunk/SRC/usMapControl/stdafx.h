@@ -51,3 +51,14 @@
 
 #endif // _WIN64
 
+#include "SystemDefine.h"
+#include "ISerialization.h"
+#include "GeodatabaseDefine.h"
+#include "DisplayDef.h"
+#include "DisplayHeader.h"
+#include "CartoDefine.h"
+#include "CartoHeader.h"
+#include "FrameworkDefine.h"
+#include "Geometry.h"
+#include "DSFileDefine.h"
+#include "DSRasterDefine.h"
