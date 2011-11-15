@@ -1,5 +1,5 @@
 #pragma once
-
+#include "InternalControl.h"
 // usMapControlCtrl.h : CusMapCtrl ActiveX 控件类的声明。
 
 
@@ -42,6 +42,21 @@ protected:
 // 调度和事件 ID
 public:
 	enum {
+		dispidRefresh = 2L,
+		dispidAddShpfile = 1L
+
 	};
+protected:
+	
+
+private:
+	CInternalControl m_MapControl;
+public:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnPaint();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+protected:
+	void AddShpfile(LPCTSTR filename);
+	void Refresh(void);
 };
 

@@ -4,7 +4,12 @@
 #include "usMapControl.h"
 #include "usMapControlCtrl.h"
 #include "usMapControlPropPage.h"
-
+#include "ShapefileWorkspaceFactory.h"
+#include "ShapefileWorkspace.h"
+#include "ShapefileFeatureClass.h"
+#include "FeatureLayer.h"
+#include "RasterLayer.h"
+#include "RasterWSFactory.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -19,6 +24,9 @@ IMPLEMENT_DYNCREATE(CusMapCtrl, COleControl)
 
 BEGIN_MESSAGE_MAP(CusMapCtrl, COleControl)
 	ON_OLEVERB(AFX_IDS_VERB_PROPERTIES, OnProperties)
+	ON_WM_CREATE()
+	ON_WM_PAINT()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
@@ -27,6 +35,8 @@ END_MESSAGE_MAP()
 
 BEGIN_DISPATCH_MAP(CusMapCtrl, COleControl)
 	DISP_FUNCTION_ID(CusMapCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
+	DISP_FUNCTION_ID(CusMapCtrl, "AddShpfile", dispidAddShpfile, AddShpfile, VT_EMPTY, VTS_BSTR)
+	DISP_FUNCTION_ID(CusMapCtrl, "Refresh", dispidRefresh, Refresh, VT_EMPTY, VTS_NONE)
 END_DISPATCH_MAP()
 
 
@@ -117,6 +127,9 @@ CusMapCtrl::CusMapCtrl()
 {
 	InitializeIIDs(&IID_DusMapControl, &IID_DusMapControlEvents);
 	// TODO: 在此初始化控件的实例数据。
+	m_MapControl.CreateAss("USMAPCONTROL");
+
+	m_MapControl.SetAutoDetroy(true);
 }
 
 
@@ -139,8 +152,7 @@ void CusMapCtrl::OnDraw(
 		return;
 
 	// TODO: 用您自己的绘图代码替换下面的代码。
-	pdc->FillRect(rcBounds, CBrush::FromHandle((HBRUSH)GetStockObject(WHITE_BRUSH)));
-	pdc->Ellipse(rcBounds);
+	
 }
 
 
@@ -179,3 +191,95 @@ void CusMapCtrl::AboutBox()
 
 
 // CusMapCtrl 消息处理程序
+
+
+
+int CusMapCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (COleControl::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	//内部地图控件创建
+	m_MapControl.Create(this);
+
+	return 0;
+}
+
+void CusMapCtrl::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+	// TODO: 在此处添加消息处理程序代码
+	// 不为绘图消息调用 COleControl::OnPaint()
+
+	CRect rect;
+	GetClientRect(rect);
+	Carto::CMapPtr pGeoMap =m_MapControl.GetMap();
+	if(pGeoMap)
+	{
+
+		::BitBlt(m_MapControl.GetClientDC(),0,0,rect.Width(),rect.Height(),m_MapControl.GetMemDC(),0,0,SRCCOPY);
+	}
+	else
+	{
+		//绘制背景
+		HBRUSH hbrush = ::CreateSolidBrush( RGB(255,255,255));
+
+		::FillRect(m_MapControl.GetClientDC() , &rect , hbrush );
+
+		::DeleteObject( hbrush );
+	}
+
+}
+
+void CusMapCtrl::OnSize(UINT nType, int cx, int cy)
+{
+	COleControl::OnSize(nType, cx, cy);
+
+	m_MapControl.ControlResize(nType,cx,cy);
+}
+
+void CusMapCtrl::AddShpfile(LPCTSTR filename)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	_bstr_t  csDataSourceTmp =filename;
+
+	CString csThemeName =csDataSourceTmp;
+
+	csThemeName = csThemeName.Mid (csThemeName.ReverseFind ('\\') + 1);
+	csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
+
+	Geodatabase::IWorkspace *pWorkspace =CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(csDataSourceTmp);
+
+	if(!pWorkspace)
+	{
+		MessageBox(_T("打开数据失败！"),_T("提示"),MB_OK);
+		return ;
+	}
+	Geodatabase::IFeatureClassPtr pFeatureClass =pWorkspace->OpenFeatureClass(csDataSourceTmp);
+
+	if(!pFeatureClass)
+	{
+		MessageBox(_T("打开数据失败！"),_T("提示"),MB_OK);
+		return ;
+	}
+
+	Carto::CMapPtr pGeoMap =m_MapControl.GetMap();
+	if(pGeoMap->AddNewLayer(pFeatureClass))
+	{
+		Carto::CLayerArray &layers =pGeoMap->GetLayers();
+		Carto::ILayerPtr pLayer =layers.GetAt(layers.GetSize()-1);
+		//设置图层名称
+		pLayer->SetName(std::string(_bstr_t(csThemeName)));
+	}
+
+
+	Refresh();
+}
+
+void CusMapCtrl::Refresh(void)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	m_MapControl.UpdateControl(drawAll);
+}
