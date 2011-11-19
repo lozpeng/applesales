@@ -5,7 +5,7 @@
 
 // CusMapCtrl : 有关实现的信息，请参阅 usMapControlCtrl.cpp。
 
-class CusMapCtrl : public COleControl
+class CusMapCtrl : public COleControl,public Framework::IMapCtrl
 {
 	DECLARE_DYNCREATE(CusMapCtrl)
 
@@ -49,8 +49,7 @@ public:
 protected:
 	
 
-private:
-	CInternalControl m_MapControl;
+
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnPaint();
@@ -58,5 +57,8 @@ public:
 protected:
 	void AddShpfile(LPCTSTR filename);
 	void Refresh(void);
+
+private:
+	//CInternalControl m_MapControl;
 };
 
