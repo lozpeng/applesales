@@ -127,9 +127,9 @@ CusMapCtrl::CusMapCtrl()
 {
 	InitializeIIDs(&IID_DusMapControl, &IID_DusMapControlEvents);
 	// TODO: 在此初始化控件的实例数据。
-	m_MapControl.CreateAss("USMAPCONTROL");
+	CreateAss("USMAPCONTROL");
 
-	m_MapControl.SetAutoDetroy(true);
+	SetAutoDetroy(true);
 }
 
 
@@ -200,7 +200,18 @@ int CusMapCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	//内部地图控件创建
-	m_MapControl.Create(this);
+	m_hClientDC = ::GetDC(this->GetSafeHwnd());
+	m_hMemDC = ::CreateCompatibleDC(m_hClientDC);
+
+	m_hCtrlWnd = this->GetSafeHwnd();
+
+	//创建一个新地图
+	Carto::CMapPtr ptrMap = new Carto::CMap();
+
+
+	ptrMap->SetName("Map--1");
+
+	Framework::IMapCtrl::SetMap(ptrMap);
 
 	return 0;
 }
@@ -213,18 +224,18 @@ void CusMapCtrl::OnPaint()
 
 	CRect rect;
 	GetClientRect(rect);
-	Carto::CMapPtr pGeoMap =m_MapControl.GetMap();
+	Carto::CMapPtr pGeoMap =GetMap();
 	if(pGeoMap)
 	{
 
-		::BitBlt(m_MapControl.GetClientDC(),0,0,rect.Width(),rect.Height(),m_MapControl.GetMemDC(),0,0,SRCCOPY);
+		::BitBlt(GetClientDC(),0,0,rect.Width(),rect.Height(),GetMemDC(),0,0,SRCCOPY);
 	}
 	else
 	{
 		//绘制背景
 		HBRUSH hbrush = ::CreateSolidBrush( RGB(255,255,255));
 
-		::FillRect(m_MapControl.GetClientDC() , &rect , hbrush );
+		::FillRect(GetClientDC() , &rect , hbrush );
 
 		::DeleteObject( hbrush );
 	}
@@ -235,7 +246,7 @@ void CusMapCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	COleControl::OnSize(nType, cx, cy);
 
-	m_MapControl.ControlResize(nType,cx,cy);
+	ControlResize(nType,cx,cy);
 }
 
 void CusMapCtrl::AddShpfile(LPCTSTR filename)
@@ -264,7 +275,7 @@ void CusMapCtrl::AddShpfile(LPCTSTR filename)
 		return ;
 	}
 
-	Carto::CMapPtr pGeoMap =m_MapControl.GetMap();
+	Carto::CMapPtr pGeoMap =GetMap();
 	if(pGeoMap->AddNewLayer(pFeatureClass))
 	{
 		Carto::CLayerArray &layers =pGeoMap->GetLayers();
@@ -281,5 +292,5 @@ void CusMapCtrl::Refresh(void)
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 
-	m_MapControl.UpdateControl(drawAll);
+	UpdateControl(drawAll);
 }
