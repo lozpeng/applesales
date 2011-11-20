@@ -6,8 +6,8 @@
 #define SYSTEM_DLL __declspec(dllexport)
 #else
 #define SYSTEM_DLL __declspec(dllimport)
-#pragma comment(lib,"System.lib")
-#pragma message("Automatically linking with System.dll")
+#pragma comment(lib,"BaseSystem.lib")
+#pragma message("Automatically linking with BaseSystem.dll")
 #endif
 
 #include "SmartPtr.h"

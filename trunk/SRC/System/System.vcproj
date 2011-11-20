@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="System"
+	Name="BaseSystem"
 	ProjectGUID="{9C7907B4-A771-4A53-A585-14CF33AC312A}"
 	RootNamespace="System"
 	Keyword="Win32Proj"
