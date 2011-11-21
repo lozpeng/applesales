@@ -74,6 +74,22 @@ ITool* ITool::FindTool(std::string strName)
 	return iter->second;
 }
 
+ITool* ITool::Clone()
+{
+	return NULL;
+}
+
+ITool* ITool::CreateTool(std::string strName)
+{
+	std::map<std::string,ITool*>::iterator iter =gTools.find(strName);
+	if(iter==gTools.end())
+	{
+		return NULL;
+	}
+
+	return iter->second->Clone();
+}
+
 void ITool::RegisterTool(std::string strName, ITool* pTool)
 {
 	gTools[strName] = pTool;

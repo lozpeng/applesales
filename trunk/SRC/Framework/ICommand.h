@@ -27,9 +27,13 @@ namespace Framework
 		//命令初始化
 		virtual void Initialize(IUIObject *pTargetControl);
 
+		virtual ICommand* Clone();
+
 	public:
 		//通过名称得到命令对象
 		static ICommand* FindCommand(std::string strName);
+
+		static ICommand* CreateCommand(std::string strName);
 
 		//注册命令
 		static void RegisterCommand(std::string strName, ICommand* pCommand);

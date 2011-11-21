@@ -41,8 +41,24 @@ namespace Framework
 		gCommands[strName] = pCommand;
 	}
 
+	ICommand* ICommand::CreateCommand(std::string strName)
+	{
+		std::map<std::string,ICommand*>::iterator iter =gCommands.find(strName);
+		if(iter==gCommands.end())
+		{
+			return NULL;
+		}
+
+		return iter->second->Clone();
+	}
+
 	void ICommand::Click()
 	{
 
+	}
+
+	ICommand* ICommand::Clone()
+	{
+		return NULL;
 	}
 }
