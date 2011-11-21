@@ -770,6 +770,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Measure"
+				>
+				<File
+					RelativePath=".\Tool\LineMeasureTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LineMeasureTool.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="UI"
