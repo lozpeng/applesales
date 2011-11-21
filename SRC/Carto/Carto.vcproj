@@ -61,7 +61,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Geometryd.lib gdal_i.lib"
+				AdditionalOptions="/nodefaultlib:System&#x0D;&#x0A;"
+				AdditionalDependencies="Geometryd.lib gdal_i.lib BaseSystem.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
@@ -905,6 +906,18 @@
 				</File>
 				<File
 					RelativePath=".\Element\StdMeasuredGrid.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Measure"
+				>
+				<File
+					RelativePath=".\Element\PolylineMeasureElement.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Element\PolylineMeasureElement.h"
 					>
 				</File>
 			</Filter>
