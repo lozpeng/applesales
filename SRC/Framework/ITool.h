@@ -26,6 +26,8 @@ public:
 	//工具初始化
 	virtual void Initialize(IUIObject *pTargetControl);
 
+	virtual ITool* Clone();
+
 	//消息响应
 	virtual void LButtonDownEvent (UINT nFlags, CPoint point);
 	virtual void LButtonUpEvent (UINT nFlags, CPoint point);
@@ -39,6 +41,8 @@ public:
 public:
 	//通过名称得到工具对象
 	static ITool* FindTool(std::string strName);
+
+	static ITool* CreateTool(std::string strName);
 
 	//注册工具
 	static void RegisterTool(std::string strName, ITool* pTool);
