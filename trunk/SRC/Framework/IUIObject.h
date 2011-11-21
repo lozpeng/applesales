@@ -50,6 +50,9 @@ public :
 	//
 	bool GetAutoDestroy() {return m_bAutoDestroy;}
 	void SetAutoDetroy(bool bAutoDestroy) { m_bAutoDestroy = bAutoDestroy;}
+
+	//ÊÇ·ñÊÇActiveX¿Ø¼þ
+	bool IsActiveX() {return m_bActiveX;}
 public:
 
 	/**
@@ -86,6 +89,8 @@ protected:
 
 	//is AutoDestroy
 	bool m_bAutoDestroy;
+
+	bool m_bActiveX;
 
 };
 

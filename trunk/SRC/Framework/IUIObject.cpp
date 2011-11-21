@@ -20,6 +20,8 @@ static std::map<std::string,IUIObject*>::iterator find_item;
 IUIObject::IUIObject()
 {
 	m_bAutoDestroy = false;
+
+	m_bActiveX =false;
 }
 
 IUIObject::~IUIObject()
