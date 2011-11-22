@@ -25,6 +25,8 @@ public:
 	void MouseMoveEvent (UINT nFlags, CPoint point);
 	void LButtonUpEvent (UINT nFlags, CPoint point);
 
+	virtual Framework::ITool* Clone();
+
 private:
 	CPoint cPt0,cPt1,cPt2;
 
