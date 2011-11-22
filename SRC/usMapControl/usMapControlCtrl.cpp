@@ -10,6 +10,7 @@
 #include "FeatureLayer.h"
 #include "RasterLayer.h"
 #include "RasterWSFactory.h"
+#include "ActivexLoad.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,6 +28,14 @@ BEGIN_MESSAGE_MAP(CusMapCtrl, COleControl)
 	ON_WM_CREATE()
 	ON_WM_PAINT()
 	ON_WM_SIZE()
+	ON_WM_LBUTTONDBLCLK()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
+	ON_WM_MOUSEWHEEL()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_RBUTTONUP()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -37,6 +46,7 @@ BEGIN_DISPATCH_MAP(CusMapCtrl, COleControl)
 	DISP_FUNCTION_ID(CusMapCtrl, "AboutBox", DISPID_ABOUTBOX, AboutBox, VT_EMPTY, VTS_NONE)
 	DISP_FUNCTION_ID(CusMapCtrl, "AddShpfile", dispidAddShpfile, AddShpfile, VT_EMPTY, VTS_BSTR)
 	DISP_FUNCTION_ID(CusMapCtrl, "Refresh", dispidRefresh, Refresh, VT_EMPTY, VTS_NONE)
+	DISP_PROPERTY_EX_ID(CusMapCtrl, "CurTool", dispidCurTool, GetCurTool, SetCurTool, VT_I2)
 END_DISPATCH_MAP()
 
 
@@ -130,6 +140,12 @@ CusMapCtrl::CusMapCtrl()
 	CreateAss("USMAPCONTROL");
 
 	SetAutoDetroy(true);
+
+	m_bActiveX =true;
+
+	m_pCurTool =NULL;
+
+	m_Tooltype =NoneTool;
 }
 
 
@@ -213,6 +229,9 @@ int CusMapCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	Framework::IMapCtrl::SetMap(ptrMap);
 
+	//为了能够加载Control库，所以调用一个没有作用的类
+	Control::CActivexLoad cLoad;
+
 	return 0;
 }
 
@@ -293,4 +312,127 @@ void CusMapCtrl::Refresh(void)
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 
 	UpdateControl(drawAll);
+}
+
+void CusMapCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	if(m_pCurTool)
+	{
+		m_pCurTool->LButtonDblClkEvent(nFlags,point);
+	}
+	__super::OnLButtonDblClk(nFlags, point);
+}
+
+void CusMapCtrl::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	if(m_pCurTool)
+	{
+		m_pCurTool->LButtonDownEvent(nFlags,point);
+	}
+
+	__super::OnLButtonDown(nFlags, point);
+}
+
+void CusMapCtrl::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	if(m_pCurTool)
+	{
+		m_pCurTool->LButtonUpEvent(nFlags,point);
+	}
+
+	__super::OnLButtonUp(nFlags, point);
+}
+
+void CusMapCtrl::OnMouseMove(UINT nFlags, CPoint point)
+{
+	if(m_pCurTool)
+	{
+		m_pCurTool->MouseMoveEvent(nFlags,point);
+	}
+
+	__super::OnMouseMove(nFlags, point);
+}
+
+BOOL CusMapCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	return __super::OnMouseWheel(nFlags, zDelta, pt);
+}
+
+void CusMapCtrl::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	if(m_pCurTool)
+	{
+		m_pCurTool->RButtonDownEvent(nFlags,point);
+	}
+
+	__super::OnRButtonDown(nFlags, point);
+}
+
+void CusMapCtrl::OnRButtonUp(UINT nFlags, CPoint point)
+{
+	
+	__super::OnRButtonUp(nFlags, point);
+}
+
+void CusMapCtrl::OnTimer(UINT_PTR nIDEvent)
+{
+	
+
+	__super::OnTimer(nIDEvent);
+}
+
+usToolType CusMapCtrl::GetCurTool(void)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	
+
+	return m_Tooltype;
+}
+
+void CusMapCtrl::SetCurTool(usToolType newVal)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	m_Tooltype =newVal;
+
+	m_pCurTool =GetTool(newVal);
+
+	if(m_pCurTool)
+	{
+		m_pCurTool->Initialize(dynamic_cast<Framework::IUIObject*>(this));
+	}
+
+	SetModifiedFlag();
+}
+
+Framework::ITool* CusMapCtrl::GetTool(usToolType tooltype)
+{
+	if(NoneTool==tooltype)
+	{
+		return NULL;
+	}
+
+	Framework::ITool *pTool =NULL;
+	switch(tooltype)
+	{
+	case PanTool:
+		pTool =Framework::ITool::CreateTool("MapPan");
+		break;
+	case ZoomInTool:
+		pTool =Framework::ITool::CreateTool("MapZoomin");
+		break;
+	case ZoomOutTool:
+		pTool =Framework::ITool::CreateTool("MapZoomout");
+		break;
+	default:
+		break;
+
+	}
+
+	return pTool;
 }

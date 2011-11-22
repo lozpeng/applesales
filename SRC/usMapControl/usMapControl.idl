@@ -7,6 +7,21 @@
 #include <olectl.h>
 #include <idispids.h>
 
+
+typedef
+[	uuid(6E4F9E00-8B10-46a6-B89B-A65A75010FD8),
+    helpstring("MapControl Tool Type"),
+]
+enum usToolType
+{
+   NoneTool =0,
+   PanTool =1,
+   ZoomInTool =2,
+   ZoomOutTool =3
+  
+}usToolType;
+
+
 [ uuid(E2C24107-110E-4076-9B00-859C576463B4), version(1.0),
   helpfile("usMapControl.hlp"),
   helpstring("usMapControl ActiveX ¿Ø¼þÄ£¿é"),
@@ -22,7 +37,8 @@ library usMapControlLib
 	dispinterface _DusMapControl
 	{
 		properties:
-		methods:
+			[id(3), helpstring("ÊôÐÔ CurTool")] usToolType CurTool;
+	methods:
 
 			[id(DISPID_ABOUTBOX)] void AboutBox();
 			
