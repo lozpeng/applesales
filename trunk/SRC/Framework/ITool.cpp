@@ -92,7 +92,11 @@ ITool* ITool::CreateTool(std::string strName)
 
 void ITool::RegisterTool(std::string strName, ITool* pTool)
 {
-	gTools[strName] = pTool;
+	if(FindTool(strName)==NULL)
+	{
+        gTools[strName] = pTool;
+	}
+	
 }
 
 }
