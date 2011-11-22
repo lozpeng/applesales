@@ -108,10 +108,13 @@ namespace Control
 		{
 
 			m_pMap->GetGraphicLayer()->AddElement(m_pPolyline);
-			m_pMap->GetGraphicLayer()->SelectElement(m_pPolyline);	
+			//m_pMap->GetGraphicLayer()->SelectElement(m_pPolyline);	
 		}
 
+		m_pPolyline->bDrawCloseButton= true;
 		m_pPolyline.reset();
+
+		
 
 				//¸üÐÂ»æÖÆ
 		m_pMapCtrl->UpdateControl((DrawContent)(drawElement));
