@@ -109,4 +109,9 @@ namespace Control
 		ReleaseCapture();
 
 	}
+
+	Framework::ITool* CToolMapPan::Clone()
+	{
+		return new CToolMapPan();
+	}
 }
