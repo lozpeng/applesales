@@ -38,7 +38,11 @@ namespace Framework
 
 	void ICommand::RegisterCommand(std::string strName, ICommand* pCommand)
 	{
-		gCommands[strName] = pCommand;
+		if(FindCommand(strName)==NULL)
+		{
+           gCommands[strName] = pCommand;
+		}
+		
 	}
 
 	ICommand* ICommand::CreateCommand(std::string strName)
