@@ -14,5 +14,25 @@ namespace TestEngine
         {
             InitializeComponent();
         }
+
+        private void AddShp_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            dlg.Filter = "shape files (*.shp)|*.shp|All files (*.*)|*.*";
+
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string filename = dlg.FileName;
+                axusMapControl1.AddShpfile(filename);
+
+            }
+        }
+
+        private void MapPan_Click(object sender, EventArgs e)
+        {
+            axusMapControl1.CurTool = usMapControlLib.usToolType.PanTool;
+        }
     }
 }
