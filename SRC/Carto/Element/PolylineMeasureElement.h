@@ -23,9 +23,13 @@ public:
 
 	void DrawNormal(Display::IDisplayPtr pDisplay);
 
+	bool bDrawCloseButton;
 
 private:
 	void DrawVertixLabel(Display::IDisplayPtr pDisplay);//显示量测值
+	void DrawVertixCircle(Display::IDisplayPtr pDisplay);//显示量测点
+
+	void DrawCloseButton(Display::IDisplayPtr pDisplay);//绘制关闭按钮
 
 };
 
