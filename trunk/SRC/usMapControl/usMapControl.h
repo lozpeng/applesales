@@ -7,7 +7,7 @@
 #endif
 
 #include "resource.h"       // 主符号
-
+#include "usMapControlidl.h"
 
 // CusMapControlApp : 有关实现的信息，请参阅 usMapControl.cpp。
 

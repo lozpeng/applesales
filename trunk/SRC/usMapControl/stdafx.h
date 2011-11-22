@@ -62,3 +62,4 @@
 #include "Geometry.h"
 #include "DSFileDefine.h"
 #include "DSRasterDefine.h"
+#include "ControlDefine.h"
