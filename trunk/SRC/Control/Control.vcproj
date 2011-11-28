@@ -782,6 +782,14 @@
 				Name="Measure"
 				>
 				<File
+					RelativePath=".\Tool\AreaMeasureTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\AreaMeasureTool.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Tool\LineMeasureTool.cpp"
 					>
 				</File>

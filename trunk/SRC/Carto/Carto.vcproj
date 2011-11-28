@@ -913,6 +913,14 @@
 				Name="Measure"
 				>
 				<File
+					RelativePath=".\Element\PolygonMeasureElement.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Element\PolygonMeasureElement.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Element\PolylineMeasureElement.cpp"
 					>
 				</File>
