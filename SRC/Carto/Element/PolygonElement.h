@@ -27,9 +27,9 @@ public:
 	void RemoveVertix(long lIndex);
 	void MoveVertixTo(long lIndex,GEOMETRY::geom::Coordinate coord);
 
+	
 protected:
 	Display::IFillSymbolPtr m_pVertixSymbol;
-
 };
 
 typedef SYSTEM::CSmartPtr<CPolygonElement> CPolygonElementPtr;

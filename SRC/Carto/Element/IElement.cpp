@@ -537,7 +537,7 @@ void IElement::Draw( Display::IDisplayPtr pDisplay)
 		DrawNoEditMode(pDisplay);
 		break;
 	case EEM_ONDRAW:
-		DrawOnDrawMode(pDisplay);
+		this->DrawOnDrawMode(pDisplay);
 		break;
 	case EEM_SELECT:
 		DrawSelectMode(pDisplay);

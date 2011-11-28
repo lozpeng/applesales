@@ -41,7 +41,6 @@ void CPolygonElement::serialization(SYSTEM::IArchive &ar)
 	IFillShapeElement::serialization(ar);
 }
 
-
 void CPolygonElement::AddVertix(GEOMETRY::geom::Coordinate coord)
 {
 	GEOMETRY::geom::Geometry* pGeo = dynamic_cast<GEOMETRY::geom::Polygon*>(m_pGeometry)->GetGeometry(0);
