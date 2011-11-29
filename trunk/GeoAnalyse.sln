@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "SRC\System\System.vcproj", "{9C7907B4-A771-4A53-A585-14CF33AC312A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaseSystem", "SRC\System\System.vcproj", "{9C7907B4-A771-4A53-A585-14CF33AC312A}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -152,6 +152,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "组件示例", "组件示�
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEngine", "SRC\TestEngine\TestEngine.csproj", "{AF5F87AC-40DE-48EB-B2AA-E1F9D9A6E95A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UAVSoft", "SRC\UAVSoft\UAVSoft.vcproj", "{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -407,6 +413,16 @@ Global
 		{AF5F87AC-40DE-48EB-B2AA-E1F9D9A6E95A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AF5F87AC-40DE-48EB-B2AA-E1F9D9A6E95A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AF5F87AC-40DE-48EB-B2AA-E1F9D9A6E95A}.Release|Win32.ActiveCfg = Release|Any CPU
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Debug|Win32.Build.0 = Debug|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Release|Any CPU.ActiveCfg = Release|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Release|Win32.ActiveCfg = Release|Win32
+		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
