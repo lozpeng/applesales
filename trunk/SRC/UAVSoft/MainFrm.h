@@ -51,10 +51,10 @@ protected:
 	afx_msg void OnToolsOptions();
 	afx_msg void OnViewWorkspace();
 	afx_msg void OnUpdateViewWorkspace(CCmdUI* pCmdUI);
-	afx_msg void OnViewWorkspace2();
-	afx_msg void OnUpdateViewWorkspace2(CCmdUI* pCmdUI);
-	afx_msg void OnViewOutput();
-	afx_msg void OnUpdateViewOutput(CCmdUI* pCmdUI);
+	/*afx_msg void OnViewWorkspace2();
+	afx_msg void OnUpdateViewWorkspace2(CCmdUI* pCmdUI);*/
+	/*afx_msg void OnViewOutput();
+	afx_msg void OnUpdateViewOutput(CCmdUI* pCmdUI);*/
 	DECLARE_MESSAGE_MAP()
 
 	BOOL CreateRibbonBar ();

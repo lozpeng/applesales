@@ -22,10 +22,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPFrameWnd)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_2000, ID_VIEW_APPLOOK_WIN7, OnUpdateAppLook)
 	ON_COMMAND(ID_VIEW_WORKSPACE, OnViewWorkspace)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_WORKSPACE, OnUpdateViewWorkspace)
-	ON_COMMAND(ID_VIEW_WORKSPACE2, OnViewWorkspace2)
+	/*ON_COMMAND(ID_VIEW_WORKSPACE2, OnViewWorkspace2)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_WORKSPACE2, OnUpdateViewWorkspace2)
 	ON_COMMAND(ID_VIEW_OUTPUT, OnViewOutput)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_OUTPUT, OnUpdateViewOutput)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_OUTPUT, OnUpdateViewOutput)*/
 	ON_REGISTERED_MESSAGE(BCGM_ON_RIBBON_CUSTOMIZE, OnRibbonCustomize)
 	ON_COMMAND(ID_TOOLS_OPTIONS, OnToolsOptions)
 END_MESSAGE_MAP()
@@ -85,33 +85,33 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndWorkSpace.SetIcon (imagesWorkspace.ExtractIcon (0), FALSE);
 
-	if (!m_wndWorkSpace2.Create (_T("View 2"), this, CRect (0, 0, 200, 200),
-		TRUE, ID_VIEW_WORKSPACE2,
-		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
-	{
-		TRACE0("Failed to create Workspace bar 2\n");
-		return -1;      // fail to create
-	}
+	//if (!m_wndWorkSpace2.Create (_T("View 2"), this, CRect (0, 0, 200, 200),
+	//	TRUE, ID_VIEW_WORKSPACE2,
+	//	WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
+	//{
+	//	TRACE0("Failed to create Workspace bar 2\n");
+	//	return -1;      // fail to create
+	//}
 
-	m_wndWorkSpace2.SetIcon (imagesWorkspace.ExtractIcon (1), FALSE);
+	//m_wndWorkSpace2.SetIcon (imagesWorkspace.ExtractIcon (1), FALSE);
 
 
-	if (!m_wndOutput.Create (_T("Output"), this, CSize (150, 150),
-		TRUE /* Has gripper */, ID_VIEW_OUTPUT,
-		WS_CHILD | WS_VISIBLE | CBRS_BOTTOM))
-	{
-		TRACE0("Failed to create output bar\n");
-		return -1;      // fail to create
-	}
+	//if (!m_wndOutput.Create (_T("Output"), this, CSize (150, 150),
+	//	TRUE /* Has gripper */, ID_VIEW_OUTPUT,
+	//	WS_CHILD | WS_VISIBLE | CBRS_BOTTOM))
+	//{
+	//	TRACE0("Failed to create output bar\n");
+	//	return -1;      // fail to create
+	//}
 
 	m_wndWorkSpace.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndWorkSpace2.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);
+	/*m_wndWorkSpace2.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);*/
 	EnableDocking(CBRS_ALIGN_ANY);
 	EnableAutoHideBars(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndWorkSpace);
-	m_wndWorkSpace2.AttachToTabWnd (&m_wndWorkSpace, BCGP_DM_STANDARD, FALSE, NULL);
-	DockControlBar(&m_wndOutput);
+	//m_wndWorkSpace2.AttachToTabWnd (&m_wndWorkSpace, BCGP_DM_STANDARD, FALSE, NULL);
+	//DockControlBar(&m_wndOutput);
 
 	OnAppLook (m_nAppLook);
 
@@ -489,33 +489,33 @@ void CMainFrame::OnUpdateViewWorkspace(CCmdUI* pCmdUI)
 	pCmdUI->Enable (!GetDockManager ()->IsPrintPreviewValid ());
 }
 
-void CMainFrame::OnViewWorkspace2() 
-{
-	ShowControlBar (&m_wndWorkSpace2,
-					!(m_wndWorkSpace2.IsVisible ()),
-					FALSE, TRUE);
-	RecalcLayout ();
-}
-
-void CMainFrame::OnUpdateViewWorkspace2(CCmdUI* pCmdUI) 
-{
-	pCmdUI->SetCheck (m_wndWorkSpace2.IsVisible ());
-	pCmdUI->Enable (!GetDockManager ()->IsPrintPreviewValid ());
-}
+//void CMainFrame::OnViewWorkspace2() 
+//{
+//	ShowControlBar (&m_wndWorkSpace2,
+//					!(m_wndWorkSpace2.IsVisible ()),
+//					FALSE, TRUE);
+//	RecalcLayout ();
+//}
+//
+//void CMainFrame::OnUpdateViewWorkspace2(CCmdUI* pCmdUI) 
+//{
+//	pCmdUI->SetCheck (m_wndWorkSpace2.IsVisible ());
+//	pCmdUI->Enable (!GetDockManager ()->IsPrintPreviewValid ());
+//}
 
  // WORKSPACEBAR
-void CMainFrame::OnViewOutput() 
-{
-	ShowControlBar (&m_wndOutput,
-					!(m_wndOutput.IsVisible ()),
-					FALSE, TRUE);
-	RecalcLayout ();
-}
-
-void CMainFrame::OnUpdateViewOutput(CCmdUI* pCmdUI) 
-{
-	pCmdUI->SetCheck (m_wndOutput.IsVisible ());
-	pCmdUI->Enable (!GetDockManager ()->IsPrintPreviewValid ());
-}
+//void CMainFrame::OnViewOutput() 
+//{
+//	ShowControlBar (&m_wndOutput,
+//					!(m_wndOutput.IsVisible ()),
+//					FALSE, TRUE);
+//	RecalcLayout ();
+//}
+//
+//void CMainFrame::OnUpdateViewOutput(CCmdUI* pCmdUI) 
+//{
+//	pCmdUI->SetCheck (m_wndOutput.IsVisible ());
+//	pCmdUI->Enable (!GetDockManager ()->IsPrintPreviewValid ());
+//}
  // OUTPUTBAR
  // RIBBON_APP

@@ -52,7 +52,18 @@
 
 #include <BCGCBProInc.h>			// BCGPro Control Bar
 
-
+#include "SystemDefine.h"
+#include "ISerialization.h"
+#include "GeodatabaseDefine.h"
+#include "DisplayDef.h"
+#include "DisplayHeader.h"
+#include "CartoDefine.h"
+#include "CartoHeader.h"
+#include "FrameworkDefine.h"
+#include "Geometry.h"
+#include "ControlDefine.h"
+#include "DSFileDefine.h"
+#include "EditorDef.h"
 
 
 
