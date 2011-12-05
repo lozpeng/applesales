@@ -288,6 +288,26 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath=".\res\DrawMesure.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\earth.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\Editor.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\filelarg.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\filesmall.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\ribbonfilelarge.bmp"
 				>
 			</File>
@@ -333,6 +353,14 @@
 			</File>
 			<File
 				RelativePath=".\res\Workspace.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\Zoombar.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\zoombarsmall.bmp"
 				>
 			</File>
 		</Filter>

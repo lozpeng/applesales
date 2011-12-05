@@ -4,8 +4,9 @@
 
 #pragma once
 
+#include "IDocument.h"
 
-class CUAVSoftDoc : public CDocument
+class CUAVSoftDoc : public CDocument,public Framework::IDocument
 {
 protected: // create from serialization only
 	CUAVSoftDoc();
