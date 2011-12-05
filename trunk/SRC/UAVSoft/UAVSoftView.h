@@ -4,6 +4,10 @@
 
 #pragma once
 
+#include "MapControl.h"
+#include "LayoutControl.h"
+#include <boost/signal.hpp>
+#include <boost/signals/connection.hpp>
 
 class CUAVSoftView : public CView
 {
@@ -41,6 +45,14 @@ protected:
 protected:
 	afx_msg void OnFilePrintPreview();
 	DECLARE_MESSAGE_MAP()
+
+private:
+	CBCGPTabWnd	m_WndTab;
+	CBCGPButton m_wndButton;
+	Control::CMapControl m_MapCtrl;
+public:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 };
 
 #ifndef _DEBUG  // debug version in UAVSoftView.cpp

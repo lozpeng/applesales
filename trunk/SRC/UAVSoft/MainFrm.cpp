@@ -63,10 +63,10 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	// TODO: add your status bar panes here:
-	m_wndStatusBar.AddElement (new CBCGPRibbonStatusBarPane (
+	/*m_wndStatusBar.AddElement (new CBCGPRibbonStatusBarPane (
 		ID_STATUSBAR_PANE1, _T("Pane 1"), TRUE), _T("Pane 1"));
 	m_wndStatusBar.AddExtendedElement (new CBCGPRibbonStatusBarPane (
-		ID_STATUSBAR_PANE2, _T("Pane 2"), TRUE), _T("Pane 2"));
+		ID_STATUSBAR_PANE2, _T("Pane 2"), TRUE), _T("Pane 2"));*/
 
 	// Load control bar icons:
 	CBCGPToolBarImages imagesWorkspace;
@@ -75,7 +75,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	imagesWorkspace.Load (IDB_WORKSPACE);
 	imagesWorkspace.SmoothResize(globalData.GetRibbonImageScale());
 	
-	if (!m_wndWorkSpace.Create (_T("View  1"), this, CRect (0, 0, 200, 200),
+	if (!m_wndWorkSpace.Create (_T("图层管理"), this, CRect (0, 0, 200, 200),
 		TRUE, ID_VIEW_WORKSPACE,
 		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
 	{
@@ -294,125 +294,334 @@ BOOL CMainFrame::CreateRibbonBar ()
 		return FALSE;
 	}
 
-	// Load panel images:
-	m_PanelImages.SetImageSize (CSize (16, 16));
-	m_PanelImages.Load (IDB_RIBBON_ICONS);
+	m_PanelImages.SetImageSize (CSize (24, 24));
+	if (!m_PanelImages.Load (IDB_ZOOMBAR))
+	{
+		TRACE0("Failed to load panel images\n");
+		return -1;
+	}
+	//主菜单
+	AddMainCategory();
+	//地图浏览
+	AddTab_MapControl();
+	//标绘量测
+	AddTab_Mesure();
+	//地理要素提取
+	AddTab_GeoInfoExtract();
+	//矢量编辑
+	AddTab_Editor();
+	//制图
+	AddTab_Print();
+	//-----------------------------------
+	// Add quick access toolbar commands:
+	//-----------------------------------
+	CBCGPRibbonQATDefaultState qatState;
+	qatState.AddCommand (ID_MAP_ZOOM_IN);
+	qatState.AddCommand (ID_ZOOM_OUT);
+	qatState.AddCommand (ID_MAP_PAN);
+	qatState.AddCommand (ID_MAP_FULLVIEW);
+	qatState.AddCommand (ID_PRE_EXTENT);
+	qatState.AddCommand (ID_NEXT_EXTENT);
+	m_wndRibbonBar.SetQuickAccessDefaultState (qatState);
 
-	// Init main button:
-	m_MainButton.SetImage (IDB_RIBBON_MAIN);
-	m_MainButton.SetToolTipText (_T("File"));
-	m_MainButton.SetText (_T("\nf"));
+	return TRUE;
+}
+
+
+void CMainFrame::AddMainCategory()
+{
+	m_MainButton.SetImage (IDB_MAIN);
+	m_MainButton.SetToolTipText (_T("文件"));
+	m_MainButton.SetDescription (_T("单击此处打开、保存地图文件"));
+	m_MainButton.SetID (ID_MAIN_BUTTON);
 
 	m_wndRibbonBar.SetMainButton (&m_MainButton, CSize (45, 45));
 
 	CBCGPRibbonMainPanel* pMainPanel = m_wndRibbonBar.AddMainCategory (
-		_T("File"), IDB_RIBBON_FILESMALL, IDB_RIBBON_FILELARGE);
+		_T("文件"), IDB_FILESMALL, IDB_FILELARGE);
 
-	pMainPanel->Add (new CBCGPRibbonButton (ID_FILE_NEW, _T("&New"), 0, 0));
-	pMainPanel->Add (new CBCGPRibbonButton (ID_FILE_OPEN, _T("&Open..."), 1, 1));
-
-	pMainPanel->Add (new CBCGPRibbonButton (ID_FILE_SAVE, _T("&Save"), 2, 2));
-
-	pMainPanel->Add (new CBCGPRibbonButton (ID_FILE_SAVE_AS, _T("Save &As..."), 3, 3));
-
-	CBCGPRibbonButton* pBtnPrint = new CBCGPRibbonButton (ID_FILE_PRINT, _T("&Print"), 4, 4);
-
-	pBtnPrint->AddSubItem (new CBCGPRibbonLabel (_T("Preview and print the document")));
-	pBtnPrint->AddSubItem (new CBCGPRibbonButton (ID_FILE_PRINT, _T("&Print"), 4, 4, TRUE));
-	pBtnPrint->AddSubItem (new CBCGPRibbonButton (ID_FILE_PRINT_DIRECT, _T("&Quick Print"), 7, 7, TRUE));
-	pBtnPrint->AddSubItem (new CBCGPRibbonButton (ID_FILE_PRINT_PREVIEW, _T("Print Pre&view"), 6, 6, TRUE));
-
-	pBtnPrint->SetKeys (_T("p"), _T("w"));
-
-	pMainPanel->Add (pBtnPrint);
-
-	pMainPanel->AddRecentFilesList (_T("Recent Documents"));
-
-	pMainPanel->AddToBottom (new CBCGPRibbonMainPanelButton (ID_TOOLS_OPTIONS, _T("Opt&ions"), 9));
-	pMainPanel->AddToBottom (new CBCGPRibbonMainPanelButton (ID_APP_EXIT, _T("E&xit"), 8));
-
-	// Add "Home" category with "Clipboard" panel:
-	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
-		_T("&Home"),
-		IDB_RIBBON_HOMESMALL,
-		IDB_RIBBON_HOMELARGE);
-
-	// Create "Clipboard" panel:
-	CBCGPRibbonPanel* pPanelClipboard = pCategory->AddPanel (
-		_T("Clipboard"), 
-		m_PanelImages.ExtractIcon (1));
-
-	CBCGPRibbonButton* pBtnPaste = new CBCGPRibbonButton (ID_EDIT_PASTE, _T("Paste\nv"), 0, 0);
-	pBtnPaste->SetMenu (IDR_PASTE_MENU, TRUE);
-	pPanelClipboard->Add (pBtnPaste);
-
-	pPanelClipboard->Add (new CBCGPRibbonButton (ID_EDIT_CUT, _T("Cut\nx"), 1));
-	pPanelClipboard->Add (new CBCGPRibbonButton (ID_EDIT_COPY, _T("Copy\nc"), 2));
-	pPanelClipboard->Add (new CBCGPRibbonButton (ID_EDIT_CLEAR, _T("Erase\nr"), 3));
-
-	pPanelClipboard->SetKeys (_T("zc"));
-
-	// Create "Window" panel:
-	CBCGPRibbonPanel* pPanelWindow = pCategory->AddPanel (
-		_T("Window"), 
-		m_PanelImages.ExtractIcon (2));
-
-	pPanelWindow->Add (new CBCGPRibbonCheckBox (ID_VIEW_WORKSPACE, _T("View 1\n1")));
-	pPanelWindow->Add (new CBCGPRibbonCheckBox (ID_VIEW_WORKSPACE2, _T("View 2\n2")));
-
-	pPanelWindow->Add (new CBCGPRibbonCheckBox (ID_VIEW_OUTPUT, _T("Output\no")));
-
-
-
-	pPanelWindow->SetKeys (_T("zw"));
-
-	// Create "<TODO>" panel:
-	CBCGPRibbonPanel* pPanelTODO = pCategory->AddPanel (
-		_T("<TODO>"));
-	pPanelTODO->Add (new CBCGPRibbonLabel (_T("TODO: add elements here")));
-
-	pPanelTODO->SetKeys (_T("zt"));
-
-	// Add some hidden (non-ribbon) elements:
-	CBCGPRibbonUndoButton* pUndo = new CBCGPRibbonUndoButton (ID_EDIT_UNDO, _T("Undo"), 4);
-
-	pUndo->AddUndoAction (_T("Undo Item 1"));
-	pUndo->AddUndoAction (_T("Undo Item 2"));
-	pUndo->AddUndoAction (_T("Undo Item 3"));
-	pUndo->AddUndoAction (_T("Undo Item 4"));
-	pUndo->AddUndoAction (_T("Undo Item 5"));
-
-	pCategory->AddHidden (pUndo);
-
-	// Add "<TODO>" category with "Clipboard" panel:
-	CBCGPRibbonCategory* pTODOCategory = m_wndRibbonBar.AddCategory (
-		_T("&TODO"), 
-		0 /* TODO: ID-category small images */, 
-		0 /* TODO: ID-category large images */);
-
-	// Add quick access toolbar commands:
-	CBCGPRibbonQATDefaultState qatState;
-
-	qatState.AddCommand (ID_FILE_NEW, FALSE);
-	qatState.AddCommand (ID_FILE_OPEN, FALSE);
-	qatState.AddCommand (ID_FILE_SAVE);
-	qatState.AddCommand (ID_FILE_PRINT_DIRECT);
-	qatState.AddCommand (ID_FILE_PRINT_PREVIEW, FALSE);
-	qatState.AddCommand (ID_EDIT_UNDO);
-
-	m_wndRibbonBar.SetQuickAccessDefaultState (qatState);
-
-	// Add "Style" button to the right of tabs:
-	CBCGPRibbonButton* pStyleButton = new CBCGPRibbonButton (-1, _T("Style\ns"), -1, -1);
-	pStyleButton->SetMenu (IDR_THEME_MENU, TRUE /* Right align */);
-
-	m_wndRibbonBar.AddToTabs (pStyleButton);
-
-	// Add "About" button to the right of tabs:
-	m_wndRibbonBar.AddToTabs (new CBCGPRibbonButton (ID_APP_ABOUT, _T("\na"), m_PanelImages.ExtractIcon (0)));
-
-	return TRUE;
+	pMainPanel->Add (new CBCGPRibbonButton (ID_NEWMAPCLASS, _T("新建地图"), 0, 0));
+	pMainPanel->Add (new CBCGPRibbonButton (ID_OPENMAPCLASS, _T("打开地图"), 1, 1));
+	pMainPanel->Add (new CBCGPRibbonButton (ID_SAVEMAPCLASS, _T("保存地图"), 2, 2));
+	//pMainPanel->Add (new CBCGPRibbonButton (ID_SAVEASMAPCLASS, _T("地图另存为..."), 3, 3));
 }
+
+//添加地图显示菜单
+void CMainFrame::AddTab_MapControl()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("开始"),
+		IDB_ZOOMBARSMALL,
+		IDB_ZOOMBAR);
+
+	//创建工程管理
+	CBCGPRibbonPanel* pPanelProject = pCategory->AddPanel (
+		_T("工程"));
+	CBCGPRibbonButton* pBtnNewXTD = new CBCGPRibbonButton (ID_NEWMAPCLASS, _T("新建"), 11, 11);
+	pPanelProject->Add (pBtnNewXTD);
+	CBCGPRibbonButton* pBtnOpenXTD = new CBCGPRibbonButton (ID_OPENMAPCLASS, _T("打开"), 12,12);
+	pPanelProject->Add (pBtnOpenXTD);
+	CBCGPRibbonButton* pBtnSaveXTD = new CBCGPRibbonButton (ID_SAVEMAPCLASS, _T("保存"), 13,13);
+	pPanelProject->Add (pBtnSaveXTD);
+	/*CBCGPRibbonButton* pBtnSaveAsXTD = new CBCGPRibbonButton (ID_SAVEASMAPCLASS, _T("另存为"), 14,14);
+	pPanelProject->Add (pBtnSaveAsXTD);*/
+	//图层
+	CBCGPRibbonPanel* pPanelFile = pCategory->AddPanel (_T("文件"));
+	CBCGPRibbonComboBox* pDisplayCombo = new CBCGPRibbonComboBox (ID_DUMMY_COMBO, FALSE, 50, "比例尺:");
+	pDisplayCombo->EnableDropDownListResize (FALSE);
+	pDisplayCombo->AddItem(_T("1:1000"));
+	pDisplayCombo->AddItem(_T("1:10000"));
+	pDisplayCombo->AddItem(_T("1:50000"));
+	pDisplayCombo->AddItem(_T("1:100000"));
+	pDisplayCombo->AddItem(_T("1:250000"));
+	pDisplayCombo->AddItem(_T("1:500000"));
+	pDisplayCombo->AddItem(_T("1:1000000"));
+	pPanelFile->Add (pDisplayCombo);
+	//加载数据
+	CBCGPRibbonButton* pPanelRaster = new CBCGPRibbonButton (ID_OPEN_IMG, _T("栅格数据加载"), 20);
+	pPanelFile->Add (pPanelRaster);
+	CBCGPRibbonButton* pPanelFeature = new CBCGPRibbonButton (ID_OPEN_Vector, _T("矢量数据加载"), 21);
+	pPanelFile->Add (pPanelFeature);
+
+	//创建视图基本操作
+	CBCGPRibbonPanel* pPanelMap = pCategory->AddPanel (_T("浏览工具"));
+	//--------------------------
+	// 放大:
+	//--------------------------
+	CBCGPRibbonButton* pBtnZoomIn = new CBCGPRibbonButton (ID_MAP_ZOOM_IN, _T("放大"), 0, 0);
+	pPanelMap->Add (pBtnZoomIn);
+	//--------------------------
+	// 缩小:
+	//--------------------------
+	CBCGPRibbonButton* pBtnZoomOut = new CBCGPRibbonButton (ID_ZOOM_OUT,_T("缩小"), 1, 1);
+	pPanelMap->Add (pBtnZoomOut);
+	
+
+	CBCGPRibbonButton* pBtnPan = new CBCGPRibbonButton (ID_MAP_PAN, _T("漫游"), 4, 4);
+	pPanelMap->Add (pBtnPan);
+	//--------------------------
+	// 全图:
+	//--------------------------
+	CBCGPRibbonButton* pBtnOvewView = new CBCGPRibbonButton (ID_MAP_FULLVIEW,_T("全图"), 5, 5);
+	pPanelMap->Add (pBtnOvewView);
+
+	//--------------------------
+	// 前一视图:
+	//--------------------------
+	CBCGPRibbonButton* pBtnPreView = new CBCGPRibbonButton (ID_PRE_EXTENT, _T("前视图"), 7, 7);
+	pPanelMap->Add (pBtnPreView);
+
+
+	//--------------------------
+	// 后一视图:
+	//--------------------------
+	CBCGPRibbonButton* pBtnNextView = new CBCGPRibbonButton (ID_NEXT_EXTENT, _T("后视图"), 8, 8);
+	pPanelMap->Add (pBtnNextView);
+
+	
+	CBCGPRibbonPanel* pPanelSystem = pCategory->AddPanel (_T("系统"));
+	CBCGPRibbonButton* pBtnSetting = new CBCGPRibbonButton (ID_SETTING,_T("设置"), 3, 22);
+	pPanelSystem->Add(pBtnSetting);
+	CBCGPRibbonButton* pBtnHelp = new CBCGPRibbonButton (ID_FOR_HELP,_T("帮助"), 1, 26);
+	pPanelSystem->Add(pBtnHelp);
+	CBCGPRibbonButton* pBtnClose = new CBCGPRibbonButton (ID_FOR_EXIT,_T("退出"), 2, 25);
+	pPanelSystem->Add(pBtnClose);
+}
+
+void CMainFrame::AddTab_Mesure()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("标绘量测"),
+		IDB_FILELARGE,
+		IDB_DRAWMESURE);
+
+
+	CBCGPRibbonPanel* pPanelLabel = pCategory->AddPanel (_T("标绘工具"));
+	//--------------------------
+	// 选择:
+	//--------------------------
+	CBCGPRibbonButton* pBtnSelected = new CBCGPRibbonButton(ID_DRAW_SELECT, _T("选择"), -1, 2);
+	pPanelLabel->Add (pBtnSelected);
+
+	//--------------------------
+	// 删除全部:
+	//--------------------------
+	CBCGPRibbonButton* pBtnDelAll = new CBCGPRibbonButton(ID_DEL_ALL, _T("删除全部"), -1, 14);
+	pPanelLabel->Add (pBtnDelAll);
+
+	//--------------------------
+	// 矢量要素:
+	//--------------------------
+	CBCGPRibbonButton* pBtnRect = new CBCGPRibbonButton (ID_DRAW_RECT, _T("矩形"), -1, 3);
+	pPanelLabel->Add (pBtnRect);
+	//--------------------------
+	// 矢量要素:
+	//--------------------------
+	CBCGPRibbonButton* pBtnPolygon = new CBCGPRibbonButton(ID_DRAW_POLYGON, _T("多边形"), -1, 4);
+	pPanelLabel->Add (pBtnPolygon);		
+	//--------------------------
+	//添加标绘线工具
+	//--------------------------
+	CBCGPRibbonButton* pBtnPolyline = new CBCGPRibbonButton(ID_DRAW_POLYLINE, _T("多段线"), -1, 5);
+	pPanelLabel->Add (pBtnPolyline);	
+	// 点标绘:
+	//--------------------------
+	CBCGPRibbonButton* pBtnPoint = new CBCGPRibbonButton(ID_DRAW_MARKER, _T("点"), -1, 6);
+	pPanelLabel->Add (pBtnPoint);
+
+	//--------------------------
+	//添加编辑选择要素工具要素工具
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditNodeElement = new CBCGPRibbonButton(ID_DRAW_EDITOR, _T("编辑结点"), -1, 7);
+	pPanelLabel->Add (pBtnEditNodeElement);
+
+	//--------------------------
+	//将标绘要素保存为shp
+	//--------------------------
+	CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 8);
+	pPanelLabel->Add (pBtnElementSaveAs);
+
+
+	//半自动提取
+	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));
+
+	//添加当前图层
+	//CBCGPRibbonButtonsGroup* pMagicGroup = new CBCGPRibbonButtonsGroup;
+
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_MAGICSTICK_LAYER,FALSE,85,"目标图层:");
+	pPanelHalfAuto->Add(pBtnCurrLayer);
+	CBCGPRibbonEdit *pEditButton =new CBCGPRibbonEdit(ID_MAGICSTICK_TOL,100,"像素阈值:");
+	pEditButton->SetEditText("20");
+	pPanelHalfAuto->Add(pEditButton);
+
+	//--------------------------
+	// 魔术棒
+	//--------------------------
+	CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 10, 10);
+
+	pPanelHalfAuto->Add (pBtnMagic);
+
+	// 删除上次魔术棒提取结果
+	//--------------------------
+	CBCGPRibbonButton* pBtnRemoveMagic = new CBCGPRibbonButton (ID_REMOVELASTMAGIC, _T("取消上次操作"), 12, 12);
+
+	pPanelHalfAuto->Add (pBtnRemoveMagic);
+
+	pPanelHalfAuto->AddSeparator();
+
+	
+}
+
+void CMainFrame::AddTab_Editor()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("提取结果编辑"),
+		IDB_FILESMALL,
+		IDB_EDITORLARGE);
+
+
+
+	//创建编辑基本操作
+	CBCGPRibbonPanel* pPanelEditor = pCategory->AddPanel (_T("编辑工具"));
+	//添加当前图层
+	pPanelEditor->Add (new CBCGPRibbonLabel (_T("编辑目标层：")));
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO_VECTOR,FALSE,100,"");
+
+	pPanelEditor->Add(pBtnCurrLayer);
+	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 1);
+	pPanelEditor->Add (pBtnShowOverView);
+
+	pPanelEditor->AddSeparator();
+	//--------------------------
+	// 开始编辑:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditStart = new CBCGPRibbonButton (ID_EDITOR_START, _T("开始编辑"), 0, 0);
+	pPanelEditor->Add (pBtnEditStart);
+	//--------------------------
+	// 绘制:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditSketch = new CBCGPRibbonButton (ID_EDITOR_SKETCH,_T("绘制"), 1, 1);
+	pPanelEditor->Add (pBtnEditSketch);
+	//--------------------------
+	// 编辑:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEdit = new CBCGPRibbonButton (ID_EDITOR_EDIT, _T("编辑"), 2, 2);
+	pPanelEditor->Add (pBtnEdit);
+	//--------------------------
+	// 撤销:
+	//--------------------------
+
+	CBCGPRibbonButton* pBtnEditUndo = new CBCGPRibbonButton (ID_EDITOR_UNDO, _T("撤销"), 3, 3);
+	pPanelEditor->Add (pBtnEditUndo);
+	//--------------------------
+	// 重复:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditRedo = new CBCGPRibbonButton (ID_EDITOR_REDO, _T("重复"), 4, 4);
+	pPanelEditor->Add (pBtnEditRedo);
+
+	//--------------------------
+	// 结束编辑:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditEnd = new CBCGPRibbonButton (ID_EDITOR_END,_T("结束编辑"), 5, 5);
+	pPanelEditor->Add (pBtnEditEnd);
+
+	//--------------------------
+	// 保存:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditSave = new CBCGPRibbonButton (ID_EDITOR_SAVE, _T("保存"), 6, 6);
+	pPanelEditor->Add (pBtnEditSave);
+	//--------------------------
+	// 删除:
+	//--------------------------
+	CBCGPRibbonButton* pBtnEditDel = new CBCGPRibbonButton (ID_DELETE_FEATURES, _T("删除"), 7, 7);
+	pPanelEditor->Add (pBtnEditDel);
+	////--------------------------
+	//// 合并要素:
+	////--------------------------
+	//CBCGPRibbonButton* pBtnEditUnion = new CBCGPRibbonButton (ID_UNION_FEATURES, _T("合并要素"), 8, 8);
+	//pPanelEditor->Add (pBtnEditUnion);
+
+	//--------------------------
+	// 要素属性编辑:
+	//--------------------------
+	CBCGPRibbonButton* pBtnAtiEdit = new CBCGPRibbonButton (ID_ATTRIBUTE_EDIT, _T("属性编辑"), 9, 9);
+	pPanelEditor->Add (pBtnAtiEdit);
+
+
+	//--------------------------
+	// 要素信息:
+	//--------------------------
+	CBCGPRibbonButton* pBtnFeatureInfo = new CBCGPRibbonButton (ID_FEATURES_INFO, _T("要素信息"), 10, 10);
+	pPanelEditor->Add (pBtnFeatureInfo);
+
+	//--------------------------
+	// 要素选择:
+	//--------------------------
+	CBCGPRibbonButton* pBtnFeatureSelect = new CBCGPRibbonButton (ID_SELECTFEATURE, _T("要素选择"), 11, 11);
+	pPanelEditor->Add (pBtnFeatureSelect);
+
+	
+
+}
+
+void CMainFrame::AddTab_GeoInfoExtract()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("灾害分析"),
+		IDB_FILELARGE,
+		IDB_DRAWMESURE);
+
+	
+}
+
+void CMainFrame::AddTab_Print()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("制图输出"),
+		IDB_FILELARGE,
+		IDB_DRAWMESURE);
+}
+
 
 LRESULT CMainFrame::OnRibbonCustomize (WPARAM wp, LPARAM lp)
 {
@@ -519,3 +728,9 @@ void CMainFrame::OnUpdateViewWorkspace(CCmdUI* pCmdUI)
 //}
  // OUTPUTBAR
  // RIBBON_APP
+
+
+Framework::IMaptreeCtrl* CMainFrame::GetTOC()
+{
+	return &m_wndWorkSpace.m_wndTree;
+}

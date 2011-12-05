@@ -32,16 +32,7 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:  // control bar embedded members
-	CBCGPRibbonStatusBar	m_wndStatusBar;
-	CBCGPRibbonBar			m_wndRibbonBar;
-	CBCGPRibbonMainButton	m_MainButton;
-	CBCGPToolBarImages		m_PanelImages;
-	CBCGPMenuBar			m_wndMenuBar;
-	CBCGPToolBar			m_wndToolBar;
-	CWorkSpaceBar			m_wndWorkSpace;
-	CWorkSpaceBar2			m_wndWorkSpace2;
-	COutputBar				m_wndOutput;
+	
 // Generated message map functions
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
@@ -60,6 +51,30 @@ protected:
 	BOOL CreateRibbonBar ();
 	void ShowOptions (int nPage);
 
+public:
+    Framework::IMaptreeCtrl* GetTOC();
+
+	void		AddMainCategory();
+	void		AddTab_MapControl();
+	void		AddTab_Mesure();
+	//编辑模块
+	void		AddTab_Editor();
+	//地理要素提取
+	void        AddTab_GeoInfoExtract();
+	//制图
+	void        AddTab_Print();
+
+protected:
+
+	CBCGPRibbonStatusBar	m_wndStatusBar;
+	CBCGPRibbonBar			m_wndRibbonBar;
+	CBCGPRibbonMainButton	m_MainButton;
+	CBCGPToolBarImages		m_PanelImages;
+	CBCGPMenuBar			m_wndMenuBar;
+	CBCGPToolBar			m_wndToolBar;
+	CWorkSpaceBar			m_wndWorkSpace;
+	CWorkSpaceBar2			m_wndWorkSpace2;
+	COutputBar				m_wndOutput;
 	UINT	m_nAppLook;
 };
 

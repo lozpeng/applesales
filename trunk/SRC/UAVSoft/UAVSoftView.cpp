@@ -21,6 +21,8 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
+	ON_WM_CREATE()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 // CUAVSoftView construction/destruction
@@ -100,3 +102,38 @@ CUAVSoftDoc* CUAVSoftView::GetDocument() const // non-debug version is inline
 
 
 // CUAVSoftView message handlers
+
+int CUAVSoftView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	m_WndTab.Create (CBCGPTabWnd::STYLE_3D_VS2005, CRect(0,0,0,0), this, ID_TABCONTROL);
+
+
+	m_MapCtrl.CreateControl(Framework::CommonUIName::AppMapControl, &m_WndTab, ID_MAPCTRL);
+	m_WndTab.AddTab( &m_MapCtrl , "Map" );
+
+	//m_LayoutCtrl.CreateControl(Framework::CommonUIName::AppLayoutControl, &m_WndTab,ID_LAYOUTCTRL);
+	//m_wndButton.Create(_T("Test"),WS_CHILD|WS_VISIBLE,CRect(0,0,10,20),&m_WndTab,IDC_TEST);
+	//m_WndTab.AddTab(&m_LayoutCtrl,_T("Layout"));
+
+
+	CUAVSoftDoc* pDoc = GetDocument();
+	pDoc->SetLinkMapCtrl(&m_MapCtrl);
+
+	m_WndTab.SetActiveTab(0);
+	m_WndTab.SetFlatFrame ();
+	m_WndTab.SetTabBorderSize (0);
+	m_WndTab.AutoDestroyWindow (FALSE);
+
+	return 0;
+}
+
+void CUAVSoftView::OnSize(UINT nType, int cx, int cy)
+{
+	CView::OnSize(nType, cx, cy);
+
+	m_WndTab.SetWindowPos (NULL, -1, -1, cx + 1, cy + 3,
+		SWP_SHOWWINDOW | SWP_NOZORDER);
+}

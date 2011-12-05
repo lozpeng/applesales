@@ -117,6 +117,15 @@ BOOL CUAVSoftApp::InitInstance()
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
 
+	//设置文档连接地图管理控件
+	CMainFrame *pMainFrame = (CMainFrame *)AfxGetMainWnd();
+
+	CUAVSoftDoc *pDoc =dynamic_cast<CUAVSoftDoc*>(pMainFrame->GetActiveDocument());
+	pDoc->SetLinkMapTree(pMainFrame->GetTOC());
+	pMainFrame->GetTOC()->RefreshFromDoc();
+
+	m_pMainWnd->SetWindowText("无人机数据处理系统");
+
 	// The one and only window has been initialized, so show and update it
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
