@@ -64,7 +64,7 @@ public:
 	//ÖÆÍ¼
 	void        AddTab_Print();
 
-protected:
+public:
 
 	CBCGPRibbonStatusBar	m_wndStatusBar;
 	CBCGPRibbonBar			m_wndRibbonBar;
