@@ -482,6 +482,20 @@ void CMainFrame::AddTab_Mesure()
 	pPanelLabel->Add (pBtnElementSaveAs);
 
 
+	//量测工具	
+	CBCGPRibbonPanel* pPanelMeasure = pCategory->AddPanel (_T("量测工具"));
+	//--------------------------
+	// 线量测:
+	//--------------------------
+	CBCGPRibbonButton* pBtnLineMeasure = new CBCGPRibbonButton(ID_LINE_MEASURE, _T("距离量测"), -1, 15);
+	pPanelMeasure->Add (pBtnLineMeasure);
+
+	//--------------------------
+	// 面量测:
+	//--------------------------
+	CBCGPRibbonButton* pBtnAreaMeasure = new CBCGPRibbonButton(ID_AREA_MEASURE, _T("面积量测"), -1, 16);
+	pPanelMeasure->Add (pBtnAreaMeasure);
+
 	//半自动提取
 	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));
 

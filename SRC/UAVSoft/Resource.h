@@ -73,6 +73,8 @@
 #define ID_MAP_FULLVIEW                 32884
 #define ID_MAP_SRCVIEW                  32885
 #define ID_32886                        32886
+#define ID_LINE_MEASURE                 32900
+#define ID_AREA_MEASURE                 32901
 #define ID_MAPCTRL                      40000
 #define ID_LAYOUTCTRL                   40001
 #define ID_MAIN_BUTTON                  40002

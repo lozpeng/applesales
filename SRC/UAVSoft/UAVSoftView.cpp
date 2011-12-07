@@ -119,6 +119,14 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_SAVEAS, OnUpdateDrawSaveAs)
 	ON_COMMAND(ID_DRAW_Export, OnDrawExport)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_Export, OnUpdateDrawExport)
+
+	//量测工具
+	 
+	ON_COMMAND(ID_LINE_MEASURE, OnLineMeasure)
+	ON_UPDATE_COMMAND_UI(ID_LINE_MEASURE, OnUpdateLineMeasure)
+	ON_COMMAND(ID_AREA_MEASURE, OnAreaMeasure)
+	ON_UPDATE_COMMAND_UI(ID_AREA_MEASURE, OnUpdateAreaMeasure)
+
 	//编辑工具
 
 	ON_COMMAND(ID_EDITOR_START, OnEditorStart)
@@ -580,6 +588,39 @@ afx_msg void CUAVSoftView::OnUpdateDrawPolygon(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "DrawPolygonElementTool");
 }
+
+afx_msg void CUAVSoftView::OnLineMeasure()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("LineMeasureTool");
+
+	pTool=Framework::ITool::FindTool("LineMeasureTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CUAVSoftView::OnUpdateLineMeasure(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "LineMeasureTool");
+}
+afx_msg void CUAVSoftView::OnAreaMeasure()
+{
+	Framework::ITool* pTool = NULL;
+	m_MapCtrl.SetCurTool("AreaMeasureTool");
+
+	pTool=Framework::ITool::FindTool("AreaMeasureTool");
+	if(pTool)
+	{
+		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+	}
+}
+afx_msg void CUAVSoftView::OnUpdateAreaMeasure(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "AreaMeasureTool");
+}
+
+
 afx_msg void CUAVSoftView::OnDrawPolyline()
 {
 	Framework::ITool* pTool = NULL;

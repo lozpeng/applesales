@@ -113,6 +113,7 @@ IDC_SIZE_RIGHTTOP       CURSOR                  "res\\cur00002.cur"
 IDC_SIZE_TOPBOTTOM      CURSOR                  "res\\cur00003.cur"
 IDC_ON_VERTIX           CURSOR                  "res\\cur00004.cur"
 IDC_VERTIX_MOVE         CURSOR                  "res\\cur00005.cur"
+IDC_Measure             CURSOR                  "res\\cur00006.cur"
 
 /////////////////////////////////////////////////////////////////////////////
 //

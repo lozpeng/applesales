@@ -150,6 +150,15 @@ public:
 
 	afx_msg void OnDrawExport();
 	afx_msg void OnUpdateDrawExport(CCmdUI* pCmdUI);
+
+	//量测工具
+	afx_msg void OnLineMeasure();
+	afx_msg void OnUpdateLineMeasure(CCmdUI* pCmdUI);
+
+	afx_msg void OnAreaMeasure();
+	afx_msg void OnUpdateAreaMeasure(CCmdUI* pCmdUI);
+
+
 	//编辑工具
 	afx_msg void OnEditorStart();
 	afx_msg void OnUpdateEditorStart(CCmdUI *pCmdUI);
