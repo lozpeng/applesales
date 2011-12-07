@@ -23,6 +23,8 @@ public:
 	void Initialize(Framework::IUIObject *pTargetControl);
 	void LButtonDownEvent (UINT nFlags, CPoint point);
 
+	virtual Framework::ITool* Clone();
+
 private:
 	HCURSOR m_hCursor;
 
