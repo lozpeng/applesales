@@ -62,6 +62,7 @@
 #define IDI_ICON2                       2023
 #define IDI_STEP1                       2023
 #define IDD_SET_CHANSYMBOL              2024
+#define IDC_Measure                     2028
 #define IDD_FEATURE_RENDER_SET          4024
 #define IDB_FEATURE_RENDER              4025
 #define IDB_RENDER_BG                   4026
@@ -195,7 +196,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2025
+#define _APS_NEXT_RESOURCE_VALUE        2029
 #define _APS_NEXT_COMMAND_VALUE         32778
 #define _APS_NEXT_CONTROL_VALUE         2020
 #define _APS_NEXT_SYMED_VALUE           2000
