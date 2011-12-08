@@ -32,9 +32,10 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.AddShp = new System.Windows.Forms.ToolStripButton();
             this.MapPan = new System.Windows.Forms.ToolStripButton();
-            this.axusMapControl1 = new AxusMapControlLib.AxusMapControl();
             this.ZoomIn = new System.Windows.Forms.ToolStripButton();
             this.ZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.axusMapControl1 = new AxusMapControlLib.AxusMapControl();
+            this.AddImage = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axusMapControl1)).BeginInit();
             this.SuspendLayout();
@@ -43,6 +44,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddShp,
+            this.AddImage,
             this.MapPan,
             this.ZoomIn,
             this.ZoomOut});
@@ -72,16 +74,6 @@
             this.MapPan.Text = "平移";
             this.MapPan.Click += new System.EventHandler(this.MapPan_Click);
             // 
-            // axusMapControl1
-            // 
-            this.axusMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axusMapControl1.Enabled = true;
-            this.axusMapControl1.Location = new System.Drawing.Point(0, 25);
-            this.axusMapControl1.Name = "axusMapControl1";
-            this.axusMapControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axusMapControl1.OcxState")));
-            this.axusMapControl1.Size = new System.Drawing.Size(599, 436);
-            this.axusMapControl1.TabIndex = 1;
-            // 
             // ZoomIn
             // 
             this.ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -101,6 +93,26 @@
             this.ZoomOut.Size = new System.Drawing.Size(23, 22);
             this.ZoomOut.Text = "缩小";
             this.ZoomOut.Click += new System.EventHandler(this.ZoomOut_Click);
+            // 
+            // axusMapControl1
+            // 
+            this.axusMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axusMapControl1.Enabled = true;
+            this.axusMapControl1.Location = new System.Drawing.Point(0, 25);
+            this.axusMapControl1.Name = "axusMapControl1";
+            this.axusMapControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axusMapControl1.OcxState")));
+            this.axusMapControl1.Size = new System.Drawing.Size(599, 436);
+            this.axusMapControl1.TabIndex = 1;
+            // 
+            // AddImage
+            // 
+            this.AddImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.AddImage.Image = ((System.Drawing.Image)(resources.GetObject("AddImage.Image")));
+            this.AddImage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.AddImage.Name = "AddImage";
+            this.AddImage.Size = new System.Drawing.Size(23, 22);
+            this.AddImage.Text = "加载影像";
+            this.AddImage.Click += new System.EventHandler(this.AddImage_Click);
             // 
             // Form1
             // 
@@ -127,6 +139,7 @@
         private System.Windows.Forms.ToolStripButton MapPan;
         private System.Windows.Forms.ToolStripButton ZoomIn;
         private System.Windows.Forms.ToolStripButton ZoomOut;
+        private System.Windows.Forms.ToolStripButton AddImage;
 
     }
 }
