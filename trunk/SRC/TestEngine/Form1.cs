@@ -44,5 +44,20 @@ namespace TestEngine
         {
             axusMapControl1.CurTool = usMapControlLib.usToolType.ZoomOutTool;
         }
+
+        private void AddImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            dlg.Filter = "影像数据(*.tif;*.img;*.tiff;*.bmp)|*.tif;*.img;*.tiff;*.bmp|All Files(*.*)|*.*";
+
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string filename = dlg.FileName;
+                axusMapControl1.AddImagefile(filename);
+
+            }
+        }
     }
 }
