@@ -71,13 +71,29 @@ protected:
 private:
 	Framework::ITool* GetTool(usToolType tooltype);
 
+	//计算要贴的图在memDC上的位置
+	void CalSrcRect(GEOMETRY::geom::Envelope extent,CRect &rect);
+	//计算贴图在view中的位置
+	void CalDestRect(GEOMETRY::geom::Envelope srcExtent,GEOMETRY::geom::Envelope destExtent,CRect &rect);
+
 private:
 	//当前工具
 	Framework::ITool* m_pCurTool;
 
 	usToolType m_Tooltype;
+
+	std::map<usToolType,Framework::ITool*> m_allTools;
+
+	double m_dblScale;
+	bool m_bTimer;
+	GEOMETRY::geom::Envelope m_srcEnvelop; //记录内存DC的地理范围
+	double   m_srcScale;
+	bool m_bMouseWheel;
+
 protected:
 	usToolType GetCurTool(void);
 	void SetCurTool(usToolType newVal);
+public:
+	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 };
 
