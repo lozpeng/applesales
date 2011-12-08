@@ -44,6 +44,7 @@ library usMapControlLib
 			
 			[id(1), helpstring("方法AddShpfile")] void AddShpfile(BSTR filename);
 			[id(2), helpstring("方法Refresh")] void Refresh(void);
+			[id(4), helpstring("方法AddImagefile")] void AddImagefile(BSTR filename);
 	};
 
 	//  CusMapCtrl 的事件调度接口

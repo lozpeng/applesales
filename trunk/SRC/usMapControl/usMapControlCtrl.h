@@ -43,6 +43,7 @@ protected:
 // 调度和事件 ID
 public:
 	enum {
+		dispidAddImagefile = 4L,
 		dispidCurTool = 3,
 		dispidRefresh = 2L,
 		dispidAddShpfile = 1L
@@ -95,5 +96,7 @@ protected:
 	void SetCurTool(usToolType newVal);
 public:
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+protected:
+	void AddImagefile(LPCTSTR filename);
 };
 

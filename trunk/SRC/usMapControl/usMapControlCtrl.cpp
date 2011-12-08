@@ -7,6 +7,7 @@
 #include "ShapefileWorkspaceFactory.h"
 #include "ShapefileWorkspace.h"
 #include "ShapefileFeatureClass.h"
+#include "RasterWSFactory.h"
 #include "FeatureLayer.h"
 #include "RasterLayer.h"
 #include "RasterWSFactory.h"
@@ -48,6 +49,7 @@ BEGIN_DISPATCH_MAP(CusMapCtrl, COleControl)
 	DISP_FUNCTION_ID(CusMapCtrl, "AddShpfile", dispidAddShpfile, AddShpfile, VT_EMPTY, VTS_BSTR)
 	DISP_FUNCTION_ID(CusMapCtrl, "Refresh", dispidRefresh, Refresh, VT_EMPTY, VTS_NONE)
 	DISP_PROPERTY_EX_ID(CusMapCtrl, "CurTool", dispidCurTool, GetCurTool, SetCurTool, VT_I2)
+	DISP_FUNCTION_ID(CusMapCtrl, "AddImagefile", dispidAddImagefile, AddImagefile, VT_EMPTY, VTS_BSTR)
 END_DISPATCH_MAP()
 
 
@@ -711,4 +713,43 @@ void CusMapCtrl::CalDestRect(GEOMETRY::geom::Envelope srcExtent,GEOMETRY::geom::
 	rect.bottom = (long)(ymax+0.5);	
 
 
+}
+void CusMapCtrl::AddImagefile(LPCTSTR filename)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	_bstr_t csDataSourceTmp=filename;
+
+	CString csThemeName =csDataSourceTmp;
+
+	csThemeName = csThemeName.Mid (csThemeName.ReverseFind ('\\') + 1);
+	csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
+
+
+
+	Geodatabase::IWorkspace *pWorkspace =CRasterWSFactory::GetInstance()->OpenFromFile(csDataSourceTmp);
+
+	if(!pWorkspace)
+	{
+		MessageBox(_T("打开数据失败！"),_T("提示"),MB_OK);
+		return ;
+	}
+	Geodatabase::IRasterDatasetPtr pRaster =pWorkspace->OpenRasterDataset(csDataSourceTmp);
+
+	if(!pRaster)
+	{
+		MessageBox(_T("打开数据失败！"),_T("提示"),MB_OK);
+		return;
+	}
+
+
+	if(m_pGeoMap->AddNewLayer(pRaster))
+	{
+		Carto::CLayerArray &layers =m_pGeoMap->GetLayers();
+		Carto::ILayerPtr pLayer =layers.GetAt(layers.GetSize()-1);
+		//设置图层名称
+		pLayer->SetName(std::string(_bstr_t(csThemeName)));
+
+	}
+	Refresh();
 }
