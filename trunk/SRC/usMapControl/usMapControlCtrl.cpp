@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(CusMapCtrl, COleControl)
 	ON_WM_RBUTTONDOWN()
 	ON_WM_RBUTTONUP()
 	ON_WM_TIMER()
+	ON_WM_SETCURSOR()
 END_MESSAGE_MAP()
 
 
@@ -146,6 +147,9 @@ CusMapCtrl::CusMapCtrl()
 	m_pCurTool =NULL;
 
 	m_Tooltype =NoneTool;
+
+	m_bTimer = false;
+	m_bMouseWheel = false;
 }
 
 
@@ -154,7 +158,13 @@ CusMapCtrl::CusMapCtrl()
 
 CusMapCtrl::~CusMapCtrl()
 {
-	// TODO: 在此清理控件的实例数据。
+	std::map<usToolType,Framework::ITool*>::iterator iter;
+	for(iter =m_allTools.begin();iter!=m_allTools.end();iter++)
+	{
+		delete iter->second;
+		iter->second =NULL;
+	}
+	m_allTools.clear();
 }
 
 
@@ -357,9 +367,144 @@ void CusMapCtrl::OnMouseMove(UINT nFlags, CPoint point)
 
 BOOL CusMapCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if(!m_pGeoMap)
+		return FALSE;
+	double dblRatio = 1;
+	long lSceenWidth,lSceenHeight;
+	GEOMETRY::geom::Coordinate point;
+	CRect rect;
+	GetClientRect(&rect);
+	lSceenWidth = rect.Width();
+	lSceenHeight = rect.Height();
 
-	return __super::OnMouseWheel(nFlags, zDelta, pt);
+	Display::IDisplayPtr pDispaly = m_pGeoMap->GetDisplay();
+
+	if (!m_bTimer)
+	{
+		m_srcEnvelop = m_pGeoMap->GetViewEnvelope();
+		SetTimer(1,300,NULL);
+		m_dblScale = pDispaly->GetDisplayTransformation().GetScale();
+
+		m_srcScale = m_dblScale;
+
+		m_bTimer = true;
+	}
+
+	m_bMouseWheel = true;
+
+	HDC hMemDC = ::CreateCompatibleDC(m_hClientDC);
+
+	HBITMAP hOldBitmap,hBitmap = ::CreateCompatibleBitmap(m_hClientDC,m_lSizeX,m_lSizeY);
+
+	hOldBitmap = (HBITMAP)::SelectObject(hMemDC,hBitmap);
+
+	//绘制背景
+	HBRUSH hbrush = ::CreateSolidBrush( RGB(255,255,255));
+
+	::FillRect(hMemDC , &rect , hbrush );
+
+	::DeleteObject( hbrush );
+
+	double xmin,xmax,ymin,ymax;
+
+	if (zDelta > 0) //放大
+	{
+		dblRatio = 0.8;
+
+		m_dblScale *= dblRatio;
+
+		m_pGeoMap->GetViewEnvelope().centre(point);
+
+		xmin = point.x - lSceenWidth/2.0*m_dblScale;
+		xmax = point.x + lSceenWidth/2.0*m_dblScale;
+		ymin = point.y - lSceenHeight/2.0*m_dblScale;
+		ymax = point.y + lSceenHeight/2.0*m_dblScale;
+
+		GEOMETRY::geom::Envelope newExt(xmin,xmax,ymin,ymax);
+
+		//改变地图的显示范围
+		m_pGeoMap->GetDisplay()->GetDisplayTransformation().FitViewBound(newExt);
+
+		CRect srcRect,destRect;
+
+		CalSrcRect(newExt,srcRect);
+
+		//如果目标范围比原始范围小，则目标矩形是整个View的客户区
+		if(newExt.getMaxX()<=m_srcEnvelop.getMaxX() 
+			&& newExt.getMinX()>=m_srcEnvelop.getMinX() 
+			&& newExt.getMaxY()<=m_srcEnvelop.getMaxY()
+			&& newExt.getMinY()>=m_srcEnvelop.getMinY())
+		{
+			destRect = rect;
+		}
+		else
+		{
+			GEOMETRY::geom::Envelope srcExtent =m_srcEnvelop;
+			CalDestRect(srcExtent,newExt,destRect);
+
+		}
+
+		::SetStretchBltMode(hMemDC,MAXSTRETCHBLTMODE);
+
+		::StretchBlt(hMemDC,destRect.left,destRect.top,destRect.Width(),destRect.Height(),(HDC)pDispaly->GetDrawDC()->GetSafeHdc(),srcRect.left,srcRect.top,srcRect.Width(),srcRect.Height(),SRCCOPY);
+
+
+		//::BitBlt(m_hMemDC,0,0,m_lSizeX,m_lSizeY,hMemDC,0,0,SRCCOPY);
+		::BitBlt(m_hClientDC,0,0,m_lSizeX,m_lSizeY,hMemDC,0,0,SRCCOPY);
+
+	}
+	else if (zDelta < 0) //缩小
+	{
+		dblRatio = 1.2;
+
+		m_dblScale *= dblRatio;
+
+		m_pGeoMap->GetViewEnvelope().centre(point);
+
+		xmin = point.x - lSceenWidth/2.0*m_dblScale;
+		xmax = point.x + lSceenWidth/2.0*m_dblScale;
+		ymin = point.y - lSceenHeight/2.0*m_dblScale;
+		ymax = point.y + lSceenHeight/2.0*m_dblScale;
+
+		GEOMETRY::geom::Envelope newExt(xmin,xmax,ymin,ymax);
+
+		//改变地图的显示范围
+		m_pGeoMap->GetDisplay()->GetDisplayTransformation().FitViewBound(newExt);
+
+
+		CRect srcRect,destRect;
+
+		CalSrcRect(m_pGeoMap->GetViewEnvelope(),srcRect);
+
+		//如果目标范围比原始范围小，则目标矩形是整个View的客户区
+		if(newExt.getMaxX()<=m_srcEnvelop.getMaxX() 
+			&& newExt.getMinX()>=m_srcEnvelop.getMinX() 
+			&& newExt.getMaxY()<=m_srcEnvelop.getMaxY()
+			&&newExt.getMinY()>=m_srcEnvelop.getMinY())
+		{
+			destRect = rect;
+		}
+		else
+		{
+			GEOMETRY::geom::Envelope srcExtent =m_srcEnvelop;
+			CalDestRect(srcExtent,newExt,destRect);
+
+		}
+
+		::SetStretchBltMode(hMemDC,MAXSTRETCHBLTMODE);
+
+		::StretchBlt(hMemDC,destRect.left,destRect.top,destRect.Width(),destRect.Height(),(HDC)pDispaly->GetDrawDC()->GetSafeHdc(),srcRect.left,srcRect.top,srcRect.Width(),srcRect.Height(),SRCCOPY);
+
+
+		::BitBlt(m_hClientDC,0,0,m_lSizeX,m_lSizeY,hMemDC,0,0,SRCCOPY);
+
+	}
+
+	::SelectObject(hMemDC,hOldBitmap);
+	::DeleteObject(hBitmap);
+	::DeleteDC(hMemDC);
+
+	return COleControl::OnMouseWheel(nFlags, zDelta, pt);
 }
 
 void CusMapCtrl::OnRButtonDown(UINT nFlags, CPoint point)
@@ -380,9 +525,25 @@ void CusMapCtrl::OnRButtonUp(UINT nFlags, CPoint point)
 
 void CusMapCtrl::OnTimer(UINT_PTR nIDEvent)
 {
-	
+	if(m_bMouseWheel)
+	{
+		m_bMouseWheel =false;
+	}
+	else
+	{
+		if(m_pGeoMap->GetExtentMode() == Carto::EEM_AUTO)
+		{
+			m_pGeoMap->GetDisplay()->GetDisplayTransformation().ZoomToFixScale(m_dblScale);
 
-	__super::OnTimer(nIDEvent);
+			Refresh();			
+		}	
+		KillTimer(1);	
+		m_bTimer = false;
+	}
+
+	COleControl::OnTimer(nIDEvent);
+
+	
 }
 
 usToolType CusMapCtrl::GetCurTool(void)
@@ -416,7 +577,14 @@ Framework::ITool* CusMapCtrl::GetTool(usToolType tooltype)
 	{
 		return NULL;
 	}
-
+	//首先在工具集中查找是否有这个实例
+	std::map<usToolType,Framework::ITool*>::iterator iter;
+	iter =m_allTools.find(tooltype);
+	if(iter!=m_allTools.end())
+	{
+		return iter->second;
+	}
+	
 	Framework::ITool *pTool =NULL;
 	switch(tooltype)
 	{
@@ -434,5 +602,113 @@ Framework::ITool* CusMapCtrl::GetTool(usToolType tooltype)
 
 	}
 
+	if(pTool)
+	{
+		m_allTools[tooltype] =pTool;
+	}
+
 	return pTool;
+}
+BOOL CusMapCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
+{
+	if(m_cursor)
+	{
+		::SetCursor(m_cursor);
+	}
+	else
+	{
+		//设置默认光标
+		::SetCursor(LoadCursor(NULL,IDC_ARROW));
+	}
+
+
+	return TRUE;
+}
+
+void CusMapCtrl::CalSrcRect(GEOMETRY::geom::Envelope extent,CRect &rect)
+{
+	//如果目标范围比原始范围大，则取整块memDC
+	double xmin,xmax,ymin,ymax;
+	if(extent.getMaxX()>=m_srcEnvelop.getMaxX() && extent.getMinX()<=m_srcEnvelop.getMinX() && extent.getMaxY()>=m_srcEnvelop.getMaxY() && extent.getMinY()<=m_srcEnvelop.getMinY())
+	{
+		rect =  m_pGeoMap->GetDisplay()->GetDisplayTransformation().GetViewBound().GetRect();
+		return;
+	}
+	else
+	{
+
+		GEOMETRY::geom::Coordinate		 cp;
+		GEOMETRY::geom::Coordinate	    cPoint, cCp;
+		GEOMETRY::geom::Envelope	       cWrdExt;
+
+		rect =  m_pGeoMap->GetDisplay()->GetDisplayTransformation().GetViewBound().GetRect();
+		//
+		cp.x = rect.CenterPoint().x;
+		cp.y = rect.CenterPoint().y;
+
+		cWrdExt = m_srcEnvelop;
+		cWrdExt.centre(cCp);
+
+		cPoint.x = extent.getMinX();
+		cPoint.y = extent.getMinY();
+
+		cPoint.x -= cCp.x;
+		cPoint.y -= cCp.y;
+		xmin = cp.x + cPoint.x / (m_srcScale);
+		ymax = cp.y - cPoint.y / (m_srcScale);
+
+		cPoint.x = extent.getMaxX();
+		cPoint.y = extent.getMaxY();
+		cPoint.x -= cCp.x;
+		cPoint.y -= cCp.y;
+		xmax = cp.x + cPoint.x / (m_srcScale);
+		ymin = cp.y - cPoint.y / (m_srcScale);
+
+		rect.left = (long)(xmin+0.5);
+		rect.top = (long)(ymin+0.5);
+		rect.right = (long)(xmax+0.5);
+		rect.bottom = (long)(ymax+0.5);	
+
+	}
+
+
+}
+
+void CusMapCtrl::CalDestRect(GEOMETRY::geom::Envelope srcExtent,GEOMETRY::geom::Envelope destExtent,CRect &rect)
+{
+
+	GEOMETRY::geom::Coordinate	  cp;
+	GEOMETRY::geom::Coordinate	  cPoint, cCp;
+	GEOMETRY::geom::Envelope	     cWrdExt;
+	double xmin,xmax,ymin,ymax;
+
+	rect = m_pGeoMap->GetDisplay()->GetDisplayTransformation().GetViewBound().GetRect();
+	//
+	cp.x = rect.CenterPoint().x;
+	cp.y = rect.CenterPoint().y;
+
+	cWrdExt = destExtent;
+	cWrdExt.centre(cCp);
+
+	cPoint.x = srcExtent.getMinX();
+	cPoint.y = srcExtent.getMinY();
+	cPoint.x -= cCp.x;
+	cPoint.y -= cCp.y;
+
+	xmin = cp.x + cPoint.x / (m_dblScale);
+	ymax = cp.y - cPoint.y / (m_dblScale);
+
+	cPoint.x = srcExtent.getMaxX();
+	cPoint.y = srcExtent.getMaxY();
+	cPoint.x -= cCp.x;
+	cPoint.y -= cCp.y;
+	xmax = cp.x + cPoint.x / (m_dblScale);
+	ymin = cp.y - cPoint.y / (m_dblScale);
+
+	rect.left = (long)(xmin+0.5);
+	rect.top = (long)(ymin+0.5);
+	rect.right = (long)(xmax+0.5);
+	rect.bottom = (long)(ymax+0.5);	
+
+
 }
