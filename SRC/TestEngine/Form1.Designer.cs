@@ -30,9 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.axusMapControl1 = new AxusMapControlLib.AxusMapControl();
             this.AddShp = new System.Windows.Forms.ToolStripButton();
             this.MapPan = new System.Windows.Forms.ToolStripButton();
+            this.axusMapControl1 = new AxusMapControlLib.AxusMapControl();
+            this.ZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.ZoomOut = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axusMapControl1)).BeginInit();
             this.SuspendLayout();
@@ -41,22 +43,14 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AddShp,
-            this.MapPan});
+            this.MapPan,
+            this.ZoomIn,
+            this.ZoomOut});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(599, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // axusMapControl1
-            // 
-            this.axusMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axusMapControl1.Enabled = true;
-            this.axusMapControl1.Location = new System.Drawing.Point(0, 25);
-            this.axusMapControl1.Name = "axusMapControl1";
-            this.axusMapControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axusMapControl1.OcxState")));
-            this.axusMapControl1.Size = new System.Drawing.Size(599, 436);
-            this.axusMapControl1.TabIndex = 1;
             // 
             // AddShp
             // 
@@ -77,6 +71,36 @@
             this.MapPan.Size = new System.Drawing.Size(23, 22);
             this.MapPan.Text = "平移";
             this.MapPan.Click += new System.EventHandler(this.MapPan_Click);
+            // 
+            // axusMapControl1
+            // 
+            this.axusMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axusMapControl1.Enabled = true;
+            this.axusMapControl1.Location = new System.Drawing.Point(0, 25);
+            this.axusMapControl1.Name = "axusMapControl1";
+            this.axusMapControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axusMapControl1.OcxState")));
+            this.axusMapControl1.Size = new System.Drawing.Size(599, 436);
+            this.axusMapControl1.TabIndex = 1;
+            // 
+            // ZoomIn
+            // 
+            this.ZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("ZoomIn.Image")));
+            this.ZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ZoomIn.Name = "ZoomIn";
+            this.ZoomIn.Size = new System.Drawing.Size(23, 22);
+            this.ZoomIn.Text = "放大";
+            this.ZoomIn.Click += new System.EventHandler(this.ZoomIn_Click);
+            // 
+            // ZoomOut
+            // 
+            this.ZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("ZoomOut.Image")));
+            this.ZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ZoomOut.Name = "ZoomOut";
+            this.ZoomOut.Size = new System.Drawing.Size(23, 22);
+            this.ZoomOut.Text = "缩小";
+            this.ZoomOut.Click += new System.EventHandler(this.ZoomOut_Click);
             // 
             // Form1
             // 
@@ -101,6 +125,8 @@
         private AxusMapControlLib.AxusMapControl axusMapControl1;
         private System.Windows.Forms.ToolStripButton AddShp;
         private System.Windows.Forms.ToolStripButton MapPan;
+        private System.Windows.Forms.ToolStripButton ZoomIn;
+        private System.Windows.Forms.ToolStripButton ZoomOut;
 
     }
 }

@@ -34,5 +34,15 @@ namespace TestEngine
         {
             axusMapControl1.CurTool = usMapControlLib.usToolType.PanTool;
         }
+
+        private void ZoomIn_Click(object sender, EventArgs e)
+        {
+            axusMapControl1.CurTool = usMapControlLib.usToolType.ZoomInTool;
+        }
+
+        private void ZoomOut_Click(object sender, EventArgs e)
+        {
+            axusMapControl1.CurTool = usMapControlLib.usToolType.ZoomOutTool;
+        }
     }
 }
