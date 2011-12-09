@@ -30,6 +30,11 @@ namespace Control
 		Element::CPolylineMeasureElementPtr m_pPolyline;
 		int m_nLastVertixId;
 
+		HCURSOR m_hHandCursor;
+		bool b_CanDelete;
+		bool b_InSketch;
+		Element::CPolylineMeasureElementPtr m_DelPolyline; 
+
 	};
 
 }
