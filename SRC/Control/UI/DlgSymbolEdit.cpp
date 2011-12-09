@@ -31,8 +31,8 @@ void CDlgSymbolEdit::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DEL,m_btDel);
 	DDX_Control(pDX, IDC_MOVEUP,m_btUp);
 	DDX_Control(pDX, IDC_MOVEDOWN,m_btDown);
-	DDX_Control(pDX, IDC_COPY,m_btCopyBUT);
-	DDX_Control(pDX, IDC_PASTE,m_btPaste);
+	//DDX_Control(pDX, IDC_COPY,m_btCopyBUT);
+	//DDX_Control(pDX, IDC_PASTE,m_btPaste);
 	DDX_Control(pDX, IDC_DISPLAY, m_picture);
 	DDX_Control(pDX, IDC_COMBO_SYMTYPE, m_comboSelType);
 	DDX_Control(pDX,IDC_CR_LINE,m_btCrLine);
@@ -254,17 +254,18 @@ BOOL CDlgSymbolEdit::OnInitDialog()
 	paste_Pic.LoadBitmap(IDB_PASTE);
 
 	m_btAdd.SetBitmap( add_Pic );
-	m_btAdd.SetTooltip("根据当前选取符号类型添加新符号");
-	m_btDel.SetBitmap( del_Pic );
-	m_btDel.SetTooltip("删除当前选取符号");
+	
+	m_btAdd.SetTooltip("添加新符号");
+	m_btDel.SetImage( IDB_DEL );
+	m_btDel.SetTooltip("删除符号");
 	m_btUp.SetBitmap( up_Pic );
-	m_btUp.SetTooltip("将当前选取符号向上移动");
+	m_btUp.SetTooltip("符号上移");
 	m_btDown.SetBitmap( down_Pic );
-	m_btDown.SetTooltip("将当前选取符号向下移动");
-	m_btCopyBUT.SetBitmap( copyBUT_Pic );
+	m_btDown.SetTooltip("符号下移");
+	/*m_btCopyBUT.SetBitmap( copyBUT_Pic );
 	m_btCopyBUT.SetTooltip("复制当前选取符号");
 	m_btPaste.SetBitmap( paste_Pic );
-	m_btPaste.SetTooltip("在当前选取符号的上方粘贴复制的符号");
+	m_btPaste.SetTooltip("在当前选取符号的上方粘贴复制的符号");*/
 
 	m_btAddition.SetTooltip("放大");
 	m_btSubtration.SetTooltip("缩小");
