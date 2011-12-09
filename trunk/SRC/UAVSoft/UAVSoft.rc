@@ -290,12 +290,12 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "UAVSoft\n\nUAVSoft\n\n\nUAVSoft.Document\nUAVSoft.Document"
+    IDR_MAINFRAME           "无人机数据处理系统\n\n无人机数据处理系统\n\n\nUAVSoft.Document\nUAVSoft.Document"
 END
 
 STRINGTABLE 
 BEGIN
-    AFX_IDS_APP_TITLE       "UAVSoft"
+    AFX_IDS_APP_TITLE       "无人机数据处理系统"
     AFX_IDS_IDLEMESSAGE     "Ready"
 END
 
