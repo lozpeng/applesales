@@ -8,21 +8,21 @@ namespace Element{
 
 	CPolygonMeasureElement::CPolygonMeasureElement()
 	{
-		m_enumElementType = ET_FILL_POLYGON_ELEMENT;
+		m_enumElementType = ET_MEASURE_POLYGON_ELEMENT;
 		m_pSelectionHandle.reset(new CEnvelopeTracker(GEOMETRY::geom::Envelope(0,0,0,0), HT_EIGHT));
 		bDrawCloseButton = false;
 	}
 
 	CPolygonMeasureElement::CPolygonMeasureElement(const GEOMETRY::geom::Geometry& geometry):CPolygonElement(geometry)
 	{
-		m_enumElementType = ET_FILL_POLYGON_ELEMENT;
+		m_enumElementType = ET_MEASURE_POLYGON_ELEMENT;
 		m_pSelectionHandle.reset(new CEnvelopeTracker(*geometry.getEnvelopeInternal(), HT_EIGHT));
 		bDrawCloseButton = false;
 	}
 
 	CPolygonMeasureElement::CPolygonMeasureElement(GEOMETRY::geom::Coordinate& coord)
 	{
-		m_enumElementType = ET_FILL_POLYGON_ELEMENT;
+		m_enumElementType = ET_MEASURE_POLYGON_ELEMENT;
 
 		GEOMETRY::geom::CoordinateSequence* pCoords = GEOMETRY::geom::GeometryFactory::getDefaultInstance()->getCoordinateSequenceFactory()->create(NULL);
 		for(int i=0; i<4; i++)

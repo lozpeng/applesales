@@ -7,14 +7,14 @@ namespace Element{
 
 	CPolylineMeasureElement::CPolylineMeasureElement(void)
 	{
-		m_enumElementType = ET_POLYLINE_ELEMENT;
+		m_enumElementType = ET_MEASURE_POLYLINE_ELEMENT;
 		m_pSelectionHandle.reset(new CEnvelopeTracker(GEOMETRY::geom::Envelope(0,0,0,0), HT_EIGHT));
 		bDrawCloseButton = false;
 	}
 
 	CPolylineMeasureElement::CPolylineMeasureElement(const GEOMETRY::geom::Geometry& geometry):CPolylineElement(geometry)
 	{
-		m_enumElementType = ET_POLYLINE_ELEMENT;
+		m_enumElementType = ET_MEASURE_POLYLINE_ELEMENT;
 
 		m_pSymbol.reset(new Display::CSimpleLineSymbol);
 		m_pSymbol->SetColor(RGB(0,0,0));
@@ -25,7 +25,7 @@ namespace Element{
 
 	CPolylineMeasureElement::CPolylineMeasureElement(GEOMETRY::geom::Coordinate& coord)
 	{
-		m_enumElementType = ET_POLYLINE_ELEMENT;
+		m_enumElementType = ET_MEASURE_POLYLINE_ELEMENT;
 
 		m_pSymbol.reset(new Display::CSimpleLineSymbol);
 		m_pSymbol->SetColor(RGB(0,0,0));
@@ -190,7 +190,7 @@ namespace Element{
 
 		
 		std::string labelName="";
-		char szLabelName[10];
+		char szLabelName[256];
 		double dbGeoLen=0,dbTotalLen=0;
 		double dbOffset = pDisplay->GetDisplayTransformation().TransformToGeo(10);
 		double dbExpand = pDisplay->GetDisplayTransformation().TransformToGeo(3);

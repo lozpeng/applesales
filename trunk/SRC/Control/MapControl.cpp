@@ -446,7 +446,7 @@ namespace Control
 	{
 
 		//用PreTranslateMessage的方法，判断Ctrl+C是否按下，按下就执行快捷键对应的操作
-		if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'X')
+		if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'x')
 		{
 			//AfxMessageBox("Ctrl + X被按下");
 			Framework::ICommand* pCommand = NULL;
@@ -460,7 +460,7 @@ namespace Control
 
 			return TRUE;
 		} 
-		else if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'C')
+		else if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'c')
 		{
 			Framework::ICommand* pCommand = NULL;
 			this->SetCurTool("CopyElementCmd");
@@ -472,7 +472,7 @@ namespace Control
 			}
 			return TRUE;
 		} 
-		else if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'V')
+		else if(pMsg->message == WM_KEYDOWN && pMsg->wParam == 'v')
 		{
 			Framework::ICommand* pCommand = NULL;
 			this->SetCurTool("PasteElementCmd");

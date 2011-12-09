@@ -30,6 +30,10 @@ namespace Control
 		Element::CPolygonMeasureElementPtr m_pPolygon;
 		int m_nLastVertixId;
 
+		HCURSOR m_hHandCursor;
+		bool b_CanDelete;
+		bool b_InSketch;
+		Element::CPolygonMeasureElementPtr m_DelPolygon; 
 	};
 
 }
