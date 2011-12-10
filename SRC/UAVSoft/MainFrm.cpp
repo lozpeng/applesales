@@ -419,6 +419,75 @@ void CMainFrame::AddTab_MapControl()
 	pPanelMap->Add (pBtnNextView);
 
 	
+	//添加当前图层
+	CBCGPRibbonPanel* pPanelTargetLayer = pCategory->AddPanel (_T("增强显示"));
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,80,"目标层:");
+	pPanelTargetLayer->Add(pBtnCurrLayer);
+
+	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 1);
+	pPanelTargetLayer->Add (pBtnShowOverView);
+	
+	pPanelTargetLayer->AddSeparator();
+
+	
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T("   调  整:")));
+	CBCGPRibbonButton* pBtnBright = new CBCGPRibbonButton (ID_BRIGHT_RESTORE, _T("亮  度:"),3);
+	pPanelTargetLayer->Add (pBtnBright);
+	CBCGPRibbonButton* pBtnContrast = new CBCGPRibbonButton (ID_CONTRAST_RESTORE, _T("对比度:"), 4);
+	pPanelTargetLayer->Add ( pBtnContrast);
+
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonSlider* pSliderBright = new CBCGPRibbonSlider(ID_BRIGHT_SLIDER);
+	pSliderBright->SetRange (0, 100);
+	pSliderBright->SetPos (50);
+	pPanelTargetLayer->Add(pSliderBright);
+
+	pPanelTargetLayer->SetCenterColumnVert(TRUE);	
+	CBCGPRibbonSlider* pSliderContrast = new CBCGPRibbonSlider (ID_CONTRAST_SLIDER);
+	pSliderContrast->SetRange (0, 100);
+	pSliderContrast->SetPos (50);
+	pPanelTargetLayer->Add ( pSliderContrast);
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonEdit* pBtnLE = new CBCGPRibbonEdit (ID_BRIGHT_TEXT, 30, _T(""));
+	pBtnLE->EnableSpinButtons (0, 99);
+	pBtnLE->SetEditText (_T("50"));
+	pPanelTargetLayer->Add (pBtnLE);
+
+	CBCGPRibbonEdit* pBtnDE = new CBCGPRibbonEdit (ID_CONTRAST_TEXT, 30, _T(""));
+	pBtnDE->EnableSpinButtons (0, 99);
+	pBtnDE->SetEditText (_T("50"));
+	pPanelTargetLayer->Add (pBtnDE);
+
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonButton* pBtnTrans = new CBCGPRibbonButton (ID_TRANSPARENT_RESTORE, _T("透明度:"), 5);
+	pPanelTargetLayer->Add ( pBtnTrans);
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonSlider* pSliderTrans = new CBCGPRibbonSlider (ID_TRANSPARENT_SLIDER);
+
+	pSliderTrans->SetRange (0, 100);
+	pSliderTrans->SetPos (0);
+	pPanelTargetLayer->Add ( pSliderTrans);
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+	CBCGPRibbonEdit* pBtnTE = new CBCGPRibbonEdit (ID_TRANSPARENT_TEXT, 30, _T(""));
+	pBtnTE->EnableSpinButtons (0, 99);
+	pBtnTE->SetEditText (_T("0"));
+	pPanelTargetLayer->Add (pBtnTE);
+	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
+
+	pPanelTargetLayer->AddSeparator();
+	CBCGPRibbonButton* pBtnSwipView = new CBCGPRibbonButton (ID_SWIPE, _T("卷帘"),0,3);
+	pPanelTargetLayer->Add ( pBtnSwipView);
+	CBCGPRibbonButton* pBtnStretch = new CBCGPRibbonButton (ID_RASLUT_EDIT, _T("闪烁"),1,4);
+	pPanelTargetLayer->Add ( pBtnStretch);
+
+
 	CBCGPRibbonPanel* pPanelSystem = pCategory->AddPanel (_T("系统"));
 	CBCGPRibbonButton* pBtnSetting = new CBCGPRibbonButton (ID_SETTING,_T("设置"), 3, 22);
 	pPanelSystem->Add(pBtnSetting);
