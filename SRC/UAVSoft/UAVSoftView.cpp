@@ -1049,37 +1049,37 @@ Carto::ILayerPtr CUAVSoftView::FindLayerbyPointer(Carto::ILayer* pLayer)
 }
 void CUAVSoftView::RefreshLayerCombo()
 {
-	//int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
-	//GetCurLyrCombox()->RemoveAllItems();
-	//GetCurLyrCombox_Vector()->RemoveAllItems();
-	//GetMagicLayer()->RemoveAllItems();
-	//for (int i=0; i<nSize; ++i)
-	//{
-	//	Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(i);
-	//	std::string strName = pLayer->GetName();
-	//	//ÅÐ¶ÏÍ¼²ãÀàÐÍ
-	//	if(pLayer->GetLayerType()==Carto::RasterLayer)
-	//	{
-	//		GetCurLyrCombox()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
-	//		GetMagicLayer()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
+	GetCurLyrCombox()->RemoveAllItems();
+	GetCurLyrCombox_Vector()->RemoveAllItems();
+	GetMagicLayer()->RemoveAllItems();
+	for (int i=0; i<nSize; ++i)
+	{
+		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(i);
+		std::string strName = pLayer->GetName();
+		//ÅÐ¶ÏÍ¼²ãÀàÐÍ
+		if(pLayer->GetLayerType()==Carto::RasterLayer)
+		{
+			GetCurLyrCombox()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+			GetMagicLayer()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
 
-	//	}
-	//	else if(pLayer->GetLayerType()==Carto::FeatureLayer)
-	//	{
-	//		GetCurLyrCombox_Vector()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+		}
+		else if(pLayer->GetLayerType()==Carto::FeatureLayer)
+		{
+			GetCurLyrCombox_Vector()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
 
-	//	}
+		}
 
 
-	//}
-	//if(GetCurLyrCombox()->GetCount() > 0)
-	//	GetCurLyrCombox()->SelectItem(0);
-	//if(GetCurLyrCombox_Vector()->GetCount() > 0)
-	//	GetCurLyrCombox_Vector()->SelectItem(0);
-	//if(GetMagicLayer()->GetCount() > 0)
-	//{
-	//	GetMagicLayer()->SelectItem(0);
-	//}
+	}
+	if(GetCurLyrCombox()->GetCount() > 0)
+		GetCurLyrCombox()->SelectItem(0);
+	if(GetCurLyrCombox_Vector()->GetCount() > 0)
+		GetCurLyrCombox_Vector()->SelectItem(0);
+	if(GetMagicLayer()->GetCount() > 0)
+	{
+		GetMagicLayer()->SelectItem(0);
+	}
 
 }
 
