@@ -702,7 +702,36 @@ void CMainFrame::AddTab_Print()
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
 		_T("制图输出"),
 		IDB_FILELARGE,
-		IDB_DRAWMESURE);
+		IDB_LAYOUT);
+
+
+
+	//创建编辑基本操作
+	CBCGPRibbonPanel* pPanelPageLayout = pCategory->AddPanel (_T("制图浏览工具"));
+	//--------------------------
+	// 放大:
+	//--------------------------
+	CBCGPRibbonButton* pBtnZoomIn = new CBCGPRibbonButton (ID_MAP_ZOOM_IN, _T("放大"), 0, 0);
+	pPanelPageLayout->Add (pBtnZoomIn);
+	//--------------------------
+	// 缩小:
+	//--------------------------
+	CBCGPRibbonButton* pBtnZoomOut = new CBCGPRibbonButton (ID_ZOOM_OUT,_T("缩小"), 1, 1);
+	pPanelPageLayout->Add (pBtnZoomOut);
+
+
+	CBCGPRibbonButton* pBtnPan = new CBCGPRibbonButton (ID_MAP_PAN, _T("漫游"), 2, 2);
+	pPanelPageLayout->Add (pBtnPan);
+	//--------------------------
+	// 全图:
+	//--------------------------
+	CBCGPRibbonButton* pBtnOvewView = new CBCGPRibbonButton (ID_MAP_FULLVIEW,_T("全图"), 3, 3);
+	pPanelPageLayout->Add (pBtnOvewView);
+	//--------------------------
+	// 1:1:
+	//--------------------------
+	CBCGPRibbonButton* pBtnSrcView = new CBCGPRibbonButton (ID_MAP_FULLVIEW,_T("1:1"), 4, 4);
+	pPanelPageLayout->Add (pBtnSrcView);
 }
 
 
