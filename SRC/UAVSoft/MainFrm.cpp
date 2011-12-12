@@ -424,16 +424,16 @@ void CMainFrame::AddTab_MapControl()
 	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,80,"目标层:");
 	pPanelTargetLayer->Add(pBtnCurrLayer);
 
-	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 1);
+	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 26);
 	pPanelTargetLayer->Add (pBtnShowOverView);
 	
 	pPanelTargetLayer->AddSeparator();
 
 	
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T("   调  整:")));
-	CBCGPRibbonButton* pBtnBright = new CBCGPRibbonButton (ID_BRIGHT_RESTORE, _T("亮  度:"),3);
+	CBCGPRibbonButton* pBtnBright = new CBCGPRibbonButton (ID_BRIGHT_RESTORE, _T("亮  度:"),29);
 	pPanelTargetLayer->Add (pBtnBright);
-	CBCGPRibbonButton* pBtnContrast = new CBCGPRibbonButton (ID_CONTRAST_RESTORE, _T("对比度:"), 4);
+	CBCGPRibbonButton* pBtnContrast = new CBCGPRibbonButton (ID_CONTRAST_RESTORE, _T("对比度:"), 30);
 	pPanelTargetLayer->Add ( pBtnContrast);
 
 
@@ -462,7 +462,7 @@ void CMainFrame::AddTab_MapControl()
 
 
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
-	CBCGPRibbonButton* pBtnTrans = new CBCGPRibbonButton (ID_TRANSPARENT_RESTORE, _T("透明度:"), 5);
+	CBCGPRibbonButton* pBtnTrans = new CBCGPRibbonButton (ID_TRANSPARENT_RESTORE, _T("透明度:"), 31);
 	pPanelTargetLayer->Add ( pBtnTrans);
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
 
