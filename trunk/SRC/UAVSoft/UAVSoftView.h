@@ -50,6 +50,7 @@ private:
 	CBCGPTabWnd	m_WndTab;
 	CBCGPButton m_wndButton;
 	Control::CMapControl m_MapCtrl;
+	Control::CLayoutControl m_LayoutCtrl;
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);

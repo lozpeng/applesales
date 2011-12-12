@@ -25,8 +25,17 @@
 #define IDB_FILESMALL                   165
 #define IDB_BITMAP1                     166
 #define IDB_MAIN                        166
+#define IDB_BITMAP2                     167
+#define IDB_LAYOUT                      167
+#define IDD_DIG_DRAWINGEXPORT           176
 #define IDC_COMPANY_URL                 1041
 #define ID_TABCONTROL                   1054
+#define IDC_RADIO_EXPORT_ALL            1054
+#define IDC_RADIO_EXPOERT_SELECTED      1055
+#define IDC_COMBO_DRAWINGTYPE           1056
+#define IDC_CHECK_ISADD                 1059
+#define IDC_BTN_SLECTPATH               1060
+#define IDC_COMBO_Export                1061
 #define ID_VIEW_TOOLBARS                32771
 #define ID_VIEW_WORKSPACE2              32792
 #define ID_VIEW_WORKSPACE               32803
@@ -137,7 +146,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        167
+#define _APS_NEXT_RESOURCE_VALUE        168
 #define _APS_NEXT_COMMAND_VALUE         40632
 #define _APS_NEXT_CONTROL_VALUE         1055
 #define _APS_NEXT_SYMED_VALUE           108

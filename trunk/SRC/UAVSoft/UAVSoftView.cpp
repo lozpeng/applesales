@@ -21,6 +21,8 @@
 #include "Tool/MagicStickTool.h"
 #include "UI/ImageProcessTool.h"
 #include "ILayer.h"
+#include "DlgDrawingExport.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -274,13 +276,13 @@ int CUAVSoftView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_MapCtrl.CreateControl(Framework::CommonUIName::AppMapControl, &m_WndTab, ID_MAPCTRL);
 	m_WndTab.AddTab( &m_MapCtrl , "Map" );
 
-	//m_LayoutCtrl.CreateControl(Framework::CommonUIName::AppLayoutControl, &m_WndTab,ID_LAYOUTCTRL);
-	//m_wndButton.Create(_T("Test"),WS_CHILD|WS_VISIBLE,CRect(0,0,10,20),&m_WndTab,IDC_TEST);
-	//m_WndTab.AddTab(&m_LayoutCtrl,_T("Layout"));
+	m_LayoutCtrl.CreateControl(Framework::CommonUIName::AppLayoutControl, &m_WndTab,ID_LAYOUTCTRL);
+	m_WndTab.AddTab(&m_LayoutCtrl,_T("Layout"));
 
 
 	CUAVSoftDoc* pDoc = GetDocument();
 	pDoc->SetLinkMapCtrl(&m_MapCtrl);
+	pDoc->SetLinkLayoutCtrl(&m_LayoutCtrl);
 
 	m_WndTab.SetActiveTab(0);
 	m_WndTab.SetFlatFrame ();
@@ -735,7 +737,65 @@ afx_msg void CUAVSoftView::OnDrawSaveAs()
 {
 	//element 转成shp
 
+	Carto::CMapPtr ipMap = m_MapCtrl.GetMap();
+	Carto::CGraphicLayerPtr ipGraphicLayer = ipMap->GetGraphicLayer();
+	long lElementCnt = ipGraphicLayer->GetElementCount();
+	if(lElementCnt <1)return;
 
+	CDlgDrawingExport Dlg;
+	if(Dlg.DoModal()==IDOK)
+	{
+		char* fileName = Dlg.m_ExportPath.GetBuffer(Dlg.m_ExportPath.GetLength());
+
+		Carto::CLayerArray &layers = ipMap->GetLayers();
+
+		Carto::ILayerPtr pLayer;
+		int index;
+		bool bfind =false;
+		bool flag = false;
+		for(int i=0;i<layers.GetSize();i++)
+		{
+			pLayer =layers.GetAt(i);
+			if(!pLayer)
+			{
+				continue;
+			}
+			if(pLayer->GetLayerType()==Carto::FeatureLayer)
+			{
+				if (strcmp(pLayer->GetName().c_str(),fileName) == 0)
+				{
+					flag = true;
+					break;
+				}
+			}
+		}
+		if(flag)
+		{
+			Geodatabase::IWorkspace *pWorkspace = pLayer->GetDataObject()->GetWorkspace();
+			//开始编辑
+			bool srcState = pWorkspace->IsEditing();
+			if(srcState== false)
+				pWorkspace->StartEdit();
+			Geodatabase::IFeatureClassPtr pFeatureClass =  (Geodatabase::IFeatureClassPtr) pLayer->GetDataObject();
+			ipGraphicLayer->SaveElementAsShp(pFeatureClass,!Dlg.m_bExpoertAll,Dlg.m_DrawingType);
+
+			pWorkspace->StopEditOperation();
+			if(srcState == false)
+				pWorkspace->StopEdit(true);
+		}
+		else
+		{
+			ipGraphicLayer->SaveElementAsShp(fileName,!Dlg.m_bExpoertAll,Dlg.m_DrawingType);
+
+			if (Dlg.m_CheckAddMap)
+			{	
+				this->GetDocument()->LoadShpFile(fileName);
+				RefreshLayerCombo();
+			}
+		}
+		m_MapCtrl.UpdateControl((DrawContent)(drawElement | drawAll));
+
+	}
 
 }
 afx_msg void CUAVSoftView::OnUpdateDrawSaveAs(CCmdUI* pCmdUI)
@@ -1111,36 +1171,36 @@ void CUAVSoftView::OnUpdateIncrementalImport(CCmdUI* pCmdUI)
 //map与layout之间切换
 LRESULT CUAVSoftView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
 {
-	//int iTabIndex=(int)wp;//激活哪个tab的索引
-	//if(iTabIndex== 1)
-	//{
-	//	//在此初始化layout
-	//	if(!m_LayoutCtrl.Initialized())
-	//	{
-	//		m_LayoutCtrl.Initialize();
-	//		OnDrawMapFrameElement();
-	//		//load temp
-	//		CString strTempFile =GetAppPathName()+"\\china.TMP";
-	//		//m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),strTempFile.AllocSysString());
-	//	}
-	//}
+	int iTabIndex=(int)wp;//激活哪个tab的索引
+	if(iTabIndex== 1)
+	{
+		//在此初始化layout
+		if(!m_LayoutCtrl.Initialized())
+		{
+			m_LayoutCtrl.Initialize();
+			OnDrawMapFrameElement();
+			//load temp
+			//CString strTempFile =GetAppPathName()+"\\china.TMP";
+			//m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),strTempFile.AllocSysString());
+		}
+	}
 	return 0;
 }
 void CUAVSoftView::OnSelectFrameElement()
 {
-	/*Framework::ITool* pTool = NULL;
+	Framework::ITool* pTool = NULL;
 	m_LayoutCtrl.SetCurTool("SelectFrameElementsTool");
 
 	pTool=Framework::ITool::FindTool("SelectFrameElementsTool");
 	if(pTool)
 	{
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
-	}*/
+	}
 }
 void CUAVSoftView::OnUpdateSelectFrameElement(CCmdUI* pCmdUI)
 {
 
-	//pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "SelectFrameElementsTool");
+	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "SelectFrameElementsTool");
 	//pCmdUI->Enable(m_bLayout);
 }
 
@@ -1148,20 +1208,20 @@ void CUAVSoftView::OnUpdateSelectFrameElement(CCmdUI* pCmdUI)
 void CUAVSoftView::OnDrawMapFrameElement()
 {
 
-	//Framework::ICommand* pCommand = NULL;
-	//m_LayoutCtrl.SetCurTool("DrawMapFrameElementCmd");
+	Framework::ICommand* pCommand = NULL;
+	m_LayoutCtrl.SetCurTool("DrawMapFrameElementCmd");
 
-	//pCommand=Framework::ICommand::FindCommand("DrawMapFrameElementCmd");
-	//if(pCommand)
-	//{
-	//	pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
-	//	pCommand->Click();
-	//}
-	//OnSelectFrameElement();
+	pCommand=Framework::ICommand::FindCommand("DrawMapFrameElementCmd");
+	if(pCommand)
+	{
+		pCommand->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		pCommand->Click();
+	}
+	OnSelectFrameElement();
 }
 void CUAVSoftView::OnUpdateDrawMapFrameElement(CCmdUI *pCmdUI)
 {
-	//pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawMapFrameElementCmd");
+	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawMapFrameElementCmd");
 	//pCmdUI->Enable(m_bLayout);
 }
 //编辑工具
@@ -1186,7 +1246,7 @@ afx_msg void CUAVSoftView::OnEditorStart()
 		Geodatabase::IFeatureClass *pFeatureClass =NULL;
 		Geodatabase::IWorkspace *pWorkspace =NULL;
 
-		bool bImport = false;
+		
 		//结束编辑
 		for(int i=0;i<num;i++)
 		{
@@ -1203,10 +1263,6 @@ afx_msg void CUAVSoftView::OnEditorStart()
 			}
 
 			pWorkspace =pFeatureClass->GetWorkspace();
-			if(bImport)
-			{
-				return;
-			}
 
 			pShapeWS = dynamic_cast<CShapefileWorkspace* >(pWorkspace);
 
@@ -1215,17 +1271,17 @@ afx_msg void CUAVSoftView::OnEditorStart()
 		if(pShapeWS==NULL)
 			return;
 
-		int flagSave = MessageBox("是否导出数据编辑增量信息？\n若导出，编辑将被保存到增量文件","提示",MB_YESNO);
-		if (flagSave == 6)
-		{
-			
+		//int flagSave = MessageBox("是否导出数据编辑增量信息？\n若导出，编辑将被保存到增量文件","提示",MB_YESNO);
+		//if (flagSave == 6)
+		//{
+		//	
 
-		}
-		else
-		{
-			pShapeWS->m_bEditIncremental = false;
-			bImport =false;
-		}
+		//}
+		//else
+		//{
+		//	pShapeWS->m_bEditIncremental = false;
+
+		//}
 		m_MapCtrl.UpdateControl(drawAll);
 	}
 }
