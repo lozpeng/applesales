@@ -53,12 +53,21 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_UPDATE_COMMAND_UI(ID_ZOOM_OUT, OnUpdateMapZoomout)
 	ON_COMMAND(ID_MAP_FULLVIEW, OnMapFullView)
 
+
 	ON_COMMAND(ID_PRE_EXTENT, OnMapPreExtent)
 	ON_UPDATE_COMMAND_UI(ID_PRE_EXTENT, OnUpdateMapPreExtent)
 	ON_COMMAND(ID_NEXT_EXTENT, OnMapNextExtent)
 	ON_UPDATE_COMMAND_UI(ID_NEXT_EXTENT, OnUpdateMapNextExtent)
 
 
+	//layout 浏览工具
+	ON_COMMAND(ID_LAYOUT_PAN, OnLayoutPan)
+	ON_UPDATE_COMMAND_UI(ID_LAYOUT_PAN, OnUpdateLayoutPan)
+	ON_COMMAND(ID_LAYOUT_ZOOM_IN, OnLayoutZoomin)
+	ON_UPDATE_COMMAND_UI(ID_LAYOUT_ZOOM_IN, OnUpdateLayoutZoomin)
+	ON_COMMAND(ID_LAYOUT_ZOOM_OUT, OnLayoutZoomout)
+	ON_UPDATE_COMMAND_UI(ID_LAYOUT_ZOOM_OUT, OnUpdateLayoutZoomout)
+	ON_COMMAND(ID_LAYOUT_FULLVIEW, OnLayoutFullView)
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
 	ON_UPDATE_COMMAND_UI(ID_POINT_SELECTFEATURE, OnUpdateSelectFeatureByPoint)
@@ -377,18 +386,62 @@ void CUAVSoftView::OnOpenImg()
 
 
 }
+	//layout 浏览工具
+	afx_msg void CUAVSoftView::OnLayoutPan()
+	{
+		Framework::ITool* pTool = NULL;
+		m_LayoutCtrl.SetCurTool("LayoutPanTool");
 
+		pTool=Framework::ITool::FindTool("LayoutPanTool");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		}
+	}
+	afx_msg void CUAVSoftView::OnUpdateLayoutPan(CCmdUI* pCmdUI)
+	{
+		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "LayoutPanTool");
+	}
+
+	afx_msg void CUAVSoftView::OnLayoutZoomin()
+	{
+		
+		Framework::ITool* pTool = NULL;
+		m_LayoutCtrl.SetCurTool("LayoutZoomInTool");
+
+		pTool=Framework::ITool::FindTool("LayoutZoomInTool");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		}
+	}
+	afx_msg void CUAVSoftView::OnUpdateLayoutZoomin(CCmdUI* pCmdUI)
+	{
+		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "LayoutZoomInTool");
+	}
+
+	afx_msg void CUAVSoftView::OnLayoutZoomout()
+	{
+		Framework::ITool* pTool = NULL;
+		m_LayoutCtrl.SetCurTool("LayoutZoomOutTool");
+
+		pTool=Framework::ITool::FindTool("LayoutZoomOutTool");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		}
+	}
+	afx_msg void CUAVSoftView::OnUpdateLayoutZoomout(CCmdUI* pCmdUI)
+	{
+		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "LayoutZoomOutTool");
+	}
+
+	afx_msg void CUAVSoftView::OnLayoutFullView()
+	{
+	}
 
 void CUAVSoftView::OnMapPan()
 {
-	//Framework::ITool* pTool = NULL;
-	//m_LayoutCtrl.SetCurTool("LayoutPanTool");
-
-	//pTool=Framework::ITool::FindTool("LayoutPanTool");
-	//if(pTool)
-	//{
-	//	pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
-	//}
 	Framework::ITool* pTool = NULL;
 	m_MapCtrl.SetCurTool("MapPan");
 

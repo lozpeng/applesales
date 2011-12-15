@@ -142,6 +142,11 @@
 #define ID_SEND_BLUEFILE                40531
 #define ID_DEL_ALL                      40532
 
+#define ID_LAYOUT_ZOOM_IN               40533
+#define ID_LAYOUT_ZOOM_OUT              40534
+#define ID_LAYOUT_PAN	                40535
+#define ID_LAYOUT_FULLVIEW              40536
+#define ID_LAYOUT_SRCSCALE              40537
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

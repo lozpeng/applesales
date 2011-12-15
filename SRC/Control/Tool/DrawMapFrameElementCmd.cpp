@@ -35,7 +35,8 @@ void CDrawMapFrameElementCmd::Click()
 	ICommand::Click();
 
 	//获取活动制图控件
-	//Framework::ILayoutCtrl* pLayoutCtrl = Framework::ILayoutCtrl::GetActiveLayoutCtrl();
+	Framework::ILayoutCtrl* pLayoutCtrl = Framework::ILayoutCtrl::GetActiveLayoutCtrl();
+	m_pLayoutCtrl = pLayoutCtrl;
 	if(!m_pLayoutCtrl)
 		return;
 

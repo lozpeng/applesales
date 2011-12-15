@@ -86,6 +86,18 @@ public:
 	afx_msg void OnSelectFeatureByPoint();
 	afx_msg void OnUpdateSelectFeatureByPoint(CCmdUI* pCmdUI);
 
+	//layout ‰Ø¿¿π§æﬂ
+	afx_msg void OnLayoutPan();
+	afx_msg void OnUpdateLayoutPan(CCmdUI* pCmdUI);
+
+	afx_msg void OnLayoutZoomin();
+	afx_msg void OnUpdateLayoutZoomin(CCmdUI* pCmdUI);
+
+	afx_msg void OnLayoutZoomout();
+	afx_msg void OnUpdateLayoutZoomout(CCmdUI* pCmdUI);
+
+	afx_msg void OnLayoutFullView();
+
 	//
 	afx_msg void OnCurrLayerCombo();
 	afx_msg void OnCurrLayerCombo_Vector();
