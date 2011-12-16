@@ -145,6 +145,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UAVSoft", "SRC\UAVSoft\UAVS
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StartUAV", "SRC\StartUAV\StartUAV.vcproj", "{C439471E-6426-42D9-AD5A-0C75F52938CC}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -375,6 +381,16 @@ Global
 		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Release|Win32.ActiveCfg = Release|Win32
 		{DD5DCA42-0FD4-41E3-BAB7-D864D58D2FED}.Release|Win32.Build.0 = Release|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Debug|Win32.Build.0 = Debug|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Release|Any CPU.ActiveCfg = Release|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Release|Win32.ActiveCfg = Release|Win32
+		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
