@@ -48,6 +48,24 @@ BOOL CStartUAVDlg::OnInitDialog()
 	m_ToolTip.Create(this);
 	m_ToolTip.Activate(true);
 
+    //图像大小
+	int nImageWidth =800;
+	int nImageHeight =600;
+
+	//计算对话框大小
+	int nDlgWidth =nImageWidth+10;
+	int nDlgHeight =nImageHeight+110;
+    
+	CRect myRect;
+	GetClientRect(&myRect);
+
+	ClientToScreen(myRect);
+	SetWindowPos(&CWnd::wndTop,myRect.left, myRect.top,
+		nDlgWidth, nDlgHeight,SWP_NOMOVE);
+
+
+    m_picLoc.MoveWindow(0,0,nImageWidth+5,nImageHeight+5);
+
 
 	CRect rectPic;
 	m_picLoc.GetWindowRect(&rectPic);
