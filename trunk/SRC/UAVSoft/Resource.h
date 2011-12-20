@@ -124,7 +124,6 @@
 #define ID_CHANGE_DETECT                40500
 #define ID_CHANGE_RENDER                40501
 #define ID_MAGIC_STICK                  40510
-#define ID_EDGE_EXTRACT                 40511
 #define ID_WATER_EXTRACT                40512
 #define ID_DELETE_FEATURES              40513
 #define ID_UNION_FEATURES               40514
@@ -147,6 +146,20 @@
 #define ID_LAYOUT_PAN	                40535
 #define ID_LAYOUT_FULLVIEW              40536
 #define ID_LAYOUT_SRCSCALE              40537
+
+#define ID_EDGE_ENHANCE                 40540
+#define ID_EDGE_EXTRACT                 40541
+#define ID_BUILD_DAMAGE                 40542
+#define ID_HIGH_WATERPOL                40544
+#define ID_ADAPT_WATERPOL               40545
+#define ID_GAS_DATAINSERT               40546
+#define ID_GAS_CREATEIMAGE              40547
+#define ID_OIL_EDGE                     40548
+#define ID_CLASSES_RENAME               40549
+#define ID_CLASSES_MERGE                40550
+
+
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
