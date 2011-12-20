@@ -87,6 +87,7 @@ IDB_FILELARGE           BITMAP                  "res\\filelarg.bmp"
 IDB_FILESMALL           BITMAP                  "res\\filesmall.bmp"
 IDB_MAIN                BITMAP                  "res\\earth.bmp"
 IDB_LAYOUT              BITMAP                  "res\\bitmap2.bmp"
+IDB_POL_LARGE           BITMAP                  "res\\pollution.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

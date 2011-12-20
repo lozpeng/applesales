@@ -691,20 +691,20 @@ void CMainFrame::AddTab_GeoInfoExtract()
 {
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
 		_T("环境污染事故分析"),
-		IDB_FILELARGE,
-		IDB_DRAWMESURE);
+		IDB_POL_LARGE,
+		IDB_POL_LARGE);
 
 	CBCGPRibbonPanel* pPanelEdge = pCategory->AddPanel (_T("图像边缘提取"));
 	//--------------------------
 	// 边缘增强
 	//--------------------------
-	CBCGPRibbonButton* pBtnEdgeEnhance = new CBCGPRibbonButton(ID_EDGE_ENHANCE, _T("图像边缘增强"), -1, 3);
+	CBCGPRibbonButton* pBtnEdgeEnhance = new CBCGPRibbonButton(ID_EDGE_ENHANCE, _T("图像边缘增强"), -1, 0);
 	pPanelEdge->Add (pBtnEdgeEnhance);
 
 	//--------------------------
 	// 边缘提取
 	//--------------------------
-	CBCGPRibbonButton* pBtnEdgeExtract = new CBCGPRibbonButton(ID_EDGE_EXTRACT, _T("图像边缘提取"), -1, 3);
+	CBCGPRibbonButton* pBtnEdgeExtract = new CBCGPRibbonButton(ID_EDGE_EXTRACT, _T("图像边缘提取"), -1, 1);
 	pPanelEdge->Add (pBtnEdgeExtract);
 
 	CBCGPRibbonPanel* pPanelPOL = pCategory->AddPanel (_T("环境污染识别"));
@@ -751,7 +751,7 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	// 分类结果编号命名
 	//--------------------------
-	CBCGPRibbonButton* pBtnClassRename = new CBCGPRibbonButton(ID_CLASSES_RENAME, _T("分类结果编号命名"), -1, 3);
+	CBCGPRibbonButton* pBtnClassRename = new CBCGPRibbonButton(ID_CLASSES_RENAME, _T("分类结果编号命名"), -1, 2);
 	pPanelClasses->Add (pBtnClassRename);
 
 	//--------------------------
