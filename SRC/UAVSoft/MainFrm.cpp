@@ -690,10 +690,77 @@ void CMainFrame::AddTab_Editor()
 void CMainFrame::AddTab_GeoInfoExtract()
 {
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
-		_T("灾害分析"),
+		_T("环境污染事故分析"),
 		IDB_FILELARGE,
 		IDB_DRAWMESURE);
 
+	CBCGPRibbonPanel* pPanelEdge = pCategory->AddPanel (_T("图像边缘提取"));
+	//--------------------------
+	// 边缘增强
+	//--------------------------
+	CBCGPRibbonButton* pBtnEdgeEnhance = new CBCGPRibbonButton(ID_EDGE_ENHANCE, _T("图像边缘增强"), -1, 3);
+	pPanelEdge->Add (pBtnEdgeEnhance);
+
+	//--------------------------
+	// 边缘提取
+	//--------------------------
+	CBCGPRibbonButton* pBtnEdgeExtract = new CBCGPRibbonButton(ID_EDGE_EXTRACT, _T("图像边缘提取1"), -1, 3);
+	pPanelEdge->Add (pBtnEdgeExtract);
+
+	CBCGPRibbonPanel* pPanelPOL = pCategory->AddPanel (_T("环境污染识别"));
+	//--------------------------
+	// 垮塌事故识别
+	//--------------------------
+	CBCGPRibbonButton* pBtnBuildDamage = new CBCGPRibbonButton(ID_BUILD_DAMAGE, _T("垮塌事故识别"), -1, 3);
+	pPanelPOL->Add (pBtnBuildDamage);
+
+	//--------------------------
+	// 高精度水华识别
+	//--------------------------
+	CBCGPRibbonButton* pBtnHighWPL = new CBCGPRibbonButton(ID_HIGH_WATERPOL, _T("高精度水华识别"), -1, 3);
+	pPanelPOL->Add (pBtnHighWPL);
+
+	//--------------------------
+	// 自适应水华识别
+	//--------------------------
+	CBCGPRibbonButton* pBtnAdaptWPL = new CBCGPRibbonButton(ID_ADAPT_WATERPOL, _T("自适应水华识别"), -1, 3);
+	pPanelPOL->Add (pBtnAdaptWPL);
+
+	//--------------------------
+	// 气体污染数据插值
+	//--------------------------
+	CBCGPRibbonButton* pBtnGasDataInsert = new CBCGPRibbonButton(ID_GAS_DATAINSERT, _T("气体污染数据插值"), -1, 3);
+	pPanelPOL->Add (pBtnGasDataInsert);
+
+	//--------------------------
+	// 浓度影像生成
+	//--------------------------
+	CBCGPRibbonButton* pBtnGasCreateImage = new CBCGPRibbonButton(ID_GAS_CREATEIMAGE, _T("浓度影像生成"), -1, 3);
+	pPanelPOL->Add (pBtnGasCreateImage);
+
+
+	//--------------------------
+	// 溢油边缘检测
+	//--------------------------
+	CBCGPRibbonButton* pBtnOilEdge = new CBCGPRibbonButton(ID_OIL_EDGE, _T("溢油边缘检测"), -1, 3);
+	pPanelPOL->Add (pBtnOilEdge);
+
+
+    
+	CBCGPRibbonPanel* pPanelClasses = pCategory->AddPanel (_T("分类后处理"));
+	//--------------------------
+	// 分类结果编号命名
+	//--------------------------
+	CBCGPRibbonButton* pBtnClassRename = new CBCGPRibbonButton(ID_CLASSES_RENAME, _T("分类结果编号命名"), -1, 3);
+	pPanelClasses->Add (pBtnEdgeEnhance);
+
+	//--------------------------
+	// 子类合并
+	//--------------------------
+	CBCGPRibbonButton* pBtnClassMerge = new CBCGPRibbonButton(ID_CLASSES_MERGE, _T("子类合并"), -1, 3);
+	pPanelClasses->Add (pBtnEdgeExtract);
+
+   
 	
 }
 
