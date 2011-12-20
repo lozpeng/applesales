@@ -711,38 +711,38 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	// 垮塌事故识别
 	//--------------------------
-	CBCGPRibbonButton* pBtnBuildDamage = new CBCGPRibbonButton(ID_BUILD_DAMAGE, _T("垮塌事故识别"), -1, 3);
+	CBCGPRibbonButton* pBtnBuildDamage = new CBCGPRibbonButton(ID_BUILD_DAMAGE, _T("垮塌事故识别"), 6, 6);
 	pPanelPOL->Add (pBtnBuildDamage);
 
 	//--------------------------
 	// 高精度水华识别
 	//--------------------------
-	CBCGPRibbonButton* pBtnHighWPL = new CBCGPRibbonButton(ID_HIGH_WATERPOL, _T("高精度水华识别"), -1, 3);
+	CBCGPRibbonButton* pBtnHighWPL = new CBCGPRibbonButton(ID_HIGH_WATERPOL, _T("高精度水华识别"), 4, 4);
 	pPanelPOL->Add (pBtnHighWPL);
 
 	//--------------------------
 	// 自适应水华识别
 	//--------------------------
-	CBCGPRibbonButton* pBtnAdaptWPL = new CBCGPRibbonButton(ID_ADAPT_WATERPOL, _T("自适应水华识别"), -1, 3);
+	CBCGPRibbonButton* pBtnAdaptWPL = new CBCGPRibbonButton(ID_ADAPT_WATERPOL, _T("自适应水华识别"), 5, 5);
 	pPanelPOL->Add (pBtnAdaptWPL);
 
 	//--------------------------
 	// 气体污染数据插值
 	//--------------------------
-	CBCGPRibbonButton* pBtnGasDataInsert = new CBCGPRibbonButton(ID_GAS_DATAINSERT, _T("气体污染数据插值"), -1, 3);
+	CBCGPRibbonButton* pBtnGasDataInsert = new CBCGPRibbonButton(ID_GAS_DATAINSERT, _T("气体污染数据插值"), 8, 8);
 	pPanelPOL->Add (pBtnGasDataInsert);
 
 	//--------------------------
 	// 浓度影像生成
 	//--------------------------
-	CBCGPRibbonButton* pBtnGasCreateImage = new CBCGPRibbonButton(ID_GAS_CREATEIMAGE, _T("浓度影像生成"), -1, 3);
+	CBCGPRibbonButton* pBtnGasCreateImage = new CBCGPRibbonButton(ID_GAS_CREATEIMAGE, _T("浓度影像生成"), 9, 9);
 	pPanelPOL->Add (pBtnGasCreateImage);
 
 
 	//--------------------------
 	// 溢油边缘检测
 	//--------------------------
-	CBCGPRibbonButton* pBtnOilEdge = new CBCGPRibbonButton(ID_OIL_EDGE, _T("溢油边缘检测"), -1, 3);
+	CBCGPRibbonButton* pBtnOilEdge = new CBCGPRibbonButton(ID_OIL_EDGE, _T("溢油边缘检测"), 7, 7);
 	pPanelPOL->Add (pBtnOilEdge);
 
 
