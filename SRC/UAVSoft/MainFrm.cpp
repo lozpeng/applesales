@@ -704,7 +704,7 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	// 边缘提取
 	//--------------------------
-	CBCGPRibbonButton* pBtnEdgeExtract = new CBCGPRibbonButton(ID_EDGE_EXTRACT, _T("图像边缘提取1"), -1, 3);
+	CBCGPRibbonButton* pBtnEdgeExtract = new CBCGPRibbonButton(ID_EDGE_EXTRACT, _T("图像边缘提取"), -1, 3);
 	pPanelEdge->Add (pBtnEdgeExtract);
 
 	CBCGPRibbonPanel* pPanelPOL = pCategory->AddPanel (_T("环境污染识别"));
@@ -752,13 +752,13 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	// 分类结果编号命名
 	//--------------------------
 	CBCGPRibbonButton* pBtnClassRename = new CBCGPRibbonButton(ID_CLASSES_RENAME, _T("分类结果编号命名"), -1, 3);
-	pPanelClasses->Add (pBtnEdgeEnhance);
+	pPanelClasses->Add (pBtnClassRename);
 
 	//--------------------------
 	// 子类合并
 	//--------------------------
 	CBCGPRibbonButton* pBtnClassMerge = new CBCGPRibbonButton(ID_CLASSES_MERGE, _T("子类合并"), -1, 3);
-	pPanelClasses->Add (pBtnEdgeExtract);
+	pPanelClasses->Add (pBtnClassMerge);
 
    
 	
