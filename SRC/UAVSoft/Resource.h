@@ -27,6 +27,8 @@
 #define IDB_MAIN                        166
 #define IDB_BITMAP2                     167
 #define IDB_LAYOUT                      167
+#define IDB_POL_COG                     168
+#define IDB_POL_LARGE                   168
 #define IDD_DIG_DRAWINGEXPORT           176
 #define IDC_COMPANY_URL                 1041
 #define ID_TABCONTROL                   1054
@@ -140,13 +142,11 @@
 #define ID_CHANGE_SETSYMBOL             40530
 #define ID_SEND_BLUEFILE                40531
 #define ID_DEL_ALL                      40532
-
 #define ID_LAYOUT_ZOOM_IN               40533
 #define ID_LAYOUT_ZOOM_OUT              40534
-#define ID_LAYOUT_PAN	                40535
+#define ID_LAYOUT_PAN                   40535
 #define ID_LAYOUT_FULLVIEW              40536
 #define ID_LAYOUT_SRCSCALE              40537
-
 #define ID_EDGE_ENHANCE                 40540
 #define ID_EDGE_EXTRACT                 40541
 #define ID_BUILD_DAMAGE                 40542
@@ -158,13 +158,11 @@
 #define ID_CLASSES_RENAME               40549
 #define ID_CLASSES_MERGE                40550
 
-
-
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        168
+#define _APS_NEXT_RESOURCE_VALUE        169
 #define _APS_NEXT_COMMAND_VALUE         40632
 #define _APS_NEXT_CONTROL_VALUE         1055
 #define _APS_NEXT_SYMED_VALUE           108
