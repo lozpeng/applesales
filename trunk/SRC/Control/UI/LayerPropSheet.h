@@ -17,6 +17,7 @@ public:
 public:
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnApply();
+	afx_msg void OnOK();
 
 
 	virtual BOOL OnInitDialog();

@@ -5,6 +5,8 @@
 #include "Control.h"
 #include "RasterPropPage.h"
 #include "IRasterDataset.h"
+#include "RasterLayer.h"
+#include "RasterRGBRender.h"
 
 // CRasterPropPage 对话框
 
@@ -30,7 +32,28 @@ void CRasterPropPage::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CRasterPropPage, CPropertyPage)
 END_MESSAGE_MAP()
 
-
+BOOL CRasterPropPage::OnApply()
+{
+	CBCGPProp* pProp = m_wndPropList.GetProperty(0);
+	int nCount = pProp->GetSubItemsCount();
+	std::string str = _T("波段组合");
+	CBCGPProp* pSubProp = NULL;
+	for (int i=0; i<nCount; i++)
+	{
+		pSubProp = pProp->GetSubItem(i);
+		if (0 == strcmp(str.c_str(),pSubProp->GetName()))
+		{
+			break;
+		}
+	}
+	//
+	Carto::CRasterLayer* pRasLayer = dynamic_cast<Carto::CRasterLayer*>(m_player);
+	Carto::CRasterRGBRender* pRGBRender = dynamic_cast<Carto::CRasterRGBRender*>(pRasLayer->GetRender().get());
+	pRGBRender->SetRedBandIndex(long(pSubProp->GetSubItem(0)->GetValue()));
+	pRGBRender->SetGreenBandIndex(long(pSubProp->GetSubItem(1)->GetValue()));
+	pRGBRender->SetBlueBandIndex(long(pSubProp->GetSubItem(2)->GetValue()));
+	return TRUE;
+}
 // CRasterPropPage 消息处理程序
 
 BOOL CRasterPropPage::OnInitDialog()
@@ -41,8 +64,10 @@ BOOL CRasterPropPage::OnInitDialog()
 	{
 		return FALSE;
 	}
-	Geodatabase::IRasterDatasetPtr pRaster =m_player->GetDataObject();
+	Geodatabase::IRasterDatasetPtr pRaster = m_player->GetDataObject();
 
+	Carto::CRasterLayer* pRasLayer = dynamic_cast<Carto::CRasterLayer*>(m_player);
+	Carto::CRasterRGBRender* pRGBRender = dynamic_cast<Carto::CRasterRGBRender*>(pRasLayer->GetRender().get());
 	CRect rectPropList;
 	m_wndPropListLocation.GetClientRect (&rectPropList);
 	m_wndPropListLocation.MapWindowPoints (this, &rectPropList);
@@ -77,15 +102,8 @@ BOOL CRasterPropPage::OnInitDialog()
 
 	pGroup1->AddSubItem(pSize);
 
-	//波段数
-	long lband =pRaster->GetBandCount();
-	
-	pProp =new CBCGPProp (_T("波段数"), (_variant_t) lband);
-	pProp->AllowEdit (FALSE);
-	pGroup1->AddSubItem(pProp);
-
-    //像素大小
-    double dx,dy;
+	//像素大小
+	double dx,dy;
 	pRaster->GetCellSize(&dx,&dy);
 	CBCGPProp* pCellSize = new CBCGPProp (_T("像素大小"), 0, TRUE);
 
@@ -97,6 +115,27 @@ BOOL CRasterPropPage::OnInitDialog()
 	pCellSize->AddSubItem (pProp);
 
 	pGroup1->AddSubItem(pCellSize);
+
+	//波段数
+	long lband =pRaster->GetBandCount();
+	CBCGPProp* pBand = new CBCGPProp (_T("波段数"), (_variant_t) lband);
+	pGroup1->AddSubItem(pBand);
+	//波段组合
+	pBand = new CBCGPProp (_T("波段组合"), (_variant_t) lband,TRUE);
+	pBand->AllowEdit (FALSE);
+	if (lband > 1)
+	{
+		pProp = new CBCGPProp (_T("红"), (_variant_t)pRGBRender->GetRedBandIndex(),_T(""));
+		pProp->EnableSpinControl (TRUE, 1, lband);
+		pBand->AddSubItem (pProp);
+		pProp = new CBCGPProp (_T("绿"), (_variant_t)pRGBRender->GetGreenBandIndex(),_T(""));
+		pProp->EnableSpinControl (TRUE, 1, lband);
+		pBand->AddSubItem (pProp);
+		pProp = new CBCGPProp (_T("蓝"), (_variant_t)pRGBRender->GetBlueBandIndex(),_T(""));
+		pProp->EnableSpinControl (TRUE, 1, lband);
+		pBand->AddSubItem (pProp);
+	}
+	pGroup1->AddSubItem(pBand);
 
 	//数据类型
 	Geodatabase::BANDDATATYPE datatype= pRaster->GetBandDataType(1);
@@ -142,11 +181,10 @@ BOOL CRasterPropPage::OnInitDialog()
 	pGroup1->AddSubItem(pProp);
 
 	m_wndPropList.AddProperty (pGroup1);
-
+	m_wndPropList.ExpandAll();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
 }
-
 
 void CRasterPropPage::SetLayer(Carto::ILayer* player)
 {

@@ -20,6 +20,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	BOOL OnApply();
+public:
 	CStatic m_wndPropListLocation;
 	virtual BOOL OnInitDialog();
 
