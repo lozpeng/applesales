@@ -10,6 +10,7 @@ IMPLEMENT_DYNAMIC(CLayerPropSheet, CPropertySheet)
 
 BEGIN_MESSAGE_MAP(CLayerPropSheet, CPropertySheet)
 	ON_BN_CLICKED(ID_APPLY_NOW , &CLayerPropSheet::OnApply)
+	ON_BN_CLICKED(IDOK, &CLayerPropSheet::OnOK)
 END_MESSAGE_MAP()
 
 CLayerPropSheet::CLayerPropSheet(CString name , CWnd *pWnd) : CPropertySheet(name , pWnd)
@@ -61,6 +62,10 @@ INT_PTR CLayerPropSheet::DoModal()
 	return CPropertySheet::DoModal();
 }
 
+void CLayerPropSheet::OnOK()
+{
+	OnApply();
+}
 void CLayerPropSheet::OnApply()
 {
 	//调用每个页面的应用函数
