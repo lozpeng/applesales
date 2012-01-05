@@ -157,7 +157,11 @@ namespace Framework
 		return pMapCtrl;
 	}
 
-
+	void IMapCtrl::SetMapFramedStatus(BOOL bFramed)
+	{
+		if(m_pGeoMap)
+			m_pGeoMap->SetFramed(bFramed);
+	}
 	void IMapCtrl::FlashShape(GEOMETRY::geom::Geometry* pShape,long nFlashes,long flashInterval,Display::ISymbol* symbol)
 	{
 		if(!m_pGeoMap||!pShape)

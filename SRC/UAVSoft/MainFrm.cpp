@@ -797,8 +797,38 @@ void CMainFrame::AddTab_Print()
 	//--------------------------
 	// 1:1:
 	//--------------------------
-	CBCGPRibbonButton* pBtnSrcView = new CBCGPRibbonButton (ID_LAYOUT_SRCSCALE,_T("1:1"), 4, 4);
-	pPanelPageLayout->Add (pBtnSrcView);
+	CBCGPRibbonButton* pBtnActualSize = new CBCGPRibbonButton (ID_LAYOUT_ACTUALSIZE,_T("1:1"), 4, 4);
+	pPanelPageLayout->Add (pBtnActualSize);
+
+
+
+	//地图整饰
+	CBCGPRibbonPanel* pPanelMapSurround = pCategory->AddPanel (_T("地图整饰工具"));
+	//--------------------------
+	// 选择制图要素:
+	//--------------------------
+	CBCGPRibbonButton* pBtnSelectFrameElement= new CBCGPRibbonButton (ID_SELECT_FRAME_ELEMENT, _T("选择要素"), 5, 5);
+	pPanelMapSurround->Add (pBtnSelectFrameElement);
+	//--------------------------
+	// 图名:
+	//--------------------------
+	CBCGPRibbonButton* pBtnDrawMapTitle = new CBCGPRibbonButton (ID_DRAW_MAP_TITLE,_T("图名"), 9,9);
+	pPanelMapSurround->Add (pBtnDrawMapTitle);
+	//--------------------------
+	// 指北针:
+	//--------------------------
+	CBCGPRibbonButton* pBtnDrawNorthArrow= new CBCGPRibbonButton (ID_DRAW_NORTH_ARROW,_T("指北针"), 7, 7);
+	pPanelMapSurround->Add (pBtnDrawNorthArrow);
+
+
+	CBCGPRibbonButton* pBtnDrawScaleBar = new CBCGPRibbonButton (ID_DRAW_SCALEBAR, _T("比例尺"), 8, 8);
+	pPanelMapSurround->Add (pBtnDrawScaleBar);
+	//--------------------------
+	// 图例:
+	//--------------------------
+	CBCGPRibbonButton* pBtnDrawLegend= new CBCGPRibbonButton (ID_DRAW_LEGEND,_T("图例"), 6, 6);
+	pPanelMapSurround->Add (pBtnDrawLegend);
+
 }
 
 

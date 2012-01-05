@@ -710,6 +710,14 @@
 				Name="Layout"
 				>
 				<File
+					RelativePath=".\Tool\DrawLegend.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawLegend.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Tool\DrawMapFrameElementCmd.cpp"
 					>
 				</File>
@@ -718,11 +726,51 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Tool\DrawMapTitle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawMapTitle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawNorthArrow.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawNorthArrow.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawScaleBar.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\DrawScaleBar.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Tool\LayoutPanTool.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Tool\LayoutPanTool.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutZoomActualSize.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutZoomActualSize.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutZoomFullExtent.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutZoomFullExtent.h"
 					>
 				</File>
 				<File

@@ -59,6 +59,7 @@ namespace Framework
 
 		std::string GetCurToolName() {return m_curToolname;}
 
+		void SetMapFramedStatus(BOOL bFramed);
 
 
 		Element::CElementCollection* GetElementCopyContainer(){return &m_ElementCopyContainer;};

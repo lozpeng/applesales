@@ -27,16 +27,15 @@ void CDrawMapFrameElementCmd::Initialize(Framework::IUIObject *pTargetControl)
 
 	//获取活动地图控件
 	m_pLayoutCtrl = dynamic_cast<Framework::ILayoutCtrl*>(pTargetControl);
-	if(!m_pLayoutCtrl)
-		return;
+
 }
 void CDrawMapFrameElementCmd::Click()
 {
 	ICommand::Click();
 
 	//获取活动制图控件
-	Framework::ILayoutCtrl* pLayoutCtrl = Framework::ILayoutCtrl::GetActiveLayoutCtrl();
-	m_pLayoutCtrl = pLayoutCtrl;
+	//Framework::ILayoutCtrl* pLayoutCtrl = Framework::ILayoutCtrl::GetActiveLayoutCtrl();
+	//m_pLayoutCtrl = pLayoutCtrl;
 	if(!m_pLayoutCtrl)
 		return;
 
@@ -54,10 +53,10 @@ void CDrawMapFrameElementCmd::Click()
 	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->AddElement(pMapFrame);
 	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->SelectElement(pMapFrame);
 	//pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(Element::PT_ADD, pMapFrame);
-	m_pLayoutCtrl->UpdateControl(drawAll);
+	m_pLayoutCtrl->UpdateControl();
 
 	//设置ActiveAction为选择图元
-	m_pLayoutCtrl->SetCurTool("SelectFrameElements");
+	m_pLayoutCtrl->SetCurTool("SelectFrameElementsTool");
 }
 
 
