@@ -39,6 +39,9 @@ namespace owScene
 
 		bool loadShaderSource( osg::Shader* shader, const std::string& fileName );
 
+	protected:
+		~AtmosphericScatteringRenderTech(){};
+
 	private:
 		osg::ref_ptr<osg::Node> _atmosphereNode;
 		osgViewer::Viewer* _viewer;
