@@ -68,6 +68,21 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_LAYOUT_ZOOM_OUT, OnLayoutZoomout)
 	ON_UPDATE_COMMAND_UI(ID_LAYOUT_ZOOM_OUT, OnUpdateLayoutZoomout)
 	ON_COMMAND(ID_LAYOUT_FULLVIEW, OnLayoutFullView)
+	ON_UPDATE_COMMAND_UI(ID_LAYOUT_FULLVIEW, OnUpdateLayoutZoomFullExtent)
+	ON_COMMAND(ID_LAYOUT_ACTUALSIZE, OnLayoutZoomActualSize)
+	ON_UPDATE_COMMAND_UI(ID_LAYOUT_ACTUALSIZE, OnUpdateLayoutZoomActualSize)
+
+	//地图整饰
+	ON_COMMAND(ID_SELECT_FRAME_ELEMENT, OnSelectFrameElement)
+	ON_UPDATE_COMMAND_UI(ID_SELECT_FRAME_ELEMENT, OnUpdateSelectFrameElement)	
+	ON_COMMAND(ID_DRAW_NORTH_ARROW, OnDrawNorthArrow)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_NORTH_ARROW, OnUpdateDrawNorthArrow)
+	ON_COMMAND(ID_DRAW_SCALEBAR, OnDrawScaleBar)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_SCALEBAR, OnUpdateDrawScaleBar)
+	ON_COMMAND(ID_DRAW_LEGEND, OnDrawLegend)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_LEGEND, OnUpdateDrawLegend)
+	ON_COMMAND(ID_DRAW_MAP_TITLE, OnDrawMapTitle)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_MAP_TITLE, OnUpdateDrawMapTitle)
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
 	ON_UPDATE_COMMAND_UI(ID_POINT_SELECTFEATURE, OnUpdateSelectFeatureByPoint)
@@ -197,6 +212,7 @@ END_MESSAGE_MAP()
 
 CUAVSoftView::CUAVSoftView()
 {
+
 	boost::function<void (Carto::ILayerPtr)> fundl = boost::bind(&CUAVSoftView::LayerDelEvent,this, _1);
 
 	m_ConnectionMapLayerDeleted = Carto::CMap::RegisterDeleteLayer(fundl);
@@ -417,7 +433,7 @@ void CUAVSoftView::OnOpenImg()
 	}
 	afx_msg void CUAVSoftView::OnUpdateLayoutZoomin(CCmdUI* pCmdUI)
 	{
-		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "LayoutZoomInTool");
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "LayoutZoomInTool");
 	}
 
 	afx_msg void CUAVSoftView::OnLayoutZoomout()
@@ -433,11 +449,125 @@ void CUAVSoftView::OnOpenImg()
 	}
 	afx_msg void CUAVSoftView::OnUpdateLayoutZoomout(CCmdUI* pCmdUI)
 	{
-		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "LayoutZoomOutTool");
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "LayoutZoomOutTool");
 	}
 
 	afx_msg void CUAVSoftView::OnLayoutFullView()
 	{
+		Framework::ICommand* pCmd = NULL;
+		m_LayoutCtrl.SetCurTool("LayoutZoomFullExtent");
+		pCmd= Framework::ICommand::FindCommand("LayoutZoomFullExtent");
+		if(pCmd)
+		{
+			pCmd->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+			pCmd->Click();
+		}
+	}
+
+	void CUAVSoftView::OnUpdateLayoutZoomFullExtent(CCmdUI *pCmdUI)
+	{
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "LayoutZoomFullExtent");
+	}
+
+	void CUAVSoftView::OnLayoutZoomActualSize()
+	{
+		Framework::ICommand* pCmd = NULL;
+		m_LayoutCtrl.SetCurTool("LayoutZoomActualSize");
+		pCmd= Framework::ICommand::FindCommand("LayoutZoomActualSize");
+		if(pCmd)
+		{
+			pCmd->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+			pCmd->Click();
+		}
+	}
+
+	void CUAVSoftView::OnUpdateLayoutZoomActualSize(CCmdUI* pCmdUI)
+	{
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "LayoutZoomActualSize");
+	}
+
+	void CUAVSoftView::OnSelectFrameElement()
+	{
+		Framework::ITool* pTool = NULL;
+		m_LayoutCtrl.SetCurTool("SelectFrameElementsTool");
+
+		pTool=Framework::ITool::FindTool("SelectFrameElementsTool");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		}
+	}
+	void CUAVSoftView::OnUpdateSelectFrameElement(CCmdUI* pCmdUI)
+	{
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "SelectFrameElementsTool");
+	}
+
+	void CUAVSoftView::OnDrawNorthArrow()
+	{
+		Framework::ICommand* pCmd = NULL;
+		m_LayoutCtrl.SetCurTool("DrawNorthArrowCmd");
+		pCmd= Framework::ICommand::FindCommand("DrawNorthArrowCmd");
+		if(pCmd)
+		{
+			pCmd->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+			pCmd->Click();
+		}
+	}
+
+	void CUAVSoftView::OnUpdateDrawNorthArrow(CCmdUI *pCmdUI)
+	{
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawNorthArrowCmd");
+	}
+
+	void CUAVSoftView::OnDrawScaleBar()
+	{
+		Framework::ICommand* pCmd = NULL;
+		m_LayoutCtrl.SetCurTool("DrawScaleBarCmd");
+		pCmd= Framework::ICommand::FindCommand("DrawScaleBarCmd");
+		if(pCmd)
+		{
+			pCmd->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+			pCmd->Click();
+		}
+	}
+
+	void CUAVSoftView::OnUpdateDrawScaleBar(CCmdUI *pCmdUI)
+	{
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawScaleBarCmd");
+	}
+
+	void CUAVSoftView::OnDrawLegend()
+	{
+		Framework::ICommand* pCmd = NULL;
+		m_LayoutCtrl.SetCurTool("DrawLegendCmd");
+		pCmd= Framework::ICommand::FindCommand("DrawLegendCmd");
+		if(pCmd)
+		{
+			pCmd->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+			pCmd->Click();
+		}
+	}
+
+	void CUAVSoftView::OnUpdateDrawLegend(CCmdUI *pCmdUI)
+	{
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawLegendCmd");
+	}
+
+	void CUAVSoftView::OnDrawMapTitle()
+	{
+		Framework::ICommand* pCmd = NULL;
+		m_LayoutCtrl.SetCurTool("DrawMapTitleCmd");
+		pCmd= Framework::ICommand::FindCommand("DrawMapTitleCmd");
+		if(pCmd)
+		{
+			pCmd->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+			pCmd->Click();
+		}
+	}
+
+	void CUAVSoftView::OnUpdateDrawMapTitle(CCmdUI *pCmdUI)
+	{
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawMapTitle");
 	}
 
 void CUAVSoftView::OnMapPan()
@@ -1225,8 +1355,13 @@ void CUAVSoftView::OnUpdateIncrementalImport(CCmdUI* pCmdUI)
 LRESULT CUAVSoftView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
 {
 	int iTabIndex=(int)wp;//激活哪个tab的索引
-	if(iTabIndex== 1)
+	if(iTabIndex== 0)
 	{
+		m_MapCtrl.SetMapFramedStatus(FALSE);
+	}
+	else if(iTabIndex== 1)
+	{
+		m_MapCtrl.SetMapFramedStatus(TRUE);
 		//在此初始化layout
 		if(!m_LayoutCtrl.Initialized())
 		{
@@ -1239,23 +1374,7 @@ LRESULT CUAVSoftView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
 	}
 	return 0;
 }
-void CUAVSoftView::OnSelectFrameElement()
-{
-	Framework::ITool* pTool = NULL;
-	m_LayoutCtrl.SetCurTool("SelectFrameElementsTool");
 
-	pTool=Framework::ITool::FindTool("SelectFrameElementsTool");
-	if(pTool)
-	{
-		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
-	}
-}
-void CUAVSoftView::OnUpdateSelectFrameElement(CCmdUI* pCmdUI)
-{
-
-	pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "SelectFrameElementsTool");
-	//pCmdUI->Enable(m_bLayout);
-}
 
 
 void CUAVSoftView::OnDrawMapFrameElement()

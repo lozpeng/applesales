@@ -146,7 +146,7 @@
 #define ID_LAYOUT_ZOOM_OUT              40534
 #define ID_LAYOUT_PAN                   40535
 #define ID_LAYOUT_FULLVIEW              40536
-#define ID_LAYOUT_SRCSCALE              40537
+#define ID_LAYOUT_ACTUALSIZE            40537
 #define ID_EDGE_ENHANCE                 40540
 #define ID_EDGE_EXTRACT                 40541
 #define ID_BUILD_DAMAGE                 40542
@@ -157,7 +157,11 @@
 #define ID_OIL_EDGE                     40548
 #define ID_CLASSES_RENAME               40549
 #define ID_CLASSES_MERGE                40550
-
+#define ID_SELECT_FRAME_ELEMENT         40551
+#define ID_DRAW_NORTH_ARROW             40552
+#define ID_DRAW_SCALEBAR                40553
+#define ID_DRAW_LEGEND                  40554
+#define ID_DRAW_MAP_TITLE               40555
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

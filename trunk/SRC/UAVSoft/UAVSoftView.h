@@ -97,7 +97,22 @@ public:
 	afx_msg void OnUpdateLayoutZoomout(CCmdUI* pCmdUI);
 
 	afx_msg void OnLayoutFullView();
-
+	afx_msg void OnUpdateLayoutZoomFullExtent(CCmdUI* pCmdUI);
+	afx_msg void OnLayoutZoomActualSize();
+	afx_msg void OnUpdateLayoutZoomActualSize(CCmdUI* pCmdUI);
+	//地图整饰
+	afx_msg void OnSelectFrameElement();
+	afx_msg void OnUpdateSelectFrameElement(CCmdUI* pCmdUI);
+	afx_msg void OnDrawMapFrameElement();
+	afx_msg void OnUpdateDrawMapFrameElement(CCmdUI* pCmdUI);
+	afx_msg void OnDrawNorthArrow();
+	afx_msg void OnUpdateDrawNorthArrow(CCmdUI* pCmdUI);
+	afx_msg void OnDrawScaleBar();
+	afx_msg void OnUpdateDrawScaleBar(CCmdUI* pCmdUI);
+	afx_msg void OnDrawLegend();
+	afx_msg void OnUpdateDrawLegend(CCmdUI* pCmdUI);
+	afx_msg void OnDrawMapTitle();
+	afx_msg void OnUpdateDrawMapTitle(CCmdUI* pCmdUI);
 	//
 	afx_msg void OnCurrLayerCombo();
 	afx_msg void OnCurrLayerCombo_Vector();
@@ -200,11 +215,7 @@ public:
 	afx_msg void OnIncrementalImport();
 	afx_msg void OnUpdateIncrementalImport(CCmdUI*);
 
-	//地图整饰
-	afx_msg void OnSelectFrameElement();
-	afx_msg void OnUpdateSelectFrameElement(CCmdUI* pCmdUI);
-	afx_msg void OnDrawMapFrameElement();
-	afx_msg void OnUpdateDrawMapFrameElement(CCmdUI* pCmdUI);
+
 
 	//魔术棒提取
 	afx_msg void OnMagicStick();
