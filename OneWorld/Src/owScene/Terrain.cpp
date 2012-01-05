@@ -750,7 +750,7 @@ void Terrain::applyImageLayers(TerrainTile* tile)
 
 Terrain::~Terrain()
 {
-	UnInit();
+	//UnInit();
 }
 
 void Terrain::Init()
@@ -781,7 +781,7 @@ void Terrain::UnInit()
 		_featurelyrs.clear();
 	}
 
-	Registry::instance().unRegisTerrain(getUID());
+	//Registry::instance().unRegisTerrain(getUID());
 }
 
 TerrainTileFactory* Terrain::getTileFactory() const
