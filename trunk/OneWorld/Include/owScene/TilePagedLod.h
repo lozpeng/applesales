@@ -24,7 +24,7 @@ namespace owScene
 
 	private:
 
-		osg::ref_ptr<Terrain> _terrain;
+		Terrain* _terrain;
 	};
 }
 
