@@ -2,9 +2,18 @@
 // Microsoft Visual C++ generated include file.
 // Used by Control.rc
 //
+#define IDD_DIALOG_FUZZYKMEAN           167
 #define IDC_RADIO_EXPORT_ALL            1054
 #define IDC_RADIO_EXPOERT_SELECTED      1055
+#define IDC_EDIT_INPUTFILE              1055
+#define IDC_BUTTON_INPUTFILE            1056
+#define IDC_EDIT_OUTPUTFILE             1057
+#define IDC_BUTTON_OUTPUTFILE           1058
+#define IDC_EDIT_CLASSNUM               1059
+#define IDC_EDIT_SAMPLECOUNT            1060
 #define IDC_COMBO_Export                1061
+#define IDC_EDIT_ITERCOUNT              1061
+#define IDC_EDIT_THREOLD                1062
 #define IDC_PAN                         2000
 #define IDC_PROGRESS                    2000
 #define IDC_ZOOMIN                      2001
