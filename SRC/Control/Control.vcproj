@@ -1232,6 +1232,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\UI\MarkerNorthArrowProperSheet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\MarkerNorthArrowProperSheet.h"
+					>
+				</File>
+				<File
 					RelativePath=".\UI\ScalebarMarkPage.cpp"
 					>
 				</File>
