@@ -569,11 +569,56 @@ bool CDSRasterDataset::DataWriteBand(long lBandIndex, long lCol, long lRow, long
 
 bool    CDSRasterDataset::GetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue)
 {
+	if(m_pDataset==NULL || lChannelIndex<1 || lChannelIndex>m_lBand)
+	{
+		return false;
+	}
+
+	GDALRasterBand *pBand=m_pDataset->GetRasterBand(lChannelIndex);
+	GDALColorTable *colorTable;
+	GDALColorEntry colorEntry;
+
+	colorTable = pBand->GetColorTable();
+	if(!colorTable)
+		return false;
+
+	long lColorCount = colorTable->GetColorEntryCount();
+
+	for(int i=0; i<lColorCount; i++)
+	{
+		colorTable->GetColorEntryAsRGB(i, &colorEntry);
+		pbRed[i] = colorEntry.c1;
+		pbGreen[i] = colorEntry.c2;
+		pbBlue[i] = colorEntry.c3;
+	}
+
 	return true;
 }
 
 bool	CDSRasterDataset::SetChannelPalette(long lChannelIndex, BYTE *pbRed, BYTE *pbGreen, BYTE *pbBlue)
 {
+
+	if(m_pDataset==NULL || lChannelIndex<1 || lChannelIndex>m_lBand)
+	{
+		return false;
+	}
+
+	GDALRasterBand *pBand=m_pDataset->GetRasterBand(lChannelIndex);
+	GDALColorEntry colorEntrys[256];
+	GDALColorTable colorTable;
+
+	for(int i=0; i<256; i++)
+	{
+		colorEntrys[i].c1 = pbRed[i];
+		colorEntrys[i].c2 = pbGreen[i];
+		colorEntrys[i].c3 = pbBlue[i];
+		colorEntrys[i].c4 = 0;
+		colorTable.SetColorEntry(i, colorEntrys+i);
+	}
+
+	pBand->SetColorTable(&colorTable);
+
+
 	return true;
 }
 
