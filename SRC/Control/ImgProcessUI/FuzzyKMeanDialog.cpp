@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "UAVSoft.h"
+#include "Control.h"
 #include "FuzzyKMeanDialog.h"
 #include "FuzzyKmeanClass.h"
 #include "ProgressBar.h"
