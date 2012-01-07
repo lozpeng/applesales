@@ -7,7 +7,7 @@
 #include "SimpleTextProperSheet.h"
 #include "MapTitleProperSheet.h"
 #include "ScaleBarProperSheet.h"
-
+#include "MarkerNorthArrowProperSheet.h"
 extern CControlApp theApp;
 
 static CSelectFrameElementsTool gSelectFrameElementsTool;
@@ -632,18 +632,18 @@ void CSelectFrameElementsTool::OnEditElementProp()
 	//		}
 	//	}
 	//	break;
-	//case Element::ET_MARKER_NORTH_ARROW:
-	//	{
-	//		otLayout::CDllResource hdll;
+	case Element::ET_MARKER_NORTH_ARROW:
+		{
+			Control::CDllResource hdll;
 
-	//		CMarkerNorthArrowProperSheet sheet("ÊôÐÔ");
-	//		sheet.SetElement(pElement);
-	//		if(sheet.DoModal()==IDOK)
-	//		{
-	//			pLayoutCtrl->UpdateControl(drawAll);
-	//		}
-	//	}
-	//	break;
+			CMarkerNorthArrowProperSheet sheet("ÊôÐÔ");
+			sheet.SetElement(pElement);
+			if(sheet.DoModal()==IDOK)
+			{
+				pLayoutCtrl->UpdateControl(drawAll);
+			}
+		}
+		break;
 	case Element::ET_ALTERNATING_SCALEBAR:
 	case Element::ET_SCALELINE:
 		{
