@@ -1359,11 +1359,11 @@ LRESULT CUAVSoftView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
 	int iTabIndex=(int)wp;//激活哪个tab的索引
 	if(iTabIndex== 0)
 	{
-		m_MapCtrl.SetMapFramedStatus(FALSE);
+		//m_MapCtrl.SetMapFramedStatus(FALSE);
 	}
 	else if(iTabIndex== 1)
 	{
-		m_MapCtrl.SetMapFramedStatus(TRUE);
+		//m_MapCtrl.SetMapFramedStatus(TRUE);
 		//在此初始化layout
 		if(!m_LayoutCtrl.Initialized())
 		{
