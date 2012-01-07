@@ -32,16 +32,12 @@
 #define IDD_DIG_DRAWINGEXPORT           176
 #define IDC_COMPANY_URL                 1041
 #define ID_TABCONTROL                   1054
-<<<<<<< .mine
-#define IDC_EDIT6                       1062
-=======
 #define IDC_RADIO_EXPORT_ALL            1054
 #define IDC_RADIO_EXPOERT_SELECTED      1055
 #define IDC_COMBO_DRAWINGTYPE           1056
 #define IDC_CHECK_ISADD                 1059
 #define IDC_BTN_SLECTPATH               1060
 #define IDC_COMBO_Export                1061
->>>>>>> .r405
 #define ID_VIEW_TOOLBARS                32771
 #define ID_VIEW_WORKSPACE2              32792
 #define ID_VIEW_WORKSPACE               32803
@@ -143,13 +139,10 @@
 #define ID_REMOVELASTMAGIC              40523
 #define ID_IncrementalImport            40524
 #define ID_DRAW_Export                  40525
+#define ID_CLASSIFY_FUZZYKMEAN          40526
 #define ID_CHANGE_SETSYMBOL             40530
 #define ID_SEND_BLUEFILE                40531
 #define ID_DEL_ALL                      40532
-<<<<<<< .mine
-#define ID_CLASSIFY_FUZZYKMEAN          40533
-
-=======
 #define ID_LAYOUT_ZOOM_IN               40533
 #define ID_LAYOUT_ZOOM_OUT              40534
 #define ID_LAYOUT_PAN                   40535
@@ -170,7 +163,7 @@
 #define ID_DRAW_SCALEBAR                40553
 #define ID_DRAW_LEGEND                  40554
 #define ID_DRAW_MAP_TITLE               40555
->>>>>>> .r405
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

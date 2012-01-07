@@ -694,17 +694,6 @@ void CMainFrame::AddTab_GeoInfoExtract()
 		IDB_POL_LARGE,
 		IDB_POL_LARGE);
 
-<<<<<<< .mine
-
-
-	CBCGPRibbonPanel* pPanelWater = pCategory->AddPanel (_T("水华信息提取"));
-	//--------------------------
-	// 模糊K均值:
-	//--------------------------
-	CBCGPRibbonButton* pBtnKMean = new CBCGPRibbonButton(ID_CLASSIFY_FUZZYKMEAN, _T("模糊K均值"), -1, 2);
-	pPanelWater->Add (pBtnKMean);
-
-=======
 	CBCGPRibbonPanel* pPanelEdge = pCategory->AddPanel (_T("图像边缘提取"));
 	//--------------------------
 	// 边缘增强
@@ -734,7 +723,7 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	// 自适应水华识别
 	//--------------------------
-	CBCGPRibbonButton* pBtnAdaptWPL = new CBCGPRibbonButton(ID_ADAPT_WATERPOL, _T("自适应水华识别"), 5, 5);
+	CBCGPRibbonButton* pBtnAdaptWPL = new CBCGPRibbonButton(ID_CLASSIFY_FUZZYKMEAN, _T("自适应水华识别"), 5, 5);
 	pPanelPOL->Add (pBtnAdaptWPL);
 
 	//--------------------------
@@ -771,8 +760,6 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	CBCGPRibbonButton* pBtnClassMerge = new CBCGPRibbonButton(ID_CLASSES_MERGE, _T("子类合并"), -1, 3);
 	pPanelClasses->Add (pBtnClassMerge);
 
-   
->>>>>>> .r405
 	
 }
 
