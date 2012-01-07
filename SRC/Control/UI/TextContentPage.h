@@ -11,7 +11,7 @@ public:
 	CTextContentPage();
 	virtual ~CTextContentPage();
 
-	void SetElement(Element::ITextElementPtr pElement);
+	void SetElement(Element::IElementPtr pElement);
 
 	BOOL OnInitDialog();
 
@@ -26,6 +26,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	Element::ITextElementPtr m_pElement;
+	Element::IElementPtr m_pElement;
 	afx_msg void OnEnChangeEditText();
 };

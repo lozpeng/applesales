@@ -1220,6 +1220,50 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="LayoutUI"
+				>
+				<File
+					RelativePath=".\UI\MapTitleProperSheet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\MapTitleProperSheet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ScalebarMarkPage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ScalebarMarkPage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ScaleBarProperSheet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ScaleBarProperSheet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ScalebarStylePage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ScalebarStylePage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ScalebarUnitPage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\ScalebarUnitPage.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Command"

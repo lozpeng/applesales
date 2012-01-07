@@ -19,6 +19,9 @@ Display::CDisplayCache::~CDisplayCache()
 // 添加GDI等对象到全局缓存中
 Display::DISPLAY_HANDLE_NODE* Display::CDisplayCache::AddToDisplayCache( DISPLAY_HANDLE pHandle , CDC *pDC )
 {
+	if(pHandle == NULL)
+		return NULL;
+
 	Display::DISPLAY_HANDLE_NODE *dhn = new DISPLAY_HANDLE_NODE;
 	dhn->pDC = pDC;
 	dhn->Handle = pHandle;
@@ -63,6 +66,9 @@ void Display::CDisplayCache::ReleaseCache( DISPLAY_HANDLE_NODE * pNode )
 // 确认使用对象缓存
 BOOL Display::CDisplayCache::UseCache( DISPLAY_HANDLE_NODE *pNode , Display::ISymbol* pSym)
 {
+	if(pNode == NULL)
+		return FALSE;
+
 	if( pNode->Handle != NULL )
 	{
 		pNode->pDC->SelectObject( pNode->Handle );

@@ -20,7 +20,7 @@ CTextContentPage::~CTextContentPage()
 {
 }
 
-void CTextContentPage::SetElement(Element::ITextElementPtr pElement)
+void CTextContentPage::SetElement(Element::IElementPtr pElement)
 {
 	m_pElement = pElement;
 }

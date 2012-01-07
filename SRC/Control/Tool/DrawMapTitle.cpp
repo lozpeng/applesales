@@ -54,7 +54,7 @@ void CDrawMapTitle::Click()
 	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->UnselectAllElements();
 	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->AddElement(pMapTitle);
 	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->SelectElement(pMapTitle);	
-	//m_pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(otElement::OPT_ADD, pMapTitle);
+	//m_pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(Element::OPT_ADD, pMapTitle);
 	m_pLayoutCtrl->UpdateControl();
 
 	//设置ActiveAction为选择图元
