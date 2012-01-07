@@ -11,6 +11,7 @@
 #include "IWorkspace.h"
 #include "ProgressBar.h"
 #include "DlgSetChangeSymbol.h"
+#include "FuzzyKMeanDialog.h"
 //流程向导相关
 #include "TreePropSheetEx.h"
 #include "DistillStep1.h"
@@ -111,6 +112,14 @@ namespace Control
 		dlg.DoModal();
         
 	}
+
+	void CImageProcessTool::ShowFuzzyKMeanDlg()
+	{
+		CDllResource hdll;
+		CFuzzyKMeanDialog dlg;
+		dlg.DoModal();
+	}
+
 	void CImageProcessTool::ShowDistillWaterSheet(Control::CMapControl* mapControl, CWnd* pParent)
 	{
 		CDllResource hdll;
