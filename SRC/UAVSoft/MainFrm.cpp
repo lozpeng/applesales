@@ -694,6 +694,17 @@ void CMainFrame::AddTab_GeoInfoExtract()
 		IDB_POL_LARGE,
 		IDB_POL_LARGE);
 
+<<<<<<< .mine
+
+
+	CBCGPRibbonPanel* pPanelWater = pCategory->AddPanel (_T("水华信息提取"));
+	//--------------------------
+	// 模糊K均值:
+	//--------------------------
+	CBCGPRibbonButton* pBtnKMean = new CBCGPRibbonButton(ID_CLASSIFY_FUZZYKMEAN, _T("模糊K均值"), -1, 2);
+	pPanelWater->Add (pBtnKMean);
+
+=======
 	CBCGPRibbonPanel* pPanelEdge = pCategory->AddPanel (_T("图像边缘提取"));
 	//--------------------------
 	// 边缘增强
@@ -761,6 +772,7 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	pPanelClasses->Add (pBtnClassMerge);
 
    
+>>>>>>> .r405
 	
 }
 
