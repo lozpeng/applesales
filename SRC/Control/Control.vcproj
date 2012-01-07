@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi;..\workflowWizard"
+				AdditionalIncludeDirectories=".\;.\ui;.\ImgprocessUI;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi;..\workflowWizard"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;CONTROL_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -207,10 +207,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DlgSetChangeSymbol.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\DllResource.cpp"
 				>
 			</File>
@@ -294,10 +290,6 @@
 			</File>
 			<File
 				RelativePath=".\ControlDefine.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DlgSetChangeSymbol.h"
 				>
 			</File>
 			<File
@@ -802,11 +794,11 @@
 				Name="ExtractInfo"
 				>
 				<File
-					RelativePath=".\DitillTool.cpp"
+					RelativePath=".\Tool\DitillTool.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\DitillTool.h"
+					RelativePath=".\Tool\DitillTool.h"
 					>
 				</File>
 				<File
@@ -944,6 +936,14 @@
 			</File>
 			<File
 				RelativePath=".\UI\DlgSelectValues.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgSetChangeSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\DlgSetChangeSymbol.h"
 				>
 			</File>
 			<File
@@ -1180,35 +1180,43 @@
 				Name="ImgProcessUI"
 				>
 				<File
-					RelativePath=".\DistillStep1.cpp"
+					RelativePath=".\ImgProcessUI\DistillStep1.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\DistillStep1.h"
+					RelativePath=".\ImgProcessUI\DistillStep1.h"
 					>
 				</File>
 				<File
-					RelativePath=".\DistillStep2.cpp"
+					RelativePath=".\ImgProcessUI\DistillStep2.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\DistillStep2.h"
+					RelativePath=".\ImgProcessUI\DistillStep2.h"
 					>
 				</File>
 				<File
-					RelativePath=".\DlgChangeDetect.cpp"
+					RelativePath=".\ImgProcessUI\DlgChangeDetect.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\DlgChangeDetect.h"
+					RelativePath=".\ImgProcessUI\DlgChangeDetect.h"
 					>
 				</File>
 				<File
-					RelativePath=".\UI\ImageProcessTool.cpp"
+					RelativePath=".\ImgProcessUI\FuzzyKMeanDialog.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\UI\ImageProcessTool.h"
+					RelativePath=".\ImgProcessUI\FuzzyKMeanDialog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ImgProcessUI\ImageProcessTool.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ImgProcessUI\ImageProcessTool.h"
 					>
 				</File>
 			</Filter>
