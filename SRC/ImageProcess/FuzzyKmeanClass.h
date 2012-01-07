@@ -2,6 +2,7 @@
 #define  _FUZZYKMEAN_CLASS_H_
 
 #include "IRasterDataset.h"
+#include "IProgress.h"
 
 
 //º¯Êý¹¦ÄÜ£º
@@ -24,7 +25,8 @@
 
 namespace ImageProcess
 {
-	IMP_DLL bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName, double dblResampleRatio, long lCenterCount, long lMaxIterCount, float fMovementThreshold);
+	IMP_DLL bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName, double dblResampleRatio,
+		long lCenterCount, long lMaxIterCount, float fMovementThreshold,SYSTEM::IProgress *pProgress);
 }
 
 #endif

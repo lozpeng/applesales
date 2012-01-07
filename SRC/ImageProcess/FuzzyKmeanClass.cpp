@@ -55,10 +55,19 @@ static long GetStringToken(char *source,
 	long start,
 	char ch);
 
-bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName, double dblResampleRatio, long lCenterCount, long lMaxIterCount, float fMovementThreshold)
+bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName, double dblResampleRatio,
+					 long lCenterCount, long lMaxIterCount, float fMovementThreshold,SYSTEM::IProgress *pProgress)
 {
 
 	using namespace Geodatabase;
+
+	//建立进度条
+	if(pProgress)
+	{
+		pProgress->Create("处理中",SYSTEM::IProgress::Percent,100);
+		pProgress->UpdateProgress("",0.01);
+
+	}
 
 	GEOMETRY::geom::Envelope env;
 	long     lWidth, lHeight,lChannelCount,lDataType;
@@ -171,6 +180,11 @@ bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName
 	CSample *pCenter;
 	pCenter = FuzzyKmean(pSampleSet, lSampleCount, lCenterCount, lMaxIterCount, fMovementThreshold, NULL, 1);
 
+	if(pProgress)
+	{
+		pProgress->UpdateProgress("",0.1);
+	}
+
 	//分类
 	CSample cPixel;
 	float mindis,dis;
@@ -218,6 +232,11 @@ bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName
 
 				rasDestDS->PixelIO(1, j+1, i+1, &classify, false);
 			}
+
+			if(pProgress)
+			{
+				pProgress->UpdateProgress("",0.1+0.9*i/lHeight);
+			}
 		}
 
 	}
@@ -234,6 +253,12 @@ bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName
 	delete []fValue;
 	delete []pCenter;
 	delete []pSampleSet;
+
+	if(pProgress)
+	{
+		pProgress->UpdateProgress("",1.0);
+		pProgress->Close();
+	}
 
 	return true;
 
