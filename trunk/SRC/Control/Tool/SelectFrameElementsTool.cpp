@@ -2,8 +2,11 @@
 #include "SelectFrameElementsTool.h"
 #include "IElement.h"
 #include "MapFrame.h"
-
+#include "DllResource.h"
 #include "Control.h"
+#include "SimpleTextProperSheet.h"
+#include "MapTitleProperSheet.h"
+#include "ScaleBarProperSheet.h"
 
 extern CControlApp theApp;
 
@@ -563,21 +566,24 @@ long CSelectFrameElementsTool::GetHandleCursor(Element::HIT_HANDLE nHandle)
 
 void CSelectFrameElementsTool::OnEditElementProp()
 {
-	//Framework::ILayoutCtrl* pLayoutCtrl = Framework::ILayoutCtrl::GetActiveLayoutCtrl();
-	//if(!pLayoutCtrl)
-	//	return;
+	Framework::ILayoutCtrl* pLayoutCtrl = Framework::ILayoutCtrl::GetActiveLayoutCtrl();
+	if(!pLayoutCtrl)
+		return;
 
-	//Carto::CGraphicLayerPtr pGraphicLayer = pLayoutCtrl->GetPageLayout()->GetGraphicLayer();
-	//if(!pGraphicLayer)
-	//	return;
+	Carto::CGraphicLayerPtr pGraphicLayer = pLayoutCtrl->GetPageLayout()->GetGraphicLayer();
+	if(!pGraphicLayer)
+		return;
 
-	//Element::IElementPtr pElement =  pGraphicLayer->GetSelectedElement(0);
+	Element::IElementPtr pElement =  pGraphicLayer->GetSelectedElement(0);
+
+	if(NULL == pElement)
+		return;
 
 	////加入回退堆栈
 	//pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(Element::OPT_EDIT_PROPERTY, pElement);
 
-	//switch(pElement->GetType())
-	//{
+	switch(pElement->GetType())
+	{
 	//case Element::ET_GROUP_ELEMENT:
 	//	{
 	//		otLayout::CDllResource hdll;
@@ -590,30 +596,30 @@ void CSelectFrameElementsTool::OnEditElementProp()
 	//		}
 	//	}
 	//	break;
-	//case Element::ET_SIMPLE_TEXT_ELEMENT:
-	//	{
-	//		otLayout::CDllResource hdll;
+	case Element::ET_SIMPLE_TEXT_ELEMENT:
+		{
+			Control::CDllResource hdll;
 
-	//		CSimpleTextProperSheet sheet("属性");
-	//		sheet.SetElement(pElement);
-	//		if(sheet.DoModal()==IDOK)
-	//		{
-	//			pLayoutCtrl->UpdateControl(drawAll);
-	//		}
-	//	}
-	//	break;
-	//case Element::ET_MAP_TITLE:	
-	//	{
-	//		otLayout::CDllResource hdll;
+			CSimpleTextProperSheet sheet("属性");
+			sheet.SetElement(pElement);
+			if(sheet.DoModal()==IDOK)
+			{
+				pLayoutCtrl->UpdateControl(drawAll);
+			}
+		}
+		break;
+	case Element::ET_MAP_TITLE:	
+		{
+			Control::CDllResource hdll;
 
-	//		CMapTitleProperSheet sheet("属性");
-	//		sheet.SetElement(pElement);
-	//		if(sheet.DoModal()==IDOK)
-	//		{
-	//			pLayoutCtrl->UpdateControl(drawAll);
-	//		}
-	//	}
-	//	break;
+			CMapTitleProperSheet sheet("属性");
+			sheet.SetElement(pElement);
+			if(sheet.DoModal()==IDOK)
+			{
+				pLayoutCtrl->UpdateControl(drawAll);
+			}
+		}
+		break;
 	//case Element::ET_MAP_FRAME_ELEMENT:
 	//	{
 	//		otLayout::CDllResource hdll;
@@ -638,20 +644,19 @@ void CSelectFrameElementsTool::OnEditElementProp()
 	//		}
 	//	}
 	//	break;
-	//case Element::ET_ALTERNATING_SCALEBAR:
-	//case Element::ET_SCALELINE:
-	//	{
-	//		otLayout::CDllResource hdll;
+	case Element::ET_ALTERNATING_SCALEBAR:
+	case Element::ET_SCALELINE:
+		{
+			Control::CDllResource hdll;
 
-	//		CScaleBarProperSheet sheet("属性");
-	//		sheet.SetElement(pElement);
-	//		if(sheet.DoModal()==IDOK)
-	//		{
-
-	//			pLayoutCtrl->UpdateControl(drawAll);
-	//		}
-	//	}
-	//	break;
+			CScaleBarProperSheet sheet("属性");
+			sheet.SetElement(pElement);
+			if(sheet.DoModal()==IDOK)
+			{
+				pLayoutCtrl->UpdateControl(drawAll);
+			}
+		}
+		break;
 	//case Element::ET_LEGEND:
 	//	{
 	//		otLayout::CDllResource hdll;
@@ -676,8 +681,8 @@ void CSelectFrameElementsTool::OnEditElementProp()
 	//		}
 	//	}
 	//	break;
-	//default:
-	//	break;
-	//}
+	default:
+		break;
+	}
 }
 

@@ -59,7 +59,7 @@ BOOL CTextSymbolPreviewPage::OnInitDialog()
 
 void CTextSymbolPreviewPage::OnBnClickedTextSymbolset()
 {
-	/*otFramework::ISymbolListCtrl *pCtrl =dynamic_cast<otFramework::ISymbolListCtrl*>(otFramework::IUIObject::GetUIObjectByName(OT_SYMBOLLISTCTRL));
+	/*Framework::ISymbolListCtrl *pCtrl =dynamic_cast<Framework::ISymbolListCtrl*>(Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppSymbolLstCtrl));
 	if(pCtrl)
 	{
 		m_pTextSymbol =pCtrl->SelectSymbol(m_pTextSymbol);
@@ -71,7 +71,7 @@ void CTextSymbolPreviewPage::OnBnClickedTextSymbolset()
 
 void CTextSymbolPreviewPage::OnBnClickedFillSymbolset()
 {
-	/*Framework::ISymbolListCtrl *pCtrl =dynamic_cast<Framework::ISymbolListCtrl*>(Framework::IUIObject::GetUIObjectByName(OT_SYMBOLLISTCTRL));
+	/*Framework::ISymbolListCtrl *pCtrl =dynamic_cast<Framework::ISymbolListCtrl*>(Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppSymbolLstCtrl));
 	if(pCtrl)
 	{
 		m_pFillSymbol =pCtrl->SelectSymbol(m_pFillSymbol);

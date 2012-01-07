@@ -58,7 +58,7 @@ void CDrawLegendCmd::Click()
 	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->SelectElement(pLegend);
 	
 	//加入回退堆栈
-	//pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(otElement::OPT_ADD, pLegend);
+	//pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(Element::OPT_ADD, pLegend);
 
 	//设置ActiveAction为选择图元
 	m_pLayoutCtrl->SetCurTool("SelectFrameElementsTool");

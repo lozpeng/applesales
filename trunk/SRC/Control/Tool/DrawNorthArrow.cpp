@@ -73,7 +73,7 @@ void CDrawNorthArrowCmd::Click()
 	pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->UnselectAllElements();
 	pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->AddElement(pNorthArrow);
 	pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->SelectElement(pNorthArrow);	
-	//pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(otElement::OPT_ADD, pNorthArrow);
+	//pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(Element::OPT_ADD, pNorthArrow);
 	pLayoutCtrl->UpdateControl();
 
 	//设置ActiveAction为选择图元

@@ -10,7 +10,7 @@
 
 #include "DllResource.h"
 
-//#include "ScaleBarProperSheet.h"
+#include "ScaleBarProperSheet.h"
 
 namespace Control
 {
@@ -56,18 +56,18 @@ void CDrawScaleBarCmd::Click()
 	if(!pAlternatingScaleBar)
 		return;
 
-	//CDllResource hdll;
-	//CScaleBarProperSheet sheet("属性");
-	//sheet.SetElement(pAlternatingScaleBar);
-	//if(sheet.DoModal()==IDOK)
-	//{
-	//	Element::IScaleBarPtr pScaleBar = sheet.GetElement();
-	//	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->UnselectAllElements();
-	//	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->AddElement(pScaleBar);
-	//	m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->SelectElement(pScaleBar);	
-	//	//m_pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(otElement::OPT_ADD, pScaleBar);
-	//	m_pLayoutCtrl->UpdateControl();
-	//}
+	CDllResource hdll;
+	CScaleBarProperSheet sheet("属性");
+	sheet.SetElement(pAlternatingScaleBar);
+	if(sheet.DoModal()==IDOK)
+	{
+		Element::IScaleBarPtr pScaleBar = pAlternatingScaleBar;//sheet.GetElement();
+		m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->UnselectAllElements();
+		m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->AddElement(pScaleBar);
+		m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->SelectElement(pScaleBar);	
+		//m_pLayoutCtrl->GetPageLayout()->GetElementOperationStack()->AddOperation(Element::OPT_ADD, pScaleBar);
+		m_pLayoutCtrl->UpdateControl();
+	}
 
 	//设置ActiveAction为选择图元
 	m_pLayoutCtrl->SetCurTool("SelectFrameElementsTool");
