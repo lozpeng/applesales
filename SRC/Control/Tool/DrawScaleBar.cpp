@@ -61,7 +61,7 @@ void CDrawScaleBarCmd::Click()
 	sheet.SetElement(pAlternatingScaleBar);
 	if(sheet.DoModal()==IDOK)
 	{
-		Element::IScaleBarPtr pScaleBar = pAlternatingScaleBar;//sheet.GetElement();
+		Element::IScaleBarPtr pScaleBar = sheet.GetElement();
 		m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->UnselectAllElements();
 		m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->AddElement(pScaleBar);
 		m_pLayoutCtrl->GetPageLayout()->GetGraphicLayer()->SelectElement(pScaleBar);	
