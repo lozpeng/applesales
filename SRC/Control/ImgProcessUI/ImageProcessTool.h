@@ -18,6 +18,8 @@ public:
 
 	static void ShowChangeSymbolDlg();
 
+	static void ShowFuzzyKMeanDlg();
+
 	static void InitSymbol();
 
 	//水体提取流程

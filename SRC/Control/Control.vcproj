@@ -939,14 +939,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\UI\DlgSetChangeSymbol.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\UI\DlgSetChangeSymbol.h"
-				>
-			</File>
-			<File
 				RelativePath=".\UI\DlgSwipeSld.cpp"
 				>
 			</File>
@@ -1201,6 +1193,14 @@
 				</File>
 				<File
 					RelativePath=".\ImgProcessUI\DlgChangeDetect.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ImgProcessUI\DlgSetChangeSymbol.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ImgProcessUI\DlgSetChangeSymbol.h"
 					>
 				</File>
 				<File
