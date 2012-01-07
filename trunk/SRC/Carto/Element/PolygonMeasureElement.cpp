@@ -204,7 +204,7 @@ namespace Element{
 		pPolygon->getCentroid(pCentroidPoint);
 
 		std::string labelName="";
-		char szLabelName[10];
+		char szLabelName[64];
 		double dbGeoLen=0,dbTotalLen=0;
 		double dbOffset = pDisplay->GetDisplayTransformation().TransformToGeo(10);
 		double dbExpand = pDisplay->GetDisplayTransformation().TransformToGeo(3);
