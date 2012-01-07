@@ -2,6 +2,8 @@
 #include "FuzzyKmeanClass.h"
 #include "IWorkspace.h"
 #include "RasterWSFactory.h"
+#include "stdlib.h"
+#include "time.h"
 
 namespace ImageProcess
 {
@@ -241,6 +243,20 @@ bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName
 
 	}
 
+	//…Ë÷√—’…´±Ì
+	BYTE pbRed[256],pbGreen[256],pbBlue[256];
+
+	srand(time(NULL));
+	for(int i=0; i<256; i++)
+	{
+		pbRed[i] = rand() % 256 ;
+		pbGreen[i] = rand() % 256 ;
+		pbBlue[i] = rand() % 256 ;
+	}
+	rasDestDS->SetChannelPalette(1, pbRed, pbGreen, pbBlue);
+	rasDestDS->GetChannelPalette(1, pbRed, pbGreen, pbBlue);
+
+	//
 	pSrcRS->DeleteBuffer();
 	rasDestDS->DeleteBuffer();
 
