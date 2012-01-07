@@ -235,6 +235,8 @@ public:
 
 	afx_msg void OnSendBlueToothFile();
 
+	afx_msg void OnClassifyFuzzyKMean();
+
 	//´ò¿ª°ïÖú
 	afx_msg void OnOpenHelp();
 

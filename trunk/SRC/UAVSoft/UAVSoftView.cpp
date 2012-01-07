@@ -19,7 +19,7 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include "Tool/MagicStickTool.h"
-#include "UI/ImageProcessTool.h"
+#include "ImgProcessUI/ImageProcessTool.h"
 #include "ILayer.h"
 #include "DlgDrawingExport.h"
 
@@ -187,6 +187,7 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_WATER_EXTRACT, OnWaterExtract)
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 	ON_UPDATE_COMMAND_UI(ID_MAGIC_STICK, OnUpdateMagicStick)
+	ON_COMMAND(ID_CLASSIFY_FUZZYKMEAN, OnClassifyFuzzyKMean)
 
 
 	ON_COMMAND(ID_MAGICSTICK_LAYER,OnMagicStickLayer)
@@ -677,6 +678,7 @@ void CUAVSoftView::OnMapFullView()
 	pMap->GetDisplay()->GetDisplayTransformation().FitViewBound(env);
 
 	m_MapCtrl.UpdateControl(drawAll);
+
 }
 
 
@@ -1888,6 +1890,11 @@ void CUAVSoftView::OnWaterExtract()
 {
 	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
 	Control::CImageProcessTool::ShowDistillWaterSheet(&m_MapCtrl, pMainFrm);
+}
+
+void CUAVSoftView::OnClassifyFuzzyKMean()
+{
+	Control::CImageProcessTool::ShowFuzzyKMeanDlg();
 }
 
 //删除上次魔术棒提取结果

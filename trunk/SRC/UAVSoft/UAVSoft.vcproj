@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor;..\ImageProcess"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -390,5 +390,9 @@
 		</File>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="UAVSoft.rc"
+		/>
 	</Globals>
 </VisualStudioProject>
