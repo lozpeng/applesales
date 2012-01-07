@@ -222,9 +222,6 @@ bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName
 
 	}
 
-	rasDestDS->SetChannelPalette()
-
-
 	pSrcRS->DeleteBuffer();
 	rasDestDS->DeleteBuffer();
 
