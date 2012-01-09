@@ -469,7 +469,7 @@ static CSample *FuzzyKmean(
 		for( long c = 0; c < lCenterCount; c ++ )
 		{
 			// value
-			float fValue = (float) c / lCenterCount;
+			float fValue = (float) c / lCenterCount*255;
 
 			for(long m = 0; m < pC[ c ].GetSize(); m ++ )
 				pC[ c ].Set( m, fValue );
