@@ -38,7 +38,7 @@ private:
     std::string m_ModelName;
     HWND m_hWnd;
     osgViewer::Viewer* mViewer;
-	osg::ref_ptr<owScene::Scene> mRoot;
+    osg::ref_ptr<owScene::Scene> mRoot;
 
 	osg::ref_ptr<owNavi::TerrainManipulator2> tm;
 
