@@ -1,12 +1,12 @@
 
 
-#include <owPlugins/ReaderWriterEarthFile/MapOptions.h>
-#include <owPlugins/ReaderWriterEarthFile/MapSerialize.h>
+#include <owPlugins/EarthFile/MapOptions.h>
+#include <owPlugins/EarthFile/MapSerialize.h>
 #include <owScene/RasterSource.h>
 #include <owScene/FeatureLayer.h>
 #include <owScene/DataSourceFactory.h>
 #include <owScene/LayerFactory.h>
-#include <owScene/ModelSpace.h>
+#include <owScene/ModelWorkSpace.h>
 
 
 using namespace owPlugins;
@@ -102,21 +102,33 @@ owScene::Scene* MapSerialize::deserialize( const Config& conf, const std::string
 	t->Initialize();
 
 	//
-	Config modellayers = conf.child("modellayers");
-	ConfigSet layerset = modellayers.children("modellayer");
-	owScene::ModelSpace* modelspace = new owScene::ModelSpace;
+	Config model = conf.child("model");
+	osg::Group* modelRoot = new osg::Group;
 
-	root->SetModelSpace(modelspace);
-
-	for(ConfigSet::iterator i=layerset.begin(); i!=layerset.end(); i++)
+	ConfigSet workspaces = model.children("workspace");
+	for(ConfigSet::iterator i=workspaces.begin(); i!=workspaces.end(); i++)
 	{
-		Config layerconf = *i;
+		owScene::ModelWorkSpace* modelspace = new owScene::ModelWorkSpace;
+		Config spaceconf = *i;
+		modelspace->read(spaceconf);
 
-		ModelLayer* modellayer = new ModelLayer;
-		modellayer->read(layerconf);
-		modelspace->AddModelLayer(modellayer);
+		Config sets = spaceconf.child("sets");
+		ConfigSet confModelSets = sets.children("set");
+
+		for(ConfigSet::iterator k=confModelSets.begin(); k!=confModelSets.end(); k++)
+		{
+			Config confModelSet = *k;
+			ModelSet* modelSet = new ModelSet;
+
+			modelSet->setSrs(modelspace->getSrs());
+			modelSet->read(confModelSet);
+			modelspace->AddMoelSet(modelSet);
+		}
+
+		modelRoot->addChild(modelspace);
 
 	}
+	root->SetModelRoot(modelRoot);
 
 	return root;
 }
