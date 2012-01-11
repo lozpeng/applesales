@@ -5,7 +5,6 @@
 #include <owScene/export.h>
 #include <owScene/AtmosphericScatteringRenderTech.h>
 #include <owScene/Terrain.h>
-#include <owScene/ModelSpace.h>
 #include <osg/Group>
 
 namespace owScene
@@ -35,8 +34,8 @@ namespace owScene
 		AtmosphericScatteringRenderTech* GetAtmospheric() { return _atmospheric.get(); }
 
 		//
-		void SetModelSpace(ModelSpace* modelspace) { _modelspace = modelspace; addChild(modelspace); }
-		ModelSpace* GetModelSpace() { return _modelspace.get(); }
+		void SetModelRoot(osg::Group* modelRoot) { _modelRoot = modelRoot; addChild(modelRoot); }
+		osg::Group* GetModelRoot() { return _modelRoot.get(); }
 
 	protected:
 
@@ -53,7 +52,7 @@ namespace owScene
 		osg::ref_ptr<AtmosphericScatteringRenderTech> _atmospheric;
 
 		//模型节点
-		osg::ref_ptr<ModelSpace> _modelspace;
+		osg::ref_ptr<osg::Group> _modelRoot;
 	};
 
 }
