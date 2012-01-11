@@ -26,7 +26,7 @@ static void rasterio_resample(GDALRasterBand* pBand, int lCol, int lRow, int lWi
 		double ratioy = 1.0 * lHeight / lBufferHeight;
 		double x,y,dx,dy;
 		int i2,j2;
-		int m1,n1,m2,n2,m3,n3,m4,n4;
+		//int m1,n1,m2,n2,m3,n3,m4,n4;
 
 		T* pBuffer1 = (T*) pBuffer;
 		T* pBuffer2 = new T[lCol*lRow];
@@ -42,35 +42,44 @@ static void rasterio_resample(GDALRasterBand* pBand, int lCol, int lRow, int lWi
 				dx = x - j2; dy = y - i2;
 
 
-				if(j2 == -1)
-				{
-					m1 = m2 = 1; m3 = m4 = 0;
-				}
-				else if(j2 == (lWidth-1))
-				{
-					m1 = m2 = (lWidth-1); m3 = m4 = (lWidth-2);
+				//if(j2 == -1)
+				//{
+				//	m1 = m2 = 1; m3 = m4 = 0;
+				//}
+				//else if(j2 == (lWidth-1))
+				//{
+				//	m1 = m2 = (lWidth-1); m3 = m4 = (lWidth-2);
 
+				//}
+				//else
+				//{
+				//	m1 = m2 = j2; m3 = m4 = j2+1;
+				//}
+
+				//if(i2 == -1)
+				//{
+				//	n1 = n3 = 1; n2 = n4 = 0;
+				//}
+				//else if( i2 == (lHeight-1))
+				//{
+				//	n1 = n3 = (lHeight-1); n2 = n4 = (lHeight-2);
+				//}
+				//else
+				//{	
+				//	n1 = n3 = i2; n2 = n4 = i2+1;
+				//}
+
+				//{
+				//	pBuffer1[i*lBufferWidth+j] = (1-dx)*(1-dy)*pBuffer2[n1*lWidth+m1]+(1-dx)*dy*pBuffer2[n2*lWidth+m2]+dx*(1-dy)*pBuffer2[n3*lWidth+m3]+dx*dy*pBuffer2[n4*lWidth+m4];
+				//}
+
+				if(j2==-1 || i2==-1 || j2==(lWidth-1) || i2 ==(lHeight-1))
+				{
+					pBuffer1[i*lBufferWidth+j] = pBuffer2[((int)y)*lWidth+((int)x)];
 				}
 				else
 				{
-					m1 = m2 = j2; m3 = m4 = j2+1;
-				}
-
-				if(i2 == -1)
-				{
-					n1 = n3 = 1; n2 = n4 = 0;
-				}
-				else if( i2 == (lHeight-1))
-				{
-					n1 = n3 = (lHeight-1); n2 = n4 = (lHeight-2);
-				}
-				else
-				{	
-					n1 = n3 = i2; n2 = n4 = i2+1;
-				}
-
-				{
-					pBuffer1[i*lBufferWidth+j] = (1-dx)*(1-dy)*pBuffer2[n1*lWidth+m1]+(1-dx)*dy*pBuffer2[n2*lWidth+m2]+dx*(1-dy)*pBuffer2[n3*lWidth+m3]+dx*dy*pBuffer2[n4*lWidth+m4];
+					pBuffer1[i*lBufferWidth+j] = (1-dx)*(1-dy)*pBuffer2[i2*lWidth+j2]+(1-dx)*dy*pBuffer2[(i2+1)*lWidth+j2]+dx*(1-dy)*pBuffer2[i2*lWidth+j2+1]+dx*dy*pBuffer2[(i2+1)*lWidth+j2+1];
 				}
 
 			}
