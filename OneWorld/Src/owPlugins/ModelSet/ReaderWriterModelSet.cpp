@@ -1,5 +1,5 @@
 #include <owScene/Terrain.h>
-#include <owScene/ModelLayer.h>
+#include <owScene/ModelSet.h>
 #include <owUtil/XmlUtils.h>
 #include <owUtil/HTTPClient.h>
 #include <owScene/ModelObject.h>
