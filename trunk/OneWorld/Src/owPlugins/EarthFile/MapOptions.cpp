@@ -1,4 +1,4 @@
-#include <owPlugins/ReaderWriterEarthFile/MapOptions.h>
+#include <owPlugins/EarthFile/MapOptions.h>
 
 using namespace owPlugins;
 
