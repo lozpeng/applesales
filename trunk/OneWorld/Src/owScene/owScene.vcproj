@@ -238,15 +238,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ModelLayer.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\ModelObject.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ModelSpace.cpp"
+				RelativePath=".\ModelSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ModelWorkSpace.cpp"
 				>
 			</File>
 			<File
@@ -400,7 +400,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Include\owScene\ModelSet.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Include\owScene\ModelSpace.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\owScene\ModelWorkSpace.h"
 				>
 			</File>
 			<File

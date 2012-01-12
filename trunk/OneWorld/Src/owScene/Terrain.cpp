@@ -750,7 +750,7 @@ void Terrain::applyImageLayers(TerrainTile* tile)
 
 Terrain::~Terrain()
 {
-	//UnInit();
+	removeChild(0,getNumChildren());
 }
 
 void Terrain::Init()
@@ -768,20 +768,7 @@ void Terrain::Init()
 
 void Terrain::UnInit()
 {
-	{
-		OpenThreads::ScopedLock<OpenThreads::Mutex> lock(_elelyrmutex);
-		_elelayers.clear();
-	}
-	{
-		OpenThreads::ScopedLock<OpenThreads::Mutex> lock(_imglyrmutex);
-		_imglyrs.clear();
-	}
-	{
-		OpenThreads::ScopedLock<OpenThreads::Mutex> lock(_fealyrmutex);
-		_featurelyrs.clear();
-	}
 
-	//Registry::instance().unRegisTerrain(getUID());
 }
 
 TerrainTileFactory* Terrain::getTileFactory() const
