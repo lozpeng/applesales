@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\..\bin\debug"
-			IntermediateDirectory="..\..\bin\imd\debug\owNavi"
+			IntermediateDirectory="..\..\imd\debug\owNavi"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
