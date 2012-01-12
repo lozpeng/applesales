@@ -57,8 +57,8 @@ void cOSG::InitSceneGraph(void)
 	mRoot = dynamic_cast<owScene::Scene*>(osgDB::readNodeFile(m_ModelName));
  
 	//add atmospheric
-	osg::ref_ptr<owScene::AtmosphericScatteringRenderTech> atmos = new owScene::AtmosphericScatteringRenderTech(mViewer);
-	mRoot->SetAtmospheric(atmos);
+	//osg::ref_ptr<owScene::AtmosphericScatteringRenderTech> atmos = new owScene::AtmosphericScatteringRenderTech(mViewer);
+	//mRoot->SetAtmospheric(atmos);
 
 }
 
@@ -119,8 +119,7 @@ void cOSG::InitCameraConfig(void)
 
 	// Add event Handler to the viewer
 	mViewer->addEventHandler(new osgViewer::StatsHandler);
-	mViewer->addEventHandler
-		(new owNavi::AutoClipPlaneHandler(mRoot->GetTerrain()));
+	mViewer->addEventHandler(new owNavi::AutoClipPlaneHandler(mRoot->GetTerrain()));
 	mViewer->addEventHandler(new osgGA::StateSetManipulator(mViewer->getCamera()->getOrCreateStateSet()));
 
 	//set manipulator node
