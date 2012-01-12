@@ -64,7 +64,7 @@ namespace owScene
 	private:
 
 		TerrainTile* _parenttile;
-		Height* _height;
+		osg::ref_ptr<Height> _height;
 		osg::Geode* _geode;
 		osg::Geometry* _geometry;
 		osg::Vec3Array* _vertexs;
