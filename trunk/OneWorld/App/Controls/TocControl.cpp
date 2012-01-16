@@ -6,6 +6,8 @@
 #include "Resource.h"
 #include "owScene/layer.h"
 #include "owNavi/FlyToManipulator.h"
+#include "owScene/rastersource.h"
+#include "owScene/featuresource.h"
 
 #define   DRAG_DELAY   60
 
@@ -59,38 +61,64 @@ namespace Control
 	}
 	void CTocControl::RefreshFromTerrain(owScene::Terrain* pTerrain)
 	{
-		HTREEITEM hRootItem = GetRootItem();		//根节点，"地形"
+		//根节点，"地形"
+		HTREEITEM hRootItem = GetRootItem();	
 		HTREEITEM hItem = GetChildItem(hRootItem);
-		int nCount = pTerrain->getImageLayersCount();
 		typedef std::pair< HTREEITEM , owScene::Layer*>  LayerItem_Pair;	
+
+		//影像
+		int nCount = pTerrain->getImageLayersCount();
 		for (int i=0; i<nCount; i++)
 		{
 			owScene::ImageLayer* pLyr = pTerrain->getImageLayer(i);
-			std::string strName = pLyr->getDataSource()->getUrl();
-			strName = strName.substr(strName.rfind("\\")+1,strName.length());
+			RasterSource* ras = dynamic_cast<RasterSource*>(pLyr->getDataSource());
+			if(!ras)
+				continue;
+
+			std::string strName = pLyr->getName();
 			HTREEITEM hTexItem = InsertItem(strName.c_str(),hItem);
 			m_LayerItemMap.insert(LayerItem_Pair(hTexItem,pLyr));
 		}
+
+		//高程
 		nCount = pTerrain->getElevationLayersCount();
 		hItem = GetNextItem(hItem,TVGN_NEXT);
 		for (int i=0; i<nCount; i++)
 		{
 			owScene::ElevationLayer* pLyr = pTerrain->getEvelationLayer(i);
-			std::string strName = pLyr->getDataSource()->getUrl();
-			strName = strName.substr(strName.rfind("\\")+1,strName.length());
+			std::string strName = pLyr->getName();
+
 			HTREEITEM hEleItem = InsertItem(strName.c_str(),hItem);
 			m_LayerItemMap.insert(LayerItem_Pair(hEleItem,pLyr));
 		}
-		nCount = pTerrain->getFeatureLayersCount();
+
+		//矢量
 		hItem = GetNextItem(hItem,TVGN_NEXT);
+
+		nCount = pTerrain->getFeatureLayersCount();
 		for (int i=0; i<nCount; i++)
 		{
 			owScene::FeatureLayer* pLyr = pTerrain->getFeatureLayer(i);
-			std::string strName = pLyr->getDataSource()->getUrl();
-			strName = strName.substr(strName.rfind("\\")+1,strName.length());
+			std::string strName = pLyr->getName();
+
 			HTREEITEM hEleItem = InsertItem(strName.c_str(),hItem);
 			m_LayerItemMap.insert(LayerItem_Pair(hEleItem,pLyr));
 		}
+
+		nCount = pTerrain->getImageLayersCount();
+		for (int i=0; i<nCount; i++)
+		{
+			owScene::ImageLayer* pLyr = pTerrain->getImageLayer(i);
+			owScene::FeatureSource * fs = dynamic_cast<owScene::FeatureSource*>(pLyr->getDataSource());
+			if(!fs)
+				continue;
+
+			std::string strName = pLyr->getName();
+			HTREEITEM hTexItem = InsertItem(strName.c_str(),hItem);
+			m_LayerItemMap.insert(LayerItem_Pair(hTexItem,pLyr));
+		}
+
+
 	}
 	void CTocControl::AddLayer(owScene::Layer* player, BOOL bExpand)
 	{
