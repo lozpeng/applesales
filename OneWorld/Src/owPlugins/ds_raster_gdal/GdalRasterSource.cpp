@@ -918,6 +918,9 @@ osg::Image* GdalRasterSource::readHeight(const GeoExtent* extent, int size)
 		case(GDT_Int16):
 			rasterio_resample<short>(bandGray,windowX,windowY,windowWidth,windowHeight,(void*)(gray),destWidth,destHeight,targetGDALType);
 			break;
+		case(GDT_Float32):
+			rasterio_resample<float>(bandGray,windowX,windowY,windowWidth,windowHeight,(void*)(gray),destWidth,destHeight,targetGDALType);
+			break;
 		default:
 			bandGray->RasterIO(GF_Read,windowX,windowY,windowWidth,windowHeight,(void*)(gray),destWidth,destHeight,targetGDALType,0,0);
 			break; // not handled
