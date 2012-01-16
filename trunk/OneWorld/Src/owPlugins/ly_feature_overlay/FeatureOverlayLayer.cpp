@@ -95,6 +95,7 @@ osg::Image* FeatureOverlayLayer::CreatImage(const TerrainTile* tile,unsigned int
 void FeatureOverlayLayer::read(const Config& config)
 {
 	_sourcename = config.attr("datasource");
+	ImageLayer::read(config);
 }
 
 void FeatureOverlayLayer::write(Config& config) const
