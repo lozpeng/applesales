@@ -421,10 +421,10 @@ void CMainFrame::AddTab_MapControl()
 	
 	//添加当前图层
 	CBCGPRibbonPanel* pPanelTargetLayer = pCategory->AddPanel (_T("增强显示"));
-	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,80,"目标层:");
+	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO,FALSE,60,"目标层:");
 	pPanelTargetLayer->Add(pBtnCurrLayer);
 
-	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 26);
+	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层"), 26);
 	pPanelTargetLayer->Add (pBtnShowOverView);
 	
 	pPanelTargetLayer->AddSeparator();
@@ -482,11 +482,14 @@ void CMainFrame::AddTab_MapControl()
 	pPanelTargetLayer->Add (new CBCGPRibbonLabel (_T(" ")));
 
 	pPanelTargetLayer->AddSeparator();
-	CBCGPRibbonButton* pBtnSwipView = new CBCGPRibbonButton (ID_SWIPE, _T("卷帘"),0,3);
+	CBCGPRibbonButton* pBtnSwipView = new CBCGPRibbonButton (ID_SWIPE, _T("卷帘"),0,6);
 	pPanelTargetLayer->Add ( pBtnSwipView);
-	CBCGPRibbonButton* pBtnStretch = new CBCGPRibbonButton (ID_RASLUT_EDIT, _T("闪烁"),1,4);
+	CBCGPRibbonButton* pBtnStretch = new CBCGPRibbonButton (ID_RASLUT_EDIT, _T("闪烁"),1,5);
 	pPanelTargetLayer->Add ( pBtnStretch);
 
+	CBCGPRibbonPanel* pPanelShowHide = pCategory->AddPanel (
+		_T("显示/隐藏"), m_PanelImages.ExtractIcon (26));
+	pPanelShowHide->Add (new CBCGPRibbonCheckBox (ID_VIEW_WORKSPACE, _T("图层管理")));
 
 	CBCGPRibbonPanel* pPanelSystem = pCategory->AddPanel (_T("系统"));
 	CBCGPRibbonButton* pBtnSetting = new CBCGPRibbonButton (ID_SETTING,_T("设置"), 3, 22);
@@ -611,7 +614,7 @@ void CMainFrame::AddTab_Editor()
 	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_CURRLAYER_COMBO_VECTOR,FALSE,100,"");
 
 	pPanelEditor->Add(pBtnCurrLayer);
-	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层范围"), 1);
+	CBCGPRibbonButton* pBtnShowOverView = new CBCGPRibbonButton (ID_ZOOMTO_LYREXTENT, _T("缩放到图层"), 1);
 	pPanelEditor->Add (pBtnShowOverView);
 
 	pPanelEditor->AddSeparator();
