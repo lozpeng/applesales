@@ -49,9 +49,12 @@ BOOL CRasterPropPage::OnApply()
 	//
 	Carto::CRasterLayer* pRasLayer = dynamic_cast<Carto::CRasterLayer*>(m_player);
 	Carto::CRasterRGBRender* pRGBRender = dynamic_cast<Carto::CRasterRGBRender*>(pRasLayer->GetRender().get());
-	pRGBRender->SetRedBandIndex(long(pSubProp->GetSubItem(0)->GetValue()));
-	pRGBRender->SetGreenBandIndex(long(pSubProp->GetSubItem(1)->GetValue()));
-	pRGBRender->SetBlueBandIndex(long(pSubProp->GetSubItem(2)->GetValue()));
+	if (pRGBRender->GetRGBMode())
+	{
+		pRGBRender->SetRedBandIndex(long(pSubProp->GetSubItem(0)->GetValue()));
+		pRGBRender->SetGreenBandIndex(long(pSubProp->GetSubItem(1)->GetValue()));
+		pRGBRender->SetBlueBandIndex(long(pSubProp->GetSubItem(2)->GetValue()));
+	}
 	return TRUE;
 }
 // CRasterPropPage 消息处理程序
