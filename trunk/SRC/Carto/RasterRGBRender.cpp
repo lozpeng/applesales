@@ -428,13 +428,23 @@ namespace Carto
 		{
 			dib.Create(mp_lResampleWidth,mp_lResampleHeight,lcolors);
 
-			dib.SetPalette(mg_byRed, mg_byGreen, mg_byBlue);
-
+			if (!m_pRasterDataset->GetChannelPalette(1, mg_byRed,mg_byGreen,mg_byBlue))
+			{
+				dib.SetPalette(mg_byRed, mg_byGreen, mg_byBlue);
+				BYTE* pLut = new BYTE[256];
+				GetChannelLUT(m_ShowBandIndex[0], pLut);
+				ApplyLut(pLut,mp_pucBufSrc[0],mp_pucBufPro[0],mp_lResampleBufferSize);
+				delete[] pLut;
+				pLut = NULL;
+			}
+			/*dib.SetPalette(mg_byRed, mg_byGreen, mg_byBlue);
 			BYTE* pLut = new BYTE[256];
 			GetChannelLUT(m_ShowBandIndex[0], pLut);
 			ApplyLut(pLut,mp_pucBufSrc[0],mp_pucBufPro[0],mp_lResampleBufferSize);
 			delete[] pLut;
-			pLut = NULL;
+			pLut = NULL;*/
+
+			dib.SetPalette(mg_byRed, mg_byGreen, mg_byBlue);
 			dib.SetImgDataBW(1,1,1,mp_lResampleWidth,mp_lResampleHeight,mp_pucBufSrc[0]);
 		}
 		else
