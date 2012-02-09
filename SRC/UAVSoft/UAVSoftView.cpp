@@ -351,6 +351,9 @@ void CUAVSoftView::OnOpenVector()
 	//_crtBreakAlloc = 9878;
 
 
+	//测试读取s57数据
+	//char *szS57File = "E:\\应用工程\\海图\\S57\\US3AK1DM\\US3AK1DM.000";
+	//this->GetDocument()->LoadS57File(szS57File);
 
 
 	char	szBigBuf[4096] = "";

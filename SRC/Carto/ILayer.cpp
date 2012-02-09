@@ -149,6 +149,9 @@ namespace Carto
 
 	ILayerPtr ILayer::CreateLayer(Geodatabase::IGeodataObjectPtr pDataObject)
 	{
+		if(pDataObject == NULL)
+			return NULL;
+
 		ILayerPtr player;
 		switch ( pDataObject->GetType() )
 		{

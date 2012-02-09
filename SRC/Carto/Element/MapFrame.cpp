@@ -326,6 +326,8 @@ void CMapFrame::DrawMap(Display::IDisplayPtr pDisplay)
 		(HDC)pMapDC->GetSafeHdc(), 0,0,SRCCOPY);
 
 		FreeDisplayObj(rect);
+
+
 	}
 	
 	
@@ -410,6 +412,8 @@ void CMapFrame::ReDrawMap(Display::IDisplayPtr pDisplay)
 	m_pGeoMap->SetDrawBound(frmBnd, TRUE);
 
 	FreeDisplayObj(frameBound);
+
+	
 }
 
 void CMapFrame::ReCalcMapToPageScale(Display::IDisplayPtr pDisplay)
@@ -420,7 +424,11 @@ void CMapFrame::ReCalcMapToPageScale(Display::IDisplayPtr pDisplay)
 void CMapFrame::ReCalcGrid()
 {
 	for(int i=0; i<m_Grids.GetGridCount(); i++)
-		m_Grids.GetMapGrid(i)->SetRecalcGrid();
+	{
+		//map与layout切换时出错，grid如果未激活就不执行下面语句
+		if(m_Grids.GetMapGrid(i)->GetGridActive())
+			m_Grids.GetMapGrid(i)->SetRecalcGrid();
+	}
 }
 
 

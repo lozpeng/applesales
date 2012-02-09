@@ -36,7 +36,7 @@ void CAlternatingScaleBar::serialization(SYSTEM::IArchive &ar)
 void CAlternatingScaleBar::DrawNormal(Display::IDisplayPtr pDisplay)
 {
 	SYSTEM::SYS_UNIT_TYPE mapUnit = m_pMapFrame->GetMap()->GetUnit();
-	double dDivisionLen = SYSTEM::UnitConverter::ConvertUnits(m_DivisionLen, m_Unit, mapUnit);
+	//double dDivisionLen = SYSTEM::UnitConverter::ConvertUnits(m_DivisionLen, m_Unit, mapUnit);
 
 	IScaleBar::DrawNormal(pDisplay);
 

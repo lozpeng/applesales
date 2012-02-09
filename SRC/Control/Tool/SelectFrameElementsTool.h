@@ -36,7 +36,7 @@ public:
 protected:
 	void UpdateStartPoint(CPoint pt);
 	void UpdateEndPoint(CPoint pt);
-	long GetHandleCursor(Element::HIT_HANDLE nHandle);
+	HCURSOR GetHandleCursor(Element::HIT_HANDLE nHandle);
 
 
 private:
@@ -54,7 +54,12 @@ private:
 private:
 	Framework::ILayoutCtrl *m_pLayoutCtrl;
 
-	HCURSOR m_hCursor;
+	HCURSOR cursorNormal;
+	HCURSOR cursorSizeAll;
+	HCURSOR cursorRightTop;
+	HCURSOR cursorTopBottom;
+	HCURSOR cursorleftTop;
+	HCURSOR cursorLeftRight;
 };
 
 

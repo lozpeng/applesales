@@ -56,7 +56,7 @@ IScaleBar::IScaleBar(const GEOMETRY::geom::Geometry& geometry, CMapFrame* pMapFr
 	m_NumLabelPos = NP_ABOVE_BAR;
 	m_NumTextSymbol.reset(new Display::CTextSymbol);
 	m_NumTextSymbol->SetTextPosType(TXTPOS_CENTER);
-	
+
 	m_DivisionMarkHeight = 2;//mm
 	m_SubDivisionMarkHeight = 1;//mm
 	m_MarkFreq = LF_DIVISIONS_FIRST_SUBDIVISION;
@@ -205,6 +205,7 @@ SYSTEM::CSmartPtr<IScaleBar> IScaleBar::CreateScaleBar(ELEMENT_TYPE type)
 void IScaleBar::MoveHandleTo(HIT_HANDLE nHandle,GEOMETRY::geom::Coordinate coord)
 {
 
+	IElement::MoveHandleTo(nHandle,coord);
 }
 void IScaleBar::UnitChanged(SYSTEM::SYS_UNIT_TYPE newUnit)
 {
@@ -278,7 +279,7 @@ void IScaleBar::CalculateScalebarRectSet(Display::IDisplayPtr pDisplay, CDisRect
 	numRect = CalcNumSize(pDisplay, barRect);
 	unitRect = CalcUnitSize(pDisplay);
 
-	if(m_DivisionLen == 0)
+	//if(m_DivisionLen == 0)
 	{
 		NormalizeRect(pDisplay, numRect);
 		NormalizeRect(pDisplay, barRect);
@@ -304,67 +305,90 @@ DIS_RECT IScaleBar::CalcUnitSize(Display::IDisplayPtr pDisplay)
 
 DIS_RECT IScaleBar::CalcBarSize(Display::IDisplayPtr pDisplay)
 {
+	//DIS_RECT* elementRect = pDisplay->GetDisplayTransformation().TransformToDisplay(&GetEnvelope());
+	//DIS_RECT unitSize = CalcUnitSize(pDisplay);
+
+	//DIS_RECT barRect;
+	//barRect.top = -m_BarHeightPixel;
+	//barRect.bottom = 0;
+	//if(m_DivisionLen == 0)
+	//{
+	//	double barLenMap;
+	//	long barLenDisplay;
+	//	barLenMap = DEFAULT_DIVISION_LEN*m_pMapFrame->GetMap()->GetMapToPageScale() ;
+	//	barLenMap = SYSTEM::UnitConverter::ConvertUnits(barLenMap, SYSTEM::SYS_UNIT_MILLIMETER, m_pMapFrame->GetMap()->GetUnit());
+	//	m_pMapFrame->GetMap()->GetDisplay()->GetDisplayTransformation().ConvertGeoToDisplay(barLenMap, barLenDisplay);
+	//	barLenDisplay *=m_DivisionNum;
+	//	m_contentChanged = TRUE;
+	//	//计算宽度
+	//	switch(m_UnitLabelPos)
+	//	{
+	//	case UP_BEFORE_BAR:
+	//	case UP_AFTER_BAR:
+	//	case UP_BEFORE_LABELS:
+	//	case UP_AFTER_LABELS:
+	//		barRect.left = 0;
+	//		barRect.right = barLenDisplay;
+	//		break;
+	//	case UP_ABOVE_BAR:
+	//	case UP_BELOW_BAR:
+	//		barRect.left = 0;
+	//		barRect.right = barLenDisplay;
+	//		break;
+	//	}
+	//	
+	//}
+	//else
+	//{
+
+		//long barLen = 0;
+		//double dbDivMapLen = SYSTEM::UnitConverter::ConvertUnits(m_DivisionLen, m_Unit, m_pMapFrame->GetMap()->GetUnit());
+
+		//m_pMapFrame->GetMap()->GetDisplay()->GetDisplayTransformation().ConvertGeoToDisplay(dbDivMapLen, barLen);
+
+		//barLen*=m_DivisionNum;
+
+
+		////计算宽度
+		//switch(m_UnitLabelPos)
+		//{
+		//case UP_BEFORE_BAR:
+		//case UP_AFTER_BAR:
+		//case UP_BEFORE_LABELS:
+		//case UP_AFTER_LABELS:
+		//	barRect.left = 0;
+		//	barRect.right = barLen;
+		//	break;
+		//case UP_ABOVE_BAR:
+		//case UP_BELOW_BAR:
+		//	barRect.left = 0;
+		//	barRect.right = barLen;
+		//	break;
+		//}
+	//}
+	
 	DIS_RECT* elementRect = pDisplay->GetDisplayTransformation().TransformToDisplay(&GetEnvelope());
 	DIS_RECT unitSize = CalcUnitSize(pDisplay);
-
 	DIS_RECT barRect;
 	barRect.top = -m_BarHeightPixel;
 	barRect.bottom = 0;
-	if(m_DivisionLen == 0)
+
+	//计算宽度
+	switch(m_UnitLabelPos)
 	{
-		double barLenMap;
-		long barLenDisplay;
-		barLenMap = DEFAULT_DIVISION_LEN*m_pMapFrame->GetMap()->GetMapToPageScale() ;
-		barLenMap = SYSTEM::UnitConverter::ConvertUnits(barLenMap, SYSTEM::SYS_UNIT_MILLIMETER, m_pMapFrame->GetMap()->GetUnit());
-		m_pMapFrame->GetMap()->GetDisplay()->GetDisplayTransformation().ConvertGeoToDisplay(barLenMap, barLenDisplay);
-		barLenDisplay *=m_DivisionNum;
-		m_contentChanged = TRUE;
-		//计算宽度
-		switch(m_UnitLabelPos)
-		{
-		case UP_BEFORE_BAR:
-		case UP_AFTER_BAR:
-		case UP_BEFORE_LABELS:
-		case UP_AFTER_LABELS:
-			barRect.left = 0;
-			barRect.right = barLenDisplay;
-			break;
-		case UP_ABOVE_BAR:
-		case UP_BELOW_BAR:
-			barRect.left = 0;
-			barRect.right = barLenDisplay;
-			break;
-		}
-		
+	case UP_BEFORE_BAR:
+	case UP_AFTER_BAR:
+	case UP_BEFORE_LABELS:
+	case UP_AFTER_LABELS:
+		barRect.left = 0;
+		barRect.right = elementRect->Width() - unitSize.Width() - m_UnitLabelGapPixel;
+		break;
+	case UP_ABOVE_BAR:
+	case UP_BELOW_BAR:
+		barRect.left = 0;
+		barRect.right = elementRect->Width();
+		break;
 	}
-	else
-	{
-		long barLen = 0;
-		double dbDivMapLen = SYSTEM::UnitConverter::ConvertUnits(m_DivisionLen, m_Unit, m_pMapFrame->GetMap()->GetUnit());
-
-		m_pMapFrame->GetMap()->GetDisplay()->GetDisplayTransformation().ConvertGeoToDisplay(dbDivMapLen, barLen);
-
-		barLen*=m_DivisionNum;
-
-
-		//计算宽度
-		switch(m_UnitLabelPos)
-		{
-		case UP_BEFORE_BAR:
-		case UP_AFTER_BAR:
-		case UP_BEFORE_LABELS:
-		case UP_AFTER_LABELS:
-			barRect.left = 0;
-			barRect.right = barLen;
-			break;
-		case UP_ABOVE_BAR:
-		case UP_BELOW_BAR:
-			barRect.left = 0;
-			barRect.right = barLen;
-			break;
-		}
-	}
-	
 	FreeDisplayObj(elementRect);
 	return barRect;
 }
@@ -381,21 +405,21 @@ DIS_RECT IScaleBar::CalcMarkSize(Display::IDisplayPtr pDisplay, DIS_RECT barRect
 
 
 	////计算宽度
-	//switch(m_UnitLabelPos)
-	//{
-	//case UP_BEFORE_BAR:
-	//case UP_AFTER_BAR:
-	//case UP_BEFORE_LABELS:
-	//case UP_AFTER_LABELS:
-	//	markRect.left = 0;
-	//	markRect.right = elementRect->Width() - unitSize.Width() - m_UnitLabelGapPixel;
-	//	break;
-	//case UP_ABOVE_BAR:
-	//case UP_BELOW_BAR:
-	//	markRect.left = 0;
-	//	markRect.right = elementRect->Width();
-	//	break;
-	//}
+	switch(m_UnitLabelPos)
+	{
+	case UP_BEFORE_BAR:
+	case UP_AFTER_BAR:
+	case UP_BEFORE_LABELS:
+	case UP_AFTER_LABELS:
+		markRect.left = 0;
+		markRect.right = elementRect->Width() - unitSize.Width() - m_UnitLabelGapPixel;
+		break;
+	case UP_ABOVE_BAR:
+	case UP_BELOW_BAR:
+		markRect.left = 0;
+		markRect.right = elementRect->Width();
+		break;
+	}
 	FreeDisplayObj(elementRect);
 	return markRect;
 }
