@@ -31,6 +31,8 @@ private:
 
 	void DrawCloseButton(Display::IDisplayPtr pDisplay);//绘制关闭按钮
 
+	SYSTEM::SYS_UNIT_TYPE  m_unitType;  //量测单位
+
 };
 
 typedef SYSTEM::CSmartPtr<CPolylineMeasureElement> CPolylineMeasureElementPtr;

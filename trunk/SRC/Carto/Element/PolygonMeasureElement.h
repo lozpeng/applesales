@@ -35,6 +35,7 @@ private:
 
 	protected:
 	Display::IFillSymbolPtr m_pVertixSymbol;
+	SYSTEM::SYS_UNIT_TYPE  m_unitType;  //Á¿²âµ¥Î»
 };
 
 typedef SYSTEM::CSmartPtr<CPolygonMeasureElement> CPolygonMeasureElementPtr;

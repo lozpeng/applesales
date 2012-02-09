@@ -10,6 +10,8 @@ namespace Element{
 		m_enumElementType = ET_MEASURE_POLYLINE_ELEMENT;
 		m_pSelectionHandle.reset(new CEnvelopeTracker(GEOMETRY::geom::Envelope(0,0,0,0), HT_EIGHT));
 		bDrawCloseButton = false;
+		m_unitType = SYSTEM::SYS_UNIT_TYPE::SYS_UNIT_METER; //量测的结果都按照“米”显示
+
 	}
 
 	CPolylineMeasureElement::CPolylineMeasureElement(const GEOMETRY::geom::Geometry& geometry):CPolylineElement(geometry)
@@ -21,6 +23,7 @@ namespace Element{
 
 		m_pSelectionHandle.reset(new CEnvelopeTracker(*geometry.getEnvelopeInternal(), HT_EIGHT));
 		bDrawCloseButton = false;
+		m_unitType = SYSTEM::SYS_UNIT_TYPE::SYS_UNIT_METER;
 	}
 
 	CPolylineMeasureElement::CPolylineMeasureElement(GEOMETRY::geom::Coordinate& coord)
@@ -38,6 +41,7 @@ namespace Element{
 
 		m_pSelectionHandle.reset(new CEnvelopeTracker(*m_pGeometry->getEnvelopeInternal(), HT_EIGHT));
 		bDrawCloseButton = false;
+		m_unitType = SYSTEM::SYS_UNIT_TYPE::SYS_UNIT_METER; //量测的结果都按照“米”显示
 	}
 
 	CPolylineMeasureElement::~CPolylineMeasureElement(void)
@@ -204,6 +208,14 @@ namespace Element{
 		labelName ="起点";
 		pDisplay->Draw(&textEnvS,labelName,TRUE);
 
+		
+		double rate=1.0;
+		std::string strUnit= SYSTEM::UnitConverter::GetUnitLabelCHS(m_unitType);
+		SYSTEM::SYS_UNIT_TYPE  unitType = pDisplay->GetDisplayTransformation().GetUnit();
+		if(unitType != m_unitType)
+		{
+			rate = SYSTEM::UnitConverter::ConvertUnits(1, unitType,m_unitType);
+		}
 		//标注量测值
 		for(int i = 0;i<pCoors->getSize()-1;i++)
 		{
@@ -214,7 +226,7 @@ namespace Element{
 			pLine->setToPoint(pToPoint);
 
 			dbGeoLen =  pLine->Length();
-			dbTotalLen+=dbGeoLen;
+			dbTotalLen+=dbGeoLen*rate;
 
 			GEOMETRY::geom::Envelope textEnv(pToPoint.x+dbOffset,pToPoint.x+dbOffset+dbExpand,pToPoint.y,pToPoint.y+dbExpand);
 
@@ -222,7 +234,8 @@ namespace Element{
 			labelName =szLabelName;
 			if(i == pCoors->getSize()-2)
 			{
-				labelName ="总长度:";labelName+=szLabelName;
+				labelName ="总长度:";
+				labelName = labelName+szLabelName+strUnit;
 			}
 			pDisplay->Draw(&textEnv,labelName,TRUE);
 		}

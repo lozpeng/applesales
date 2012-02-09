@@ -182,7 +182,6 @@ namespace Control
 
 			if(flagSelected==false)
 			{
-				m_DelPolyline= NULL;
 				b_CanDelete= false;
 				//设置光标类型
 				m_pMapCtrl->SetCursor(m_hCursor);

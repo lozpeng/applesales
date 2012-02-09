@@ -375,6 +375,7 @@ void CMapFrame::UpdateMapFrame(Display::IDisplayPtr pDisplay)
 //ÖØ»æmap
 void CMapFrame::ReDrawMap(Display::IDisplayPtr pDisplay)
 {
+	ReCalcMapToPageScale(pDisplay);
 	m_pGeoMap->SetFramePageScale(pDisplay->GetDisplayTransformation().GetMapScale(), m_dbMapScale);
 
 	DIS_BOUND *frameBound = pDisplay->GetDisplayTransformation().TransformToDisplayBound(m_pGeometry->getEnvelopeInternal());
@@ -418,6 +419,7 @@ void CMapFrame::ReDrawMap(Display::IDisplayPtr pDisplay)
 
 void CMapFrame::ReCalcMapToPageScale(Display::IDisplayPtr pDisplay)
 {
+	double bb=m_pGeoMap->GetDisplay()->GetDisplayTransformation().GetMapScale();
 	m_dbMapScale = m_pGeoMap->GetDisplay()->GetDisplayTransformation().GetMapScale()/pDisplay->GetDisplayTransformation().GetMapScale();
 }
 

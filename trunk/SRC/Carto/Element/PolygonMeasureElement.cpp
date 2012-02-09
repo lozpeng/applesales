@@ -11,6 +11,7 @@ namespace Element{
 		m_enumElementType = ET_MEASURE_POLYGON_ELEMENT;
 		m_pSelectionHandle.reset(new CEnvelopeTracker(GEOMETRY::geom::Envelope(0,0,0,0), HT_EIGHT));
 		bDrawCloseButton = false;
+		m_unitType = SYSTEM::SYS_UNIT_TYPE::SYS_UNIT_METER; //量测的结果都按照“米”显示
 	}
 
 	CPolygonMeasureElement::CPolygonMeasureElement(const GEOMETRY::geom::Geometry& geometry):CPolygonElement(geometry)
@@ -18,6 +19,7 @@ namespace Element{
 		m_enumElementType = ET_MEASURE_POLYGON_ELEMENT;
 		m_pSelectionHandle.reset(new CEnvelopeTracker(*geometry.getEnvelopeInternal(), HT_EIGHT));
 		bDrawCloseButton = false;
+		m_unitType = SYSTEM::SYS_UNIT_TYPE::SYS_UNIT_METER; //量测的结果都按照“米”显示
 	}
 
 	CPolygonMeasureElement::CPolygonMeasureElement(GEOMETRY::geom::Coordinate& coord)
@@ -34,6 +36,7 @@ namespace Element{
 
 		m_pSelectionHandle.reset(new CEnvelopeTracker(*m_pGeometry->getEnvelopeInternal(), HT_EIGHT));
 		bDrawCloseButton = false;
+		m_unitType = SYSTEM::SYS_UNIT_TYPE::SYS_UNIT_METER; //量测的结果都按照“米”显示
 	}
 
 	CPolygonMeasureElement::~CPolygonMeasureElement(void)
@@ -214,10 +217,19 @@ namespace Element{
 		GEOMETRY::geom::Envelope textEnvS(pCentroidPoint);
 		textEnvS.expandBy(dbExpand);
 
+		double rate=1.0;
+		std::string strUnit= SYSTEM::UnitConverter::GetUnitLabelCHS(m_unitType);
+		strUnit = strUnit+"*"+strUnit;
+		SYSTEM::SYS_UNIT_TYPE  unitType = pDisplay->GetDisplayTransformation().GetUnit();
+		if(unitType != m_unitType)
+		{
+			rate = SYSTEM::UnitConverter::ConvertUnits(1, unitType,m_unitType);
+		}
+
 		labelName ="总面积:";
 
-		sprintf(szLabelName, "%.3f", dbArea);
-		labelName +=szLabelName;
+		sprintf(szLabelName, "%.3f", dbArea*rate);
+		labelName +=szLabelName+strUnit;
 
 		pDisplay->Draw(&textEnvS,labelName,TRUE);
 
