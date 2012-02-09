@@ -9,6 +9,9 @@
 #include "RasterLayer.h"
 #include "RasterWSFactory.h"
 #include <boost/function.hpp>
+#include "OGRFeatureClass.h"
+#include "OGRWorkspace.h"
+#include "OGRWorkspaceFactory.h"
 
 namespace Framework
 {
@@ -162,7 +165,35 @@ namespace Framework
 
 		Geodatabase::IWorkspace* ipWorkspace = CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(fileName);
 		Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->OpenFeatureClass(fileName);
+		if(ipFeatureCls == NULL)
+			return;
 
+		Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
+		pLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
+		if (pLayer ==NULL)
+			return;
+
+		//设置图层名
+		pLayer->SetName(std::string(csThemeName));
+		m_pActiveMap->AddLayer(pLayer);
+
+		if(m_pLinkMapTree)
+		{
+			m_pLinkMapTree->AddLayer(pLayer);
+		}
+	}
+
+	void IDocument::LoadS57File(const char *fileName)
+	{
+		CString csDataSourceTmp=fileName;
+
+		CString csThemeName = csDataSourceTmp.Mid (csDataSourceTmp.ReverseFind ('\\') + 1);
+		csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
+
+		Geodatabase::IWorkspace* ipWorkspace = COGRWorkspaceFactory::GetInstance()->OpenFromFile(fileName);
+
+		//将s57的point加入
+		Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->OpenFeatureClass("point");
 
 		Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
 		pLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
@@ -174,7 +205,33 @@ namespace Framework
 		{
 			m_pLinkMapTree->AddLayer(pLayer);
 		}
-	}
 
+		//将s57的Line加入
+		ipFeatureCls = ipWorkspace->OpenFeatureClass("Line");
+
+		pLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
+		//设置图层名
+		pLayer->SetName(std::string(csThemeName));
+		m_pActiveMap->AddLayer(pLayer);
+
+		if(m_pLinkMapTree)
+		{
+			m_pLinkMapTree->AddLayer(pLayer);
+		}
+
+		//将s57的point加入
+		ipFeatureCls = ipWorkspace->OpenFeatureClass("Area");
+
+		pLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
+		//设置图层名
+		pLayer->SetName(std::string(csThemeName));
+		m_pActiveMap->AddLayer(pLayer);
+
+		if(m_pLinkMapTree)
+		{
+			m_pLinkMapTree->AddLayer(pLayer);
+		}
+
+	}
 
 }

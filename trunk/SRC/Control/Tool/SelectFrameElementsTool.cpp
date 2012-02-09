@@ -15,7 +15,6 @@ static CSelectFrameElementsTool gSelectFrameElementsTool;
 
 CSelectFrameElementsTool::CSelectFrameElementsTool() : Framework::ITool("SelectFrameElementsTool")
 {
-	m_hCursor = NULL;
 	m_nMoveStatus = NO_MOVING;
 	m_nCanMoveContent = CMC_CANMOVE_NONE;
 
@@ -25,13 +24,41 @@ CSelectFrameElementsTool::CSelectFrameElementsTool() : Framework::ITool("SelectF
 
 	m_nCurHandle = Element::HH_HIT_NONE;
 
+	cursorNormal = NULL;
+	cursorSizeAll = NULL;
+	cursorRightTop = NULL;
+	cursorTopBottom = NULL;
+	cursorleftTop = NULL;
+	cursorLeftRight = NULL;
+
 }
 
 CSelectFrameElementsTool::~CSelectFrameElementsTool()
 {
-	if(m_hCursor)
+
+	if(cursorNormal)
 	{
-		DeleteObject( m_hCursor );
+		DeleteObject( cursorNormal );
+	}
+	if(cursorSizeAll)
+	{
+		DeleteObject( cursorSizeAll );
+	}
+	if(cursorRightTop)
+	{
+		DeleteObject( cursorRightTop );
+	}
+	if(cursorTopBottom)
+	{
+		DeleteObject( cursorTopBottom );
+	}
+	if(cursorleftTop)
+	{
+		DeleteObject( cursorleftTop );
+	}
+	if(cursorLeftRight)
+	{
+		DeleteObject( cursorLeftRight );
 	}
 }
 
@@ -41,10 +68,18 @@ void CSelectFrameElementsTool::Initialize(Framework::IUIObject *pTargetControl)
 	ITool::Initialize(pTargetControl);
 
 	//初始化光标
-	if(m_hCursor==NULL)
-	{
-		m_hCursor =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_Arrow) );
-	}
+	if(cursorNormal == NULL)
+		cursorNormal =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_Arrow));
+	if(cursorSizeAll == NULL)
+		cursorSizeAll =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_ALL));
+	if(cursorRightTop == NULL)
+		cursorRightTop =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_RIGHTTOP));
+	if(cursorTopBottom == NULL)
+		cursorTopBottom =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_TOPBOTTOM));
+	if(cursorleftTop == NULL)
+		cursorleftTop =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_LEFTTOP));
+	if(cursorLeftRight == NULL)
+		cursorLeftRight =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_SIZE_LEFTRIGHT));
 
 
 	//获取活动地图控件
@@ -53,8 +88,7 @@ void CSelectFrameElementsTool::Initialize(Framework::IUIObject *pTargetControl)
 		return;
 
 	//设置光标类型
-	m_pLayoutCtrl->SetCursor(m_hCursor);
-
+	m_pLayoutCtrl->SetCursor(cursorNormal);
 
 }
 
@@ -155,17 +189,17 @@ void CSelectFrameElementsTool::MouseMoveEvent (UINT nFlags, CPoint point)
 			if( m_nCurHandle== Element::HH_HIT_NONE)//未击中
 			{
 				m_nCanMoveContent = CMC_CANMOVE_NONE;//设置当前可移动内容为：无
-				//m_pLayoutCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
+				m_pLayoutCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
 			}
 			else if(m_nCurHandle == Element::HH_HIT_INTERIOR)//击中图元内部
 			{
 				m_nCanMoveContent = CMC_CANMOVE_ELEMENT;//设置当前可移动内容为：element可以平移
-				//m_pLayoutCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
+				m_pLayoutCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
 			}
 			else //击中图元handle
 			{
 				m_nCanMoveContent = CMC_CANMOVE_HANDLE;//设置当前可移动内容为：handle可以移动
-				//m_pLayoutCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
+				m_pLayoutCtrl->SetCursor(GetHandleCursor(m_nCurHandle));
 			}
 		}
 		break;
@@ -317,7 +351,7 @@ void CSelectFrameElementsTool::LButtonUpEvent (UINT nFlags, CPoint point)
 	m_nCanMoveContent = CMC_CANMOVE_NONE;
 
 	m_pLayoutCtrl->UpdateControl(drawAll);
-	//m_pLayoutCtrl->SetCursor(cursorNormal);
+	m_pLayoutCtrl->SetCursor(cursorNormal);
 
 	ReleaseCapture();
 
@@ -533,35 +567,35 @@ void CSelectFrameElementsTool::UpdateEndPoint(CPoint pt)
 	pDisplay->GetDisplayTransformation().ConvertDisplayToGeo(m_cPtEnd.x, m_cPtEnd.y, m_endCoord);
 }
 
-long CSelectFrameElementsTool::GetHandleCursor(Element::HIT_HANDLE nHandle)
+HCURSOR CSelectFrameElementsTool::GetHandleCursor(Element::HIT_HANDLE nHandle)
 {
 
 	switch(nHandle)
 	{
-	//case Element::HH_HIT_NONE:
-	//	return cursorNormal;
-	//case Element::HH_HIT_INTERIOR:
-	//	return cursorSizeAll;
-	//case Element::HH_HIT_MINX_MINY:
-	//	return cursorRightTop;
-	//case Element::HH_HIT_MIDX_MINY:
-	//	return cursorTopBottom;
-	//case Element::HH_HIT_MAXX_MINY:
-	//	return cursorleftTop;
-	//case Element::HH_HIT_MAXX_MIDY:
-	//	return cursorLeftRight;
-	//case Element::HH_HIT_MAXX_MAXY:
-	//	return cursorRightTop;
-	//case Element::HH_HIT_MIDX_MAXY:
-	//	return cursorTopBottom;
-	//case Element::HH_HIT_MINX_MAXY:
-	//	return cursorleftTop;
-	//case Element::HH_HIT_MINX_MIDY:
-	//	return cursorLeftRight;
-	//default:
-	//	return cursorNormal;
+	case Element::HH_HIT_NONE:
+		return cursorNormal;
+	case Element::HH_HIT_INTERIOR:
+		return cursorSizeAll;
+	case Element::HH_HIT_MINX_MINY:
+		return cursorRightTop;
+	case Element::HH_HIT_MIDX_MINY:
+		return cursorTopBottom;
+	case Element::HH_HIT_MAXX_MINY:
+		return cursorleftTop;
+	case Element::HH_HIT_MAXX_MIDY:
+		return cursorLeftRight;
+	case Element::HH_HIT_MAXX_MAXY:
+		return cursorRightTop;
+	case Element::HH_HIT_MIDX_MAXY:
+		return cursorTopBottom;
+	case Element::HH_HIT_MINX_MAXY:
+		return cursorleftTop;
+	case Element::HH_HIT_MINX_MIDY:
+		return cursorLeftRight;
+	default:
+		return cursorNormal;
 	}
-	return 1;
+	return cursorNormal;
 }
 
 void CSelectFrameElementsTool::OnEditElementProp()

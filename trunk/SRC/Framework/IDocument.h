@@ -54,6 +54,8 @@ public:
 	//加载shp文件
 	void LoadShpFile(const char *file);
 
+	//加载s57数据
+	void LoadS57File(const char *file);
 
 	void SetLinkMapCtrl(IMapCtrl *pMapCtrl);
 

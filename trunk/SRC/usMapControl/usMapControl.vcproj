@@ -109,8 +109,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\..\..\outdir\$(ConfigurationName)\"
+			IntermediateDirectory="..\..\..\indir\$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="2"
 			UseOfMFC="2"
 			CharacterSet="1"
@@ -138,6 +138,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\ImageProcess;..\Geometry\capi;..\Control"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
@@ -153,7 +154,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="2052"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;&quot;$(OutDir)/TypeLib&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -161,8 +162,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				AdditionalDependencies="comsuppw.lib Geometry.lib"
 				OutputFile="$(OutDir)\$(ProjectName).ocx"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OutDir)"
 				ModuleDefinitionFile=".\usMapControl.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
