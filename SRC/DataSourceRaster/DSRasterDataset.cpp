@@ -93,6 +93,7 @@ void CDSRasterDataset::Init()
 		break;
 	}
 	//统计各个波段的最大最小值
+
 	for(long lband =0;lband<m_lBand;lband++)
 	{
 		switch(datatype)
@@ -133,7 +134,15 @@ void CDSRasterDataset::Init()
 
         m_pdMins[lband] =dMin;
 		m_pdMaxs[lband] =dMax;
-
+		GDALRasterBand *pBand=m_pDataset->GetRasterBand(lband+1);
+		GDALColorTable *colorTable;
+		GDALColorEntry colorEntry;
+		colorTable = pBand->GetColorTable();
+		if(colorTable)
+		{
+			m_pdMins[lband] =0;
+			m_pdMaxs[lband] =255;
+		}
 	}
 
 	if(buffer)
