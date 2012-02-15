@@ -55,6 +55,32 @@ BOOL CRasterPropPage::OnApply()
 		pRGBRender->SetGreenBandIndex(long(pSubProp->GetSubItem(1)->GetValue()));
 		pRGBRender->SetBlueBandIndex(long(pSubProp->GetSubItem(2)->GetValue()));
 	}
+
+	std::string strColormap = _T("调色板");
+	pSubProp = NULL;
+	for (int i=0; i<nCount; i++)
+	{
+		pSubProp = pProp->GetSubItem(i);
+		if (0 == strcmp(strColormap.c_str(),pSubProp->GetName()))
+		{
+			break;
+		}
+	}
+
+	if (!pSubProp)
+		return TRUE;
+	Geodatabase::IRasterDatasetPtr pRaster = m_player->GetDataObject();
+	BYTE byRed[256];
+	BYTE byGreen[256];
+	BYTE byBlue[256];
+	for (int i=0; i<256; i++)
+	{
+		long lValue = pSubProp->GetSubItem(i)->GetValue();
+		byRed[i] = GetRValue(lValue);
+		byGreen[i] = GetGValue(lValue);
+		byBlue[i] = GetBValue(lValue);
+	}
+	pRaster->SetChannelPalette(1,byRed,byGreen,byBlue);
 	return TRUE;
 }
 // CRasterPropPage 消息处理程序
@@ -183,6 +209,24 @@ BOOL CRasterPropPage::OnInitDialog()
 	pProp->AllowEdit (FALSE);
 	pGroup1->AddSubItem(pProp);
 
+	BYTE byRed[256];
+	BYTE byGreen[256];
+	BYTE byBlue[256];
+	if (pRaster->GetChannelPalette(1, byRed,byGreen,byBlue))
+	{
+		CBCGPProp* pPalette =  new CBCGPProp (_T("调色板"));
+		pPalette->AllowEdit (FALSE);
+		pGroup1->AddSubItem(pPalette);
+		for (int i=0; i<256; i++)
+		{
+			CString str;
+			str.Format("%d",i);
+			CBCGPColorProp* pColorProp = new CBCGPColorProp(str, RGB(byRed[i],byGreen[i],byBlue[i]),NULL);
+			pColorProp->EnableOtherButton (_T("Other..."));
+			pColorProp->EnableAutomaticButton (_T("Default"), ::GetSysColor (COLOR_3DFACE));
+			pPalette->AddSubItem (pColorProp);
+		}
+	}
 	m_wndPropList.AddProperty (pGroup1);
 	m_wndPropList.ExpandAll();
 	return TRUE;  // return TRUE unless you set the focus to a control
