@@ -151,6 +151,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StartUAV", "SRC\StartUAV\St
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Geometry", "SRC\Geometry\build\msvc100\Geometry\Geometry.vcproj", "{108E75A3-0A92-489A-B1A9-8F071D40A108}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -391,6 +397,16 @@ Global
 		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Release|Win32.ActiveCfg = Release|Win32
 		{C439471E-6426-42D9-AD5A-0C75F52938CC}.Release|Win32.Build.0 = Release|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Debug|Win32.ActiveCfg = Debug|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Debug|Win32.Build.0 = Debug|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Any CPU.ActiveCfg = Release|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Win32.ActiveCfg = Release|Win32
+		{108E75A3-0A92-489A-B1A9-8F071D40A108}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
