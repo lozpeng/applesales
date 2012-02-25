@@ -12,6 +12,7 @@
 
 class DSRASTER_DLL CRasterWSFactory: public Geodatabase::IWorkspaceFactory 
 {
+	friend class CRasterGarbo;
 public:
 	CRasterWSFactory(void);
 	virtual ~CRasterWSFactory(void);

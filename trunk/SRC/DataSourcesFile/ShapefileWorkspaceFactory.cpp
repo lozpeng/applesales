@@ -2,6 +2,24 @@
 #include "ShapefileWorkspaceFactory.h"
 #include "ShapefileWorkspace.h"
 
+class CFileGarbo //它的唯一工作就是在析构函数中删除CSingleton的实例
+{
+
+public:
+
+	~CFileGarbo()
+
+	{
+
+		if( CShapefileWorkspaceFactory::m_instance )
+
+			delete CShapefileWorkspaceFactory::m_instance;
+
+	}
+
+};
+static CFileGarbo Garbo;
+
 CShapefileWorkspaceFactory* CShapefileWorkspaceFactory::m_instance =0;
 
 using namespace Geodatabase;
