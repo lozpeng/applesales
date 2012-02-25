@@ -13,6 +13,7 @@
 
 class DSFile_DLL CShapefileWorkspaceFactory: public Geodatabase::IWorkspaceFactory
 {
+	friend class CFileGarbo;
 public:
 	CShapefileWorkspaceFactory(void);
 	virtual ~CShapefileWorkspaceFactory(void);

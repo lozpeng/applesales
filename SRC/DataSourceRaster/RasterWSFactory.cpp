@@ -6,6 +6,24 @@
 using namespace Geodatabase;
 using namespace std;
 
+class CRasterGarbo //它的唯一工作就是在析构函数中删除CSingleton的实例
+{
+
+public:
+
+	~CRasterGarbo()
+
+	{
+
+		if( CRasterWSFactory::m_instance )
+
+			delete CRasterWSFactory::m_instance;
+
+	}
+
+};
+static CRasterGarbo Garbo;
+
 CRasterWSFactory* CRasterWSFactory::m_instance =NULL;
 
 CRasterWSFactory::CRasterWSFactory(void)
