@@ -260,6 +260,14 @@ bool FuzzyKmeanClass(const char *pszInputFileName, const char *pszOutputFileName
 	pSrcRS->DeleteBuffer();
 	rasDestDS->DeleteBuffer();
 
+	//写入类别信息
+	std::map<unsigned char,std::string> classes;
+    for(i=0;i<lCenterCount;i++)
+	{
+		classes[i+1]="";
+	}
+	rasDestDS->SetClassesInfo(classes);
+
 	for(i = 0; i < lSampleCount; i ++)
 	{
 		pSampleSet[i].Release();
