@@ -20,6 +20,8 @@ public:
 
 	static void ShowFuzzyKMeanDlg();
 
+	static void ShowClassVectorDlg();
+
 	static void InitSymbol();
 
 	//水体提取流程

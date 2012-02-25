@@ -16,6 +16,7 @@
 #include "TreePropSheetEx.h"
 #include "DistillStep1.h"
 #include "DistillStep2.h"
+#include "Raster2VectorDialog.h"
 #include "TreePropSheetEx.h"
 #include "Control.h"
 namespace Control
@@ -117,6 +118,13 @@ namespace Control
 	{
 		CDllResource hdll;
 		CFuzzyKMeanDialog dlg;
+		dlg.DoModal();
+	}
+
+	void CImageProcessTool::ShowClassVectorDlg()
+	{
+		CDllResource hdll;
+		CRaster2VectorDialog dlg;
 		dlg.DoModal();
 	}
 
