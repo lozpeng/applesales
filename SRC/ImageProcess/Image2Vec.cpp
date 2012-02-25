@@ -10,7 +10,7 @@
 namespace ImageProcess
 {
 
-bool ImgClass2Shp(const char *infile,const char *outfile,unsigned char classval)
+bool ImgClass2Shp(const char *infile,const char *outfile,unsigned char classval,int minisize)
 {
 	using namespace GEOMETRY::geom;
 
@@ -69,8 +69,7 @@ bool ImgClass2Shp(const char *infile,const char *outfile,unsigned char classval)
 	long lwidth,lheight;
 	pDataset->GetSize(&lwidth,&lheight);
     
-	//最小矢量化区域的大小
-	int nminSize=10;
+	
 	//像素值
 	unsigned char pixel;
 
@@ -266,7 +265,7 @@ bool ImgClass2Shp(const char *infile,const char *outfile,unsigned char classval)
 				}
 
 				//判断这个区域包含的点数目是否小于最小阈值
-				if(ltotal>=nminSize)
+				if(ltotal>=minisize)
 				{
 					bStartPoint =false;
 
