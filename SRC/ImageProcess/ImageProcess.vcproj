@@ -181,6 +181,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Bandmath.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DistanceClassify.cpp"
 				>
 			</File>
@@ -190,6 +194,10 @@
 			</File>
 			<File
 				RelativePath=".\GeoObjectExtract.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Image2Vec.cpp"
 				>
 			</File>
 			<File
@@ -235,6 +243,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\Bandmath.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DistanceClassify.h"
 				>
 			</File>
@@ -244,6 +256,10 @@
 			</File>
 			<File
 				RelativePath=".\GeoObjectExtract.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Image2Vec.h"
 				>
 			</File>
 			<File
