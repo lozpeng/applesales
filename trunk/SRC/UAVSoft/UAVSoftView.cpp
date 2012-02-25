@@ -23,7 +23,6 @@
 #include "ILayer.h"
 #include "DlgDrawingExport.h"
 
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -1925,13 +1924,13 @@ void CUAVSoftView::OnDeleteLastMagic()
 			continue;
 		}
 		ldata =pElement->GetUserdata();
-		if(ldata==1 ||ldata ==3 ||ldata==2)
-		{
+		/*if(ldata==1 ||ldata ==3 ||ldata==2 || ldata==4)
+		{*/
 			pLayer->RemoveElement(pElement);
 			//更新视图
-			m_MapCtrl.UpdateControl(drawElement);
+			m_MapCtrl.UpdateControl(drawElement|drawGeoSelection|drawEdit|drawTempObj);
 			break;
-		}
+		//}
 	}
 
 
@@ -2020,5 +2019,5 @@ void CUAVSoftView::OnDelAll()
 	pLayer->RemoveAllElements();
 	//更新视图
 	m_MapCtrl.UpdateControl(drawAll);
-
+    
 }
