@@ -1025,6 +1025,8 @@ bool CDSRasterDataset::GetClassesInfo(std::map<unsigned char,std::string> &class
 	{
 		return false;
 	}
+	//设置中文
+	locale oldloc = locale::global(locale(""));
 	//分类文件文件名
 	std::string strclassfile =m_name+=".classes";
     
@@ -1033,6 +1035,7 @@ bool CDSRasterDataset::GetClassesInfo(std::map<unsigned char,std::string> &class
 	//如果没有分类文件，则返回
 	if(!fs)
 	{
+        locale::global(oldloc);
 		return false;
 	}
 	std::string line,key,value;
@@ -1046,6 +1049,7 @@ bool CDSRasterDataset::GetClassesInfo(std::map<unsigned char,std::string> &class
 	}
 
 	fs.close();
+	locale::global(oldloc);
 	return true;
 }
 
@@ -1057,6 +1061,7 @@ bool CDSRasterDataset::SetClassesInfo(const std::map<unsigned char,std::string> 
 		return false;
 	}
 
+	locale oldloc = locale::global(locale(""));
     ofstream os;
     
 	//分类文件文件名
@@ -1064,6 +1069,7 @@ bool CDSRasterDataset::SetClassesInfo(const std::map<unsigned char,std::string> 
 	os.open(strclassfile.c_str());
 	if(os.bad())
 	{
+		locale::global(oldloc);
 		return false;
 	}
 	std::string newline;
@@ -1083,5 +1089,6 @@ bool CDSRasterDataset::SetClassesInfo(const std::map<unsigned char,std::string> 
 	}
 	
 	os.close();
+	locale::global(oldloc);
 	return true;
 }
