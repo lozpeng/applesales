@@ -2,6 +2,8 @@
 // Microsoft Visual C++ generated include file.
 // Used by Control.rc
 //
+#define IDOK2                           3
+#define IDCANCEL2                       4
 #define IDD_DIALOG_FUZZYKMEAN           167
 #define IDC_RADIO_EXPORT_ALL            1053
 #define IDC_RADIO_EXPOERT_SELECTED      1054
@@ -35,6 +37,7 @@
 #define IDC_SIZE_RIGHTTOP               2018
 #define IDC_EXTENT_TOP2                 2019
 #define IDC_EXTENT_BOTTOM               2020
+#define IDC_EDIT_CLASSVALUE             2020
 #define IDC_COMBO_DESTIMG               2021
 #define IDC_SIZE_TOPBOTTOM              2022
 #define IDC_EDIT1                       2023
@@ -45,6 +48,7 @@
 #define IDB_MAP_TREE                    2028
 #define IDC_CHECK_USEHIS                2029
 #define IDB_MAPTREE_STATE               2030
+#define IDD_DIALOG_RASTER2VECTOR        2030
 #define IDC_CHECK_LOADCHANGE            2031
 #define IDD_PROGRESS_BAR                2032
 #define IDC_EDIT2                       2033
@@ -242,9 +246,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2030
+#define _APS_NEXT_RESOURCE_VALUE        2031
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         2020
+#define _APS_NEXT_CONTROL_VALUE         2021
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif

@@ -231,6 +231,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ImgProcessUI\Raster2VectorDialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\SimpleRenderPage.cpp"
 				>
 			</File>
@@ -314,6 +318,10 @@
 			</File>
 			<File
 				RelativePath=".\MaptreeCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ImgProcessUI\Raster2VectorDialog.h"
 				>
 			</File>
 			<File

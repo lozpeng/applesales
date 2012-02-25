@@ -77,7 +77,11 @@ void CFuzzyKMeanDialog::OnBnClickedOk()
 {
 	Control::CProgressBar progress;
 
+	//
 	ImageProcess::FuzzyKmeanClass(m_strInputFile, m_strOutputFile, m_lSampleCount, m_lClassNum, m_lIterCount, m_dblThreold, &progress);
+
 
 	OnOK();
 }
+
+
