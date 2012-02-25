@@ -366,5 +366,15 @@ bool IRasterDataset::PixelIO(long lBandIndex, long lCol, long lRow, void *pvValu
 	return true;
 }
 
+bool IRasterDataset::GetClassesInfo(std::map<unsigned char,std::string> &classinfos)
+{
+	return false;
+}
+
+bool IRasterDataset::SetClassesInfo(const std::map<unsigned char,std::string> &classinfos)
+{
+	return false;
+}
+
 
 } //namespace Geodatabase

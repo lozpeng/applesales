@@ -198,6 +198,12 @@ public:
 	*/
 	virtual	bool	SetChannelLUT(long lChannelIndex, BYTE *pbLUT, long lNodesCount = 0, GEOMETRY::geom::Coordinate* pstPts = NULL);
 
+	/*@*****************************读取设置分类类别相关接口********************************************@*/
+
+
+	virtual bool   GetClassesInfo(std::map<unsigned char,std::string> &classinfos);
+
+	virtual bool   SetClassesInfo(const std::map<unsigned char,std::string> &classinfos);
 	/*@*****************************金字塔操作相关接口********************************************@*/
 
 

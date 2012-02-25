@@ -3,6 +3,7 @@
 #include "RasterWorkspace.h"
 #include <geometry/geom/Envelope.h>
 #include "RelativePath.h"
+#include <fstream>
 using namespace Geodatabase;
 
 CDSRasterDataset::CDSRasterDataset(CRasterWorkspace *pWorkspace,GDALDataset *pDataset,bool bRead,const char *name)
@@ -931,4 +932,156 @@ void CDSRasterDataset::serialization(SYSTEM::IArchive &ar)
 		ar&relPath;
 
 	}
+}
+
+#define COMMENT_CHAR '#'
+
+static bool IsSpace(char c)
+{
+	if (' ' == c || '\t' == c)
+		return true;
+	return false;
+}
+
+static bool IsCommentChar(char c)
+{
+	switch(c)
+	{
+	case COMMENT_CHAR:
+		return true;
+	default:
+		return false;
+	}
+}
+
+static void Trim(std::string & str)
+{
+	if (str.empty())
+	{
+		return;
+	}
+	int i, start_pos, end_pos;
+	for (i = 0; i < str.size(); ++i)
+	{
+		if (!IsSpace(str[i]))
+		{
+			break;
+		}
+	}
+	if (i == str.size())
+	{ // 
+		str = "";
+		return;
+	}
+
+	start_pos = i;
+
+	for (i = str.size() - 1; i >= 0; --i)
+	{
+		if (!IsSpace(str[i]))
+		{
+			break;
+		}
+	}
+	end_pos = i;
+
+	str = str.substr(start_pos, end_pos - start_pos + 1);
+}
+
+bool AnalyseLine(const std::string & line, std::string & key, std::string & value)
+{
+	using namespace std;
+	if (line.empty())
+		return false;
+	int start_pos = 0, end_pos = line.size() - 1, pos;
+	if ((pos = line.find(COMMENT_CHAR)) != -1)
+	{
+		if (0 == pos)
+		{  
+		}
+		end_pos = pos - 1;
+	}
+	string new_line = line.substr(start_pos, start_pos + 1 - end_pos);  // 棰勫鐞嗭紝鍒犻櫎娉ㄩ噴閮ㄥ垎
+
+	if ((pos = new_line.find('=')) == -1)
+		return false;  // 娌℃湁=鍙?
+	key = new_line.substr(0, pos);
+	value = new_line.substr(pos + 1, end_pos + 1- (pos + 1));
+
+	Trim(key);
+	if (key.empty())
+	{
+		return false;
+	}
+	Trim(value);
+	
+	return true;
+}
+
+bool CDSRasterDataset::GetClassesInfo(std::map<unsigned char,std::string> &classinfos)
+{
+	using namespace std;
+	if(m_pDataset==NULL)
+	{
+		return false;
+	}
+	//分类文件文件名
+	std::string strclassfile =m_name+=".classes";
+    
+	fstream fs(strclassfile.c_str());
+	
+	//如果没有分类文件，则返回
+	if(!fs)
+	{
+		return false;
+	}
+	std::string line,key,value;
+	while (std::getline(fs, line))
+	{
+		
+		if (AnalyseLine(line, key, value))
+		{
+			classinfos[atoi(key.c_str())] =value;
+		}
+	}
+
+	fs.close();
+	return true;
+}
+
+bool CDSRasterDataset::SetClassesInfo(const std::map<unsigned char,std::string> &classinfos)
+{
+    using namespace std;
+	if(m_pDataset==NULL)
+	{
+		return false;
+	}
+
+    ofstream os;
+    
+	//分类文件文件名
+	std::string strclassfile =m_name+=".classes";
+	os.open(strclassfile.c_str());
+	if(os.bad())
+	{
+		return false;
+	}
+	std::string newline;
+	char buffer[40];
+	std::map<unsigned char,std::string>::const_iterator iter;
+	for(iter=classinfos.begin();iter!=classinfos.end();iter++)
+	{
+		
+		memset(buffer,0,sizeof(buffer));
+
+		sprintf(buffer,"%d",(int)iter->first);
+		newline=buffer;
+		newline+="=";
+		newline+=iter->second;
+		//写入新类别
+		os<<newline<<endl;
+	}
+	
+	os.close();
+	return true;
 }
