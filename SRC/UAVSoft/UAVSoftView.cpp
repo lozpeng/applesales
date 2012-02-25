@@ -1926,7 +1926,8 @@ void CUAVSoftView::OnBuildDamage()
 
 void CUAVSoftView::OnHighWaterpol()
 {
-
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	Control::CImageProcessTool::ShowDistillWaterSheet(&m_MapCtrl, pMainFrm);
 }
 
 void CUAVSoftView::OnGasDatainsert()
