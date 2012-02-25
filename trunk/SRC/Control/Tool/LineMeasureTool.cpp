@@ -206,7 +206,7 @@ namespace Control
 
 		if (m_nLastVertixId >= 2  )
 		{
-
+            m_pPolyline->SetUserdata(4);
 			m_pMap->GetGraphicLayer()->AddElement(m_pPolyline);
 			//m_pMap->GetGraphicLayer()->SelectElement(m_pPolyline);	
 		}
