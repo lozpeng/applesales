@@ -760,7 +760,7 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	// 子类合并
 	//--------------------------
-	CBCGPRibbonButton* pBtnClassMerge = new CBCGPRibbonButton(ID_CLASSES_MERGE, _T("子类合并"), -1, 3);
+	CBCGPRibbonButton* pBtnClassMerge = new CBCGPRibbonButton(ID_CLASSES_MERGE, _T("分类矢量化"), -1, 3);
 	pPanelClasses->Add (pBtnClassMerge);
 
 	

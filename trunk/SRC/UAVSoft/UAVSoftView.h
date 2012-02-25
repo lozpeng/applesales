@@ -235,7 +235,15 @@ public:
 
 	afx_msg void OnSendBlueToothFile();
 
+	afx_msg void OnEdgeEnhance();
+	afx_msg void OnEdgeExtract();
+	afx_msg void OnBuildDamage();
+	afx_msg void OnHighWaterpol();
 	afx_msg void OnClassifyFuzzyKMean();
+	afx_msg void OnGasDatainsert();
+	afx_msg void OnGasCreateImage();
+	afx_msg void OnOilEdge();
+	afx_msg void OnClassVector();
 
 	//´ò¿ª°ïÖú
 	afx_msg void OnOpenHelp();
