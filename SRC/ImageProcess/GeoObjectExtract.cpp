@@ -919,7 +919,7 @@ bool WaterExtract(const char *InputFileName, const char *OutputFileName,std::vec
 						break;
 					}
 					//判断像素值和平均值的差距是否小于标准差两倍
-					if((abs(dValue-sinfos[k].mean[bandid]))<(sinfos[k].stdval[bandid]*2))
+					if((abs(dValue-sinfos[k].mean[bandid]))<(sinfos[k].stdval[bandid]*3))
 					{
 						bWater =true;
 					}
