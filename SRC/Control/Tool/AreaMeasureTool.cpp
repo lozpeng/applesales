@@ -218,6 +218,7 @@ namespace Control
 
 		if (m_nLastVertixId >= 2  )
 		{
+			m_pPolygon->SetUserdata(4);
 			m_pMap->GetGraphicLayer()->AddElement(m_pPolygon);
 			//m_pMap->GetGraphicLayer()->SelectElement(m_pPolygon);	
 		}
