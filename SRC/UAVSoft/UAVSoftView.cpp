@@ -186,7 +186,17 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_WATER_EXTRACT, OnWaterExtract)
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
 	ON_UPDATE_COMMAND_UI(ID_MAGIC_STICK, OnUpdateMagicStick)
+
+	//info extract
+	ON_COMMAND(ID_EDGE_ENHANCE,OnEdgeEnhance)
+	ON_COMMAND(ID_EDGE_EXTRACT,OnEdgeExtract)
+	ON_COMMAND(ID_BUILD_DAMAGE,OnBuildDamage)
+	ON_COMMAND(ID_HIGH_WATERPOL,OnHighWaterpol)
 	ON_COMMAND(ID_CLASSIFY_FUZZYKMEAN, OnClassifyFuzzyKMean)
+	ON_COMMAND(ID_GAS_DATAINSERT,OnGasDatainsert)
+	ON_COMMAND(ID_GAS_CREATEIMAGE,OnGasCreateImage)
+	ON_COMMAND(ID_OIL_EDGE,OnOilEdge)
+	ON_COMMAND(ID_CLASSES_MERGE,OnClassVector)
 
 
 	ON_COMMAND(ID_MAGICSTICK_LAYER,OnMagicStickLayer)
@@ -1898,6 +1908,47 @@ void CUAVSoftView::OnClassifyFuzzyKMean()
 {
 	Control::CImageProcessTool::ShowFuzzyKMeanDlg();
 }
+
+void CUAVSoftView::OnEdgeEnhance()
+{
+
+}
+
+void CUAVSoftView::OnEdgeExtract()
+{
+
+}
+
+void CUAVSoftView::OnBuildDamage()
+{
+
+}
+
+void CUAVSoftView::OnHighWaterpol()
+{
+
+}
+
+void CUAVSoftView::OnGasDatainsert()
+{
+
+}
+
+void CUAVSoftView::OnGasCreateImage()
+{
+
+}
+
+void CUAVSoftView::OnOilEdge()
+{
+
+}
+
+void CUAVSoftView::OnClassVector()
+{
+	Control::CImageProcessTool::ShowClassVectorDlg();
+}
+
 
 //删除上次魔术棒提取结果
 void CUAVSoftView::OnDeleteLastMagic()
