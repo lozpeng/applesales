@@ -245,6 +245,9 @@ public:
 	afx_msg void OnOilEdge();
 	afx_msg void OnClassVector();
 
+	//分类结果编号
+	afx_msg void OnModifyClassinfo();
+
 	//打开帮助
 	afx_msg void OnOpenHelp();
 

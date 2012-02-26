@@ -39,7 +39,10 @@
 #define IDC_EXTENT_BOTTOM               2020
 #define IDC_EDIT_CLASSVALUE             2020
 #define IDC_COMBO_DESTIMG               2021
+#define IDC_COMBO_SELCLS_VALUE          2021
 #define IDC_SIZE_TOPBOTTOM              2022
+#define IDC_BUTTON2                     2022
+#define IDC_BTN_COLORPICK               2022
 #define IDC_EDIT1                       2023
 #define IDC_ON_VERTIX                   2024
 #define IDC_EDIT_RELSHP                 2025
@@ -50,10 +53,13 @@
 #define IDB_MAPTREE_STATE               2030
 #define IDD_DIALOG_RASTER2VECTOR        2030
 #define IDC_CHECK_LOADCHANGE            2031
+#define IDD_DLG_MODIFYIMGCLASS          2031
 #define IDD_PROGRESS_BAR                2032
 #define IDC_EDIT2                       2033
+#define IDC_EDIT_CLSNAME                2033
 #define IDC_EDIT_CHANGETHD              2034
 #define IDC_BUTTON1                     2035
+#define IDC_BT_SELCLASSFILE             2035
 #define IDC_BUTTON_POLYGON              2036
 #define IDC_BTN_SHOWSYMBOL              2037
 #define IDR_LAYER_MENU                  2038
@@ -62,6 +68,7 @@
 #define IDC_EDIT_MINAREA2               2041
 #define IDC_EDIT_TOLL                   2042
 #define IDC_COMBO1                      2043
+#define IDC_COMBO_SELCLS_FILE           2043
 #define IDC_COMBO_RS_LYR                2044
 #define IDD_RASTER_PROP                 2045
 #define IDC_EDIT_EXWATERSHP             2046
@@ -246,9 +253,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2031
+#define _APS_NEXT_RESOURCE_VALUE        2032
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         2021
+#define _APS_NEXT_CONTROL_VALUE         2023
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif

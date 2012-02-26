@@ -1001,12 +1001,12 @@ bool AnalyseLine(const std::string & line, std::string & key, std::string & valu
 		}
 		end_pos = pos - 1;
 	}
-	string new_line = line.substr(start_pos, start_pos + 1 - end_pos);  // 棰勫鐞嗭紝鍒犻櫎娉ㄩ噴閮ㄥ垎
+	//string new_line = line.substr(start_pos, start_pos + 1 - end_pos);  // 棰勫鐞嗭紝鍒犻櫎娉ㄩ噴閮ㄥ垎
 
-	if ((pos = new_line.find('=')) == -1)
+	if ((pos = line.find('=')) == -1)
 		return false;  // 娌℃湁=鍙?
-	key = new_line.substr(0, pos);
-	value = new_line.substr(pos + 1, end_pos + 1- (pos + 1));
+	key = line.substr(0, pos);
+	value = line.substr(pos + 1, end_pos + 1- (pos + 1));
 
 	Trim(key);
 	if (key.empty())
@@ -1028,7 +1028,7 @@ bool CDSRasterDataset::GetClassesInfo(std::map<unsigned char,std::string> &class
 	//设置中文
 	locale oldloc = locale::global(locale(""));
 	//分类文件文件名
-	std::string strclassfile =m_name+=".classes";
+	std::string strclassfile =m_name+".classes";
     
 	fstream fs(strclassfile.c_str());
 	
@@ -1065,7 +1065,7 @@ bool CDSRasterDataset::SetClassesInfo(const std::map<unsigned char,std::string> 
     ofstream os;
     
 	//分类文件文件名
-	std::string strclassfile =m_name+=".classes";
+	std::string strclassfile =m_name+".classes";
 	os.open(strclassfile.c_str());
 	if(os.bad())
 	{

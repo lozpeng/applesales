@@ -198,6 +198,9 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_OIL_EDGE,OnOilEdge)
 	ON_COMMAND(ID_CLASSES_MERGE,OnClassVector)
 
+	ON_COMMAND(ID_CLASSES_RENAME,OnModifyClassinfo)
+	
+
 
 	ON_COMMAND(ID_MAGICSTICK_LAYER,OnMagicStickLayer)
 	ON_COMMAND(ID_MAGICSTICK_TOL,OnMagicTol)
@@ -2072,4 +2075,12 @@ void CUAVSoftView::OnDelAll()
 	//更新视图
 	m_MapCtrl.UpdateControl(drawAll);
     
+}
+
+void CUAVSoftView::OnModifyClassinfo()
+{
+	Control::CImageProcessTool::ModifyImgClasses();
+	//更新视图
+	m_MapCtrl.UpdateControl(drawAll);
+
 }

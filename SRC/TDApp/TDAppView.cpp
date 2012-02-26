@@ -21,7 +21,7 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include "Tool/MagicStickTool.h"
-#include "UI/ImageProcessTool.h"
+#include "imgprocessUI/ImageProcessTool.h"
 #include "ILayer.h"
 #include "DlgIncrementalExport.h"
 #include "DlgIncrementalImport.h"

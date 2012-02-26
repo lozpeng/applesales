@@ -33,7 +33,7 @@ CShapefileWorkspace::~CShapefileWorkspace()
 	ClearEditCache();
 	for (int k = 0;k< m_FeatureDataset.size();k++)
 	{
-		delete m_FeatureDataset[k];
+		//delete m_FeatureDataset[k];
 		m_FeatureDataset[k] = NULL;
 	}
 }

@@ -5,7 +5,7 @@
 #include "TDApp.h"
 
 #include "MainFrm.h"
-#include "ImageProcessTool.h"
+#include "imgprocessUI/ImageProcessTool.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
