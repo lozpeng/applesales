@@ -19,6 +19,8 @@
 #include "Raster2VectorDialog.h"
 #include "TreePropSheetEx.h"
 #include "Control.h"
+#include "DlgModifyImgClass.h"
+
 namespace Control
 {
 	std::vector<TreePropSheet::CTreePropSheetEx*> CImageProcessTool::m_manageSheet;
@@ -131,7 +133,7 @@ namespace Control
 	void CImageProcessTool::ShowDistillWaterSheet(Control::CMapControl* mapControl, CWnd* pParent)
 	{
 		CDllResource hdll;
-		TreePropSheet::CTreePropSheetEx* pFlowSheet = new TreePropSheet::CTreePropSheetEx("水体信息提取");
+		TreePropSheet::CTreePropSheetEx* pFlowSheet = new TreePropSheet::CTreePropSheetEx("水华信息提取");
 		pFlowSheet->SetTreeViewMode( TRUE, TRUE, TRUE);
 		pFlowSheet->SetIsResizable( true );
 		pFlowSheet->SetTreeWidth( 150 );  
@@ -179,5 +181,12 @@ namespace Control
 			}
 		}
 		m_manageSheetPage.clear();
+	}
+
+	void CImageProcessTool::ModifyImgClasses()
+	{
+		CDllResource hdll;
+		CDlgModifyImgClass dlg;
+		dlg.DoModal();
 	}
 }

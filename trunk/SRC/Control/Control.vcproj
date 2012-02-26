@@ -207,6 +207,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DlgModifyImgClass.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DllResource.cpp"
 				>
 			</File>
@@ -294,6 +298,10 @@
 			</File>
 			<File
 				RelativePath=".\ControlDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DlgModifyImgClass.h"
 				>
 			</File>
 			<File

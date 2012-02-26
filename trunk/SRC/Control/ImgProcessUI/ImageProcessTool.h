@@ -29,6 +29,9 @@ public:
 
 	//释放流程向导申请的内存
 	static void ReleaseSheets();
+
+	//分类结果编号
+	static void ModifyImgClasses();
 private:
 	static std::vector<TreePropSheet::CTreePropSheetEx*> m_manageSheet;
 	static std::vector<CResizablePage*>  m_manageSheetPage;
