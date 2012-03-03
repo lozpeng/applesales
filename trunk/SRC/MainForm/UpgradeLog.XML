@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="RibbonSimplePad">
+</Property><Property Name="解决方案文件" Value="E:\新建文件夹\Src\Src\Src\COM\MainForm\RibbonSimplePad.sln">
+</Property><Property Name="用户选项文件" Value="E:\新建文件夹\Src\Src\Src\COM\MainForm\RibbonSimplePad.suo">
+</Property><Property Name="Date" Value="2012年2月7日星期二">
+</Property><Property Name="Time" Value="09:26">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="RibbonSimplePad.sln" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\RibbonSimplePad.sln">
+</Event><Event ErrorLevel="0" Project="" Source="RibbonSimplePad.suo" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\RibbonSimplePad.suo">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="RibbonSimplePad.csproj" Description="项目文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\RibbonSimplePad.csproj">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="AssemblyInfo.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="ColorBox.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\ColorBox.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmFind.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmFind.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmFind.Designer.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmFind.Designer.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmMain.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmMain.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmMain.Designer.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmMain.Designer.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmPad.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmPad.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmPad.Designer.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmPad.Designer.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmReplace.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmReplace.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmReplace.Designer.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmReplace.Designer.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="Program.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\Program.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="Properties\Resources.Designer.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="AboutForm.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\AboutForm.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="AboutForm.Designer.cs" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\AboutForm.Designer.cs">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="Properties\licenses.licx" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\Properties\licenses.licx">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="RibbonSimplePad.ico" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\RibbonSimplePad.ico">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="AboutForm.resx" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\AboutForm.resx">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmFind.resx" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmFind.resx">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmMain.resx" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmMain.resx">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmPad.resx" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmPad.resx">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="frmReplace.resx" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\frmReplace.resx">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="online.gif" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\online.gif">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="Properties\Resources.resx" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\Properties\Resources.resx">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="Properties\app.manifest" Description="文件已成功备份为 E:\新建文件夹\Src\Src\Src\COM\MainForm\Backup\Properties\app.manifest">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="RibbonSimplePad.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="RibbonSimplePad" Source="RibbonSimplePad.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="RibbonSimplePad.sln" Description="成功转换解决方案">
+</Event><Event ErrorLevel="3" Project="" Source="RibbonSimplePad.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="RibbonSimplePad" Source="RibbonSimplePad.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event></UpgradeLog>
