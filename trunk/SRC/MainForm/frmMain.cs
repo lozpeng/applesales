@@ -754,11 +754,18 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
         {
         
         }
-
-    
-
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
+        }
+
+        private void barButtonAddImage_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barButtonAddShp_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

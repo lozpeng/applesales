@@ -177,6 +177,15 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.barButtonItem23 = new DevExpress.XtraBars.BarButtonItem();
+            this.barEditItemLayers = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemComboBox4 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            this.repositoryItemButtonEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.repositoryItemTextEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.barSubItem2 = new DevExpress.XtraBars.BarSubItem();
+            this.barButtonAddImage = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonAddShp = new DevExpress.XtraBars.BarButtonItem();
+            this.axusMapControl1 = new AxusMapControlLib.AxusMapControl();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupControlContainer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -229,7 +238,13 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit_Bright.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl)).BeginInit();
             this.xtraTabControl.SuspendLayout();
+            this.xtraTabPage_Map.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axusMapControl1)).BeginInit();
             this.SuspendLayout();
             // 
             // iWeb
@@ -423,10 +438,14 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
             this.selectMarkTool,
             this.textMark,
             this.pageFullExtent,
-            this.pageRealSize});
+            this.pageRealSize,
+            this.barEditItemLayers,
+            this.barSubItem2,
+            this.barButtonAddImage,
+            this.barButtonAddShp});
             this.ribbonControl1.LargeImages = this.imageCollection1;
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 255;
+            this.ribbonControl1.MaxItemId = 263;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.PageCategoryAlignment = DevExpress.XtraBars.Ribbon.RibbonPageCategoryAlignment.Right;
             this.ribbonControl1.PageHeaderItemLinks.Add(this.iAbout);
@@ -445,7 +464,11 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
             this.repositoryItemImageEdit1,
             this.repositoryItemPictureEdit2,
             this.repositoryItemPictureEdit3,
-            this.repositoryItemTrackBar1});
+            this.repositoryItemTrackBar1,
+            this.repositoryItemComboBox4,
+            this.repositoryItemButtonEdit2,
+            this.repositoryItemTextEdit1,
+            this.repositoryItemTextEdit2});
             this.ribbonControl1.SelectedPage = this.ribbonPage1;
             this.ribbonControl1.Size = new System.Drawing.Size(1107, 148);
             this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
@@ -1196,6 +1219,8 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
             // 
             // ribbonPageGroup2
             // 
+            this.ribbonPageGroup2.ItemLinks.Add(this.barEditItemLayers);
+            this.ribbonPageGroup2.ItemLinks.Add(this.barSubItem2);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             // 
             // ribbonPageGroup3
@@ -1908,6 +1933,7 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
             // 
             // xtraTabPage_Map
             // 
+            this.xtraTabPage_Map.Controls.Add(this.axusMapControl1);
             this.xtraTabPage_Map.Name = "xtraTabPage_Map";
             this.xtraTabPage_Map.Size = new System.Drawing.Size(700, 436);
             this.xtraTabPage_Map.Text = "Map";
@@ -1993,6 +2019,77 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
             this.barButtonItem23.LargeImageIndex = 24;
             this.barButtonItem23.Name = "barButtonItem23";
             // 
+            // barEditItemLayers
+            // 
+            this.barEditItemLayers.Caption = "图层：";
+            this.barEditItemLayers.Edit = this.repositoryItemComboBox4;
+            this.barEditItemLayers.Id = 255;
+            this.barEditItemLayers.Name = "barEditItemLayers";
+            this.barEditItemLayers.Width = 120;
+            // 
+            // repositoryItemComboBox4
+            // 
+            this.repositoryItemComboBox4.AutoHeight = false;
+            this.repositoryItemComboBox4.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemComboBox4.Name = "repositoryItemComboBox4";
+            this.repositoryItemComboBox4.UseParentBackground = true;
+            // 
+            // repositoryItemButtonEdit2
+            // 
+            this.repositoryItemButtonEdit2.AutoHeight = false;
+            this.repositoryItemButtonEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.repositoryItemButtonEdit2.Name = "repositoryItemButtonEdit2";
+            this.repositoryItemButtonEdit2.UseParentBackground = true;
+            // 
+            // repositoryItemTextEdit1
+            // 
+            this.repositoryItemTextEdit1.AutoHeight = false;
+            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            this.repositoryItemTextEdit1.UseParentBackground = true;
+            // 
+            // repositoryItemTextEdit2
+            // 
+            this.repositoryItemTextEdit2.AutoHeight = false;
+            this.repositoryItemTextEdit2.Name = "repositoryItemTextEdit2";
+            this.repositoryItemTextEdit2.UseParentBackground = true;
+            // 
+            // barSubItem2
+            // 
+            this.barSubItem2.Caption = "加载地理数据";
+            this.barSubItem2.Id = 260;
+            this.barSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonAddImage),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonAddShp)});
+            this.barSubItem2.Name = "barSubItem2";
+            // 
+            // barButtonAddImage
+            // 
+            this.barButtonAddImage.Caption = "加载栅格";
+            this.barButtonAddImage.Id = 261;
+            this.barButtonAddImage.ImageIndex = 0;
+            this.barButtonAddImage.Name = "barButtonAddImage";
+            this.barButtonAddImage.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonAddImage_ItemClick);
+            // 
+            // barButtonAddShp
+            // 
+            this.barButtonAddShp.Caption = "加载矢量";
+            this.barButtonAddShp.Id = 262;
+            this.barButtonAddShp.ImageIndex = 1;
+            this.barButtonAddShp.Name = "barButtonAddShp";
+            this.barButtonAddShp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonAddShp_ItemClick);
+            // 
+            // axusMapControl1
+            // 
+            this.axusMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axusMapControl1.Enabled = true;
+            this.axusMapControl1.Location = new System.Drawing.Point(0, 0);
+            this.axusMapControl1.Name = "axusMapControl1";
+            this.axusMapControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axusMapControl1.OcxState")));
+            this.axusMapControl1.Size = new System.Drawing.Size(700, 436);
+            this.axusMapControl1.TabIndex = 0;
+            // 
             // frmMain
             // 
             this.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2069,7 +2166,13 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
             ((System.ComponentModel.ISupportInitialize)(this.spinEdit_Bright.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl)).EndInit();
             this.xtraTabControl.ResumeLayout(false);
+            this.xtraTabPage_Map.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axusMapControl1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2245,6 +2348,15 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
         private BarButtonItem textMark;
         private BarButtonItem pageFullExtent;
         private BarButtonItem pageRealSize;
+        private BarEditItem barEditItemLayers;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox4;
+        private BarSubItem barSubItem2;
+        private BarButtonItem barButtonAddImage;
+        private BarButtonItem barButtonAddShp;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit2;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit2;
+        private AxusMapControlLib.AxusMapControl axusMapControl1;
 
     }
 }
