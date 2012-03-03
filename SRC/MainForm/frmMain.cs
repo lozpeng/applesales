@@ -475,15 +475,17 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
 
         private void barButtonItem_ZoomIn_ItemClick(object sender, ItemClickEventArgs e)
         {
+            axusMapControl1.CurTool = usMapControlLib.usToolType.ZoomInTool;
         }
 
         private void barButtonItem_ZoomOut_ItemClick(object sender, ItemClickEventArgs e)
         {
+            axusMapControl1.CurTool = usMapControlLib.usToolType.ZoomOutTool;
         }
 
         private void barButtonItem_Pan_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            axusMapControl1.CurTool = usMapControlLib.usToolType.PanTool;
         }
 
         private void barButtonItem_ProView_ItemClick(object sender, ItemClickEventArgs e)
@@ -760,12 +762,32 @@ namespace DevExpress.XtraBars.Demos.RibbonSimplePad {
 
         private void barButtonAddImage_ItemClick(object sender, ItemClickEventArgs e)
         {
+            OpenFileDialog dlg = new OpenFileDialog();
 
+            dlg.Filter = "Ó°ÏñÊý¾Ý(*.tif;*.img;*.tiff;*.bmp)|*.tif;*.img;*.tiff;*.bmp|All Files(*.*)|*.*";
+
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string filename = dlg.FileName;
+                axusMapControl1.AddImagefile(filename);
+
+            }
         }
 
         private void barButtonAddShp_ItemClick(object sender, ItemClickEventArgs e)
         {
+            OpenFileDialog dlg = new OpenFileDialog();
 
+            dlg.Filter = "shape files (*.shp)|*.shp|All files (*.*)|*.*";
+
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string filename = dlg.FileName;
+                axusMapControl1.AddShpfile(filename);
+
+            }
         }
     }
 }
