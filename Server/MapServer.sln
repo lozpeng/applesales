@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IISExtension", "IISExtension\IISExtension.vcproj", "{4E4EB222-0B2D-456F-9F4A-9717437F93A9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HttpHandler", "HttpHandler\HttpHandler.vcproj", "{BF4A85BD-9185-46A7-AABA-6827B996925A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E4EB222-0B2D-456F-9F4A-9717437F93A9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4E4EB222-0B2D-456F-9F4A-9717437F93A9}.Debug|Win32.Build.0 = Debug|Win32
+		{4E4EB222-0B2D-456F-9F4A-9717437F93A9}.Release|Win32.ActiveCfg = Release|Win32
+		{4E4EB222-0B2D-456F-9F4A-9717437F93A9}.Release|Win32.Build.0 = Release|Win32
+		{BF4A85BD-9185-46A7-AABA-6827B996925A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BF4A85BD-9185-46A7-AABA-6827B996925A}.Debug|Win32.Build.0 = Debug|Win32
+		{BF4A85BD-9185-46A7-AABA-6827B996925A}.Release|Win32.ActiveCfg = Release|Win32
+		{BF4A85BD-9185-46A7-AABA-6827B996925A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
