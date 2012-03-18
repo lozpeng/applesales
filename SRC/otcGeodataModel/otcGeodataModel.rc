@@ -1,0 +1,136 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""otcGeodatabase.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "InternalName", "otcGeodatabase.dll"
+            VALUE "OriginalFilename", "otcGeodatabase.dll"
+            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_OTCGeodatabase     REGISTRY                "otcGeodataModel.rgs"
+IDR_TMSWORKSPACEFACTORY REGISTRY                "TmsWorkspaceFactory.rgs"
+IDR_OTWORKSPACE         REGISTRY                "otWorkspace.rgs"
+IDR_TMSWF               REGISTRY                "TmsWF.rgs"
+IDR_OTFEATURECLASS      REGISTRY                "otFeatureClass.rgs"
+IDR_OTFIELD             REGISTRY                "otField.rgs"
+IDR_OTFEATURE           REGISTRY                "otFeature.rgs"
+IDR_OTSIMPLEQUERY       REGISTRY                "otSimpleQuery.rgs"
+IDR_OTSPATIALQUERY      REGISTRY                "otSpatialQuery.rgs"
+IDR_OTFEATURECURSOR     REGISTRY                "otFeatureCursor.rgs"
+IDR_OTSHPWF             REGISTRY                "otShpWF.rgs"
+IDR_OTRASTERDATASET     REGISTRY                "otRasterDataset.rgs"
+IDR_OTIFEWF             REGISTRY                "otIfeWF.rgs"
+IDR_OTRASTERBLOCK       REGISTRY                "otRasterBlock.rgs"
+IDR_OTSELCTIONSET       REGISTRY                "otSelctionSet.rgs"
+IDR_OTSPATIALREFERENCE  REGISTRY                "otSpatialReference.rgs"
+IDR_OTPROJTRANSFORM     REGISTRY                "otProjTransform.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "otcGeodatabase"
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "otcGeodataModel.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

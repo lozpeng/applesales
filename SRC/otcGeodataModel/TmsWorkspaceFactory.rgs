@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeodatabase.TmsWorkspaceFactory.1 = s 'TmsWorkspaceFactory Class'
+	{
+		CLSID = s '{C735C1D6-6CD7-4174-87FB-F47071FEF128}'
+	}
+	otcGeodatabase.TmsWorkspaceFactory = s 'TmsWorkspaceFactory Class'
+	{
+		CLSID = s '{C735C1D6-6CD7-4174-87FB-F47071FEF128}'
+		CurVer = s 'otcGeodatabase.TmsWorkspaceFactory.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C735C1D6-6CD7-4174-87FB-F47071FEF128} = s 'TmsWorkspaceFactory Class'
+		{
+			ProgID = s 'otcGeodatabase.TmsWorkspaceFactory.1'
+			VersionIndependentProgID = s 'otcGeodatabase.TmsWorkspaceFactory'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{84521EAF-6C68-428A-ACCA-FCEB5F46D28F}'
+		}
+	}
+}

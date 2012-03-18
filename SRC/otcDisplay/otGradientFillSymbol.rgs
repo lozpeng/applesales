@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otGradientFillSymbol.1 = s 'otGradientFillSymbol Class'
+	{
+		CLSID = s '{EF13EE24-EF7B-44BA-9E54-E3AEB1466718}'
+	}
+	otcDisplay.otGradientFillSymbol = s 'otGradientFillSymbol Class'
+	{
+		CLSID = s '{EF13EE24-EF7B-44BA-9E54-E3AEB1466718}'
+		CurVer = s 'otcDisplay.otGradientFillSymbol.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {EF13EE24-EF7B-44BA-9E54-E3AEB1466718} = s 'otGradientFillSymbol Class'
+		{
+			ProgID = s 'otcDisplay.otGradientFillSymbol.1'
+			VersionIndependentProgID = s 'otcDisplay.otGradientFillSymbol'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

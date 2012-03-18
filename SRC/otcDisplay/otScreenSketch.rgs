@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otScreenSketch.1 = s 'otScreenSketch Class'
+	{
+		CLSID = s '{85D728B2-0CE5-4E8A-AB1B-7A1EE54F3DB3}'
+	}
+	otcDisplay.otScreenSketch = s 'otScreenSketch Class'
+	{
+		CLSID = s '{85D728B2-0CE5-4E8A-AB1B-7A1EE54F3DB3}'
+		CurVer = s 'otcDisplay.otScreenSketch.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {85D728B2-0CE5-4E8A-AB1B-7A1EE54F3DB3} = s 'otScreenSketch Class'
+		{
+			ProgID = s 'otcDisplay.otScreenSketch.1'
+			VersionIndependentProgID = s 'otcDisplay.otScreenSketch'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

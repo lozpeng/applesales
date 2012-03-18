@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otSimpleLineSymbol.1 = s 'otSimpleLineSymbol Class'
+	{
+		CLSID = s '{779F8606-279E-471E-B2BE-6EE5A5F2D4A9}'
+	}
+	otcDisplay.otSimpleLineSymbol = s 'otSimpleLineSymbol Class'
+	{
+		CLSID = s '{779F8606-279E-471E-B2BE-6EE5A5F2D4A9}'
+		CurVer = s 'otcDisplay.otSimpleLineSymbol.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {779F8606-279E-471E-B2BE-6EE5A5F2D4A9} = s 'otSimpleLineSymbol Class'
+		{
+			ProgID = s 'otcDisplay.otSimpleLineSymbol.1'
+			VersionIndependentProgID = s 'otcDisplay.otSimpleLineSymbol'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

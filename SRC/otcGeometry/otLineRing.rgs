@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeometry.otLineRing.1 = s 'otLineRing Class'
+	{
+		CLSID = s '{DBE796BC-841C-4ABB-A83B-2523CEEC3046}'
+	}
+	otcGeometry.otLineRing = s 'otLineRing Class'
+	{
+		CLSID = s '{DBE796BC-841C-4ABB-A83B-2523CEEC3046}'
+		CurVer = s 'otcGeometry.otLineRing.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DBE796BC-841C-4ABB-A83B-2523CEEC3046} = s 'otLineRing Class'
+		{
+			ProgID = s 'otcGeometry.otLineRing.1'
+			VersionIndependentProgID = s 'otcGeometry.otLineRing'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A919D188-A659-422A-9FF7-552F23D97D13}'
+		}
+	}
+}

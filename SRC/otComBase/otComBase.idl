@@ -1,0 +1,68 @@
+// otComBase.idl : otComBase 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(otComBase.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+typedef
+[	uuid(0117237D-D754-4745-B5F2-D736B686A746),
+	helpstring("otUnits,坐标单位"),
+]
+enum otUnits
+{
+	OT_UNIT_POINT,			//屏幕像素
+
+	OT_UNIT_MILLIMETER,	//毫米
+	OT_UNIT_CENTIMETER,	//厘米
+	OT_UNIT_DECIMETER,		//分米
+	OT_UNIT_METER,			 //米		
+	OT_UNIT_KILOMETER,	//公里
+
+	SYS_UNIT_POINT,			//磅1/72英寸
+	OT_UNIT_INCH,			//英寸
+	OT_UNIT_FEET,			//英尺
+	OT_UNIT_YARD,			//码
+	OT_UNIT_MILE,			//英里
+	OT_UNIT_NAUTICALMILE,	//海里
+
+	OT_UNIT_RADIAN,		//弧度
+	OT_UNIT_DEGREE,		//度
+
+	OT_UNIT_UNKNOWN     //未知单位
+}otUnits;
+
+[
+	object,
+	uuid(4166D466-63A3-40AB-B1AB-D67DF5B0E855),
+	helpstring("IOriginData 接口"),
+	pointer_default(unique)
+]
+interface IOriginData : IUnknown{
+	[propget, helpstring("属性 OriginData")] HRESULT OriginData([out, retval] LONG* pVal);
+	[propput, helpstring("属性 OriginData")] HRESULT OriginData([in] LONG newVal);
+	[propget, helpstring("属性 AutoDestroy")] HRESULT AutoDestroy([out, retval] BOOL* pVal);
+	[propput, helpstring("属性 AutoDestroy")] HRESULT AutoDestroy([in] BOOL newVal);
+};
+[
+	uuid(5280A105-E960-4CEC-AA01-58E9637853EA),
+	version(1.0),
+	helpstring("otComBase 1.0 类型库")
+]
+library otComBase
+{
+	importlib("stdole2.tlb");
+
+    enum otUnits;
+
+	[
+		uuid(72033937-969A-4F43-82E5-DD38C65068AA),
+		helpstring("OriginData Class")
+	]
+	coclass OriginData
+	{
+		[default] interface IOriginData;
+	};
+};

@@ -1,0 +1,574 @@
+// otcGeodatabase.idl : otcGeodatabase 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(otcGeodatabase.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+
+interface IotWorkspace;
+interface IotDataObject;
+interface IotTable;
+interface IotField;
+interface IotFeature;
+interface IotFeatureClass;
+interface IotRasterDataset;
+interface IotRow;
+
+
+typedef
+[	uuid(735CF597-780E-430f-BD97-5768D17BED0B),
+    helpstring("otWorkspaceType,工作空间类型"),
+]
+enum otWorkspaceType
+{
+  OWT_FileSystem =1,  //文件系统
+  OWT_OTSDE =2       //TitanSDE
+}otWorkspaceType;
+
+typedef
+[	uuid(7B78B972-316F-4784-87F1-117B663C6EC5),
+    helpstring("otSpatialRel,空间相交类型"),
+]
+enum otSpatialRel
+{
+    otSpatialRelUndefined, //未定义的关系
+
+	otSpatialRelIntersects, //查询几何体和目标几何体相交
+
+	otSpatialRelEnvelopeIntersects, //边界矩形相交
+
+	otSpatialRelTouches,
+
+	otSpatialRelOverlaps,
+
+	otSpatialRelCrosses,
+
+	otSpatialRelWithin,  //查询几何体在目标几何体之内
+
+	otSpatialRelContains //查询几何体包含目标几何体
+}otSpatialRel;
+
+
+typedef
+[	uuid(B6BF3975-1FA7-40ba-B82A-40CA6C38589D),
+    helpstring("otDataType，数据集类型"),
+]
+enum otDataType
+{
+     OT_UNKNOWN_TYPE,
+	 OT_METADATA_SET,
+	 OT_TABLE,
+	 OT_FEATURECLASS,
+	 OT_FEATUREDATASET,
+	 OT_RASTERDATASET,
+	 OT_RASTERCATALOG, //栅格目录
+	 OT_TINDATASET,
+	 OT_TOPODATASET
+}otDataType;
+
+
+typedef
+[	uuid(99590811-ECAD-4f60-BD5B-746E87489231),
+    helpstring("otFieldType，字段类型"),
+]
+enum otFieldType
+{
+    FTYPE_UNKNOWN,
+	FTYPE_BOOL,
+	FTYPE_SHORT,  
+	FTYPE_LONG,
+	FTYPE_FLOAT,  
+	FTYPE_DOUBLE,
+	FTYPE_STRING,
+	FTYPE_DATE,   
+	FTYPE_TIME,
+	FTYPE_GEOMETRY,
+	FTYPE_BLOB,
+	FTYPE_CLOB,
+	FTYPE_RASTERBLOCK
+}otFieldType;
+
+
+/** 通道类型*/
+typedef
+[	uuid(80519D5D-3F0F-4a69-97FD-BCE8FA3E8446),
+    helpstring("otBandType，栅格像素数据类型"),
+]
+enum otBandType
+{
+	OTB_UNKNOWN ,
+	OTB_BIT1	,
+	OTB_BYTE	,
+	OTB_USHORT	,
+	OTB_SHORT	,
+	OTB_ULONG	,
+	OTB_LONG	,
+	OTB_FLOAT	,
+	OTB_DOUBLE	
+
+}otBandType;
+
+
+//IotWorkspaceFactory接口
+[
+	object,
+	uuid(C45AEEAB-A045-473b-A143-BEA219A6E691),
+	helpstring("IotWorkspaceFactory 接口"),
+	pointer_default(unique)
+]
+interface IotWorkspaceFactory : IUnknown{
+
+	[helpstring("方法OpenFromFile")] HRESULT OpenFromFile([in] BSTR filename, [out,retval] IotWorkspace** workspace);
+	[helpstring("方法OpenFolder")] HRESULT OpenFolder([in] BSTR name, [out,retval] IotWorkspace** retWorkspace);
+};
+
+
+
+
+//IotRow接口
+[
+	object,
+	uuid(434C180F-0B61-4428-BEA0-4902C6A26006),
+	helpstring("IotRow 接口"),
+	pointer_default(unique)
+]
+interface IotRow : IUnknown{
+	[propget, helpstring("属性 Table")] HRESULT Table([out, retval] IotTable** pVal);
+	[propget, helpstring("属性 FieldCount")] HRESULT FieldCount([out, retval] LONG* pVal);
+	[propget, helpstring("属性 ID")] HRESULT ID([out, retval] LONG* pVal);
+	[propget, helpstring("属性 Field")] HRESULT Field([in] LONG index, [out, retval] IotField** pVal);
+	[propget, helpstring("属性 Value")] HRESULT Value([in] LONG index, [out, retval] VARIANT* pVal);
+	[propput, helpstring("属性 Value")] HRESULT Value([in] LONG index, [in] VARIANT newVal);
+	[helpstring("方法Update")] HRESULT Update(void);
+	[helpstring("方法Delete")] HRESULT Delete(void);
+};
+
+
+
+//ITmsWF接口
+[
+	object,
+	uuid(C4424A1C-C3D8-4D65-91D0-75573C2EAF67),
+	helpstring("ITmsWF 接口"),
+	pointer_default(unique)
+]
+interface ITmsWF : IotWorkspaceFactory{
+};
+
+//IotField 接口
+[
+	object,
+	uuid(5DC04615-EB7D-45A2-A405-2D79BBA4D2F7),
+	helpstring("IotField 接口"),
+	pointer_default(unique)
+]
+interface IotField : IUnknown{
+	[propget, helpstring("属性 Name")] HRESULT Name([out, retval] BSTR* pVal);
+	[propput, helpstring("属性 Name")] HRESULT Name([in] BSTR newVal);
+	[propget, helpstring("属性 Length")] HRESULT Length([out, retval] LONG* pVal);
+	[propput, helpstring("属性 Length")] HRESULT Length([in] LONG newVal);
+	[propget, helpstring("属性 Type")] HRESULT Type([out, retval] otFieldType* pVal);
+	[propput, helpstring("属性 Type")] HRESULT Type([in] otFieldType newVal);
+	[propget, helpstring("属性 Precision")] HRESULT Precision([out, retval] LONG* pVal);
+	[propput, helpstring("属性 Precision")] HRESULT Precision([in] LONG newVal);
+};
+
+//IotSimpleQuery 接口
+[
+	object,
+	uuid(CEFB51F2-2462-477C-9037-69A06F64632A),
+	helpstring("IotSimpleQuery 接口"),
+	pointer_default(unique)
+]
+interface IotSimpleQuery : IUnknown{
+	[propget, helpstring("属性 Fields")] HRESULT Fields([out, retval] BSTR* pVal);
+	[propput, helpstring("属性 Fields")] HRESULT Fields([in] BSTR newVal);
+	[propget, helpstring("属性 WhereString")] HRESULT WhereString([out, retval] BSTR* pVal);
+	[propput, helpstring("属性 WhereString")] HRESULT WhereString([in] BSTR newVal);
+	[helpstring("方法AddField")] HRESULT AddField([in] BSTR fieldname);
+};
+
+
+
+
+//IotCursor 接口
+[
+	object,
+	uuid(56EBD89B-77FC-47f8-975C-0CFBEFAB72E3),
+	helpstring("IotCursor 接口"),
+	pointer_default(unique)
+]
+interface IotCursor : IUnknown{
+
+	[propget, helpstring("属性 Table")] HRESULT Table([out, retval] IotTable** pVal);
+	[helpstring("方法NextRow")] HRESULT NextRow([out,retval] IotRow** row);
+	[helpstring("方法IsEOF")] HRESULT IsEOF([out,retval] VARIANT_BOOL* ret);
+};
+
+
+
+//IotFeatureCursor 接口
+[
+	object,
+	uuid(0CCE34BB-0DF4-453E-9BE9-4109209CB31F),
+	helpstring("IotFeatureCursor 接口"),
+	pointer_default(unique)
+]
+interface IotFeatureCursor : IotCursor{
+	[helpstring("方法NextFeature")] HRESULT NextFeature([out,retval] IotFeature** retFeature);
+};
+
+//IotShpWF 接口
+[
+	object,
+	uuid(108AA1D4-8661-43E0-B1CD-D4EF320567D7),
+	helpstring("IotShpWF 接口"),
+	pointer_default(unique)
+]
+interface IotShpWF : IotWorkspaceFactory{
+};
+
+
+//IotIfeWF 接口
+[
+	object,
+	uuid(68C740E9-F043-49D5-A7A6-B5A712CC5EC5),
+	helpstring("IotIfeWF 接口"),
+	pointer_default(unique)
+]
+interface IotIfeWF : IotWorkspaceFactory{
+};
+
+//IotRasterBlock 接口
+[
+	object,
+	uuid(C598484A-347E-4436-984A-9AF4B574607C),
+	helpstring("IotRasterBlock 接口"),
+	pointer_default(unique)
+]
+interface IotRasterBlock : IUnknown{
+	[propget, helpstring("属性 DataType")] HRESULT DataType([out, retval] otBandType* pVal);
+	[propput, helpstring("属性 DataType")] HRESULT DataType([in] otBandType newVal);
+	[propget, helpstring("属性 Width")] HRESULT Width([out, retval] LONG* pVal);
+	[propput, helpstring("属性 Width")] HRESULT Width([in] LONG newVal);
+	[propget, helpstring("属性 Height")] HRESULT Height([out, retval] LONG* pVal);
+	[propput, helpstring("属性 Height")] HRESULT Height([in] LONG newVal);
+	[helpstring("方法GetValue")] HRESULT GetValue([in] LONG X, [in] LONG Y, [out,retval] VARIANT* value);
+	[propget, helpstring("属性 SafeArray")] HRESULT SafeArray([out, retval] VARIANT* pVal);
+	[propput, helpstring("属性 SafeArray")] HRESULT SafeArray([in] VARIANT newVal);
+};
+
+//IotSelectionSet 接口
+[
+	object,
+	uuid(B5B73261-A971-4040-A56B-932C85D31121),
+	helpstring("IotSelectionSet 接口"),
+	pointer_default(unique)
+]
+interface IotSelectionSet : IUnknown{
+	[propget, helpstring("属性 Count")] HRESULT Count([out, retval] LONG* pVal);
+	[helpstring("方法IsEOF")] HRESULT IsEOF([out,retval] VARIANT_BOOL* ret);
+	[helpstring("方法ResetIndex")] HRESULT ResetIndex(void);
+	[helpstring("方法NextID")] HRESULT NextID([out,retval] LONG* id);
+	[helpstring("方法Add")] HRESULT Add([in] LONG id);
+	[propget, helpstring("属性 Table")] HRESULT Table([out, retval] IotTable** pVal);
+};
+
+//IotSpatialReference 接口
+[
+	object,
+	uuid(3C6AAEF9-400B-4C15-A9A3-B31B6E79154A),
+	helpstring("IotSpatialReference 接口"),
+	pointer_default(unique)
+]
+interface IotSpatialReference : IUnknown{
+	[helpstring("方法Clone")] HRESULT Clone([out,retval] IotSpatialReference** spatialReference);
+	[helpstring("方法ImportFromWkt")] HRESULT ImportFromWkt([in] BSTR wkt, [out,retval] VARIANT_BOOL* bSuccess);
+	[helpstring("方法ImportFromESRI")] HRESULT ImportFromESRI([in] BSTR wkt, [out,retval] VARIANT_BOOL* bSuccess);
+	[helpstring("方法ExportToWkt")] HRESULT ExportToWkt([out,retval] BSTR* wkt);
+	[helpstring("方法IsGeographic")] HRESULT IsGeographic([out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法IsProjected")] HRESULT IsProjected([out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法IsSame")] HRESULT IsSame([in] IotSpatialReference* other, [out,retval] VARIANT_BOOL* bSame);
+	[helpstring("方法GetGeogName")] HRESULT GetGeogName([out,retval] BSTR* name);
+	[helpstring("方法GetProjName")] HRESULT GetProjName([out,retval] BSTR* name);
+};
+
+
+[
+	object,
+	uuid(10D9A3D7-BD2B-4B51-8306-88A8CF64A0F9),
+	helpstring("IotProjTransform 接口"),
+	pointer_default(unique)
+]
+interface IotProjTransform : IUnknown{
+	[propget, helpstring("属性 FromSpatialReference")] HRESULT FromSpatialReference([out, retval] IotSpatialReference** pVal);
+	[propget, helpstring("属性 ToSpatialReference")] HRESULT ToSpatialReference([out, retval] IotSpatialReference** pVal);
+	[helpstring("方法SetSpatialReference")] HRESULT SetSpatialReference([in] IotSpatialReference* from, [in] IotSpatialReference* to);
+	[helpstring("方法Transform")] HRESULT Transform([in] LONG count, [in] SAFEARRAY(double)* inX, [in] SAFEARRAY(double)* inY, [in,out] SAFEARRAY(double)* outX, [in,out] SAFEARRAY(double)* outY);
+};
+[
+	uuid(84521EAF-6C68-428A-ACCA-FCEB5F46D28F),
+	version(1.0),
+	helpstring("otcGeodatabase 1.0 类型库")
+]
+library otcGeodatabase
+{
+	importlib("stdole2.tlb");
+	importlib("otcGeometry.tlb");
+
+
+	//IotWorkspace接口
+	[
+		object,
+		uuid(DC845E45-7E27-40CD-AFFE-0A19246D4C84),
+		helpstring("IotWorkspace 接口"),
+		pointer_default(unique)
+	]
+	interface IotWorkspace : IUnknown{
+		[propget, helpstring("属性 Type")] HRESULT Type([out, retval] otWorkspaceType* pVal);
+		[propget, helpstring("属性 Path")] HRESULT Path([out, retval] BSTR* pVal);
+		[helpstring("方法OpenFeatureClass")] HRESULT OpenFeatureClass([in] BSTR filename, [out,retval] IotFeatureClass** FeatureClass);
+		[helpstring("方法IsEditing")] HRESULT IsEditing([out,retval] VARIANT_BOOL* bret);
+		[helpstring("方法StartEdit")] HRESULT StartEdit(void);
+		[helpstring("方法StopEdit")] HRESULT StopEdit([in] VARIANT_BOOL save);
+		[helpstring("方法StartEditOperation")] HRESULT StartEditOperation(void);
+		[helpstring("方法StopEditOperation")] HRESULT StopEditOperation(void);
+		[helpstring("方法UndoEdit")] HRESULT UndoEdit(void);
+		[helpstring("方法RedoEdit")] HRESULT RedoEdit(void);
+		[helpstring("方法CanUndo")] HRESULT CanUndo([out,retval] VARIANT_BOOL* bret);
+		[helpstring("方法CanRedo")] HRESULT CanRedo([out,retval] VARIANT_BOOL* ret);
+		[helpstring("方法OpenRasterDataset")] HRESULT OpenRasterDataset([in] BSTR filename, [in] VARIANT_BOOL ReadOnly, [out,retval] IotRasterDataset** ret);
+		[helpstring("方法CreateFeatureClass")] HRESULT CreateFeatureClass([in] BSTR filename, [in] IotEnvelope* extent, [in] BSTR projWkt, [in] enum otGeometryType FeatureType, [in] VARIANT_BOOL hasZ, [in] VARIANT_BOOL hasM, [in] LONG numField, [in] SAFEARRAY(IotField*)* fields, [out,retval] IotFeatureClass** retFeatureClass);
+	};
+
+	//IotSpatialQuery 接口
+	[
+		object,
+		uuid(E541D0C8-E8EF-4FF5-8021-1C4664BCFA5A),
+		helpstring("IotSpatialQuery 接口"),
+		pointer_default(unique)
+	]
+	interface IotSpatialQuery : IUnknown{
+		[propget, helpstring("属性 SpatialRelation")] HRESULT SpatialRelation([out, retval] otSpatialRel* pVal);
+		[propput, helpstring("属性 SpatialRelation")] HRESULT SpatialRelation([in] otSpatialRel newVal);
+		[propget, helpstring("属性 Geometry")] HRESULT Geometry([out, retval] IotGeometry** pVal);
+		[propput, helpstring("属性 Geometry")] HRESULT Geometry([in] IotGeometry* newVal);
+	};
+	//IotDataObject接口
+	[
+		object,
+		uuid(B3B54E8E-CCD7-4d21-9D12-F7CC2700E4DC),
+		helpstring("IotDataObject 接口"),
+		pointer_default(unique)
+	]
+	interface IotDataObject : IUnknown{
+		[helpstring("方法GetType")] HRESULT GetType(otDataType* type);
+		[helpstring("方法GetName")] HRESULT GetName([out,retval] BSTR* name);
+		[helpstring("方法GetExtent")] HRESULT GetExtent([out,retval] IotEnvelope** envelope);
+		[propget, helpstring("属性 Workspace")] HRESULT Workspace([out, retval] IotWorkspace** pVal);
+	};
+
+	//IotTable接口
+	[
+		object,
+		uuid(90993C2C-8725-4c0b-822C-8C8FE30E2F71),
+		helpstring("IotTable 接口"),
+		pointer_default(unique)
+	]
+	interface IotTable : IotDataObject{
+		[helpstring("方法Query")] HRESULT Query([in] IotSimpleQuery* queryFilter, [in] VARIANT_BOOL bReadOnly, [out,retval] IotCursor** retCursor);
+		[helpstring("方法Select")] HRESULT Select([in] IotSimpleQuery* queryFilter, [out,retval] IotSelectionSet** ret);
+		[propget, helpstring("属性 FieldCount")] HRESULT FieldCount([out, retval] LONG* pVal);
+		[helpstring("方法GetField")] HRESULT GetField([in] LONG index, [out,retval] IotField** field);
+		[helpstring("方法FindField")] HRESULT FindField([in] BSTR name, [out,retval] LONG* index);
+	};
+
+	//IotFeatureClass接口
+	[
+		object,
+		uuid(8510FECB-1125-4B18-BCBA-DCEC58D49541),
+		helpstring("IotFeatureClass 接口"),
+		pointer_default(unique)
+	]
+	interface IotFeatureClass : IotTable{
+		[propget, helpstring("属性 FeatureCount")] HRESULT FeatureCount([out, retval] LONG* pVal);
+		[propget, helpstring("属性 ShapeFieldName")] HRESULT ShapeFieldName([out, retval] BSTR* pVal);
+		[helpstring("方法GetFeature")] HRESULT GetFeature([in] LONG index, [out,retval] IotFeature** feature);
+		[propget, helpstring("属性 HasM")] HRESULT HasM([out, retval] VARIANT_BOOL* pVal);
+		[propget, helpstring("属性 HasZ")] HRESULT HasZ([out, retval] VARIANT_BOOL* pVal);
+		[propget, helpstring("属性 ShapeType")] HRESULT ShapeType([out, retval]enum otGeometryType* pVal);
+		[helpstring("方法CreateFeature")] HRESULT CreateFeature([out,retval] IotFeature** retFeature);
+		[helpstring("方法DeleteFeature")] HRESULT DeleteFeature([in] LONG index);
+		[helpstring("方法AddFeature")] HRESULT AddFeature([in] IotFeature* feature);
+		[propget, helpstring("属性 SpatialReference")] HRESULT SpatialReference([out, retval] IotSpatialReference** pVal);
+	};
+
+	//IotRasterDataset 接口
+	[
+	object,
+	uuid(05626CAA-F7D6-41B7-976A-63D175787C71),
+	helpstring("IotRasterDataset 接口"),
+	pointer_default(unique)
+	]
+	interface IotRasterDataset : IotDataObject{
+		[propget, helpstring("属性 Writable")] HRESULT Writable([out, retval] VARIANT_BOOL* pVal);
+		[propget, helpstring("属性 ChannelCount")] HRESULT ChannelCount([out, retval] LONG* pVal);
+		[propget, helpstring("属性 Width")] HRESULT Width([out, retval] LONG* pVal);
+		[propget, helpstring("属性 Height")] HRESULT Height([out, retval] LONG* pVal);
+		[propget, helpstring("属性 Projection")] HRESULT Projection([out, retval] BSTR* pVal);
+		[propput, helpstring("属性 Projection")] HRESULT Projection([in] BSTR newVal);
+		[propget, helpstring("属性 HasPyramid")] HRESULT HasPyramid([out, retval] VARIANT_BOOL* pVal);
+		[helpstring("方法CreateRasterBlock")] HRESULT CreateRasterBlock([in] LONG BandIndex,[in] LONG width, [in] LONG height,[out, retval]IotRasterBlock **ret);
+		[helpstring("方法ReadData")] HRESULT ReadData([in] LONG BandIndex, [in] LONG row, [in] LONG col, [in] IotRasterBlock* RasterBlock);
+		[propget, helpstring("属性 SpatialReference")] HRESULT SpatialReference([out, retval] IotSpatialReference** pVal);
+	};
+
+	[
+	object,
+	uuid(BFC52BEC-08B0-4912-9B3C-95F513D4ADBE),
+	helpstring("IotFeature 接口"),
+	pointer_default(unique)
+    ]
+    interface IotFeature : IotRow{
+		[propget, helpstring("属性 Shape")] HRESULT Shape([out, retval] IotGeometry** pVal);
+		[propput, helpstring("属性 Shape")] HRESULT Shape([in] IotGeometry* newVal);
+		[propget, helpstring("属性 ShapeClone")] HRESULT ShapeClone([out, retval] IotGeometry** pVal);
+	};
+ 
+
+	[
+		uuid(D0F4E02C-2744-44F0-AA4E-236DB4B0C32E),
+		helpstring("otWorkspace Class")
+	]
+	coclass otWorkspace
+	{
+		[default] interface IotWorkspace;
+	};
+	[
+		uuid(C2A9DB38-525F-4926-BBEF-EF8D704753C2),
+		helpstring("TmsWF Class")
+	]
+	coclass TmsWF
+	{
+		[default] interface ITmsWF;
+	};
+	[
+		uuid(5EA62603-C8B4-4D41-A9C0-F9341201BC33),
+		helpstring("otFeatureClass Class")
+	]
+	coclass otFeatureClass
+	{
+		[default] interface IUnknown;
+		interface IotFeatureClass;
+	};
+	[
+		uuid(383530D5-D824-4B98-A3C7-5F941250614C),
+		helpstring("otField Class")
+	]
+	coclass otField
+	{
+		[default] interface IUnknown;
+		interface IotField;
+	};
+	[
+		uuid(88DF126B-E46A-42C3-911A-F1CBFE2DA4A5),
+		helpstring("otFeature Class")
+	]
+	coclass otFeature
+	{
+		[default] interface IUnknown;
+		interface IotFeature;
+	};
+	[
+		uuid(728BB52A-09D1-4FE2-9A99-8AA6D940BB70),
+		helpstring("otSimpleQuery Class")
+	]
+	coclass otSimpleQuery
+	{
+		[default] interface IUnknown;
+		interface IotSimpleQuery;
+		
+	};
+	[
+		uuid(982AFA8F-D953-4D45-B2CD-FA6502968253),
+		helpstring("otSpatialQuery Class")
+	]
+	coclass otSpatialQuery
+	{
+		[default] interface IUnknown;
+		interface IotSpatialQuery;
+		interface IotSimpleQuery;
+	};
+	[
+		uuid(1F6A9940-E855-4B2C-974D-512DD777717B),
+		helpstring("otFeatureCursor Class")
+	]
+	coclass otFeatureCursor
+	{
+		[default] interface IUnknown;
+		interface IotFeatureCursor;
+	};
+	[
+		uuid(FE912E8F-0120-4288-8BF5-31C3469ED287),
+		helpstring("otShpWF Class")
+	]
+	coclass otShpWF
+	{
+		[default] interface IotShpWF;
+	};
+	[
+		uuid(1B8A8D38-5302-4355-A68D-4FD0DBF6CE72),
+		helpstring("otRasterDataset Class")
+	]
+	coclass otRasterDataset
+	{
+		[default] interface IUnknown;
+		interface IotRasterDataset;
+	};
+	[
+		uuid(5DF07ECB-A7DC-4CEB-B1DF-573BDA73CCE4),
+		helpstring("otIfeWF Class")
+	]
+	coclass otIfeWF
+	{
+		[default] interface IotIfeWF;
+	};
+	[
+		uuid(4F7B55B0-24F6-436C-BB78-9BA6B7C791A8),
+		helpstring("otRasterBlock Class")
+	]
+	coclass otRasterBlock
+	{
+		[default] interface IUnknown;
+		interface IotRasterBlock;
+	};
+	[
+		uuid(10103FA4-F23A-499A-8F47-2EED0D114278),
+		helpstring("otSelectionSet Class")
+	]
+	coclass otSelectionSet
+	{
+		[default] interface IUnknown;
+		interface IotSelectionSet;
+	};
+	[
+		uuid(AE6077B3-97E6-407C-8598-E70B32B0EBAC),
+		helpstring("otSpatialReference Class")
+	]
+	coclass otSpatialReference
+	{
+		[default] interface IUnknown;
+		interface IotSpatialReference;
+	};
+	[
+		uuid(6701C06C-4ED5-408B-9D57-48941DBB23D6),
+		helpstring("otProjTransform Class")
+	]
+	coclass otProjTransform
+	{
+		[default] interface IotProjTransform;
+	};
+};

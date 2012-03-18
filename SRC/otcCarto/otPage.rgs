@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otPage.1 = s 'otPage Class'
+	{
+		CLSID = s '{6409EB5F-AA78-4846-8EA2-F8C5863D29D4}'
+	}
+	otcCarto.otPage = s 'otPage Class'
+	{
+		CLSID = s '{6409EB5F-AA78-4846-8EA2-F8C5863D29D4}'
+		CurVer = s 'otcCarto.otPage.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6409EB5F-AA78-4846-8EA2-F8C5863D29D4} = s 'otPage Class'
+		{
+			ProgID = s 'otcCarto.otPage.1'
+			VersionIndependentProgID = s 'otcCarto.otPage'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

@@ -1,0 +1,61 @@
+// otMapTreeControl.idl : ActiveX 控件项目的类型库源。
+
+// 此文件将由 MIDL 编译器工具处理以
+// 产生类型库(otMapTreeControl.tlb)，该类型库将成为
+// otMapTreeControl.ocx 中的资源。
+
+#include <olectl.h>
+#include <idispids.h>
+
+[ uuid(B9D879EE-BBA9-4150-9AB9-BF620A2B09C8), version(1.0),
+  helpfile("otMapTreeControl.hlp"),
+  helpstring("otMapTreeControl ActiveX 控件模块"),
+  control ]
+library otMapTreeControlLib
+{
+	importlib(STDOLE_TLB);
+
+	//  CotMapTreeCtrl 的主调度接口
+
+	[ uuid(F8C383A6-BC41-43ED-8DEA-6BFED591B192),
+	  helpstring("otMapTree 控件 的调度接口")]
+	dispinterface _DotMapTreeControl
+	{
+		properties:
+			[id(3), helpstring("属性 HasLine")]  VARIANT_BOOL HasLine;
+			[id(4), helpstring("属性 ShowPopMenu")]  VARIANT_BOOL ShowPopMenu;
+
+		methods:
+
+			[id(DISPID_ABOUTBOX)] void AboutBox();
+			[id(1), helpstring("方法SetFriendControl")] void SetFriendControl(IDispatch* MapControl);
+			[id(2), helpstring("方法Update")] void Update(void);
+	};
+
+	//  CotMapTreeCtrl 的事件调度接口
+
+	[ uuid(A9D71CB3-7908-4C84-B547-1F6BA6DFEFBC),
+	  helpstring("otMapTree 控件 的事件接口") ]
+	dispinterface _DotMapTreeControlEvents
+	{
+		properties:
+			//  事件接口没有任何属性
+
+		methods:
+			[id(1)] void OnDoubleClick(LONG button, LONG flag, LONG x, LONG y);
+			[id(2)] void OnMouseDown(LONG button, LONG flag, LONG x, LONG y);
+			[id(3)] void OnMouseUp(LONG button, LONG flag, LONG x, LONG y);
+			[id(4)] void OnMouseMove(LONG button, LONG flag, LONG x, LONG y);
+	};
+
+	//  CotMapTreeCtrl 的类信息
+
+	[ uuid(87A8EF82-3CED-4CDA-AFC2-7E6A36FDE490),
+	  helpstring("otMapTree 控件"), control ]
+	coclass otMapTreeControl
+	{
+		[default] dispinterface _DotMapTreeControl;
+		[default, source] dispinterface _DotMapTreeControlEvents;
+	};
+
+};

@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeodatabase.TmsWF.1 = s 'TmsWF Class'
+	{
+		CLSID = s '{C2A9DB38-525F-4926-BBEF-EF8D704753C2}'
+	}
+	otcGeodatabase.TmsWF = s 'TmsWF Class'
+	{
+		CLSID = s '{C2A9DB38-525F-4926-BBEF-EF8D704753C2}'
+		CurVer = s 'otcGeodatabase.TmsWF.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C2A9DB38-525F-4926-BBEF-EF8D704753C2} = s 'TmsWF Class'
+		{
+			ProgID = s 'otcGeodatabase.TmsWF.1'
+			VersionIndependentProgID = s 'otcGeodatabase.TmsWF'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{84521EAF-6C68-428A-ACCA-FCEB5F46D28F}'
+		}
+	}
+}

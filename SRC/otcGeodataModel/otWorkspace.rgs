@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeodatabase.otWorkspace.1 = s 'otWorkspace Class'
+	{
+		CLSID = s '{D0F4E02C-2744-44F0-AA4E-236DB4B0C32E}'
+	}
+	otcGeodatabase.otWorkspace = s 'otWorkspace Class'
+	{
+		CLSID = s '{D0F4E02C-2744-44F0-AA4E-236DB4B0C32E}'
+		CurVer = s 'otcGeodatabase.otWorkspace.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {D0F4E02C-2744-44F0-AA4E-236DB4B0C32E} = s 'otWorkspace Class'
+		{
+			ProgID = s 'otcGeodatabase.otWorkspace.1'
+			VersionIndependentProgID = s 'otcGeodatabase.otWorkspace'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{84521EAF-6C68-428A-ACCA-FCEB5F46D28F}'
+		}
+	}
+}

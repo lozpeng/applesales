@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otRasterLayer.1 = s 'otRasterLayer Class'
+	{
+		CLSID = s '{A1B2ED9C-1A68-45FE-A346-F9DFF9DFB5E2}'
+	}
+	otcCarto.otRasterLayer = s 'otRasterLayer Class'
+	{
+		CLSID = s '{A1B2ED9C-1A68-45FE-A346-F9DFF9DFB5E2}'
+		CurVer = s 'otcCarto.otRasterLayer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A1B2ED9C-1A68-45FE-A346-F9DFF9DFB5E2} = s 'otRasterLayer Class'
+		{
+			ProgID = s 'otcCarto.otRasterLayer.1'
+			VersionIndependentProgID = s 'otcCarto.otRasterLayer'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

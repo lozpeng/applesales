@@ -11,7 +11,7 @@
 #include "IRender.h"
 #include "ISelectionSet.h"
 #include "LabelRender.h"
-
+#include "ILayer.h"
 
 namespace Carto
 {

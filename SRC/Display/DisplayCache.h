@@ -2,7 +2,7 @@
 
 #ifndef CDISPLAYCACHE_H
 #define CDISPLAYCACHE_H
-
+#include <set>
 
 namespace Display{
 class CDC;

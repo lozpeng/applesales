@@ -63,3 +63,11 @@
 #include "DSFileDefine.h"
 #include "DSRasterDefine.h"
 #include "ControlDefine.h"
+#include "otComUIDef.h"
+#include <vector>
+#include <map>
+
+#import "otComBase.tlb" raw_interfaces_only, raw_native_types, no_namespace, named_guids, auto_search
+#import "otcGeometry.tlb" raw_interfaces_only, raw_native_types, no_namespace, named_guids, auto_search
+#import "otcDisplay.tlb" raw_interfaces_only, raw_native_types, no_namespace, named_guids, auto_search
+#import "otcCarto.tlb"  raw_interfaces_only, raw_native_types, no_namespace, named_guids, auto_search

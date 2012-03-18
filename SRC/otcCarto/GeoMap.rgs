@@ -1,0 +1,27 @@
+HKCR
+{
+	otcCarto.GeoMap.1 = s 'GeoMap Class'
+	{
+		CLSID = s '{91EAA7A2-5758-4B92-A08F-877F1AD469EF}'
+	}
+	otcCarto.GeoMap = s 'GeoMap Class'
+	{
+		CLSID = s '{91EAA7A2-5758-4B92-A08F-877F1AD469EF}'
+		CurVer = s 'otcCarto.GeoMap.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {91EAA7A2-5758-4B92-A08F-877F1AD469EF} = s 'GeoMap Class'
+		{
+			ProgID = s 'otcCarto.GeoMap.1'
+			VersionIndependentProgID = s 'otcCarto.GeoMap'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otColor.1 = s 'otColor Class'
+	{
+		CLSID = s '{A697DF9C-D3E8-4BCF-86D1-6987C26A8546}'
+	}
+	otcDisplay.otColor = s 'otColor Class'
+	{
+		CLSID = s '{A697DF9C-D3E8-4BCF-86D1-6987C26A8546}'
+		CurVer = s 'otcDisplay.otColor.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A697DF9C-D3E8-4BCF-86D1-6987C26A8546} = s 'otColor Class'
+		{
+			ProgID = s 'otcDisplay.otColor.1'
+			VersionIndependentProgID = s 'otcDisplay.otColor'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

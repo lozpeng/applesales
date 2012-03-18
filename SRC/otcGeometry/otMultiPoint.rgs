@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeometry.otMultiPoint.1 = s 'otMultiPoint Class'
+	{
+		CLSID = s '{9527C418-8F57-403D-B23F-F4435BFBFBB2}'
+	}
+	otcGeometry.otMultiPoint = s 'otMultiPoint Class'
+	{
+		CLSID = s '{9527C418-8F57-403D-B23F-F4435BFBFBB2}'
+		CurVer = s 'otcGeometry.otMultiPoint.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9527C418-8F57-403D-B23F-F4435BFBFBB2} = s 'otMultiPoint Class'
+		{
+			ProgID = s 'otcGeometry.otMultiPoint.1'
+			VersionIndependentProgID = s 'otcGeometry.otMultiPoint'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A919D188-A659-422A-9FF7-552F23D97D13}'
+		}
+	}
+}

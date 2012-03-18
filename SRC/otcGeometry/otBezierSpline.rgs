@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeometry.otBezierSpline.1 = s 'otBezierSpline Class'
+	{
+		CLSID = s '{D7C52CAA-E37E-4C9D-9838-8BE1C8312D2A}'
+	}
+	otcGeometry.otBezierSpline = s 'otBezierSpline Class'
+	{
+		CLSID = s '{D7C52CAA-E37E-4C9D-9838-8BE1C8312D2A}'
+		CurVer = s 'otcGeometry.otBezierSpline.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {D7C52CAA-E37E-4C9D-9838-8BE1C8312D2A} = s 'otBezierSpline Class'
+		{
+			ProgID = s 'otcGeometry.otBezierSpline.1'
+			VersionIndependentProgID = s 'otcGeometry.otBezierSpline'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A919D188-A659-422A-9FF7-552F23D97D13}'
+		}
+	}
+}

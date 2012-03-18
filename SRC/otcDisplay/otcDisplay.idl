@@ -1,0 +1,695 @@
+// otcDisplay.idl : otcDisplay 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(otcDisplay.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+interface IotColor;
+
+typedef
+[	uuid(0172E7CD-3A80-4816-9E5C-F719E426B5ED),
+    helpstring("otSymbolUnit,符号的单位"),
+]
+enum otSymbolUnit
+{
+	otPOINTS	=  0,
+	otMILLIMETER = 1,
+	otCENTIMETER = 10,
+	otDECIMETER = 100
+	
+}otSymbolUnit;
+
+typedef
+[	uuid(B8048F4A-88C3-4593-BA22-C0B3C5F2C5EA),
+    helpstring("otSymbolType,符号的类型"),
+]
+enum otSymbolType
+{
+    otNONE_SYMBOL = 0x01, //空符号
+	otTEXT_SYMBOL = 0x02,//文字符号
+	otMARKER_SYMBOL = 0x10,
+	otLINE_SYMBOL = 0x20,
+	otFILL_SYMBOL = 0x40,
+	otEXT_SYMBOL = 0x80, 
+	otCOMPLEX_SYMBOL = 0x0100,
+
+
+	otSIMPLE_MARKER_SYMBOL = 0x11,	
+	otCHAR_MARKER_SYMBOL   = 0x12,
+	otARROW_MARKER_SYMBOL  = 0x13,
+	otPIC_MARKER_SYMBOL    = 0x14,
+
+	otSIMPLE_LINE_SYMBOL = 0x21,
+	otADV_LINE_SYMBOL	  = 0x22,
+	otMARKER_LINE_SYMBOL	  = 0x23,
+	otHASH_LINE_SYMBOL   = 0x24,		
+	otPIC_LINE_SYMBOL    = 0x25,
+
+
+	otSIMPLE_FILL_SYMBOL = 0x41,
+	otMARKER_FILL_SYMBOL	  = 0x42,
+	otLINE_FILL_SYMBOL   = 0x43,
+	otPIC_FILL_SYMBOL    =	0x44,
+	otGRADIENT_FILL_SYMBOL = 0x45,
+
+
+	otCOMPLEX_MARKER_SYMBOL = otCOMPLEX_SYMBOL | otMARKER_SYMBOL,
+	otCOMPLEX_LINE_SYMBOL = otCOMPLEX_SYMBOL | otLINE_SYMBOL,
+	otCOMPLEX_FILL_SYMBOL=	otCOMPLEX_SYMBOL | otFILL_SYMBOL,
+
+	otEXT_MARKER_SYMBOL	  = otEXT_SYMBOL | otMARKER_SYMBOL,
+	otEXT_LINE_SYMBOL	  = otEXT_SYMBOL | otLINE_SYMBOL,
+	otEXT_FILL_SYMBOL	  = otEXT_SYMBOL | otFILL_SYMBOL,
+	otEXT_ALL_SYMBOL	  = 0xf0
+
+}otSymbolType;
+
+typedef
+[	uuid(116B65E1-17D3-4a92-8DF6-4AF23C55808E),
+    helpstring("otSimpleMarkerStyle,简单点的样式"),
+]
+enum otSimpleMarkerStyle
+{
+    OT_MARKER_NULL		=	0,
+	OT_MARKER_SQUARE	=	1,
+	OT_MARKER_CIRCLE	=	2,
+	OT_MARKER_CROSS	=	3,
+	OT_MARKER_X		=	4,
+	OT_MARKER_STAR		=	5,
+	OT_MARKER_DIAMOND	=	6,
+}otSimpleMarkerStyle;
+
+typedef
+[	uuid(3835E4BE-0692-4ceb-8756-231146526970),
+    helpstring("otSimpleLineStyle,简单线的样式"),
+]
+enum otSimpleLineStyle
+{
+    OT_SLINE_SOLID		=	0,
+	OT_SLINE_DASH			=	1,
+	OT_SLINE_DOT			=	2,
+	OT_SLINE_DASHDOT		=	3,
+	OT_SLINE_DASHDOTDOT	=	4,
+	OT_SLINE_NULL			=	5,
+	OT_SLINE_INSIDEFRAME	=	6
+}otSimpleLineStyle;
+
+typedef
+[	uuid(C2F7A92A-2C7C-4af4-B1F8-13A3CAD90FE8),
+    helpstring("otSimpleLineStyle,简单线的样式"),
+]
+enum otGradientFillType
+{
+    OT_GRADIENTFILL_LINEAR = 1,
+	OT_GRADIENTFILL_RECTANGLAR = 2,
+	OT_GRADIENTFILL_CIRCLAR = 3
+}otGradientFillType;
+
+//IotSymbol 接口
+[
+object,
+uuid(3719D63B-9A15-4bc3-AC8A-33543E7092BC),
+helpstring("IotSymbol 接口"),
+pointer_default(unique)
+]
+interface IotSymbol : IUnknown{
+
+	
+	[propget, helpstring("属性 Type")] HRESULT Type([out, retval] otSymbolType* pVal);
+	[propget, helpstring("属性 Unit")] HRESULT Unit([out, retval] otSymbolUnit* pVal);
+	[propput, helpstring("属性 Unit")] HRESULT Unit([in] otSymbolUnit newVal);
+};
+
+//IotMarkerSymbol 接口
+[
+object,
+uuid(B1797A2E-3B2C-434a-980E-36278B98312C),
+helpstring("IotMarkerSymbol 接口"),
+pointer_default(unique)
+]
+interface IotMarkerSymbol : IotSymbol{
+
+
+	[propget, helpstring("属性 Color")] HRESULT Color([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 Color")] HRESULT Color([in] IotColor* newVal);
+	[propget, helpstring("属性 OffsetX")] HRESULT OffsetX([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 OffsetX")] HRESULT OffsetX([in] DOUBLE newVal);
+	[propget, helpstring("属性 OffsetY")] HRESULT OffsetY([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 OffsetY")] HRESULT OffsetY([in] DOUBLE newVal);
+	[propget, helpstring("属性 Angle")] HRESULT Angle([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Angle")] HRESULT Angle([in] DOUBLE newVal);
+	[propget, helpstring("属性 Size")] HRESULT Size([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Size")] HRESULT Size([in] DOUBLE newVal);
+};
+
+//IotLineSymbol 接口
+[
+object,
+uuid(8A5B2356-8FF7-4027-A4F8-02ABE13C8C7E),
+helpstring("IotLineSymbol 接口"),
+pointer_default(unique)
+]
+interface IotLineSymbol : IotSymbol{
+
+	[propget, helpstring("属性 LineWidth")] HRESULT LineWidth([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 LineWidth")] HRESULT LineWidth([in] DOUBLE newVal);
+	[propget, helpstring("属性 Color")] HRESULT Color([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 Color")] HRESULT Color([in] IotColor* newVal);
+};
+
+//IotFillSymbol 接口
+[
+object,
+uuid(107F6E58-F6E7-44cd-B4DF-A61B3D5F97D2),
+helpstring("IotFillSymbol 接口"),
+pointer_default(unique)
+]
+interface IotFillSymbol : IotSymbol{
+
+	[propget, helpstring("属性 DrawOutLine")] HRESULT DrawOutLine([out, retval] VARIANT_BOOL* pVal);
+	[propput, helpstring("属性 DrawOutLine")] HRESULT DrawOutLine([in] VARIANT_BOOL newVal);
+	[propget, helpstring("属性 OutLine")] HRESULT OutLine([out, retval] IotSymbol** pVal);
+	[propput, helpstring("属性 OutLine")] HRESULT OutLine([in] IotSymbol* newVal);
+	[propget, helpstring("属性 Color")] HRESULT FillColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 Color")] HRESULT FillColor([in] IotColor* newVal);
+};
+
+
+//IotColor 接口
+[
+	object,
+	uuid(A3ABFAB4-3D14-4F02-ADAF-37AC9CD2D60B),
+	helpstring("IotColor 接口"),
+	pointer_default(unique)
+]
+interface IotColor : IUnknown{
+	[propget, helpstring("属性 Red")] HRESULT Red([out, retval] LONG* pVal);
+	[propput, helpstring("属性 Red")] HRESULT Red([in] LONG newVal);
+	[propget, helpstring("属性 Green")] HRESULT Green([out, retval] LONG* pVal);
+	[propput, helpstring("属性 Green")] HRESULT Green([in] LONG newVal);
+	[propget, helpstring("属性 Blue")] HRESULT Blue([out, retval] LONG* pVal);
+	[propput, helpstring("属性 Blue")] HRESULT Blue([in] LONG newVal);
+};
+
+//IotSimpleMarkerSymbol 接口
+[
+	object,
+	uuid(27409DBF-730B-4756-9D09-5EBF25885E7B),
+	helpstring("IotSimpleMarkerSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotSimpleMarkerSymbol : IotMarkerSymbol{
+	[propget, helpstring("属性 DrawOutLine")] HRESULT DrawOutLine([out, retval] VARIANT_BOOL* pVal);
+	[propput, helpstring("属性 DrawOutLine")] HRESULT DrawOutLine([in] VARIANT_BOOL newVal);
+	[propget, helpstring("属性 OutLineWidth")] HRESULT OutLineWidth([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 OutLineWidth")] HRESULT OutLineWidth([in] DOUBLE newVal);
+	[propget, helpstring("属性 MarkerStyle")] HRESULT MarkerStyle([out, retval] otSimpleMarkerStyle* pVal);
+	[propput, helpstring("属性 MarkerStyle")] HRESULT MarkerStyle([in] otSimpleMarkerStyle newVal);
+	[propget, helpstring("属性 OutLineColor")] HRESULT OutLineColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 OutLineColor")] HRESULT OutLineColor([in] IotColor* newVal);
+};
+
+//IotCharMarkerSymbol 接口
+[
+	object,
+	uuid(39F5D04E-3135-45CA-A004-FE0ACA6AE883),
+	helpstring("IotCharMarkerSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotCharMarkerSymbol : IotMarkerSymbol{
+};
+
+//IotArrowMarkerSymbol 接口
+[
+	object,
+	uuid(C43B9169-5882-4704-A02D-40E6FA9F095F),
+	helpstring("IotArrowMarkerSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotArrowMarkerSymbol : IotMarkerSymbol{
+};
+
+
+//IotPicMarkerSymbol 接口
+[
+	object,
+	uuid(59480D48-BA1B-4684-B932-05F177699F2E),
+	helpstring("IotPicMarkerSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotPicMarkerSymbol : IotMarkerSymbol{
+	[propget, helpstring("属性 PictureFile")] HRESULT PictureFile([out, retval] BSTR* pVal);
+	[propput, helpstring("属性 PictureFile")] HRESULT PictureFile([in] BSTR newVal);
+	[propget, helpstring("属性 TransparentColor")] HRESULT TransparentColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 TransparentColor")] HRESULT TransparentColor([in] IotColor* newVal);
+	[propget, helpstring("属性 BackgroundColor")] HRESULT BackgroundColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 BackgroundColor")] HRESULT BackgroundColor([in] IotColor* newVal);
+};
+
+
+//IotSimpleLineSymbol 接口
+[
+	object,
+	uuid(EDA46204-CF12-4BF3-8811-2DAFB54E8BB9),
+	helpstring("IotSimpleLineSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotSimpleLineSymbol : IotLineSymbol{
+	[propget, helpstring("属性 LineStyle")] HRESULT LineStyle([out, retval] otSimpleLineStyle* pVal);
+	[propput, helpstring("属性 LineStyle")] HRESULT LineStyle([in] otSimpleLineStyle newVal);
+};
+
+//IotAdvLineSymbol 接口
+[
+	object,
+	uuid(FDDD408D-5B2A-4232-BBF2-FF2D4BE46A12),
+	helpstring("IotAdvLineSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotAdvLineSymbol : IotLineSymbol{
+};
+
+//IotHashLineSymbol 接口
+[
+	object,
+	uuid(6C75C746-7EBC-40A1-84D0-3F2B4165413D),
+	helpstring("IotHashLineSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotHashLineSymbol : IotLineSymbol{
+};
+
+//IotMarkerLineSymbol 接口
+[
+	object,
+	uuid(21D5AFE5-E6C8-4048-BB4B-34B038E0D382),
+	helpstring("IotMarkerLineSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotMarkerLineSymbol : IotLineSymbol{
+	[propget, helpstring("属性 MarkerSymbol")] HRESULT MarkerSymbol([out, retval] IotMarkerSymbol** pVal);
+	[propput, helpstring("属性 MarkerSymbol")] HRESULT MarkerSymbol([in] IotMarkerSymbol* newVal);
+};
+
+//IotSimpleFillSymbol 接口
+[
+	object,
+	uuid(7E000018-2A71-46F6-AD2F-BF89B66B4CED),
+	helpstring("IotSimpleFillSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotSimpleFillSymbol : IotFillSymbol{
+
+};
+
+//IotLineFillSymbol 接口
+[
+	object,
+	uuid(398832F1-2E6D-45DB-9C8D-AE154F85E613),
+	helpstring("IotLineFillSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotLineFillSymbol : IotFillSymbol{
+	[propget, helpstring("属性 Angle")] HRESULT Angle([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Angle")] HRESULT Angle([in] DOUBLE newVal);
+	[propget, helpstring("属性 separation")] HRESULT separation([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 separation")] HRESULT separation([in] DOUBLE newVal);
+	[propget, helpstring("属性 Offset")] HRESULT Offset([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Offset")] HRESULT Offset([in] DOUBLE newVal);
+	[propget, helpstring("属性 LineSymbol")] HRESULT LineSymbol([out, retval] IotLineSymbol** pVal);
+	[propput, helpstring("属性 LineSymbol")] HRESULT LineSymbol([in] IotLineSymbol* newVal);
+};
+
+//IotMarkerFillSymbol 接口
+[
+	object,
+	uuid(B26681BD-81F8-43BF-A229-ACAA3623B48F),
+	helpstring("IotMarkerFillSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotMarkerFillSymbol : IotFillSymbol{
+	[propget, helpstring("属性 OffsetX")] HRESULT OffsetX([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 OffsetX")] HRESULT OffsetX([in] DOUBLE newVal);
+	[propget, helpstring("属性 OffsetY")] HRESULT OffsetY([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 OffsetY")] HRESULT OffsetY([in] DOUBLE newVal);
+	[propget, helpstring("属性 SeparationX")] HRESULT SeparationX([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 SeparationX")] HRESULT SeparationX([in] DOUBLE newVal);
+	[propget, helpstring("属性 SeparationY")] HRESULT SeparationY([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 SeparationY")] HRESULT SeparationY([in] DOUBLE newVal);
+	[propget, helpstring("属性 MarkSymbol")] HRESULT MarkSymbol([out, retval] IotMarkerSymbol** pVal);
+	[propput, helpstring("属性 MarkSymbol")] HRESULT MarkSymbol([in] IotMarkerSymbol* newVal);
+};
+
+//IotPicFillSymbol 接口
+[
+	object,
+	uuid(4E814FCE-21F8-4C1F-A7A7-F5BA00FF33F7),
+	helpstring("IotPicFillSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotPicFillSymbol : IotFillSymbol{
+	[propget, helpstring("属性 PictureFile")] HRESULT PictureFile([out, retval] BSTR* pVal);
+	[propput, helpstring("属性 PictureFile")] HRESULT PictureFile([in] BSTR newVal);
+	[propget, helpstring("属性 BackgroundColor")] HRESULT BackgroundColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 BackgroundColor")] HRESULT BackgroundColor([in] IotColor* newVal);
+	[propget, helpstring("属性 TransparentColor")] HRESULT TransparentColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 TransparentColor")] HRESULT TransparentColor([in] IotColor* newVal);
+};
+
+//IotGradientFillSymbol 接口
+[
+	object,
+	uuid(4E914FCE-21F8-4C1F-A747-F5BA00EF33A7),
+	helpstring("IotGradientFillSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotGradientFillSymbol : IotFillSymbol{
+	[propget, helpstring("属性 BeginColor")] HRESULT BeginColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 BeginColor")] HRESULT BeginColor([in] IotColor* newVal);
+	[propget, helpstring("属性 EndColor")] HRESULT EndColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 EndColor")] HRESULT EndColor([in] IotColor* newVal);
+	[propget, helpstring("属性 GradientFillType")] HRESULT GradientFillType([out, retval] otGradientFillType * pVal);
+	[propput, helpstring("属性 GradientFillType")] HRESULT GradientFillType([in] otGradientFillType newVal);
+	[propget, helpstring("属性 SegmentCounts")] HRESULT SegmentCounts([out, retval] LONG* pVal);
+	[propput, helpstring("属性 SegmentCounts")] HRESULT SegmentCounts([in] LONG newVal);
+	[propget, helpstring("属性 Percent")] HRESULT Percent([out, retval] LONG *pVal);
+	[propput, helpstring("属性 Percent")] HRESULT Percent([in] LONG newVal);
+	[propget, helpstring("属性 Angle")] HRESULT Angle([out, retval] FLOAT * pVal);
+	[propput, helpstring("属性 Angle")] HRESULT Angle([in] FLOAT newVal);
+
+};
+
+//IotComplexMarkerSymbol 接口
+[
+	object,
+	uuid(16F3B5D1-4723-4645-A2A8-369F6DFCC9E9),
+	helpstring("IotComplexMarkerSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotComplexMarkerSymbol : IotMarkerSymbol{
+};
+
+//IotComplexLineSymbol 接口
+[
+	object,
+	uuid(8B0226DB-2624-45EF-A113-A8BC1F2E7D23),
+	helpstring("IotComplexLineSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotComplexLineSymbol : IotLineSymbol{
+};
+
+//IotComplexFillSymbol 接口
+[
+	object,
+	uuid(D9CBB941-385C-4AF3-8DD8-503DF67103E4),
+	helpstring("IotComplexFillSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotComplexFillSymbol : IotFillSymbol{
+};
+
+//IotCanvas 接口
+[
+	object,
+	uuid(4E269D07-6C04-443B-B560-6CF841926208),
+	helpstring("IotCanvas 接口"),
+	pointer_default(unique)
+]
+interface IotCanvas : IUnknown{
+};
+
+
+[
+	object,
+	uuid(751B8D1B-9231-48F0-8DEA-CD8B82F7A7E2),
+	helpstring("IotSymbolConvert 接口"),
+	pointer_default(unique)
+]
+interface IotSymbolConvert : IUnknown{
+	[helpstring("方法ConvertSymbol")] HRESULT ConvertSymbol(LONG ldata, [in] VARIANT_BOOL bown, [out,retval] IotSymbol** retSymbol);
+};
+
+//IotTextSymbol 接口
+[
+	object,
+	uuid(3D75BBF9-65B4-419C-9E02-A0B1D78DDCCF),
+	helpstring("IotTextSymbol 接口"),
+	pointer_default(unique)
+]
+interface IotTextSymbol : IotSymbol{
+	[propget, helpstring("属性 Size")] HRESULT Size([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Size")] HRESULT Size([in] DOUBLE newVal);
+	[propget, helpstring("属性 Angle")] HRESULT Angle([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Angle")] HRESULT Angle([in] DOUBLE newVal);
+	[propget, helpstring("属性 TextColor")] HRESULT TextColor([out, retval] IotColor** pVal);
+	[propput, helpstring("属性 TextColor")] HRESULT TextColor([in] IotColor* newVal);
+	[propget, helpstring("属性 Font")] HRESULT Font([out, retval] IFontDisp** pVal);
+	[propput, helpstring("属性 Font")] HRESULT Font([in] IFontDisp* newVal);
+};
+[
+	object,
+	uuid(8D3709D7-6DD5-4728-8DCC-8B3A5D6A7A52),
+	helpstring("IotSymbolLibLoader 接口"),
+	pointer_default(unique)
+]
+interface IotSymbolLibLoader : IUnknown{
+	[helpstring("方法Open")] HRESULT Open([in] BSTR libName, [out,retval] VARIANT_BOOL* ret);
+	[helpstring("方法GetSymbol")] HRESULT GetSymbol([in] BSTR name,[out,retval] IotSymbol** retSymbol);
+};
+[
+	uuid(4EEC370A-29C3-4463-8826-FCC2453863F5),
+	version(1.0),
+	helpstring("otcDisplay 1.0 类型库")
+]
+library otcDisplay
+{
+	importlib("stdole2.tlb");
+	importlib("otcGeometry.tlb");
+
+
+	//IotScreenSketch 接口
+	[
+	object,
+	uuid(B65D1224-3598-43E1-86C6-7C18C76F18D9),
+	helpstring("IotScreenSketch 接口"),
+	pointer_default(unique)
+	]
+	interface IotScreenSketch : IUnknown{
+		[helpstring("方法Create")] HRESULT Create(enum otGeometryType type);
+		[propput, helpstring("属性 ScreenCanvas")] HRESULT ScreenCanvas([in] IotCanvas* newVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+		[helpstring("方法Start")] HRESULT Start(void);
+		[helpstring("方法Stop")] HRESULT Stop([out,retval] IotGeometry** retGeometry);
+		[helpstring("方法AddPoint")] HRESULT AddPoint(IotPoint* point);
+		[helpstring("方法SetMousePoint")] HRESULT SetMousePoint([in] IotPoint* point);
+		[helpstring("方法SetCircleCenter")] HRESULT SetCircleCenter([in] IotPoint* point);
+		[helpstring("方法SetEllipseTopLeft")] HRESULT SetEllipseTopLeft([in] IotPoint* point);
+		[helpstring("方法SetRectTopLeft")] HRESULT SetRectTopLeft([in] IotPoint* point);
+	};
+
+
+	[
+		uuid(A697DF9C-D3E8-4BCF-86D1-6987C26A8546),
+		helpstring("otColor Class")
+	]
+	coclass otColor
+	{
+		[default] interface IUnknown;
+		interface IotColor;
+	};
+	[
+		uuid(DC6C369B-EA27-4FCB-8906-7508F8FA4A2C),
+		helpstring("otSimpleMarkerSymbol Class")
+	]
+	coclass otSimpleMarkerSymbol
+	{
+		[default] interface IUnknown;
+		 interface IotSimpleMarkerSymbol;
+	};
+	[
+		uuid(0E87A077-D0E6-4353-9E47-663C660A220B),
+		helpstring("otCharMarkerSymbol Class")
+	]
+	coclass otCharMarkerSymbol
+	{
+		[default] interface IUnknown;
+		 interface IotCharMarkerSymbol;
+	};
+	[
+		uuid(6AD355FA-FE9A-4C2C-A131-7C946F2FE82D),
+		helpstring("otArrowMarkerSymbol Class")
+	]
+	coclass otArrowMarkerSymbol
+	{
+		[default] interface IUnknown;
+		interface IotArrowMarkerSymbol;
+	};
+	[
+		uuid(B33304AB-A61C-4CD2-B109-B5392091C5B0),
+		helpstring("otPicMarkerSymbol Class")
+	]
+	coclass otPicMarkerSymbol
+	{
+		[default] interface IUnknown;
+		 interface IotPicMarkerSymbol;
+	};
+	[
+		uuid(779F8606-279E-471E-B2BE-6EE5A5F2D4A9),
+		helpstring("otSimpleLineSymbol Class")
+	]
+	coclass otSimpleLineSymbol
+	{
+		[default] interface IUnknown;
+		interface IotSimpleLineSymbol;
+	};
+	[
+		uuid(C8432A67-F6A1-4FDA-980F-D3FCD0A17DD3),
+		helpstring("otAdvLineSymbol Class")
+	]
+	coclass otAdvLineSymbol
+	{
+		[default] interface IUnknown;
+		 interface IotAdvLineSymbol;
+	};
+	[
+		uuid(8445B8A3-8B9D-422D-A074-9236E1BC4029),
+		helpstring("otHashLineSymbol Class")
+	]
+	coclass otHashLineSymbol
+	{
+		[default] interface IUnknown;
+		interface IotHashLineSymbol;
+	};
+	[
+		uuid(452E98A1-4135-419A-9FC3-A9714A7C8958),
+		helpstring("otMarkerLineSymbol Class")
+	]
+	coclass otMarkerLineSymbol
+	{
+		[default] interface IUnknown;
+		interface IotMarkerLineSymbol;
+	};
+	[
+		uuid(93B81013-DA84-4413-944D-15C81EF1EC53),
+		helpstring("otSimpleFillSymbol Class")
+	]
+	coclass otSimpleFillSymbol
+	{
+		[default] interface IUnknown;
+		 interface IotSimpleFillSymbol;
+	};
+	[
+		uuid(FD15140D-3358-496C-9E25-3EC2561AC7ED),
+		helpstring("otLineFillSymbol Class")
+	]
+	coclass otLineFillSymbol
+	{
+		[default] interface IUnknown;
+		interface IotLineFillSymbol;
+	};
+	[
+		uuid(92C59C1C-684E-431E-A7B5-29A0692F2C02),
+		helpstring("otMarkerFillSymbol Class")
+	]
+	coclass otMarkerFillSymbol
+	{
+		[default] interface IUnknown;
+		interface IotMarkerFillSymbol;
+	};
+	[
+		uuid(56ECB028-1126-4625-B0CD-9E06EAEB10E3),
+		helpstring("otPicFillSymbol Class")
+	]
+	coclass otPicFillSymbol
+	{
+		[default] interface IUnknown;
+		interface IotPicFillSymbol;
+	};
+	
+    [
+		uuid(EF13EE24-EF7B-44BA-9E54-E3AEB1466718),
+		helpstring("otGradientFillSymbol Class")
+	]
+	coclass otGradientFillSymbol
+	{
+		[default] interface IUnknown;
+		interface IotGradientFillSymbol;
+	};
+	
+
+    [
+		uuid(EF19AE24-EF7B-440A-9E55-E6AEB146D748),
+		helpstring("otComplexMarkerSymbol Class")
+	]
+	coclass otComplexMarkerSymbol
+	{
+		[default] interface IUnknown;
+		interface IotComplexMarkerSymbol;
+	};
+	[
+		uuid(C2BF7A7D-0317-4708-B0DC-0E9C56559FCF),
+		helpstring("otComplexLineSymbol Class")
+	]
+	coclass otComplexLineSymbol
+	{
+		[default] interface IUnknown;
+		interface IotComplexLineSymbol;
+	};
+	[
+		uuid(187D30A9-9564-43A1-908A-E16B6DD66990),
+		helpstring("otComplexFillSymbol Class")
+	]
+	coclass otComplexFillSymbol
+	{
+		[default] interface IUnknown;
+		interface IotComplexFillSymbol;
+	};
+	[
+		uuid(2D840C7B-D85C-4FCB-A880-F77557DCEED8),
+		helpstring("otCanvas Class")
+	]
+	coclass otCanvas
+	{
+		[default] interface IUnknown;
+		interface IotCanvas;
+	};
+	[
+		uuid(85D728B2-0CE5-4E8A-AB1B-7A1EE54F3DB3),
+		helpstring("otScreenSketch Class")
+	]
+	coclass otScreenSketch
+	{
+		[default] interface IUnknown;
+		interface IotScreenSketch;
+	};
+	[
+		uuid(CF43A7C4-66C4-4A6C-B122-2C49DFA72890),
+		helpstring("otSymbolConvert Class")
+	]
+	coclass otSymbolConvert
+	{
+		[default] interface IotSymbolConvert;
+	};
+	[
+		uuid(F77D8A36-14CD-48B8-9488-3560388717D6),
+		helpstring("otTextSymbol Class")
+	]
+	coclass otTextSymbol
+	{
+		[default] interface IUnknown;
+		interface IotTextSymbol;
+	};
+	[
+		uuid(CF4EAA89-A08A-49B1-A163-D9D07FD25A47),
+		helpstring("otSymbolLibLoader Class")
+	]
+	coclass otSymbolLibLoader
+	{
+		[default] interface IUnknown;
+		interface IotSymbolLibLoader;
+	};
+};

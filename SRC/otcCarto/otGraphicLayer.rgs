@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otGraphicLayer.1 = s 'otGraphicLayer Class'
+	{
+		CLSID = s '{07C08A06-1859-4E9B-BAA1-90FBD153AD4C}'
+	}
+	otcCarto.otGraphicLayer = s 'otGraphicLayer Class'
+	{
+		CLSID = s '{07C08A06-1859-4E9B-BAA1-90FBD153AD4C}'
+		CurVer = s 'otcCarto.otGraphicLayer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {07C08A06-1859-4E9B-BAA1-90FBD153AD4C} = s 'otGraphicLayer Class'
+		{
+			ProgID = s 'otcCarto.otGraphicLayer.1'
+			VersionIndependentProgID = s 'otcCarto.otGraphicLayer'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otPolygonElement.1 = s 'otPolygonElement Class'
+	{
+		CLSID = s '{5B1C2866-BD99-4C6B-ABE1-DAF21B8FBADD}'
+	}
+	otcCarto.otPolygonElement = s 'otPolygonElement Class'
+	{
+		CLSID = s '{5B1C2866-BD99-4C6B-ABE1-DAF21B8FBADD}'
+		CurVer = s 'otcCarto.otPolygonElement.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {5B1C2866-BD99-4C6B-ABE1-DAF21B8FBADD} = s 'otPolygonElement Class'
+		{
+			ProgID = s 'otcCarto.otPolygonElement.1'
+			VersionIndependentProgID = s 'otcCarto.otPolygonElement'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

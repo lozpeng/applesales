@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otBezierCurveElement.1 = s 'otBezierCurveElement Class'
+	{
+		CLSID = s '{BAEFF30B-7A9C-41FC-BE1D-8FE208FDBC44}'
+	}
+	otcCarto.otBezierCurveElement = s 'otBezierCurveElement Class'
+	{
+		CLSID = s '{BAEFF30B-7A9C-41FC-BE1D-8FE208FDBC44}'
+		CurVer = s 'otcCarto.otBezierCurveElement.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {BAEFF30B-7A9C-41FC-BE1D-8FE208FDBC44} = s 'otBezierCurveElement Class'
+		{
+			ProgID = s 'otcCarto.otBezierCurveElement.1'
+			VersionIndependentProgID = s 'otcCarto.otBezierCurveElement'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

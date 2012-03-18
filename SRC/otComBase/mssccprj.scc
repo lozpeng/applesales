@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[otComBase.vcproj]
+SCC_Aux_Path = "\\Devserver\VSS_ALL\TitanImage7_VSS"
+SCC_Project_Name = "$/Src/COM/otComBase", PGTAAAAA
+
+[otComBasePS.vcproj]
+SCC_Aux_Path = "\\Devserver\VSS_ALL\TitanImage7_VSS"
+SCC_Project_Name = "$/Src/COM/otComBase", PGTAAAAA

@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otComplexLineSymbol.1 = s 'otComplexLineSymbol Class'
+	{
+		CLSID = s '{C2BF7A7D-0317-4708-B0DC-0E9C56559FCF}'
+	}
+	otcDisplay.otComplexLineSymbol = s 'otComplexLineSymbol Class'
+	{
+		CLSID = s '{C2BF7A7D-0317-4708-B0DC-0E9C56559FCF}'
+		CurVer = s 'otcDisplay.otComplexLineSymbol.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C2BF7A7D-0317-4708-B0DC-0E9C56559FCF} = s 'otComplexLineSymbol Class'
+		{
+			ProgID = s 'otcDisplay.otComplexLineSymbol.1'
+			VersionIndependentProgID = s 'otcDisplay.otComplexLineSymbol'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otFeatureLayer.1 = s 'otFeatureLayer Class'
+	{
+		CLSID = s '{29FFCCDA-2132-4232-8901-5D4C42DBC0A7}'
+	}
+	otcCarto.otFeatureLayer = s 'otFeatureLayer Class'
+	{
+		CLSID = s '{29FFCCDA-2132-4232-8901-5D4C42DBC0A7}'
+		CurVer = s 'otcCarto.otFeatureLayer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {29FFCCDA-2132-4232-8901-5D4C42DBC0A7} = s 'otFeatureLayer Class'
+		{
+			ProgID = s 'otcCarto.otFeatureLayer.1'
+			VersionIndependentProgID = s 'otcCarto.otFeatureLayer'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

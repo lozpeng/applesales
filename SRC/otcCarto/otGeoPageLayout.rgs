@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otGeoPageLayout.1 = s 'otGeoPageLayout Class'
+	{
+		CLSID = s '{58D5B697-2EA1-461A-B6F3-2A0A059DDBFB}'
+	}
+	otcCarto.otGeoPageLayout = s 'otGeoPageLayout Class'
+	{
+		CLSID = s '{58D5B697-2EA1-461A-B6F3-2A0A059DDBFB}'
+		CurVer = s 'otcCarto.otGeoPageLayout.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {58D5B697-2EA1-461A-B6F3-2A0A059DDBFB} = s 'otGeoPageLayout Class'
+		{
+			ProgID = s 'otcCarto.otGeoPageLayout.1'
+			VersionIndependentProgID = s 'otcCarto.otGeoPageLayout'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

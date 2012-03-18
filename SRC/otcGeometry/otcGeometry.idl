@@ -1,0 +1,528 @@
+// otcGeometry.idl : otcGeometry 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(otcGeometry.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+interface IotEnvelope;
+interface IotPoint;
+interface IotGeometry;
+
+typedef
+[	uuid(0F1D6D4C-1C98-4e37-B9B7-0D4C6A25E8AE),
+    helpstring("otGeometryType,几何体的类型"),
+]
+enum otGeometryType
+{
+	OT_GEOM_NULL, //未知的几何模型
+
+    OT_GEOM_POINT, //点
+	
+	OT_GEOM_LINESTRING, //线
+	
+	OT_GEOM_LINERING,//线环
+	
+	OT_GEOM_POLYGON,  //多边形
+	
+	OT_GEOM_MULTIPOINT, //多点
+	
+	OT_GEOM_MULTILINESTRING, //多线
+	
+	OT_GEOM_MULTIPOLYGON, //多多边形
+	
+	OT_GEOM_GEOMETRYCOLLECTION,
+
+	OT_GEOM_LINE, //线段
+
+	OT_GEOM_CIRCULARARC, //圆形弧段
+
+	OT_GEOM_ELLIPTICARC, //椭圆弧段
+
+	OT_GEOM_CIRCLE,//圆
+
+	OT_GEOM_ELLIPSE,  //椭圆
+
+	OT_GEOM_BEZIERSPLINE, //Bezier Spline
+
+	OT_GEOM_BEZIERCURVE  //贝塞尔曲线段
+
+}otGeometryType;
+
+
+//IotPointCollection 接口
+[
+	object,
+	uuid(67644AA5-0A8D-4ff2-B2E4-51290FB139AA),
+	helpstring("IotPointCollection 接口"),
+	pointer_default(unique)
+]
+interface IotPointCollection : IUnknown{
+
+	[propget, helpstring("属性 PointNum")] HRESULT PointNum([out, retval] LONG* pVal);
+	[propget, helpstring("属性 Point")] HRESULT Point([in] LONG index, [out, retval] IotPoint** pVal);
+	[helpstring("方法AddPoint")] HRESULT AddPoint([in] IotPoint* point);
+	[helpstring("方法InsertPoint")] HRESULT InsertPoint([in] LONG index, [in] IotPoint* point);
+	[helpstring("方法ReplacePoint")] HRESULT ReplacePoint([in] LONG index, [in] IotPoint* point);
+	[helpstring("方法RemovePoint")] HRESULT RemovePoint([in] LONG index);
+};
+
+//IotTransform 接口
+[
+	object,
+	uuid(B227DF87-4B92-43f9-966E-9A4BD620DB8C),
+	helpstring("IotTransform 接口"),
+	pointer_default(unique)
+]
+interface IotTransform : IUnknown{
+
+	[helpstring("方法Move")] HRESULT Move([in] DOUBLE dx, [in] DOUBLE dy);
+	[helpstring("方法Scale")] HRESULT Scale([in] IotPoint* Origin, [in] DOUBLE dx, [in] DOUBLE dy);
+	[helpstring("方法Rotate")] HRESULT Rotate([in] IotPoint* Origin, [in] DOUBLE angle);
+};
+
+//IotGeometryCollection 接口
+[
+	object,
+	uuid(F89C4CC5-548A-478c-B094-BE80FCB1C5CF),
+	helpstring("IotGeometryCollection 接口"),
+	pointer_default(unique)
+]
+interface IotGeometryCollection : IUnknown{
+
+	[propget, helpstring("属性 GeometryCount")] HRESULT GeometryCount([out, retval] LONG* pVal);
+	[helpstring("方法GetGeometry")] HRESULT GetGeometry([in] LONG index, [out,retval] IotGeometry** retGeometry);
+	[helpstring("方法AddGeometry")] HRESULT AddGeometry([in] IotGeometry* geometry);
+};
+
+
+//IotGeometry 接口
+[
+	object,
+	uuid(031E731D-C0A9-44b0-ADC6-A2779B1D9D60),
+	helpstring("IotGeometry 接口"),
+	pointer_default(unique)
+]
+interface IotGeometry : IUnknown{
+	
+
+	[propget, helpstring("属性 GeometryType")] HRESULT GeometryType([out, retval] otGeometryType* pVal);
+	[propget, helpstring("属性 PointCount")] HRESULT PointCount([out, retval] LONG* pVal);
+	[helpstring("方法GetEnvelope")] HRESULT GetEnvelope([out,retval] IotEnvelope** envelope);
+	[propget, helpstring("属性 HasZ")] HRESULT HasZ([out, retval] VARIANT_BOOL* pVal);
+	[propput, helpstring("属性 HasZ")] HRESULT HasZ([in] VARIANT_BOOL newVal);
+	[propget, helpstring("属性 HasM")] HRESULT HasM([out, retval] VARIANT_BOOL* pVal);
+	[propput, helpstring("属性 HasM")] HRESULT HasM([in] VARIANT_BOOL newVal);
+	[propget, helpstring("属性 IsEmpty")] HRESULT IsEmpty([out, retval] VARIANT_BOOL* pVal);
+	[helpstring("方法SetEmpty")] HRESULT SetEmpty(void);
+	[helpstring("方法Clone")] HRESULT Clone([out,retval] IotGeometry** geometry);
+	[propget, helpstring("属性 IsValid")] HRESULT IsValid([out, retval] VARIANT_BOOL* pVal);
+
+	//几何关系操作
+	[helpstring("方法Disjoint")] HRESULT Disjoint([in] IotGeometry* other, [out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法Touches")] HRESULT Touches([in] IotGeometry* other, [out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法Intersects")] HRESULT Intersects([in] IotGeometry* other, [out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法Crosses")] HRESULT Crosses([in] IotGeometry* other, [out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法Within")] HRESULT Within([in] IotGeometry* other, [out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法Overlaps")] HRESULT Overlaps([in] IotGeometry* other, [out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法Equals")] HRESULT Equals([in] IotGeometry* other, [out,retval] VARIANT_BOOL* bRet);
+	[helpstring("方法Covers")] HRESULT Covers([in] IotGeometry* other, [out,retval] VARIANT_BOOL* bRet);
+    
+	//拓扑操作
+	[helpstring("方法ConvexHull")] HRESULT ConvexHull([out,retval] IotGeometry** retGeometry);
+	[helpstring("方法Buffer")] HRESULT Buffer([in] DOUBLE distance, [out,retval] IotGeometry** retGeometry);
+    
+	[helpstring("方法Intersection")] HRESULT Intersection([in] IotGeometry* other, [out,retval] IotGeometry** retGeometry);
+	[helpstring("方法Union")] HRESULT Union([in] IotGeometry* other, [out,retval] IotGeometry** retGeometry);
+	[helpstring("方法Difference")] HRESULT Difference([in] IotGeometry* other, [out,retval] IotGeometry** retGeometry);
+	[helpstring("方法SymDifference")] HRESULT SymDifference([in] IotGeometry* other, [out,retval] IotGeometry** retGeometry);
+
+};
+
+
+//IotEnvelope 接口
+[
+	object,
+	uuid(D3D17ED8-8141-4B37-931B-AB4D2AA8AD8A),
+	helpstring("IotEnvelope 接口"),
+	pointer_default(unique)
+]
+interface IotEnvelope : IUnknown{
+	[propget, helpstring("属性 MinX")] HRESULT MinX([out, retval] double* pVal);
+	[propput, helpstring("属性 MinX")] HRESULT MinX([in] double newVal);
+	[propget, helpstring("属性 MinY")] HRESULT MinY([out, retval] double* pVal);
+	[propput, helpstring("属性 MinY")] HRESULT MinY([in] double newVal);
+	[propget, helpstring("属性 MaxX")] HRESULT MaxX([out, retval] double* pVal);
+	[propput, helpstring("属性 MaxX")] HRESULT MaxX([in] double newVal);
+	[propget, helpstring("属性 MaxY")] HRESULT MaxY([out, retval] double* pVal);
+	[propput, helpstring("属性 MaxY")] HRESULT MaxY([in] double newVal);
+
+};
+
+//IotPoint 接口
+[
+	object,
+	uuid(E345D296-34C1-42EA-95DC-8441FE42F9CB),
+	helpstring("IotPoint 接口"),
+	pointer_default(unique)
+]
+interface IotPoint : IUnknown{
+	[propget, helpstring("属性 X")] HRESULT X([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 X")] HRESULT X([in] DOUBLE newVal);
+	[propget, helpstring("属性 Y")] HRESULT Y([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Y")] HRESULT Y([in] DOUBLE newVal);
+	[propget, helpstring("属性 Z")] HRESULT Z([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Z")] HRESULT Z([in] DOUBLE newVal);
+	[propget, helpstring("属性 M")] HRESULT M([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 M")] HRESULT M([in] DOUBLE newVal);
+};
+
+//IotSegment 接口
+[
+	object,
+	uuid(42899086-1BE7-4870-8485-6DDFC114D6A7),
+	helpstring("IotSegment 接口"),
+	pointer_default(unique)
+]
+interface IotSegment : IUnknown{
+	
+	[propget, helpstring("属性 FromPoint")] HRESULT FromPoint([out, retval] IotPoint** pVal);
+	[propput, helpstring("属性 FromPoint")] HRESULT FromPoint([in] IotPoint* newVal);
+	[propget, helpstring("属性 ToPoint")] HRESULT ToPoint([out, retval] IotPoint** pVal);
+	[propput, helpstring("属性 ToPoint")] HRESULT ToPoint([in] IotPoint* newVal);
+};
+
+//IotSegmentCollection 接口
+[
+	object,
+	uuid(C3DF7859-3624-4846-861F-015DBC0B98F9),
+	helpstring("IotSegmentCollection 接口"),
+	pointer_default(unique)
+]
+interface IotSegmentCollection : IUnknown{
+	
+	
+	[propget, helpstring("属性 SegmentCount")] HRESULT SegmentCount([out, retval] LONG* pVal);
+	[helpstring("方法AddSegment")] HRESULT AddSegment([in] IotSegment* segment);
+	[helpstring("方法GetSegment")] HRESULT GetSegment([in] LONG index, [out,retval] IotSegment** ret);
+};
+
+
+//IotLineString 接口
+[
+	object,
+	uuid(CF2D8ABA-5D6A-4732-B81F-DBCA0C5D25AC),
+	helpstring("IotLineString 接口"),
+	pointer_default(unique)
+]
+interface IotLineString : IUnknown{
+	[helpstring("方法IsClosed")] HRESULT IsClosed([out,retval] VARIANT_BOOL* bRet);
+	[propget, helpstring("属性 Length")] HRESULT Length([out, retval] DOUBLE* pVal);
+	[propget, helpstring("属性 StartPoint")] HRESULT StartPoint([out, retval] IotPoint** pVal);
+	[propput, helpstring("属性 StartPoint")] HRESULT StartPoint([in] IotPoint* newVal);
+	[propget, helpstring("属性 EndPoint")] HRESULT EndPoint([out, retval] IotPoint** pVal);
+	[propput, helpstring("属性 EndPoint")] HRESULT EndPoint([in] IotPoint* newVal);
+};
+
+//IotLineRing 接口
+[
+	object,
+	uuid(37AAECC0-6AF7-45A9-8222-60E8404F45D4),
+	helpstring("IotLineRing 接口"),
+	pointer_default(unique)
+]
+interface IotLineRing : IotLineString{
+};
+
+//IotMultiPoint 接口
+[
+	object,
+	uuid(8928D749-81A2-48A1-8071-5D4739988A1B),
+	helpstring("IotMultiPoint 接口"),
+	pointer_default(unique)
+]
+interface IotMultiPoint : IUnknown{
+};
+
+//IotMultiLineString 接口
+[
+	object,
+	uuid(4665385A-34D0-4E4D-8626-1F018A99548B),
+	helpstring("IotMultiLineString 接口"),
+	pointer_default(unique)
+]
+interface IotMultiLineString : IUnknown{
+	[propget, helpstring("属性 Length")] HRESULT Length([out, retval] DOUBLE* pVal);
+};
+
+//IotPolygon 接口
+[
+	object,
+	uuid(D3A18F5B-90F8-45E4-8EF7-2EC948DCA74F),
+	helpstring("IotPolygon 接口"),
+	pointer_default(unique)
+]
+interface IotPolygon : IUnknown{
+	[propget, helpstring("属性 InteriorRingCount")] HRESULT InteriorRingCount([out, retval] LONG* pVal);
+	[propget, helpstring("属性 Area")] HRESULT Area([out, retval] DOUBLE* pVal);
+	[propget, helpstring("属性 ExteriorRing")] HRESULT ExteriorRing([out, retval] IotLineRing** pVal);
+	[propput, helpstring("属性 ExteriorRing")] HRESULT ExteriorRing([in] IotLineRing* newVal);
+	[propget, helpstring("属性 InteriorRing")] HRESULT InteriorRing([in] LONG index, [out, retval] IotLineRing** pVal);
+	[propput, helpstring("属性 InteriorRing")] HRESULT InteriorRing([in] LONG index, [in] IotLineRing* newVal);
+	[helpstring("方法AddInteriorRing")] HRESULT AddInteriorRing([in] IotLineRing* ring);
+};
+
+//IotMultiPolygon 接口
+[
+	object,
+	uuid(B57958AB-D268-44BA-8E9B-2BEE1C8C2CD9),
+	helpstring("IotMultiPolygon 接口"),
+	pointer_default(unique)
+]
+interface IotMultiPolygon : IUnknown{
+	[propget, helpstring("属性 Area")] HRESULT Area([out, retval] DOUBLE* pVal);
+};
+
+[
+	object,
+	uuid(3FD948E8-3CBF-448A-85F7-A1AFAF204CB5),
+	helpstring("IotGeoConvert 接口"),
+	pointer_default(unique)
+]
+interface IotGeoConvert : IUnknown{
+	[helpstring("方法ConvertGeo")] HRESULT ConvertGeo([in] LONG p, [in] VARIANT_BOOL bown, [out,retval] IotGeometry** retGeo);
+	[helpstring("方法ConvertIGeo")] HRESULT ConvertIGeo([in] IotGeometry* geometry, [out,retval] LONG* ret);
+};
+
+//IotCircle 接口
+[
+	object,
+	uuid(216DAD59-1C93-45B9-8E37-4F0B049AD3AB),
+	helpstring("IotCircle 接口"),
+	pointer_default(unique)
+]
+interface IotCircle : IUnknown{
+	[propget, helpstring("属性 CenterPoint")] HRESULT CenterPoint([out, retval] IotPoint** pVal);
+	[propput, helpstring("属性 CenterPoint")] HRESULT CenterPoint([in] IotPoint* newVal);
+	[propget, helpstring("属性 Radius")] HRESULT Radius([out, retval] DOUBLE* pVal);
+	[propput, helpstring("属性 Radius")] HRESULT Radius([in] DOUBLE newVal);
+};
+
+[
+	object,
+	uuid(8F0790DE-9A26-4196-8B2C-2D8A9D206868),
+	helpstring("IotEllipse 接口"),
+	pointer_default(unique)
+]
+interface IotEllipse : IUnknown{
+	[propget, helpstring("属性 CenterPoint")] HRESULT CenterPoint([out, retval] IotPoint** pVal);
+	[propput, helpstring("属性 CenterPoint")] HRESULT CenterPoint([in] IotPoint* newVal);
+	[helpstring("方法GetAxes")] HRESULT GetAxes([in,out] DOUBLE* semiMajor, [in,out] DOUBLE* semiMinor);
+	[helpstring("方法SetAxes")] HRESULT SetAxes([in] DOUBLE semiMajor, [in] DOUBLE semiMinor);
+};
+
+
+[
+	object,
+	uuid(FD6436F2-D47E-4DDB-B24C-F7F37D0865D2),
+	helpstring("IotBezierSpline 接口"),
+	pointer_default(unique)
+]
+interface IotBezierSpline : IUnknown{
+	[helpstring("方法Create")] HRESULT Create([in] LONG numPoints, [in] IotPoint** points);
+};
+
+//IotLine 接口
+[
+	object,
+	uuid(716150DE-5EC3-454C-B6FB-DC019105E7DE),
+	helpstring("IotLine 接口"),
+	pointer_default(unique)
+]
+interface IotLine : IotSegment{
+};
+
+//IotBezierCurve 接口
+[
+	object,
+	uuid(719A5E2E-1432-427C-9DC9-9379BDB88576),
+	helpstring("IotBezierCurve 接口"),
+	pointer_default(unique)
+]
+interface IotBezierCurve : IotSegment{
+	[propget, helpstring("属性 FirstCtrlPoint")] HRESULT FirstCtrlPoint([out, retval] IotPoint** pVal);
+	[propput, helpstring("属性 FirstCtrlPoint")] HRESULT FirstCtrlPoint([in] IotPoint* newVal);
+	[propget, helpstring("属性 SecondCtrlPoint")] HRESULT SecondCtrlPoint([out, retval] IotPoint** pVal);
+	[propput, helpstring("属性 SecondCtrlPoint")] HRESULT SecondCtrlPoint([in] IotPoint* newVal);
+};
+
+[
+	uuid(A919D188-A659-422A-9FF7-552F23D97D13),
+	version(1.0),
+	helpstring("otcGeometry 1.0 类型库")
+]
+library otcGeometry
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(344A66CC-BDD9-49B8-8945-B0F72002D97B),
+		helpstring("otEnvelope Class")
+	]
+	coclass otEnvelope
+	{
+		[default] interface IUnknown;
+		 interface IotEnvelope;
+	};
+	[
+		uuid(6A5D4FE7-1732-4F67-8605-6411760B55FE),
+		helpstring("otPoint Class")
+	]
+	coclass otPoint
+	{
+
+		[default] interface IUnknown;
+		interface IotPoint;
+		interface IotGeometry;
+	};
+	[
+		uuid(06C1E7EF-EC63-41B0-A6FC-CF3185CAFC39),
+		helpstring("otLineString Class")
+	]
+	coclass otLineString
+	{
+		[default] interface IUnknown;
+		 interface IotLineString;
+		interface IotGeometry;
+		interface IotPointCollection;
+		interface IotSegmentCollection;
+		interface IotTransform;
+	};
+	[
+		uuid(DBE796BC-841C-4ABB-A83B-2523CEEC3046),
+		helpstring("otLineRing Class")
+	]
+	coclass otLineRing
+	{
+		[default] interface IUnknown;
+		 interface IotLineRing;
+		interface IotGeometry;
+		interface IotPointCollection;
+		interface IotSegmentCollection;
+		interface IotTransform;
+	};
+	[
+		uuid(9527C418-8F57-403D-B23F-F4435BFBFBB2),
+		helpstring("otMultiPoint Class")
+	]
+	coclass otMultiPoint
+	{
+		[default] interface IUnknown;
+		interface IotMultiPoint;
+		interface IotGeometry;
+		interface IotPointCollection;
+		interface IotTransform;
+	};
+	[
+		uuid(692FC1C7-8899-427C-A8BA-64461D26A30B),
+		helpstring("otMultiLineString Class")
+	]
+	coclass otMultiLineString
+	{
+		[default] interface IUnknown;
+		interface IotMultiLineString;
+		interface IotGeometry;
+		interface IotGeometryCollection;
+		interface IotTransform;
+
+	};
+	[
+		uuid(4BDBD639-E914-4B4E-BC38-F596F7CC3CF1),
+		helpstring("otPolygon Class")
+	]
+	coclass otPolygon
+	{
+		[default] interface IUnknown;
+		interface IotPolygon;
+		interface IotGeometry;
+		interface IotTransform;
+	};
+	[
+		uuid(48F1AC95-23D5-4395-AD1D-0A887405C283),
+		helpstring("otMultiPolygon Class")
+	]
+	coclass otMultiPolygon
+	{
+		[default] interface IUnknown;
+		interface IotMultiPolygon;
+		interface IotGeometry;
+		interface IotGeometryCollection;
+		interface IotTransform;
+
+	};
+	[
+		uuid(3F4B78D0-10E9-4222-88FE-9B077CF3DDAC),
+		helpstring("otGeoConvert Class")
+	]
+	coclass otGeoConvert
+	{
+
+		[default] interface IotGeoConvert;
+	};
+	[
+		uuid(D98CFB7C-5B03-4314-85D9-1CB2A43D03E1),
+		helpstring("otCircle Class")
+	]
+	coclass otCircle
+	{
+		[default] interface IUnknown;
+		interface IotCircle;
+		interface IotGeometry;
+		interface IotTransform;
+	};
+	[
+		uuid(10428073-895D-4F57-8575-B8846D057B98),
+		helpstring("otEllipse Class")
+	]
+	coclass otEllipse
+	{
+		[default] interface IUnknown;
+		 interface IotEllipse;
+		 interface IotGeometry;
+		 interface IotTransform;
+	};
+	[
+		uuid(D7C52CAA-E37E-4C9D-9838-8BE1C8312D2A),
+		helpstring("otBezierSpline Class")
+	]
+	coclass otBezierSpline
+	{
+		[default] interface IUnknown;
+		 interface IotBezierSpline;
+		 interface IotGeometry;
+		 interface IotPointCollection;
+		 interface IotTransform;
+	};
+
+	[
+		uuid(45A0C519-99EB-4D89-8721-7A3C2415AE7B),
+		helpstring("otLine Class")
+	]
+	coclass otLine
+	{
+		[default] interface IUnknown;
+		interface IotLine;
+		interface IotGeometry;
+	};
+	[
+		uuid(CF0D8787-FAD6-48A4-A1DC-2DCAF8E27087),
+		helpstring("otBezierCurve Class")
+	]
+	coclass otBezierCurve
+	{
+		[default] interface IUnknown;
+		interface IotBezierCurve;
+		interface IotGeometry;
+	};
+};

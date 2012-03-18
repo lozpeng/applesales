@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otArrowMarkerSymbol.1 = s 'otArrowMarkerSymbol Class'
+	{
+		CLSID = s '{6AD355FA-FE9A-4C2C-A131-7C946F2FE82D}'
+	}
+	otcDisplay.otArrowMarkerSymbol = s 'otArrowMarkerSymbol Class'
+	{
+		CLSID = s '{6AD355FA-FE9A-4C2C-A131-7C946F2FE82D}'
+		CurVer = s 'otcDisplay.otArrowMarkerSymbol.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6AD355FA-FE9A-4C2C-A131-7C946F2FE82D} = s 'otArrowMarkerSymbol Class'
+		{
+			ProgID = s 'otcDisplay.otArrowMarkerSymbol.1'
+			VersionIndependentProgID = s 'otcDisplay.otArrowMarkerSymbol'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

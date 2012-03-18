@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otSimpleRender.1 = s 'otSimpleRender Class'
+	{
+		CLSID = s '{57138786-BC15-4C16-AFB1-C3870AE9F9D3}'
+	}
+	otcCarto.otSimpleRender = s 'otSimpleRender Class'
+	{
+		CLSID = s '{57138786-BC15-4C16-AFB1-C3870AE9F9D3}'
+		CurVer = s 'otcCarto.otSimpleRender.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {57138786-BC15-4C16-AFB1-C3870AE9F9D3} = s 'otSimpleRender Class'
+		{
+			ProgID = s 'otcCarto.otSimpleRender.1'
+			VersionIndependentProgID = s 'otcCarto.otSimpleRender'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

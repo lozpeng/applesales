@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeometry.Envelope.1 = s 'Envelope Class'
+	{
+		CLSID = s '{344A66CC-BDD9-49B8-8945-B0F72002D97B}'
+	}
+	otcGeometry.Envelope = s 'Envelope Class'
+	{
+		CLSID = s '{344A66CC-BDD9-49B8-8945-B0F72002D97B}'
+		CurVer = s 'otcGeometry.Envelope.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {344A66CC-BDD9-49B8-8945-B0F72002D97B} = s 'Envelope Class'
+		{
+			ProgID = s 'otcGeometry.Envelope.1'
+			VersionIndependentProgID = s 'otcGeometry.Envelope'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A919D188-A659-422A-9FF7-552F23D97D13}'
+		}
+	}
+}
