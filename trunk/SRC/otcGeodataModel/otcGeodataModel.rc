@@ -129,7 +129,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-1 TYPELIB "otcGeodataModel.tlb"
+1 TYPELIB "otcGeodatabase.tlb"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

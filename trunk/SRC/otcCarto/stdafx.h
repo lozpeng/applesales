@@ -51,7 +51,7 @@ using namespace ATL;
 #import "otComBase.tlb" raw_interfaces_only, raw_native_types, no_namespace, named_guids, auto_search
 #include <windows.h>
 #import "otcGeometry.tlb"  raw_interfaces_only,raw_native_types, no_namespace, named_guids, auto_search
-#import "otcGeodataModel.tlb"  raw_interfaces_only,raw_native_types, no_namespace, named_guids, auto_search
+#import "otcGeodatabase.tlb"  raw_interfaces_only,raw_native_types, no_namespace, named_guids, auto_search
 #import "otcDisplay.tlb"  raw_interfaces_only,raw_native_types, no_namespace, named_guids, auto_search
 
 

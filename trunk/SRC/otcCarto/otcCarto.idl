@@ -154,7 +154,7 @@ library otcCarto
 	importlib("stdole2.tlb");
 	importlib("otComBase.tlb");
     importlib("otcGeometry.tlb");
-	importlib("otcGeodataModel.tlb");
+	importlib("otcGeodatabase.tlb");
 	importlib("otcDisplay.tlb");
 
 	enum otDrawContent;
