@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'otComBase'
+		'otComBase.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

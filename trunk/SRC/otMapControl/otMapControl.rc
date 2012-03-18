@@ -1,0 +1,266 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""otMapControl.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "otMapControl.ocx"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "OriginalFilename", "otMapControl.ocx"
+            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ABOUTDLL            ICON                    "otMapControl.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_OTMAPCONTROL        BITMAP                  "otMapCtrl.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX_OTMAPCONTROL DIALOGEX 34, 22, 260, 69
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于"
+FONT 9, "宋体", 400, 0, 0x86
+BEGIN
+    ICON            IDI_ABOUTDLL,IDC_STATIC,10,10,21,21
+    LTEXT           "TITAN  otMapControl",IDC_STATIC,40,14,170,8
+    LTEXT           "Copyright (C) 2010, ",IDC_STATIC,40,42,170,8
+    DEFPUSHBUTTON   "确定",IDOK,221,7,32,16,WS_GROUP
+END
+
+IDD_PROPPAGE_OTMAPCONTROL DIALOG  0, 0, 250, 62
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "宋体, MS Sans Serif"
+BEGIN
+    LTEXT           "TODO: 将用于操作 otMap 控件 的属性的控件放置在此对话框上。",IDC_STATIC,7,25,229,16
+END
+
+IDD_SYMBOL_PREVIEW_PAGE DIALOGEX 0, 0, 206, 161
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "符号"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_SYMBOL_PREVIEW,"Button",BS_OWNERDRAW | WS_TABSTOP,59,18,88,53
+    PUSHBUTTON      "设置",IDC_SYMBOLSET,79,78,50,14
+    GROUPBOX        "",IDC_STATIC,57,12,92,61
+END
+
+IDD_PAGE_ELEMENT_SIZE_POS DIALOGEX 0, 0, 254, 169
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "位置和大小"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "位置",IDC_STATIC,7,7,113,155
+    GROUPBOX        "大小",IDC_STATIC,129,7,118,71
+    LTEXT           "X:",IDC_STATIC,15,29,8,8
+    LTEXT           "Y:",IDC_STATIC,15,54,8,8
+    EDITTEXT        IDC_EDIT_POS_X,28,26,58,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_POS_Y,27,51,58,14,ES_AUTOHSCROLL
+    LTEXT           "宽:",IDC_STATIC,137,29,12,8
+    LTEXT           "高:",IDC_STATIC,137,53,12,8
+    EDITTEXT        IDC_EDIT_WIDTH,151,26,58,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HEIGHT,151,50,58,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_NAME,151,110,58,14,ES_AUTOHSCROLL
+    GROUPBOX        "图元名称",IDC_STATIC,129,85,118,77
+    LTEXT           "定位点:",IDC_STATIC,14,87,28,8
+    CONTROL         "",IDC_RADIO_LEFT_TOP,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE | WS_GROUP,29,105,11,10
+    CONTROL         "",IDC_RADIO_CENTER_TOP,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,54,105,11,10
+    CONTROL         "",IDC_RADIO_RIGHT_TOP,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,79,105,11,10
+    CONTROL         "",IDC_RADIO_LEFT_CENTER,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,29,124,11,10
+    CONTROL         "",IDC_RADIO_CENTER_CENTER,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,54,124,11,10
+    CONTROL         "",IDC_RADIO_RIGHT_CENTER,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,79,124,11,10
+    CONTROL         "",IDC_RADIO_LEFT_BOTTOM,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,29,143,11,10
+    CONTROL         "",IDC_RADIO_CENTER_BOTTOM,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,54,143,11,10
+    CONTROL         "",IDC_RADIO_RIGHT_BOTTOM,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,79,143,11,10
+    LTEXT           "",IDC_STATIC_UNIT,87,28,32,8
+    LTEXT           "",IDC_STATIC_UNIT2,85,54,32,8
+    LTEXT           "",IDC_STATIC_UNIT3,210,29,32,8
+    LTEXT           "",IDC_STATIC_UNIT4,210,52,32,8
+END
+
+IDD_PAGE_TEXT_CONTENT DIALOGEX 0, 0, 216, 180
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "文字内容"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "文字:",IDC_STATIC,9,13,20,8
+    EDITTEXT        IDC_EDIT_TEXT,30,14,167,64,ES_AUTOHSCROLL
+END
+
+IDD_FEATURE_INFOMATION DIALOGEX 0, 0, 295, 155
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "属性"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    CONTROL         "Tree1",IDC_TREE_FEATURES,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | WS_TABSTOP | 0x800,7,7,116,141,WS_EX_CLIENTEDGE
+    CONTROL         "List1",IDC_LIST_FEATURE_INFO,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,126,7,162,141,WS_EX_CLIENTEDGE
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX_OTMAPCONTROL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 253
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 62
+    END
+
+    IDD_PROPPAGE_OTMAPCONTROL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_MAP_ZOOMOUT         CURSOR                  "res\\cursor\\mapZoomout.cur"
+IDC_NORMAL              CURSOR                  "res\\cursor\\cursor2.cur"
+IDC_MAP_PAN             CURSOR                  "res\\cursor\\mapPan.cur"
+IDC_MAP_ZOOMIN          CURSOR                  "res\\cursor\\mapZoomIn.cur"
+IDC_CROSS               CURSOR                  "res\\cursor\\cross.cur"
+IDC_MODIFY_FEATURE      CURSOR                  "res\\cursor\\ModifyShape.cur"
+IDC_SIZE_ALL            CURSOR                  "res\\cursor\\cursor1.cur"
+IDC_ON_LINE             CURSOR                  "res\\cursor\\ON_LINE.cur"
+IDC_ON_VERTIX           CURSOR                  "res\\cursor\\cross1.cur"
+IDC_SIZE_LEFTRIGHT      CURSOR                  "res\\cursor\\size_leftright.cur"
+IDC_SIZE_LEFTTOP        CURSOR                  "res\\cursor\\size_lefttop.cur"
+IDC_SIZE_RIGHTTOP       CURSOR                  "res\\cursor\\size_righttop.cur"
+IDC_SIZE_TOPBOTTOM      CURSOR                  "res\\cursor\\size_topbottom.cur"
+IDC_VERTIX_MOVE         CURSOR                  "res\\cursor\\cur00001.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_OTMAPCONTROL        "otMap 控件"
+    IDS_OTMAPCONTROL_PPG    "otMap 属性页"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_OTMAPCONTROL_PPG_CAPTION "常规"
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "otMapControl.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

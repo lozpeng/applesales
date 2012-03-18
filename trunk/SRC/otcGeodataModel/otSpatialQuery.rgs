@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeodatabase.otSpatialQuery.1 = s 'otSpatialQuery Class'
+	{
+		CLSID = s '{982AFA8F-D953-4D45-B2CD-FA6502968253}'
+	}
+	otcGeodatabase.otSpatialQuery = s 'otSpatialQuery Class'
+	{
+		CLSID = s '{982AFA8F-D953-4D45-B2CD-FA6502968253}'
+		CurVer = s 'otcGeodatabase.otSpatialQuery.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {982AFA8F-D953-4D45-B2CD-FA6502968253} = s 'otSpatialQuery Class'
+		{
+			ProgID = s 'otcGeodatabase.otSpatialQuery.1'
+			VersionIndependentProgID = s 'otcGeodatabase.otSpatialQuery'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{84521EAF-6C68-428A-ACCA-FCEB5F46D28F}'
+		}
+	}
+}

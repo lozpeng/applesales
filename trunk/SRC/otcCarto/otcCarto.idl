@@ -1,0 +1,650 @@
+// otcCarto.idl : otcCarto 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(otcCarto.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+interface IotGraphicLayer;
+interface IGeoMap;
+interface IotPage;
+
+typedef
+[	uuid(D3988066-E27E-40f3-B9E6-09344784A441),
+    helpstring("otLayerType,工作空间类型"),
+]
+enum otLayerType
+{
+    OT_Unknown,
+	OT_FeatureLayer,
+	OT_RasterLayer,
+	OT_TinLayer,
+	OT_GraphicLayer
+}otLayerType;
+
+typedef
+[	uuid(4ECACC6D-E0F6-480f-8398-CABCA7C41516),
+    helpstring("ElementType,图元类型"),
+]
+enum ElementType
+{
+    OT_ELEMENT_NONE = 0x01,		//空
+	
+	OT_MAP_FRAME_ELEMENT = 0x02,//地图图元
+
+	//点
+	OT_SIMPLE_POINT_ELEMENT = 0x11,		//简单点
+	
+	//线
+	OT_POLYLINE_ELEMENT = 0x21,			//折线
+	OT_CURVE_ELEMENT = 0x22,			//曲线
+
+	//面
+	OT_FILL_RECTANGLE_ELEMENT = 0x41,	//矩形
+	OT_FILL_POLYGON_ELEMENT = 0x42,		//多边形
+	OT_FILL_CIRCLE_ELEMENT = 0x43,		//圆
+	OT_FILL_ELLIPSE_ELEMENT = 0x44,		//椭圆
+	
+	//文字
+	OT_SIMPLE_TEXT_ELEMENT  = 0x81,		//简单字符号
+	OT_CALLOUT_TEXT_ELEMENT = 0x82,		//callout text
+
+	OT_PICTURE_ELEMENT = 0x0201		//图片图元
+
+	
+}ElementType;
+
+typedef
+[	uuid(90B636E5-B79A-443f-9521-82CD06318061),
+    helpstring("otDrawContent,绘制内容"),
+]
+enum otDrawContent
+{
+   //不显示
+	otDrawNone = 0x00,
+	//显示矢量要素、栅格
+	otDrawGeography = 0x01,
+	//显示选择
+	otDrawGeoSelection = 0x02,
+	//显示图元
+	otDrawElement = 0x04,
+	//临时编辑
+	otDrawEdit = 0x08,
+	//临时对象
+	otdrawTempObj = 0x10,
+	//全部显示
+	otDrawAll = 0x1F
+}otDrawContent;
+
+typedef
+[	uuid(842D741A-DC11-43fd-90B4-9DCD2EC82ABB),
+    helpstring("otSelectOption,选择集类型"),
+]
+enum otSelectOption
+{
+    OT_SELECT_REPLACE,
+	OT_SELECT_ADD,
+	OT_SELECT_SUBTRACT,
+	OT_SELECT_INTERSECT
+}otSelectOption;
+
+typedef
+[	uuid(2147B361-BE4E-4173-860F-86C7D3DEC0A5),
+    helpstring("otFeatureRenderType,Render类型"),
+]
+enum otFeatureRenderType
+{
+	OTSIMPLERENDER ,/**< 简单专题*/
+	OTUNIQUERENDER , //唯一值
+	OTRANGERENDER ,  //范围
+	OTDOTDENSITYRENDER //点密度
+}otFeatureRenderType;
+
+
+typedef
+[	uuid(AFAF56A9-805A-4a29-B644-22EE4BB1DB47),
+    helpstring("otOutputFileType,屏幕输出的文件类型"),
+]
+enum otOutputFileType
+{
+	OT_BMP,
+    OT_JPEG,
+	OT_TIFF
+}otOutputFileType;
+
+typedef
+[	uuid(2435551C-FAE7-4b86-9873-4892752F2117),
+    helpstring("RasterEnhanceType,选择集类型"),
+]
+enum RasterEnhanceType
+{
+    LINESTRETCH =1001, //线性增强
+	HISTGRAMNORMAL =1002,//直方图均衡
+	HISTGRAMEQULIZE =1003,
+	LOGENHANCE =1004, //对数增强
+	EXPHANCE =1005, //指数增强
+	StANDARDDEV =1008 //标准差
+
+}RasterEnhanceType;
+
+//IotGeoPageLayout 接口
+[
+	object,
+	uuid(20352E96-A989-4153-A4A0-9CA7F91DB52E),
+	helpstring("IotGeoPageLayout 接口"),
+	pointer_default(unique)
+]
+interface IotGeoPageLayout : IUnknown{
+	[propget, helpstring("属性 GraphicLayer")] HRESULT GraphicLayer([out, retval] IotGraphicLayer** pVal);
+	[propget, helpstring("属性 Page")] HRESULT Page([out, retval] IotPage** pVal);
+};
+
+
+
+
+[
+	uuid(6894B3CB-B38F-4EA0-8B01-3041479E9EE9),
+	version(1.0),
+	helpstring("otcCarto 1.0 类型库")
+]
+library otcCarto
+{
+	importlib("stdole2.tlb");
+	importlib("otComBase.tlb");
+    importlib("otcGeometry.tlb");
+	importlib("otcGeodataModel.tlb");
+	importlib("otcDisplay.tlb");
+
+	enum otDrawContent;
+	enum otOutputFileType;
+
+    //IotFeatureRender 接口
+	[
+	object,
+	uuid(98C98A24-FF62-4599-A003-A6ECE7F78FB8),
+	helpstring("IotFeatureRender 接口"),
+	pointer_default(unique)
+	]
+	interface IotFeatureRender : IUnknown{
+		
+		[propget, helpstring("属性 RenderType")] HRESULT RenderType([out, retval] otFeatureRenderType* pVal);
+	};
+
+    
+	[
+		object,
+		uuid(3BB94E62-A5FA-4D55-98C1-23FA39DA23CD),
+		helpstring("IotSimpleRender 接口"),
+		pointer_default(unique)
+	]
+	interface IotSimpleRender : IotFeatureRender{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+	};
+
+     //IElement 接口
+	[
+	object,
+	uuid(AEAB375F-2E75-4c81-A0D5-E65EDAD37CD4),
+	helpstring("IElement 接口"),
+	pointer_default(unique)
+	]
+	interface IElement : IUnknown{
+		[propget, helpstring("属性 Geometry")] HRESULT Geometry([out, retval] IotGeometry** pVal);
+		[propput, helpstring("属性 Geometry")] HRESULT Geometry([in] IotGeometry* newVal);
+		[propget, helpstring("属性 Name")] HRESULT Name([out, retval] BSTR* pVal);
+		[propput, helpstring("属性 Name")] HRESULT Name([in] BSTR newVal);
+		[propget, helpstring("属性 Type")] HRESULT Type([out, retval] ElementType* pVal);
+	};
+
+
+	//IotFrameElementBase 接口
+	[
+	object,
+	uuid(D940E6E3-39C2-497f-89A3-3C8E50AF3A05),
+	helpstring("IotFrameElementBase 接口"),
+	pointer_default(unique)
+	]
+	interface IotFrameElementBase : IElement{
+
+	};
+
+
+	//IotMarkerElement 接口
+	[
+	object,
+	uuid(93ABBC20-5FAB-4240-841D-64A718F40BE1),
+	helpstring("IotMarkerElement 接口"),
+	pointer_default(unique)
+	]
+	interface IotMarkerElement : IElement{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+	};
+
+	
+    //IotPolylineElement 接口
+	[
+		object,
+		uuid(A22AA436-D71B-415D-8BB1-0217DB45B7E0),
+		helpstring("IotPolylineElement 接口"),
+		pointer_default(unique)
+	]
+	interface IotPolylineElement : IElement{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+	};
+
+	//IotPolygonElement 接口
+	[
+	object,
+	uuid(CE4E1D46-6EDE-431A-A727-7B67AD39022B),
+	helpstring("IotPolygonElement 接口"),
+	pointer_default(unique)
+	]
+	interface IotPolygonElement : IElement{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+	};
+
+	//IotRectElement 接口
+	[
+		object,
+		uuid(3E34B214-22B7-4EA8-A1CA-B7BFF5371C04),
+		helpstring("IotRectElement 接口"),
+		pointer_default(unique)
+	]
+	interface IotRectElement : IElement{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+	};
+
+	//IotCircleElement 接口
+	[
+		object,
+		uuid(D44BFFDF-7ECC-4E13-B044-DC57F8D9778E),
+		helpstring("IotCircleElement 接口"),
+		pointer_default(unique)
+	]
+	interface IotCircleElement : IElement{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+
+	};
+
+	//IotEllipseElement 接口	
+	[
+		object,
+		uuid(B7ADC815-48C8-458F-BA23-6CD14CF48C19),
+		helpstring("IotEllipseElement 接口"),
+		pointer_default(unique)
+	]
+	interface IotEllipseElement : IElement{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+	};
+
+	//IotBezierCurveElement 接口
+	[
+		object,
+		uuid(146D442A-808A-4C9F-B474-E371E39A9794),
+		helpstring("IotBezierCurveElement 接口"),
+		pointer_default(unique)
+	]
+	interface IotBezierCurveElement : IElement{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+	};
+
+	//IotPictureElement 接口
+	[
+		object,
+		uuid(828574AA-E196-47B6-A3AC-E426D0A97D15),
+		helpstring("IotPictureElement 接口"),
+		pointer_default(unique)
+	]
+	interface IotPictureElement : IElement{
+		[propget, helpstring("属性 PictureFile")] HRESULT PictureFile([out, retval] BSTR* pVal);
+		[propput, helpstring("属性 PictureFile")] HRESULT PictureFile([in] BSTR newVal);
+	};
+
+	//IotTextElement 接口
+	[
+		object,
+		uuid(ED8B01AF-78F3-41FC-89A3-BBDA308F9D5D),
+		helpstring("IotTextElement 接口"),
+		pointer_default(unique)
+	]
+	interface IotTextElement : IElement{
+		[propget, helpstring("属性 Symbol")] HRESULT Symbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 Symbol")] HRESULT Symbol([in] IotSymbol* newVal);
+		[propget, helpstring("属性 Text")] HRESULT Text([out, retval] BSTR* pVal);
+		[propput, helpstring("属性 Text")] HRESULT Text([in] BSTR newVal);
+	};
+
+	//IotCalloutTextElement 接口
+	[
+		object,
+		uuid(B4E8FA64-ADFD-498E-81D0-F9A52159B60E),
+		helpstring("IotCalloutTextElement 接口"),
+		pointer_default(unique)
+	]
+	interface IotCalloutTextElement : IElement{
+		[propget, helpstring("属性 TextSymbol")] HRESULT TextSymbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 TextSymbol")] HRESULT TextSymbol([in] IotSymbol* newVal);
+		[propget, helpstring("属性 FillSymbol")] HRESULT FillSymbol([out, retval] IotSymbol** pVal);
+		[propput, helpstring("属性 FillSymbol")] HRESULT FillSymbol([in] IotSymbol* newVal);
+		[propget, helpstring("属性 Text")] HRESULT Text([out, retval] BSTR* pVal);
+		[propput, helpstring("属性 Text")] HRESULT Text([in] BSTR newVal);
+		[propget, helpstring("属性 AnchorPoint")] HRESULT AnchorPoint([out, retval] IotPoint** pVal);
+		[propput, helpstring("属性 AnchorPoint")] HRESULT AnchorPoint([in] IotPoint* newVal);
+		[propget, helpstring("属性 TextOriginPoint")] HRESULT TextOriginPoint([out, retval] IotPoint** pVal);
+		[propput, helpstring("属性 TextOriginPoint")] HRESULT TextOriginPoint([in] IotPoint* newVal);
+	};
+
+	//IotPage 接口
+	[
+	object,
+	uuid(6FC775A1-7F40-4B81-92F8-C2B3C3CF3DAC),
+	helpstring("IotPage 接口"),
+	pointer_default(unique)
+	]
+	interface IotPage : IUnknown{
+		[propget, helpstring("属性 PageEnvelope")] HRESULT PageEnvelope([out, retval] IotEnvelope** pVal);
+	};
+
+
+	//IotMapFrame 接口
+	[
+	object,
+	uuid(3175177D-CFA9-4C82-B789-5EEAF9248931),
+	helpstring("IotMapFrame 接口"),
+	pointer_default(unique)
+	]
+	interface IotMapFrame : IotFrameElementBase{
+		[propget, helpstring("属性 Map")] HRESULT Map([out, retval] IGeoMap** pVal);
+		[propput, helpstring("属性 Map")] HRESULT Map([in] IGeoMap* newVal);
+		[helpstring("方法Create")] HRESULT Create([in] IGeoMap* map, [in] IotEnvelope* envelope);
+	};
+
+
+	//IotLayer 接口
+	[
+	object,
+	uuid(2B7F6D8E-1318-4f33-BBA4-D395AE52D1D0),
+	helpstring("IotLayer 接口"),
+	pointer_default(unique)
+    ]
+	interface IotLayer : IUnknown{
+
+		[propget, helpstring("属性 Name")] HRESULT Name([out, retval] BSTR* pVal);
+		[propput, helpstring("属性 Name")] HRESULT Name([in] BSTR newVal);
+		[propget, helpstring("属性 LayerDesciption")] HRESULT LayerDesciption([out, retval] BSTR* pVal);
+		[propput, helpstring("属性 LayerDesciption")] HRESULT LayerDesciption([in] BSTR newVal);
+		[propget, helpstring("属性 Visible")] HRESULT Visible([out, retval] VARIANT_BOOL* pVal);
+		[propput, helpstring("属性 Visible")] HRESULT Visible([in] VARIANT_BOOL newVal);
+		[propget, helpstring("属性 ScaleRangeValid")] HRESULT ScaleRangeValid([out, retval] VARIANT_BOOL* pVal);
+		[propput, helpstring("属性 ScaleRangeValid")] HRESULT ScaleRangeValid([in] VARIANT_BOOL newVal);
+		[propget, helpstring("属性 ScaleRangeMin")] HRESULT ScaleRangeMin([out, retval] DOUBLE* pVal);
+		[propput, helpstring("属性 ScaleRangeMin")] HRESULT ScaleRangeMin([in] DOUBLE newVal);
+		[propget, helpstring("属性 ScaleRangeMax")] HRESULT ScaleRangeMax([out, retval] DOUBLE* pVal);
+		[propput, helpstring("属性 ScaleRangeMax")] HRESULT ScaleRangeMax([in] DOUBLE newVal);
+		[propget, helpstring("属性 LayerType")] HRESULT LayerType([out, retval] otLayerType* pVal);
+		[propget, helpstring("属性 DataObject")] HRESULT DataObject([out, retval] IotDataObject** pVal);
+		[propput, helpstring("属性 DataObject")] HRESULT DataObject([in] IotDataObject* newVal);
+	};
+
+	//IotRasterLayer 接口
+	[
+		object,
+		uuid(D8E6C255-17AE-40C6-AE56-04EF940462DA),
+		helpstring("IotRasterLayer 接口"),
+		pointer_default(unique)
+	]
+	interface IotRasterLayer : IotLayer{
+		[propget, helpstring("属性 TransparentValue")] HRESULT TransparentValue([out, retval] LONG* pVal);
+		[propput, helpstring("属性 TransparentValue")] HRESULT TransparentValue([in] LONG newVal);
+		[helpstring("方法Enhance")] HRESULT Enhance([in] RasterEnhanceType type);
+		[helpstring("方法SetBrightAndContrast")] HRESULT SetBrightAndContrast([in] LONG bright, [in] LONG contrast);
+	};
+
+	//IotFeatureLayer 接口
+	[
+	object,
+	uuid(6B2D9CBB-C4E9-42BF-9331-4919D9758614),
+	helpstring("IotFeatureLayer 接口"),
+	pointer_default(unique)
+	]
+	interface IotFeatureLayer : IotLayer{
+		[propget, helpstring("属性 SelectionSet")] HRESULT SelectionSet([out, retval] IotSelectionSet** pVal);
+		[propput, helpstring("属性 SelectionSet")] HRESULT SelectionSet([in] IotSelectionSet* newVal);
+		[helpstring("方法ClearSelection")] HRESULT ClearSelection(void);
+		[helpstring("方法Select")] HRESULT Select([in] IotSimpleQuery* queryFilter, [in] enum otSelectOption option);
+		[propget, helpstring("属性 Render")] HRESULT Render([out, retval] IotFeatureRender** pVal);
+		[propput, helpstring("属性 Render")] HRESULT Render([in] IotFeatureRender* newVal);
+	};
+
+	//IotGraphicLayer 接口
+	[
+	object,
+	uuid(892F223F-D887-4263-9CCA-2688F298729B),
+	helpstring("IotGraphicLayer 接口"),
+	pointer_default(unique)
+	]
+	interface IotGraphicLayer : IotLayer{
+
+		[propget, helpstring("属性 Count")] HRESULT Count([out, retval] LONG* pVal);
+		[helpstring("方法AddElement")] HRESULT AddElement([in] IElement* element);
+		[helpstring("方法GetElement")] HRESULT GetElement([in] LONG index, [out,retval] IElement** retElement);
+		[helpstring("方法RemoveAllElements")] HRESULT RemoveAllElements(void);
+		[helpstring("方法RemoveElement")] HRESULT RemoveElement([in] IElement* element);
+		[propget, helpstring("属性 SelectedElementCount")] HRESULT SelectedElementCount([out, retval] LONG* pVal);
+		[helpstring("方法SelectElement")] HRESULT SelectElement([in] IElement* element);
+		[helpstring("方法IsElementSelected")] HRESULT IsElementSelected([in] IElement* element, [out,retval] VARIANT_BOOL* bSelected);
+		[helpstring("方法UnselectElement")] HRESULT UnselectElement([in] IElement* element);
+		[helpstring("方法GetSelectedElement")] HRESULT GetSelectedElement([in] LONG index,[out,retval] IElement** retElement);
+		[helpstring("方法SelectAllElements")] HRESULT SelectAllElements(void);
+		[helpstring("方法UnselectAllElements")] HRESULT UnselectAllElements(void);
+	};
+
+	//IGeoMap 接口
+	[
+		object,
+		uuid(7BC33468-C328-41E6-8D61-24E46F8BBD7B),
+		dual,
+		nonextensible,
+		helpstring("IGeoMap 接口"),
+		pointer_default(unique)
+	]
+	interface IGeoMap : IDispatch{
+		[id(1), helpstring("方法LayerCount")] HRESULT LayerCount([out,retval] LONG* Count);
+		[propget, id(2), helpstring("属性 MapUnit")] HRESULT MapUnit([out, retval] enum otUnits* pVal);
+		[propget, id(3), helpstring("属性 GraphicLayer")] HRESULT GraphicLayer([out, retval] IotGraphicLayer** pVal);
+		[propget, id(4), helpstring("属性 Name")] HRESULT Name([out, retval] BSTR* pVal);
+		[propput, id(4), helpstring("属性 Name")] HRESULT Name([in] BSTR newVal);
+		[id(5), helpstring("方法AddLayer")] HRESULT AddLayer([in] IotLayer* layer);
+		[id(6), helpstring("方法GetLayer")] HRESULT GetLayer([in] LONG index, [out,retval] IotLayer** retLayer);
+		[id(7), helpstring("方法RemoveLayers")] HRESULT RemoveLayers(void);
+		[id(8), helpstring("方法DeleteLayer")] HRESULT DeleteLayer([in] LONG index);
+		[id(9), helpstring("方法FindLayer")] HRESULT FindLayer([in] IotLayer* layer, [out,retval] LONG* index);
+		[id(10), helpstring("方法MoveLayer")] HRESULT MoveLayer([in] IotLayer* layer, [in] LONG ToIndex);
+		[propget, id(11), helpstring("属性 SpatialReference")] HRESULT SpatialReference([out, retval] IotSpatialReference** pVal);
+		[propput, id(11), helpstring("属性 SpatialReference")] HRESULT SpatialReference([in] IotSpatialReference* newVal);
+		[id(12), helpstring("方法ZoomActualSize")] HRESULT ZoomActualSize(void);
+		[id(13), helpstring("方法ZoomFullExtent")] HRESULT ZoomFullExtent(void);
+	};
+
+	[
+		uuid(A56763EB-DE04-4561-8D4E-1CF5F158FAEA),
+		helpstring("_IGeoMapEvents 接口")
+	]
+	dispinterface _IGeoMapEvents
+	{
+		properties:
+		methods:
+			[id(1), helpstring("方法ElementDelete")] HRESULT ElementDeleted([in]IElement* element);
+	};
+	[
+		uuid(91EAA7A2-5758-4B92-A08F-877F1AD469EF),
+		helpstring("GeoMap Class")
+	]
+	coclass GeoMap
+	{
+		[default] interface IUnknown;
+		interface IGeoMap;
+		[default, source] dispinterface _IGeoMapEvents;
+	};
+	[
+		uuid(29FFCCDA-2132-4232-8901-5D4C42DBC0A7),
+		helpstring("otFeatureLayer Class")
+	]
+	coclass otFeatureLayer
+	{
+		[default] interface IUnknown;
+		interface IotFeatureLayer;
+	};
+	[
+		uuid(07C08A06-1859-4E9B-BAA1-90FBD153AD4C),
+		helpstring("otGraphicLayer Class")
+	]
+	coclass otGraphicLayer
+	{
+		[default] interface IUnknown;
+		interface IotGraphicLayer;
+	};
+	[
+		uuid(09ADAB83-8667-4764-BAF1-EF1C57927C01),
+		helpstring("otMarkerElement Class")
+	]
+	coclass otMarkerElement
+	{
+		[default] interface IUnknown;
+		interface IotMarkerElement;
+	};
+	[
+		uuid(7CD1FB96-C0E7-48BF-AFB5-E5B468A8CFC3),
+		helpstring("otPolylineElement Class")
+	]
+	coclass otPolylineElement
+	{
+		[default] interface IUnknown;
+		interface IotPolylineElement;
+	};
+	[
+		uuid(5B1C2866-BD99-4C6B-ABE1-DAF21B8FBADD),
+		helpstring("otPolygonElement Class")
+	]
+	coclass otPolygonElement
+	{
+		[default] interface IUnknown;
+		 interface IotPolygonElement;
+	};
+	[
+		uuid(3892BCF3-EF3C-488D-B027-53BAFC084CF3),
+		helpstring("otRectElement Class")
+	]
+	coclass otRectElement
+	{
+		[default] interface IotRectElement;
+	};
+	[
+		uuid(4E50DECD-BA9E-4EB0-B392-817679CEFBD4),
+		helpstring("otTextElement Class")
+	]
+	coclass otTextElement
+	{
+		[default] interface IotTextElement;
+	};
+	[
+		uuid(A1B2ED9C-1A68-45FE-A346-F9DFF9DFB5E2),
+		helpstring("otRasterLayer Class")
+	]
+	coclass otRasterLayer
+	{
+		[default] interface IUnknown;
+		interface IotRasterLayer;
+	};
+	[
+		uuid(5FD0038C-DFC2-4BBF-8B2F-6280D5DBAAB2),
+		helpstring("otCircleElement Class")
+	]
+	coclass otCircleElement
+	{
+		[default] interface IUnknown;
+		interface IotCircleElement;
+	};
+	[
+		uuid(58D5B697-2EA1-461A-B6F3-2A0A059DDBFB),
+		helpstring("otGeoPageLayout Class")
+	]
+	coclass otGeoPageLayout
+	{
+		[default] interface IUnknown;
+		interface IotGeoPageLayout;
+	};
+	[
+		uuid(BAEFF30B-7A9C-41FC-BE1D-8FE208FDBC44),
+		helpstring("otBezierCurveElement Class")
+	]
+	coclass otBezierCurveElement
+	{
+		[default] interface IUnknown;
+		interface IotBezierCurveElement;
+	};
+	[
+		uuid(7D3AD466-57C8-4991-B57B-FB6359EB1FAD),
+		helpstring("otEllipseElement Class")
+	]
+	coclass otEllipseElement
+	{
+		[default] interface IUnknown;
+		interface IotEllipseElement;
+	};
+	[
+		uuid(90D04AB6-FB73-409D-B38F-5371DF10A3B7),
+		helpstring("otPictureElement Class")
+	]
+	coclass otPictureElement
+	{
+		[default] interface IUnknown;
+		interface IotPictureElement;
+	};
+	[
+		uuid(BD5390E6-D1B4-4863-9055-FC5734441BC3),
+		helpstring("otCalloutTextElement Class")
+	]
+	coclass otCalloutTextElement
+	{
+		[default] interface IUnknown;
+		interface IotCalloutTextElement;
+	};
+	[
+		uuid(57138786-BC15-4C16-AFB1-C3870AE9F9D3),
+		helpstring("otSimpleRender Class")
+	]
+	coclass otSimpleRender
+	{
+		[default] interface IUnknown;
+		 interface IotSimpleRender;
+	};
+	[
+		uuid(6409EB5F-AA78-4846-8EA2-F8C5863D29D4),
+		helpstring("otPage Class")
+	]
+	coclass otPage
+	{
+		[default] interface IUnknown;
+		 interface IotPage;
+	};
+	[
+		uuid(2925AA1E-E428-4B3D-B888-04FF1732C342),
+		helpstring("otMapFrame Class")
+	]
+	coclass otMapFrame
+	{
+		[default] interface IUnknown;
+		interface IotMapFrame;
+	};
+};

@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeometry.otGeoConvert.1 = s 'otGeoConvert Class'
+	{
+		CLSID = s '{3F4B78D0-10E9-4222-88FE-9B077CF3DDAC}'
+	}
+	otcGeometry.otGeoConvert = s 'otGeoConvert Class'
+	{
+		CLSID = s '{3F4B78D0-10E9-4222-88FE-9B077CF3DDAC}'
+		CurVer = s 'otcGeometry.otGeoConvert.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3F4B78D0-10E9-4222-88FE-9B077CF3DDAC} = s 'otGeoConvert Class'
+		{
+			ProgID = s 'otcGeometry.otGeoConvert.1'
+			VersionIndependentProgID = s 'otcGeometry.otGeoConvert'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A919D188-A659-422A-9FF7-552F23D97D13}'
+		}
+	}
+}

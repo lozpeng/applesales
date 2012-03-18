@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otAdvLineSymbol.1 = s 'otAdvLineSymbol Class'
+	{
+		CLSID = s '{C8432A67-F6A1-4FDA-980F-D3FCD0A17DD3}'
+	}
+	otcDisplay.otAdvLineSymbol = s 'otAdvLineSymbol Class'
+	{
+		CLSID = s '{C8432A67-F6A1-4FDA-980F-D3FCD0A17DD3}'
+		CurVer = s 'otcDisplay.otAdvLineSymbol.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C8432A67-F6A1-4FDA-980F-D3FCD0A17DD3} = s 'otAdvLineSymbol Class'
+		{
+			ProgID = s 'otcDisplay.otAdvLineSymbol.1'
+			VersionIndependentProgID = s 'otcDisplay.otAdvLineSymbol'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

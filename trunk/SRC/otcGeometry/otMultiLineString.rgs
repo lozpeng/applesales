@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeometry.otMultiLineString.1 = s 'otMultiLineString Class'
+	{
+		CLSID = s '{692FC1C7-8899-427C-A8BA-64461D26A30B}'
+	}
+	otcGeometry.otMultiLineString = s 'otMultiLineString Class'
+	{
+		CLSID = s '{692FC1C7-8899-427C-A8BA-64461D26A30B}'
+		CurVer = s 'otcGeometry.otMultiLineString.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {692FC1C7-8899-427C-A8BA-64461D26A30B} = s 'otMultiLineString Class'
+		{
+			ProgID = s 'otcGeometry.otMultiLineString.1'
+			VersionIndependentProgID = s 'otcGeometry.otMultiLineString'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A919D188-A659-422A-9FF7-552F23D97D13}'
+		}
+	}
+}

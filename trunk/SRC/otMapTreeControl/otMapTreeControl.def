@@ -1,0 +1,9 @@
+; otMapTreeControl.def : 定义模块参数。
+
+LIBRARY      "otMapTreeControl.OCX"
+
+EXPORTS
+	DllCanUnloadNow     PRIVATE
+	DllGetClassObject   PRIVATE
+	DllRegisterServer   PRIVATE
+	DllUnregisterServer PRIVATE

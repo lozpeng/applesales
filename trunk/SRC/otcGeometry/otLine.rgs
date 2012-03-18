@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeometry.otLine.1 = s 'otLine Class'
+	{
+		CLSID = s '{45A0C519-99EB-4D89-8721-7A3C2415AE7B}'
+	}
+	otcGeometry.otLine = s 'otLine Class'
+	{
+		CLSID = s '{45A0C519-99EB-4D89-8721-7A3C2415AE7B}'
+		CurVer = s 'otcGeometry.otLine.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {45A0C519-99EB-4D89-8721-7A3C2415AE7B} = s 'otLine Class'
+		{
+			ProgID = s 'otcGeometry.otLine.1'
+			VersionIndependentProgID = s 'otcGeometry.otLine'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A919D188-A659-422A-9FF7-552F23D97D13}'
+		}
+	}
+}

@@ -47,7 +47,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\ImageProcess;..\Geometry\capi;..\Control"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\ImageProcess;..\Geometry\capi;..\Control;..\otComUI;&quot;$(OutDir)/TypeLib&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -138,7 +138,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\ImageProcess;..\Geometry\capi;..\Control"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\ImageProcess;..\Geometry\capi;..\Control;..\otComUI"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"

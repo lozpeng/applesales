@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otLineFillSymbol.1 = s 'otLineFillSymbol Class'
+	{
+		CLSID = s '{FD15140D-3358-496C-9E25-3EC2561AC7ED}'
+	}
+	otcDisplay.otLineFillSymbol = s 'otLineFillSymbol Class'
+	{
+		CLSID = s '{FD15140D-3358-496C-9E25-3EC2561AC7ED}'
+		CurVer = s 'otcDisplay.otLineFillSymbol.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FD15140D-3358-496C-9E25-3EC2561AC7ED} = s 'otLineFillSymbol Class'
+		{
+			ProgID = s 'otcDisplay.otLineFillSymbol.1'
+			VersionIndependentProgID = s 'otcDisplay.otLineFillSymbol'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

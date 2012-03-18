@@ -1,0 +1,26 @@
+HKCR
+{
+	otcCarto.otMapFrame.1 = s 'otMapFrame Class'
+	{
+		CLSID = s '{2925AA1E-E428-4B3D-B888-04FF1732C342}'
+	}
+	otcCarto.otMapFrame = s 'otMapFrame Class'
+	{
+		CLSID = s '{2925AA1E-E428-4B3D-B888-04FF1732C342}'
+		CurVer = s 'otcCarto.otMapFrame.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {2925AA1E-E428-4B3D-B888-04FF1732C342} = s 'otMapFrame Class'
+		{
+			ProgID = s 'otcCarto.otMapFrame.1'
+			VersionIndependentProgID = s 'otcCarto.otMapFrame'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{6894B3CB-B38F-4EA0-8B01-3041479E9EE9}'
+		}
+	}
+}

@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[otcCarto.vcproj]
+SCC_Aux_Path = "\\Devserver\VSS_ALL\TitanImage7_VSS"
+SCC_Project_Name = "$/Src/COM/otcCarto", FGTAAAAA
+
+[otcCartoPS.vcproj]
+SCC_Aux_Path = "\\Devserver\VSS_ALL\TitanImage7_VSS"
+SCC_Project_Name = "$/Src/COM/otcCarto", FGTAAAAA

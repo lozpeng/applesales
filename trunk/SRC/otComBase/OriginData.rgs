@@ -1,0 +1,26 @@
+HKCR
+{
+	otComBase.OriginData.1 = s 'OriginData Class'
+	{
+		CLSID = s '{72033937-969A-4F43-82E5-DD38C65068AA}'
+	}
+	otComBase.OriginData = s 'OriginData Class'
+	{
+		CLSID = s '{72033937-969A-4F43-82E5-DD38C65068AA}'
+		CurVer = s 'otComBase.OriginData.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {72033937-969A-4F43-82E5-DD38C65068AA} = s 'OriginData Class'
+		{
+			ProgID = s 'otComBase.OriginData.1'
+			VersionIndependentProgID = s 'otComBase.OriginData'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{5280A105-E960-4CEC-AA01-58E9637853EA}'
+		}
+	}
+}

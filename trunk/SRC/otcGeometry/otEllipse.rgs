@@ -1,0 +1,26 @@
+HKCR
+{
+	otcGeometry.otEllipse.1 = s 'otEllipse Class'
+	{
+		CLSID = s '{10428073-895D-4F57-8575-B8846D057B98}'
+	}
+	otcGeometry.otEllipse = s 'otEllipse Class'
+	{
+		CLSID = s '{10428073-895D-4F57-8575-B8846D057B98}'
+		CurVer = s 'otcGeometry.otEllipse.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {10428073-895D-4F57-8575-B8846D057B98} = s 'otEllipse Class'
+		{
+			ProgID = s 'otcGeometry.otEllipse.1'
+			VersionIndependentProgID = s 'otcGeometry.otEllipse'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A919D188-A659-422A-9FF7-552F23D97D13}'
+		}
+	}
+}

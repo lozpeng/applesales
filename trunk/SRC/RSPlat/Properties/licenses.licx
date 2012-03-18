@@ -1,0 +1,13 @@
+DevExpress.XtraEditors.TextEdit, DevExpress.XtraEditors.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraEditors.LabelControl, DevExpress.XtraEditors.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraTab.XtraTabControl, DevExpress.XtraEditors.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraBars.Docking.DockManager, DevExpress.XtraBars.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraEditors.Repository.RepositoryItemComboBox, DevExpress.XtraEditors.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraBars.BarManager, DevExpress.XtraBars.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraBars.Ribbon.RibbonControl, DevExpress.XtraBars.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraEditors.CheckEdit, DevExpress.XtraEditors.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraEditors.ButtonEdit, DevExpress.XtraEditors.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit, DevExpress.XtraEditors.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraNavBar.NavBarControl, DevExpress.XtraNavBar.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073
+DevExpress.XtraTabbedMdi.XtraTabbedMdiManager, DevExpress.XtraBars.v9.1, Version=9.1.5.0, Culture=neutral, PublicKeyToken=5377c8e3b72b4073

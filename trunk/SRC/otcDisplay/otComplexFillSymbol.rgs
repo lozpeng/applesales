@@ -1,0 +1,26 @@
+HKCR
+{
+	otcDisplay.otComplexFillSymbol.1 = s 'otComplexFillSymbol Class'
+	{
+		CLSID = s '{187D30A9-9564-43A1-908A-E16B6DD66990}'
+	}
+	otcDisplay.otComplexFillSymbol = s 'otComplexFillSymbol Class'
+	{
+		CLSID = s '{187D30A9-9564-43A1-908A-E16B6DD66990}'
+		CurVer = s 'otcDisplay.otComplexFillSymbol.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {187D30A9-9564-43A1-908A-E16B6DD66990} = s 'otComplexFillSymbol Class'
+		{
+			ProgID = s 'otcDisplay.otComplexFillSymbol.1'
+			VersionIndependentProgID = s 'otcDisplay.otComplexFillSymbol'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4EEC370A-29C3-4463-8826-FCC2453863F5}'
+		}
+	}
+}

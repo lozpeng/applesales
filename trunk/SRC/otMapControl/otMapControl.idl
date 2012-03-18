@@ -1,0 +1,168 @@
+// otMapControl.idl : ActiveX 控件项目的类型库源。
+
+// 此文件将由 MIDL 编译器工具处理以
+// 产生类型库(otMapControl.tlb)，该类型库将成为
+// otMapControl.ocx 中的资源。
+
+#include <olectl.h>
+#include <idispids.h>
+
+
+typedef
+[	uuid(BDD9D0AD-421E-4b85-880C-13711CB69B7A),
+    helpstring("otMapControl Action Type"),
+]
+enum otActionType
+{
+   actionNone =0,
+   actionPan =1,
+   actionZoomIn =2,
+   actionZoomOut =3,
+   actionDrawPolylineElement,
+   actionDrawPolygonElement,
+   actionDrawRectElement,
+   actionDrawTextElement,
+   actionSelectElement,
+   actionSelectByPoint,
+   actionSelectByRect,
+   actionSelectByPolygon,
+   actionSelectByLine,
+   actionSelectByCircle,
+   actionIdentifyFeature,
+   actionDrawBezierCurveElement,
+   actionDrawSimpleMarkerElement,
+   actionDrawFreehandLineElement,
+   actionZoomActualSize
+}otActionType;
+
+typedef
+[	uuid(EED68378-9C6F-46ce-9DEF-65BED7BC3073),
+    helpstring("otMapControl Mouse Type"),
+]
+enum otMouseType
+{
+   otMouseDefault,
+   otMouseCustom
+}otMouseType;
+
+
+
+[ uuid(83832279-48EB-4E01-A842-7A17DABE20A5), version(1.0),
+  helpfile("otMapControl.hlp"),
+  helpstring("otMapControl ActiveX 控件模块"),
+  control ]
+
+
+
+
+library otMapControlLib
+{
+	importlib(STDOLE_TLB);
+	importlib("otcGeometry.tlb");
+	importlib("otcDisplay.tlb");
+    importlib("otcCarto.tlb");
+	//  CotMapCtrl 的主调度接口
+    
+    interface IGeoMap;
+
+	[ uuid(1C60EC25-8C5A-4B28-AEF7-017C158D4017),
+	  helpstring("otMap 控件 的调度接口")]
+	dispinterface _DotMapControl
+	{
+		properties:
+			[id(3), helpstring("属性 Action")]  otActionType Action;
+			[id(9), helpstring("属性 ViewExtent")] IotEnvelope* ViewExtent;
+			[id(10), helpstring("属性 FullExtent")] IotEnvelope* FullExtent;
+			[id(13), helpstring("属性 ScreenCanvas")] IotCanvas *ScreenCanvas;
+			[id(16), helpstring("属性 MouseType")] otMouseType MouseType;
+			[id(17), helpstring("属性 MouseIcon")] BSTR MouseIcon;
+
+	methods:
+
+			[id(DISPID_ABOUTBOX)] void AboutBox();
+			[id(1), helpstring("方法AddFeatureLayer")] void AddFeatureLayer([in] BSTR filename);
+			[id(2), helpstring("方法Refresh")] void Refresh(void);
+			[id(4), helpstring("打开TMS文件，并添加到地图中")] void AddTmsFile([in] BSTR filename);
+			[id(5), helpstring("打开影像文件，并添加到地图中")] VARIANT_BOOL AddImageFile([in] BSTR filename);
+			[id(6), helpstring("移动地图")] void MoveMap(DOUBLE dx, DOUBLE dy);
+			[id(7), propget] IGeoMap* Map();
+			[id(8), propget] IDispatch* Object();
+			[id(11), helpstring("方法AddShpFile")] void AddShpFile([in]BSTR filename);
+			[id(12), helpstring("方法UpdateContent")] void UpdateContent(enum otDrawContent content);
+			[id(14), helpstring("方法RefreshScreen")] void RefreshScreen(void);
+			[id(15), helpstring("方法LoadGWF")] void LoadGWF(BSTR filename);
+			[id(18), helpstring("方法MapToPixel")] void MapToPixel([in]DOUBLE mapX,[in] DOUBLE mapY,[out] LONG* X, [out]LONG* Y);
+
+			[id(19), helpstring("方法PixelToMap")] IotPoint* PixelToMap(LONG x, LONG y);
+			[id(20), helpstring("方法MoveCenterTo")] void MoveCenterTo(IotPoint* point);
+			[id(21), helpstring("方法OutputMap")] void OutputMap(LONG hDC);
+			[id(22), helpstring("方法OutputMapToFile")] VARIANT_BOOL OutputMapToFile(BSTR filename, enum otOutputFileType filetype);
+	
+			[id(23), helpstring("方法LoadElementFile")] void LoadElementFile(BSTR filename);
+			[id(24), helpstring("方法RemoveElement")] void RemoveElement(void);
+			[id(25), helpstring("方法SaveElement")] void SaveElement(BSTR filename);
+			[id(26), helpstring("方法FlashLayer")] void FlashLayer(LONG layerID, LONG millisecond);
+			[id(27), helpstring("方法StopFlashLayer")] void StopFlashLayer(void);
+	};
+
+	//  CotMapCtrl 的事件调度接口
+
+	[ uuid(5E23396E-8367-4E8E-A9FF-CBA23B378FAA),
+	  helpstring("otMap 控件 的事件接口") ]
+	dispinterface _DotMapControlEvents
+	{
+		properties:
+			//  事件接口没有任何属性
+
+		methods:
+			[id(1)] void OnDoubleClick(LONG button, LONG flag, LONG X, LONG Y, DOUBLE MapX, DOUBLE MapY);
+			[id(2)] void OnMouseDown(LONG button, LONG flag, LONG x, LONG y, DOUBLE mapX, DOUBLE mapY);
+			[id(3)] void OnMouseUp(LONG button, LONG flag, LONG x, LONG y, DOUBLE mapX, DOUBLE mapY);
+			[id(4)] void OnMouseMove(LONG button, LONG flag, LONG x, LONG y, DOUBLE mapX, DOUBLE mapY);
+	};
+
+	//  CotMapCtrl 的类信息
+
+	[ uuid(875F9C3B-337B-4D2C-A325-277F2E1D2068),
+	  helpstring("otMap 控件"), control ]
+	coclass otMapControl
+	{
+		[default] dispinterface _DotMapControl;
+		[default, source] dispinterface _DotMapControlEvents;
+	};
+
+	//  otSymbolSelector 的主调度接口
+		
+	[ uuid(1E5E4427-9C21-4DD0-867E-BAC51C6DAD63) ]
+	dispinterface IotSymbolSelector
+	{
+		properties:
+		methods:
+			[id(1), helpstring("方法SelectSymbol")] IotSymbol* SelectSymbol(IotSymbol* symbol);
+	};
+
+	//  otSymbolSelector 的类信息
+
+	[ uuid(61F0A120-2A95-442F-B541-4B3C309ECAF0) ]
+	coclass otSymbolSelector
+	{
+		[default] dispinterface IotSymbolSelector;
+	};
+	//  otLayerProperty 的主调度接口
+		
+	[ uuid(63E2AB56-8483-4405-AB79-40B81AEF1CCC) ]
+	dispinterface IotLayerProperty
+	{
+		properties:
+		methods:
+			[id(1), helpstring("方法ShowLayerProperty")] void ShowLayerProperty(IotLayer* layer,IDispatch *MapControl);
+	};
+
+	//  otLayerProperty 的类信息
+
+	[ uuid(798B7203-4A4B-48a9-B802-FB4C66246040) ]
+	coclass otLayerProperty
+	{
+		[default] dispinterface IotLayerProperty;
+	};
+};
