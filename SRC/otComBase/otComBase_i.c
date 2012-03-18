@@ -6,7 +6,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0366 */
-/* at Sat Mar 17 08:25:31 2012
+/* at Sun Mar 18 11:02:46 2012
  */
 /* Compiler settings for .\otComBase.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

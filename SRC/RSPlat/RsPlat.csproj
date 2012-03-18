@@ -218,7 +218,7 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
-    <COMReference Include="otcGeodataModel">
+    <COMReference Include="otcGeodatabase">
       <Guid>{84521EAF-6C68-428A-ACCA-FCEB5F46D28F}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
