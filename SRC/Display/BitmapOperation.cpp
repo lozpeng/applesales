@@ -277,6 +277,7 @@ HANDLE Display::CBitmapOperation::DIBSectionToDIB(HBITMAP hBitmap)
 	::SelectObject( hSourceDC, hOldSourceBitmap ); 
 	DeleteDC( hSourceDC ); 
 	ReleaseDC( NULL, hDC );
+	return hNewDIB;
 }
 
 WORD Display::CBitmapOperation::DIBNumColors(HANDLE hDIB) 
