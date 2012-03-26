@@ -82,6 +82,8 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_LEGEND, OnUpdateDrawLegend)
 	ON_COMMAND(ID_DRAW_MAP_TITLE, OnDrawMapTitle)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_MAP_TITLE, OnUpdateDrawMapTitle)
+	ON_COMMAND(ID_LOAD_TEMP, OnLoadTemp)
+
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
 	ON_UPDATE_COMMAND_UI(ID_POINT_SELECTFEATURE, OnUpdateSelectFeatureByPoint)
@@ -429,6 +431,7 @@ void CUAVSoftView::OnOpenImg()
 		{
 			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
 		}
+
 	}
 	afx_msg void CUAVSoftView::OnUpdateLayoutPan(CCmdUI* pCmdUI)
 	{
@@ -581,6 +584,19 @@ void CUAVSoftView::OnOpenImg()
 		}
 	}
 
+	void CUAVSoftView::OnLoadTemp()
+	{
+		//test
+		CString csFileName = _T("无标题");
+
+		static CString csFilter = "GeoAnalyse Workspace File(*.TMP)|*.TMP||";
+
+		CFileDialog dlg(FALSE, "TMP", csFileName, OFN_HIDEREADONLY, csFilter);
+		if( IDOK == dlg.DoModal() )
+		{
+			m_LayoutCtrl.SaveTemplate(dlg.GetPathName().AllocSysString());
+		}
+	}
 	void CUAVSoftView::OnUpdateDrawMapTitle(CCmdUI *pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawMapTitle");
@@ -1367,7 +1383,17 @@ void CUAVSoftView::OnUpdateIncrementalImport(CCmdUI* pCmdUI)
 	pCmdUI->Enable(pMap->GetEditor()->IsEditing());
 }
 
-
+CString GetAppPathName()
+{
+	TCHAR	szProgPath[MAX_PATH*2];
+	::GetModuleFileName(NULL, szProgPath, sizeof(szProgPath)/sizeof(TCHAR));    
+	CString PathName = szProgPath;
+	CString FileName = PathName;
+	int    SplashPos = PathName.ReverseFind('\\');
+	if(SplashPos>=2 && SplashPos<=PathName.GetLength()-4)
+		FileName=PathName.Left(SplashPos);
+	return FileName;
+}
 //map与layout之间切换
 LRESULT CUAVSoftView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
 {
@@ -1385,8 +1411,8 @@ LRESULT CUAVSoftView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
 			m_LayoutCtrl.Initialize();
 			OnDrawMapFrameElement();
 			//load temp
-			//CString strTempFile =GetAppPathName()+"\\china.TMP";
-			//m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),strTempFile.AllocSysString());
+			CString strTempFile =GetAppPathName()+"\\china.TMP";
+			m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),strTempFile.AllocSysString());
 		}
 	}
 	return 0;

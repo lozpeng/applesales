@@ -831,6 +831,12 @@ void CMainFrame::AddTab_Print()
 	CBCGPRibbonButton* pBtnDrawLegend= new CBCGPRibbonButton (ID_DRAW_LEGEND,_T("图例"), 6, 6);
 	pPanelMapSurround->Add (pBtnDrawLegend);
 
+	//--------------------------
+	// 加载模板:
+	//--------------------------
+	CBCGPRibbonButton* pBtnLoadTMP= new CBCGPRibbonButton (ID_LOAD_TEMP,_T("更改模板"), 17, 17);
+	pPanelMapSurround->Add (pBtnLoadTMP);
+
 }
 
 

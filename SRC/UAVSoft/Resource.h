@@ -163,16 +163,12 @@
 #define ID_DRAW_SCALEBAR                40553
 #define ID_DRAW_LEGEND                  40554
 #define ID_DRAW_MAP_TITLE               40555
-
+#define ID_LOAD_TEMP					40556
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-<<<<<<< .mine
-#define _APS_NEXT_RESOURCE_VALUE        168
-=======
 #define _APS_NEXT_RESOURCE_VALUE        169
->>>>>>> .r405
 #define _APS_NEXT_COMMAND_VALUE         40632
 #define _APS_NEXT_CONTROL_VALUE         1060
 #define _APS_NEXT_SYMED_VALUE           108

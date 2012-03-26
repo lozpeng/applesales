@@ -143,7 +143,7 @@ namespace Framework
 
 			Carto::CGraphicLayerPtr pLayer = m_pPageLayout->GetGraphicLayer();
 
-			IMapCtrl* pMapCtrl = (IMapCtrl*)IUIObject::GetUIObjectByName("STANDARD_MAPCTRL");
+			IMapCtrl* pMapCtrl = (IMapCtrl*)IUIObject::GetUIObjectByName(CommonUIName::AppMapControl);
 
 			Element::IElementPtr pElement = pLayer->Reset();
 			while(pElement)
@@ -152,7 +152,7 @@ namespace Framework
 				{
 					Element::CMapFrame* pMapFrame = dynamic_cast<Element::CMapFrame*>(pElement.get());
 					long mapID = pMapFrame->GetMapID();
-					Carto::CMapPtr pMap ;//= pMapCtrl->GetMapByID(mapID);
+					Carto::CMapPtr pMap = pMapCtrl->GetMap();//getGetMapByID(mapID);
 
 					pMapFrame->SetMap(pMap);
 				}
