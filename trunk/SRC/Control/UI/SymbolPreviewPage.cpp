@@ -48,14 +48,14 @@ BOOL CSymbolPreviewPage::OnInitDialog()
 
 void CSymbolPreviewPage::OnBnClickedSrSymbolset()
 {
-	/*Framework::ISymbolListCtrl *pCtrl =dynamic_cast<Framework::ISymbolListCtrl*>(Framework::IUIObject::GetUIObjectByName(SYMBOLLISTCTRL));
+	Framework::ISymbolListCtrl *pCtrl =dynamic_cast<Framework::ISymbolListCtrl*>(Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppSymbolLstCtrl));
 	if(pCtrl)
 	{
 		m_pSymbol =pCtrl->SelectSymbol(m_pSymbol);
 	}
 	m_PreviewBtn.SetSymbol(m_pSymbol.get());
 
-	SetModified();*/
+	SetModified();
 }
 
 

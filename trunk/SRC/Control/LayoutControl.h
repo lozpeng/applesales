@@ -48,6 +48,7 @@ namespace Control
 		void CalDestRect(GEOMETRY::geom::Envelope srcExtent,GEOMETRY::geom::Envelope destExtent,CRect &rect);
 
 		void LoadTemplate(Carto::CMapPtr map, BSTR templatefile);
+		void SaveTemplate(BSTR templatefile);
 	private:
 
 		bool m_bMouseWheel;

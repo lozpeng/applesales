@@ -38,6 +38,9 @@ protected:
 
 	void DrawNormal(Display::IDisplayPtr pDisplay);
 
+
+	void MoveHandleTo(HIT_HANDLE nHandle,GEOMETRY::geom::Coordinate coord);
+
 protected:
 	BOOL m_bGeometryChanged;
 

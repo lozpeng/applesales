@@ -452,20 +452,21 @@ namespace Control
 
 	void CLayoutControl::LoadTemplate(Carto::CMapPtr map, BSTR templatefile)
 	{
-		CRect rect;
-		GetClientRect(rect);
-		m_pPageLayout.reset(new Carto::CPageLayout());
-		m_pPageLayout->Initialize((long)m_hMemDC,rect.Width(),rect.Height());
-
 		USES_CONVERSION; 
-		
+
 		LPCTSTR pFileName = OLE2T(templatefile);
-		
+
 		CFile file;
 		if(!file.Open(pFileName,CFile::modeRead))
 		{
 			return;
 		}
+
+		CRect rect;
+		GetClientRect(rect);
+		m_pPageLayout.reset(new Carto::CPageLayout());
+		m_pPageLayout->Initialize((long)m_hMemDC,rect.Width(),rect.Height());
+
 
 		CString PrjPath =pFileName;
 		CString basePath =PrjPath.Left(PrjPath.ReverseFind(_T('\\'))+1);
@@ -485,8 +486,8 @@ namespace Control
 
 		BOOL bLayoutExist ;
 		bin & bLayoutExist;
-
-		serialization(bin);
+		if(bLayoutExist)
+			serialization(bin);
 
 		Carto::CGraphicLayerPtr pLayer = m_pPageLayout->GetGraphicLayer();
 
@@ -505,9 +506,44 @@ namespace Control
 
 
 		delete[] pStart;
+		ar.Close ();
+		file.Close ();
 
 		UpdateControl(drawAll);
 	}
+	void CLayoutControl::SaveTemplate(BSTR templatefile)
+	{
+		USES_CONVERSION; 
+
+		LPCTSTR pFileName = OLE2T(templatefile);
+
+		CFile file;
+		if(!file.Open(pFileName,CFile::modeCreate|CFile::modeWrite))
+		{
+			return;
+		}
+
+		CString PrjPath =pFileName;
+		CString basePath =PrjPath.Left(PrjPath.ReverseFind(_T('\\'))+1);
+
+		CArchive ar(&file,CArchive::store);
+
+		SYSTEM::CBinArchive bin;
+		bin.SetWriteState();
+
+		BOOL bLayoutExist = Initialized();
+		bin & bLayoutExist;
+		if(bLayoutExist)
+			serialization(bin);
+
+		ar << bin.GetSize();
+		ar.Write( bin.GetData() , bin.GetSize() );
+
+		ar.Close ();
+		file.Close ();
+	}
+
+
 
 
 
