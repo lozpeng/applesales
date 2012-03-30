@@ -837,6 +837,11 @@ void CMainFrame::AddTab_Print()
 	CBCGPRibbonButton* pBtnLoadTMP= new CBCGPRibbonButton (ID_LOAD_TEMP,_T("更改模板"), 17, 17);
 	pPanelMapSurround->Add (pBtnLoadTMP);
 
+	//--------------------------
+	// 保存模板:
+	//--------------------------
+	CBCGPRibbonButton* pBtnSaveTMP= new CBCGPRibbonButton (ID_SAVE_TEMP,_T("保存模板"), 18, 18);
+	pPanelMapSurround->Add (pBtnSaveTMP);
 }
 
 

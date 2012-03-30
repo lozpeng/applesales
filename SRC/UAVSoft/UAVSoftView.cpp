@@ -83,6 +83,7 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_DRAW_MAP_TITLE, OnDrawMapTitle)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_MAP_TITLE, OnUpdateDrawMapTitle)
 	ON_COMMAND(ID_LOAD_TEMP, OnLoadTemp)
+	ON_COMMAND(ID_SAVE_TEMP, OnSaveTemp)
 
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
@@ -585,6 +586,19 @@ void CUAVSoftView::OnOpenImg()
 	}
 
 	void CUAVSoftView::OnLoadTemp()
+	{
+		//load temp
+		CString csFileName = _T("无标题");
+
+		static CString csFilter = "GeoAnalyse Workspace File(*.TMP)|*.TMP||";
+
+		CFileDialog dlg(TRUE, "TMP", csFileName, OFN_HIDEREADONLY, csFilter);
+		if( IDOK == dlg.DoModal() )
+		{
+			m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),dlg.GetPathName().AllocSysString());
+		}
+	}
+	void CUAVSoftView::OnSaveTemp()
 	{
 		//test
 		CString csFileName = _T("无标题");
