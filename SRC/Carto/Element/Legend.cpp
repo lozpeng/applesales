@@ -742,6 +742,8 @@ void CLegend::MapFrameSettedEvent()
 		return;
 
 	Carto::CLayerArray LayerArray = pMap->GetLayers();
+	if(LayerArray.GetSize()<1)
+		return;
 	for(int i=0;i< m_vecLegendItems.size(); i++)
 		m_vecLegendItems[i]->SetLayer(LayerArray[m_vecLegendItems[i]->GetLayerID()]);
 }

@@ -53,8 +53,9 @@ ILegendItemPtr CHorizontalLegendItem::Clone()
 void CHorizontalLegendItem::Draw(Display::IDisplayPtr pDisplay, DIS_RECT& rect)
 {
 	ILegendItem::Draw(pDisplay, rect);
-
-
+	if(m_pLayer == NULL)
+		return;
+			
 	DrawLayerName(pDisplay, rect, m_pLayer->GetName());
 
 	Carto::CLegendInfoPtr pInfo = m_pLayer->GetLegendInfo();
