@@ -164,6 +164,7 @@
 #define ID_DRAW_LEGEND                  40554
 #define ID_DRAW_MAP_TITLE               40555
 #define ID_LOAD_TEMP					40556
+#define ID_SAVE_TEMP					40557
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

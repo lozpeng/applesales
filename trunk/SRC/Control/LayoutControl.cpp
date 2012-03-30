@@ -450,8 +450,10 @@ namespace Control
 
 	}
 
+
 	void CLayoutControl::LoadTemplate(Carto::CMapPtr map, BSTR templatefile)
 	{
+
 		USES_CONVERSION; 
 
 		LPCTSTR pFileName = OLE2T(templatefile);

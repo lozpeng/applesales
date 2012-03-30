@@ -47,6 +47,10 @@ namespace Carto
 		for(int i=0; i<lSize; i++)
 		{
 			Element::IElementPtr pElement = m_vecElements[i];
+			
+			if(pElement == NULL)
+				continue;
+
 			if(pElement->GetType() & Element::ET_MAP_SURROUND_ELEMENT)
 			{
 				Element::IMapSurround* pSurround = dynamic_cast<Element::IMapSurround*>(pElement.get());
@@ -54,6 +58,8 @@ namespace Carto
 				for(int j=0; j<lSize; j++)
 				{
 					Element::IElementPtr pElement2 = m_vecElements[j];
+					if(pElement2 == NULL)
+						continue;
 					if(pElement2->GetType() == Element::ET_MAP_FRAME_ELEMENT)
 					{
 						Element::CMapFrame* pFrm = dynamic_cast<Element::CMapFrame*>(pElement2.get());

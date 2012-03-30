@@ -47,6 +47,8 @@ namespace Control
 		//计算贴图在view中的位置
 		void CalDestRect(GEOMETRY::geom::Envelope srcExtent,GEOMETRY::geom::Envelope destExtent,CRect &rect);
 
+
+		//制图模板操作
 		void LoadTemplate(Carto::CMapPtr map, BSTR templatefile);
 		void SaveTemplate(BSTR templatefile);
 	private:
