@@ -213,6 +213,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\InverseDist.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MagicStick.cpp"
 				>
 			</File>
@@ -272,6 +276,10 @@
 			</File>
 			<File
 				RelativePath=".\ImgChangeDetect.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InverseDist.h"
 				>
 			</File>
 			<File
