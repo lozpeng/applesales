@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor;..\ImageProcess"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
