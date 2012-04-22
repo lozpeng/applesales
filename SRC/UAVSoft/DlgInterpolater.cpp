@@ -74,6 +74,8 @@ void CDlgInterpolater::OnBnClickedButtonInputfile()
 
 void CDlgInterpolater::OnBnClickedOk()
 {
+	this->UpdateData();
+
 	using namespace std;
 	// TODO: 在此添加控件通知处理程序代码
 	if(m_dbSearchRadius<=0||m_dbCellSize<=0||m_strInputFile.GetLength()<1||m_strOutputFile.GetLength()<1)
