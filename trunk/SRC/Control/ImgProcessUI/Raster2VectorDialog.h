@@ -26,4 +26,5 @@ public:
 	int m_classValue;
 	afx_msg void OnBnClickedOk2();
 	long m_lThres;
+	afx_msg void OnBnClickedCancel2();
 };
