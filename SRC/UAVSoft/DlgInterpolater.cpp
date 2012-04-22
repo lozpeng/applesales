@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "UAVSoft.h"
 #include "DlgInterpolater.h"
-
+#include "InverseDist.h"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -74,6 +74,7 @@ void CDlgInterpolater::OnBnClickedButtonInputfile()
 
 void CDlgInterpolater::OnBnClickedOk()
 {
+	using namespace std;
 	// TODO: 在此添加控件通知处理程序代码
 	if(m_dbSearchRadius<=0||m_dbCellSize<=0||m_strInputFile.GetLength()<1||m_strOutputFile.GetLength()<1)
 	{
@@ -83,6 +84,8 @@ void CDlgInterpolater::OnBnClickedOk()
 
 	std::string filename= m_strInputFile;
 
+	//设置中文
+	locale oldloc = locale::global(locale(""));
 	std::ifstream in(filename.c_str());
 	if(!in) {
 		::AfxMessageBox(_T("打开txt文件失败..."));
@@ -90,6 +93,7 @@ void CDlgInterpolater::OnBnClickedOk()
 	}
 
 	double x, y, z;
+    std::vector<double> dxs,dys,dzs;
 	//m_vecPoints.clear();
 	while(!in.eof()) {
 		std::string line;
@@ -97,12 +101,25 @@ void CDlgInterpolater::OnBnClickedOk()
 		istringstream iss(line);
 		iss >> x >> y >> z;
 		//m_vecPoints.push_back(Point3D(x, y, z));
+		dxs.push_back(x);
+		dys.push_back(y);
+		dzs.push_back(z);
 
 	}
 	
 	
 	//调用插值函数
+	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzs,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,m_strOutputFile))
+	{
+        MessageBox("处理失败");
+		
+	}
+	else
+	{
+		MessageBox("处理成功");
+	}
 
 
+	locale::global(oldloc);
 	OnOK();
 }
