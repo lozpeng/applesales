@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CRaster2VectorDialog, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_INPUTFILE, &CRaster2VectorDialog::OnBnClickedButtonInputfile)
 	ON_BN_CLICKED(IDC_BUTTON_OUTPUTFILE, &CRaster2VectorDialog::OnBnClickedButtonOutputfile)
 	ON_BN_CLICKED(IDOK2, &CRaster2VectorDialog::OnBnClickedOk2)
+	ON_BN_CLICKED(IDCANCEL2, &CRaster2VectorDialog::OnBnClickedCancel2)
 END_MESSAGE_MAP()
 
 
@@ -73,4 +74,9 @@ void CRaster2VectorDialog::OnBnClickedOk2()
 	ImageProcess::ImgClass2Shp(m_strInputFile, m_strOutputFile, m_classValue, m_lThres);
 
 	OnOK();
+}
+
+void CRaster2VectorDialog::OnBnClickedCancel2()
+{
+	OnCancel();
 }
