@@ -22,6 +22,7 @@
 #include "ImgProcessUI/ImageProcessTool.h"
 #include "ILayer.h"
 #include "DlgDrawingExport.h"
+#include "DlgInterpolater.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -1976,6 +1977,8 @@ void CUAVSoftView::OnHighWaterpol()
 void CUAVSoftView::OnGasDatainsert()
 {
 
+	CDlgInterpolater InterpolaterDlg = new CDlgInterpolater();
+	InterpolaterDlg.DoModal();
 }
 
 void CUAVSoftView::OnGasCreateImage()
