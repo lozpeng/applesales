@@ -43,8 +43,8 @@ struct WeightAndZ
 	double z;
 };
 
-bool CInverseDist::Run(std::vector<double> dxs, std::vector<double> dys, 
-					   std::vector<double> dzs,double xres,double yres, double radius, const char *strout)
+bool CInverseDist::Run(std::vector<double> &dxs, std::vector<double> &dys, 
+					   std::vector<double> &dzs,double xres,double yres, double radius, const char *strout)
 {
 
 	using namespace Geodatabase;
