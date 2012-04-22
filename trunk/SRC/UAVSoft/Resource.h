@@ -29,15 +29,20 @@
 #define IDB_LAYOUT                      167
 #define IDB_POL_COG                     168
 #define IDB_POL_LARGE                   168
+#define IDD_DIG_Interpolater            169
 #define IDD_DIG_DRAWINGEXPORT           176
 #define IDC_COMPANY_URL                 1041
 #define ID_TABCONTROL                   1054
-#define IDC_RADIO_EXPORT_ALL            1054
-#define IDC_RADIO_EXPOERT_SELECTED      1055
-#define IDC_COMBO_DRAWINGTYPE           1056
-#define IDC_CHECK_ISADD                 1059
-#define IDC_BTN_SLECTPATH               1060
-#define IDC_COMBO_Export                1061
+#define IDC_RADIO_EXPORT_ALL            1055
+#define IDC_RADIO_EXPOERT_SELECTED      1056
+#define IDC_EDIT_INPUTFILE              1057
+#define IDC_COMBO_DRAWINGTYPE           1058
+#define IDC_BUTTON_INPUTFILE            1059
+#define IDC_EDIT_OUTPUTFILE             1060
+#define IDC_BUTTON_OUTPUTFILE           1061
+#define IDC_CHECK_ISADD                 1062
+#define IDC_BTN_SLECTPATH               1063
+#define IDC_COMBO_Export                1064
 #define ID_VIEW_TOOLBARS                32771
 #define ID_VIEW_WORKSPACE2              32792
 #define ID_VIEW_WORKSPACE               32803
@@ -163,13 +168,17 @@
 #define ID_DRAW_SCALEBAR                40553
 #define ID_DRAW_LEGEND                  40554
 #define ID_DRAW_MAP_TITLE               40555
-#define ID_LOAD_TEMP					40556
-#define ID_SAVE_TEMP					40557
+#define ID_LOAD_TEMP                    40556
+#define ID_SAVE_TEMP                    40557
+#define IDC_EDIT_CELLSIZE               40558
+#define IDC_EDIT_SEARCHRADIUS           40559
+
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        169
+#define _APS_NEXT_RESOURCE_VALUE        170
 #define _APS_NEXT_COMMAND_VALUE         40632
 #define _APS_NEXT_CONTROL_VALUE         1060
 #define _APS_NEXT_SYMED_VALUE           108
