@@ -29,7 +29,7 @@ static void rasterio_resample(GDALRasterBand* pBand, int lCol, int lRow, int lWi
 		//int m1,n1,m2,n2,m3,n3,m4,n4;
 
 		T* pBuffer1 = (T*) pBuffer;
-		T* pBuffer2 = new T[lCol*lRow];
+		T* pBuffer2 = new T[lWidth*lHeight];
 
 		pBand->RasterIO(GF_Read,lCol,lRow,lWidth,lHeight,pBuffer2,lWidth,lHeight,targetGDALType,0,0);
 
