@@ -142,9 +142,11 @@ void CDlgInterpolater::Excel2Shp(std::string filename,std::vector<double> &dxs, 
 
 		int lfieldindex = pFeatureClass->FindField(szFieldname);
 
-
 		//提交要素
 		pFeatureClass->AddFeature(pFeature.get());
+
+		//pFeature->GetValue(lfieldindex).SetDouble(double(dzs[i]));
+		//pFeature->Update();
 
 
 	}
@@ -267,6 +269,8 @@ void CDlgInterpolater::OnBnClickedOk()
 		MessageBox("处理成功");
 	}
 
+	pDoc->LoadImageFile(m_strOutputFile);
+	pDoc->GetLinkMapCtrl()->UpdateControl(drawAll);
 
 	locale::global(oldloc);
 	OnOK();
