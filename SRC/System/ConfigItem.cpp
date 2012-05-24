@@ -22,6 +22,9 @@ SYSTEM::CConfigItem::~CConfigItem()
 // 当节点名称唯一时，通过名字得到
 SYSTEM::IConfigItemPtr SYSTEM::CConfigItem::GetChildByName(const char *Name)
 {	
+	if(itemElement == NULL)
+		return NULL;
+
 	DOMNodeList*    nodeList = ((DOMElement*)itemElement)->getElementsByTagName(X(Name));
 	if( nodeList->getLength() != 1 )
 		return NULL;
