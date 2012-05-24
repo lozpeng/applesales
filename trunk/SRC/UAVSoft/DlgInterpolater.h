@@ -26,4 +26,7 @@ public:
 	double m_dbCellSize;
 	double m_dbSearchRadius;
 	afx_msg void OnBnClickedOk();
+
+	void Excel2Shp(std::string filename,std::vector<double> &dxs, std::vector<double> &dys, 
+		std::vector<double> &dzs);
 };
