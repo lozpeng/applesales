@@ -2,7 +2,7 @@
 #include "IRasterRender.h"
 #include "CartoHeader.h"
 #include "RasterRGBRender.h"
-
+#include "RasterClassifyColorRender.h"
 namespace Carto
 {
 
@@ -40,6 +40,8 @@ SYSTEM::CSmartPtr<IRasterRender> IRasterRender::CreateRender(Carto::RASTER_RENDE
 	{
 	case RASTER_RGBRENDER:
 		return IRasterRenderPtr( new CRasterRGBRender() );
+	case RASTER_CLASSIFY_COLORRAMP_RENDER:
+        return IRasterRenderPtr( new CRasterClassifyColorRender());
 	case RASTER_CUSTOMRENDER: 
 		return NULL;
 	default:

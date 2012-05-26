@@ -61,6 +61,7 @@ namespace Carto
 	enum RASTER_RENDER_TYPE
 	{
 		RASTER_RGBRENDER = 0x01,/**< RGB渲染*/
+		RASTER_CLASSIFY_COLORRAMP_RENDER=0x02,/**颜色表分类渲染*/
 		RASTER_CUSTOMRENDER = 0x10,/**< 自定义专题，用于编写扩展专题*/
 	};
 
