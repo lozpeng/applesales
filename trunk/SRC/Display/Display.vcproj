@@ -202,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ColorDefine.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ComplexFillSymbol.cpp"
 				>
 			</File>
@@ -251,6 +255,10 @@
 			</File>
 			<File
 				RelativePath=".\HashLineSymbol.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\IColorRamp.cpp"
 				>
 			</File>
 			<File
@@ -392,6 +400,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ColorDefine.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ComplexFillSymbol.h"
 				>
 			</File>
@@ -441,6 +453,10 @@
 			</File>
 			<File
 				RelativePath=".\HashLineSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IColorRamp.h"
 				>
 			</File>
 			<File
