@@ -125,7 +125,7 @@ void CDlgInterpolater::Excel2Shp(std::string filename,std::vector<double> &dxs, 
 
 	GEOMETRY::geom::Geometry* pGeometry =NULL;
 
-	for (size_t i=0;i<dzs.size();i++)
+	for (size_t i=0;i<dxs.size();i++)
 	{
 
 		//产生一个新的要素
@@ -159,6 +159,8 @@ void CDlgInterpolater::Excel2Shp(std::string filename,std::vector<double> &dxs, 
 #include "MainFrm.h"
 #include "UAVSoftDoc.h"
 #include "IMapCtrl.h"
+#include "ProgressBar.h"
+
 void CDlgInterpolater::OnBnClickedOk()
 {
 	this->UpdateData();
@@ -175,7 +177,7 @@ void CDlgInterpolater::OnBnClickedOk()
 	locale oldloc = locale::global(locale(""));
 
 	double x, y, z;
-	std::vector<double> dxs,dys,dzs;
+	std::vector<double> dxs,dys,dzs,dzso2,dzno,dzh2s,dzco;
 	
 	CString tempString = PathFindExtension(m_strInputFile);
 	tempString.MakeLower();
@@ -214,12 +216,39 @@ void CDlgInterpolater::OnBnClickedOk()
 		}
 		
 		//数据读取(二氧化硫)
-		sheet.ReadColumn(pArray,'G'-'A'+1);
+		int nStartFlag = 'F'-'A'+1;
+		sheet.ReadColumn(pArray,nStartFlag);
 		for (int k=1;k< lCnt;k++)
 		{
 			pVal = pArray.GetAt(k);
 			z= atof(pVal);
-			dzs.push_back(z);
+			dzso2.push_back(z);
+		}
+
+		nStartFlag+=6;
+		sheet.ReadColumn(pArray,nStartFlag);
+		for (int k=1;k< lCnt;k++)
+		{
+			pVal = pArray.GetAt(k);
+			z= atof(pVal);
+			dzno.push_back(z);
+		}
+
+		nStartFlag+=3;
+		sheet.ReadColumn(pArray,nStartFlag);
+		for (int k=1;k< lCnt;k++)
+		{
+			pVal = pArray.GetAt(k);
+			z= atof(pVal);
+			dzh2s.push_back(z);
+		}
+		nStartFlag+=3;
+		sheet.ReadColumn(pArray,nStartFlag);
+		for (int k=1;k< lCnt;k++)
+		{
+			pVal = pArray.GetAt(k);
+			z= atof(pVal);
+			dzco.push_back(z);
 		}
 
 	}
@@ -245,21 +274,56 @@ void CDlgInterpolater::OnBnClickedOk()
 		}
 	}
 
-
-	//创建shp文件
-	std::string strShpFile =m_strOutputFile.Left(m_strOutputFile.GetLength()-4);
-	strShpFile +=".shp";
-	this->Excel2Shp(strShpFile,dxs,dys,dzs);
-
-	//shp数据加载
-
 	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
 	CUAVSoftDoc* pDoc = (CUAVSoftDoc*)pMainFrm->GetActiveDocument();
-	pDoc->LoadShpFile(strShpFile.c_str());
-	pDoc->GetLinkMapCtrl()->UpdateControl(drawAll);
 
+	CString retFile=m_strOutputFile;
+	int extFlag = m_strOutputFile.Find(".tif",0);
+	retFile.Insert(extFlag,"_so2");
+
+	Control::CProgressBar progress;
+	const char* szProName="SO2数据插值中，请等待...";
 	//调用插值函数
-	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzs,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,m_strOutputFile))
+	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzso2,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
+	{
+		MessageBox("处理失败");
+
+	}
+	pDoc->LoadImageFile(retFile);
+
+
+
+	szProName="NO数据插值中，请等待...";
+	retFile=m_strOutputFile;
+	retFile.Insert(extFlag,"_no");
+	//调用插值函数
+	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzno,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
+	{
+		MessageBox("处理失败");
+
+	}
+	pDoc->LoadImageFile(retFile);
+
+
+	//
+	szProName="H2S数据插值中，请等待...";
+	retFile=m_strOutputFile;
+	retFile.Insert(extFlag,"_h2s");
+	//调用插值函数
+	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzh2s,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
+	{
+		MessageBox("处理失败");
+
+	}
+
+	pDoc->LoadImageFile(retFile);
+
+	//
+	szProName="CO数据插值中，请等待...";
+	retFile=m_strOutputFile;
+	retFile.Insert(extFlag,"_co");
+	//调用插值函数
+	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzco,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
 	{
 		MessageBox("处理失败");
 
@@ -268,8 +332,20 @@ void CDlgInterpolater::OnBnClickedOk()
 	{
 		MessageBox("处理成功");
 	}
+	pDoc->LoadImageFile(retFile);
 
-	pDoc->LoadImageFile(m_strOutputFile);
+
+
+	//创建shp文件
+	std::string strShpFile =m_strOutputFile.Left(m_strOutputFile.GetLength()-4);
+	strShpFile +=".shp";
+	this->Excel2Shp(strShpFile,dxs,dys,dzs);
+
+	//shp数据加载
+
+	pDoc->LoadShpFile(strShpFile.c_str());
+	pDoc->GetLinkMapCtrl()->UpdateControl(drawAll);
+
 	pDoc->GetLinkMapCtrl()->UpdateControl(drawAll);
 
 	locale::global(oldloc);

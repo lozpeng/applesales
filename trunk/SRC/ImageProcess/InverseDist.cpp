@@ -43,8 +43,8 @@ struct WeightAndZ
 	double z;
 };
 
-bool CInverseDist::Run(std::vector<double> &dxs, std::vector<double> &dys, 
-					   std::vector<double> &dzs,double xres,double yres, double radius, const char *strout)
+bool CInverseDist::Run(std::vector<double> &dxs, std::vector<double> &dys, std::vector<double> &dzs,
+					   double xres,double yres, double radius, const char *strout,SYSTEM::IProgress *pProgress,const char *strProName)
 {
 
 	using namespace Geodatabase;
@@ -55,6 +55,14 @@ bool CInverseDist::Run(std::vector<double> &dxs, std::vector<double> &dys,
 	if(!strout)
 	{
 		return false;
+	}
+
+	//建立进度条
+	if(pProgress)
+	{
+		pProgress->Create(strProName,SYSTEM::IProgress::Percent,100);
+		pProgress->UpdateProgress("",0.01);
+
 	}
 
 	GEOMETRY::geom::Envelope extent=CalExtent(dxs,dys);
@@ -93,7 +101,7 @@ bool CInverseDist::Run(std::vector<double> &dxs, std::vector<double> &dys,
 
 	rasDestDS->SetCoordinateExtent(extent);
 
-	long i,j,k;
+	long i,j,k,totalPro=1;
 	int m;
 	double xpos,ypos;
 	double distance = 0;
@@ -149,12 +157,24 @@ bool CInverseDist::Run(std::vector<double> &dxs, std::vector<double> &dys,
 
 			rasDestDS->PixelIO(1, j , i, &fvalue, false);
 
+			totalPro++;
+
+			if(pProgress)
+			{
+				pProgress->UpdateProgress("",1.0*totalPro/(height*width));
+			}
 		}
 	
 	
 	}
     
 	rasDestDS->DeleteBuffer();
+
+	if(pProgress)
+	{
+		pProgress->UpdateProgress("",1.0);
+		pProgress->Close();
+	}
 
 	return true;
 
