@@ -250,6 +250,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RasterClassifyColorRender.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RasterLayer.cpp"
 				>
 			</File>
@@ -365,6 +369,10 @@
 			</File>
 			<File
 				RelativePath=".\RangeRender.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RasterClassifyColorRender.h"
 				>
 			</File>
 			<File
