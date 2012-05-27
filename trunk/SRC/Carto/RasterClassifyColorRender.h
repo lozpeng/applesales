@@ -72,6 +72,8 @@ private:
 
 };
 
+typedef SYSTEM::CSmartPtr<CRasterClassifyColorRender> CRasterClassifyColorRenderPtr;
+
 
 }
 

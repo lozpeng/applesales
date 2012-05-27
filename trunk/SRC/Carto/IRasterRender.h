@@ -50,6 +50,12 @@ public:
 
 
 	/**
+	* 获得专题类型
+	* @return 返回专题类型
+	*/
+	RASTER_RENDER_TYPE GetRenderType(){return m_type;}
+
+	/**
 	* 对当前Render中的栅格数据源增强显示绘制
 	* @param nEnhanceMode 增强显示方法
 	*/
