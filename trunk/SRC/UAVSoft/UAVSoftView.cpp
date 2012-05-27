@@ -23,6 +23,7 @@
 #include "ILayer.h"
 #include "DlgDrawingExport.h"
 #include "DlgInterpolater.h"
+#include "DialogCreateRoi.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -200,6 +201,8 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_GAS_DATAINSERT,OnGasDatainsert)
 	ON_COMMAND(ID_GAS_CREATEIMAGE,OnGasCreateImage)
 	ON_COMMAND(ID_OIL_EDGE,OnOilEdge)
+
+	ON_COMMAND(IDC_CREATE_ROI_DIALOG, OnRoiDlg)
 	ON_COMMAND(ID_CLASSES_MERGE,OnClassVector)
 
 	ON_COMMAND(ID_CLASSES_RENAME,OnModifyClassinfo)
@@ -223,7 +226,8 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 
 	ON_REGISTERED_MESSAGE(BCGM_CHANGE_ACTIVE_TAB,OnChangeActiveTab)
 
-END_MESSAGE_MAP()
+	ON_WM_LBUTTONDOWN()
+	END_MESSAGE_MAP()
 
 // CUAVSoftView construction/destruction
 
@@ -231,14 +235,17 @@ CUAVSoftView::CUAVSoftView()
 {
 
 	boost::function<void (Carto::ILayerPtr)> fundl = boost::bind(&CUAVSoftView::LayerDelEvent,this, _1);
-
 	m_ConnectionMapLayerDeleted = Carto::CMap::RegisterDeleteLayer(fundl);
+
+	boost::function<void (Element::IElementPtr pElement)> fun = boost::bind(&CUAVSoftView::ContainerChangeEvent,this, _1);
+	m_ConnectionContainerChanged = Element::CGraphicsContainer::RegisterContainerChanged(fun);
 
 }
 
 CUAVSoftView::~CUAVSoftView()
 {
 	m_ConnectionMapLayerDeleted.disconnect();
+	m_ConnectionContainerChanged.disconnect();
 }
 
 BOOL CUAVSoftView::PreCreateWindow(CREATESTRUCT& cs)
@@ -1868,6 +1875,73 @@ void CUAVSoftView::OnUpdateMagicStick(CCmdUI* pCmdUI)
 		pCmdUI->SetCheck(FALSE);
 	}
 }
+void CUAVSoftView::ContainerChangeEvent(Element::IElementPtr pElement)
+{
+	if(m_Dlg_Roi)
+	{
+		if (m_Dlg_Roi->m_bNewROI)
+		{
+			Carto::CLayerArray layerArray = m_MapCtrl.GetMap()->GetLayers();
+			int nCount = layerArray.GetSize();
+			if (nCount <= 0)
+				return;
+			for (int i = nCount-1; i>=0; i--)
+			{
+				Carto::ILayerPtr pLayer = layerArray.GetAt(i);
+				Envelope pEnv = pLayer->GetEnvelope();
+				if (pLayer->GetLayerType() == Carto::RasterLayer)
+				{
+					CoordinateSequence* coords = pElement->GetGeometry()->getCoordinates();
+					for (int j=0; j<coords->size(); j++)
+					{
+						Coordinate coord = coords->getAt(j);
+						if (coord.x > pEnv.getMaxX() || coord.x < pEnv.getMinX()|| coord.y > pEnv.getMaxY() || coord.y < pEnv.getMinY())
+						{
+							return;
+						}
+					}
+					int m = 0;
+					GEOMETRY::geom::Polygon* pPolygon = dynamic_cast<GEOMETRY::geom::Polygon*>(pElement->GetGeometry());
+					Geodatabase::IRasterDatasetPtr pRaster =pLayer->GetDataObject();
+					const Envelope* pEnvInternal = pPolygon->getEnvelopeInternal();
+					long lLeft, lRight, lTop, lBottom;
+					pRaster->WorldToPixel(pEnvInternal->getMinX(),pEnvInternal->getMinY(),&lLeft,&lBottom);
+					pRaster->WorldToPixel(pEnvInternal->getMaxX(),pEnvInternal->getMaxY(),&lRight,&lTop);
+					
+					//把多边形转换为屏幕多边形
+					long lScreenX, lScreenY;
+					/*CRgn rgn;
+					rgn.CreatePolygonRgn(*/
+					LPPOINT pt = new  POINT[coords->size()];
+					for (int j=0; j<coords->size(); j++)
+					{
+						Coordinate coord = coords->getAt(j);
+						pRaster->WorldToPixel(coord.x, coord.y,&pt[j].x,&pt[j].y);
+					}
+					CRgn rgn;
+					rgn.CreatePolygonRgn(pt,coords->size(),ALTERNATE);
+					m_Dlg_Roi->AddROIElement(rgn,pElement);
+					break;
+					//pRaster->CreateBuffer();
+					//for (int j=lLeft; j<lRight; j++)
+					//{
+					//	for (int k=lTop; k<lBottom; k++)
+					//	{
+					//		if (rgn.PtInRegion(j,k))
+					//		{
+					//			//获取ROI点
+					//			m++;
+					//			BYTE a;
+					//			pRaster->PixelIO(1,j,k,&a,true);
+					//		}
+					//	}
+					//}
+					//pRaster->DeleteBuffer();
+				}
+			}
+		}
+	}
+}
 void CUAVSoftView::LayerDelEvent(Carto::ILayerPtr pLayer)
 {
 	//更新图层下拉框
@@ -1994,6 +2068,21 @@ void CUAVSoftView::OnOilEdge()
 void CUAVSoftView::OnClassVector()
 {
 	Control::CImageProcessTool::ShowClassVectorDlg();
+}
+
+void CUAVSoftView::OnRoiDlg()
+{
+	if(m_Dlg_Roi)
+	{
+		m_Dlg_Roi->ShowWindow(SW_SHOW);
+	}
+	else
+	{
+		m_Dlg_Roi.reset(new CDialogCreateRoi(&m_MapCtrl));
+		m_Dlg_Roi->Create(IDD_DLG_CREATE_ROI, this);
+		m_Dlg_Roi->ShowWindow(SW_SHOW);
+	}
+
 }
 
 
@@ -2126,4 +2215,11 @@ void CUAVSoftView::OnModifyClassinfo()
 	//更新视图
 	m_MapCtrl.UpdateControl(drawAll);
 
+}
+
+void CUAVSoftView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	CView::OnLButtonDown(nFlags, point);
 }

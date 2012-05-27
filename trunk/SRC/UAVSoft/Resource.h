@@ -30,6 +30,9 @@
 #define IDB_POL_COG                     168
 #define IDB_POL_LARGE                   168
 #define IDD_DIG_Interpolater            169
+#define IDD_DLG_CREATE_ROI              170
+#define IDD_DIALOG_CLASS                171
+#define IDD_DIALOG_SUPERCLASS           171
 #define IDD_DIG_DRAWINGEXPORT           176
 #define IDC_COMPANY_URL                 1041
 #define ID_TABCONTROL                   1054
@@ -39,10 +42,14 @@
 #define IDC_COMBO_DRAWINGTYPE           1058
 #define IDC_BUTTON_INPUTFILE            1059
 #define IDC_EDIT_OUTPUTFILE             1060
+#define IDC_ROI_LIST                    1060
 #define IDC_BUTTON_OUTPUTFILE           1061
+#define IDC_BUTTON1                     1061
+#define IDC_BTN_ADD                     1061
 #define IDC_CHECK_ISADD                 1062
 #define IDC_BTN_SLECTPATH               1063
 #define IDC_COMBO_Export                1064
+#define IDC_LIST_CLASS                  1064
 #define ID_VIEW_TOOLBARS                32771
 #define ID_VIEW_WORKSPACE2              32792
 #define ID_VIEW_WORKSPACE               32803
@@ -172,15 +179,15 @@
 #define ID_SAVE_TEMP                    40557
 #define IDC_EDIT_CELLSIZE               40558
 #define IDC_EDIT_SEARCHRADIUS           40559
-
+#define IDC_CREATE_ROI_DIALOG           40560
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        170
+#define _APS_NEXT_RESOURCE_VALUE        172
 #define _APS_NEXT_COMMAND_VALUE         40632
-#define _APS_NEXT_CONTROL_VALUE         1060
+#define _APS_NEXT_CONTROL_VALUE         1065
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

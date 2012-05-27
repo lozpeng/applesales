@@ -1,7 +1,9 @@
 #include "StdAfx.h"
 #include "GraphicsContainer.h"
 
+
 namespace Element{
+	static boost::signal<void (Element::IElementPtr pElement)> gCallbackChangeGraphics;
 CGraphicsContainer::CGraphicsContainer(void)
 {
 	Reset();
@@ -44,7 +46,7 @@ void CGraphicsContainer::AddElement(IElementPtr pElement)
 
 	m_vecElements.push_back(pElement);
 
-	ContainerChangedEvent();
+	ContainerChangedEvent(pElement);
 }
 
 void CGraphicsContainer::AddElements(CElementCollection elements, BOOL bFrontToBackOrder)
@@ -65,8 +67,6 @@ void CGraphicsContainer::AddElements(CElementCollection elements, BOOL bFrontToB
 			AddElement(pEle);
 		}
 	}
-	
-	ContainerChangedEvent();
 }
 
 void CGraphicsContainer::SetElementAt(long lIndex, IElementPtr pElement)
@@ -76,7 +76,7 @@ void CGraphicsContainer::SetElementAt(long lIndex, IElementPtr pElement)
 
 	m_vecElements[lIndex] = pElement;
 	
-	ContainerChangedEvent();
+	ContainerChangedEvent(pElement);
 }
 
 void CGraphicsContainer::InserElementAt(long lIndex, IElementPtr pElement)
@@ -107,14 +107,12 @@ void CGraphicsContainer::RemoveElement(IElementPtr pElement)
 		}
 	}
 	
-	ContainerChangedEvent();
+	ContainerChangedEvent(pElement);
 }
 
 void CGraphicsContainer::RemoveAllElements()
 {
 	m_vecElements.clear();
-
-	ContainerChangedEvent();
 }
 
 void CGraphicsContainer::BringForward(IElementPtr pElement)
@@ -376,10 +374,13 @@ CElementCollection& CGraphicsContainer::LocateElementsByEnvelope(const GEOMETRY:
 	CElementCollection e;
 	return e;
 }
-
-void CGraphicsContainer::ContainerChangedEvent()
+boost::signals::connection  Element::CGraphicsContainer::RegisterContainerChanged(boost::function<void (Element::IElementPtr pElement)> fun)
+	{
+		return gCallbackChangeGraphics.connect(fun);
+	}
+void CGraphicsContainer::ContainerChangedEvent(IElementPtr pElement)
 {
-
+	gCallbackChangeGraphics(pElement);
 }
 
 }
