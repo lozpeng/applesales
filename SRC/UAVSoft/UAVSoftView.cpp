@@ -242,11 +242,15 @@ CUAVSoftView::CUAVSoftView()
 	boost::function<void (Element::IElementPtr pElement)> fun = boost::bind(&CUAVSoftView::ContainerChangeEvent,this, _1);
 	m_ConnectionContainerChanged = Element::CGraphicsContainer::RegisterContainerChanged(fun);
 
+	boost::function<void (Element::IElementPtr pElement)> funDel = boost::bind(&CUAVSoftView::ElementDelEvent,this, _1);
+	m_ConnectionContainerChanged = Carto::CGraphicLayer::RegisterDeleteElement(funDel);
+
 }
 
 CUAVSoftView::~CUAVSoftView()
 {
 	m_ConnectionMapLayerDeleted.disconnect();
+	m_ConnectionElementDeleted.disconnect();
 	m_ConnectionContainerChanged.disconnect();
 }
 
@@ -1875,6 +1879,13 @@ void CUAVSoftView::OnUpdateMagicStick(CCmdUI* pCmdUI)
 	else
 	{
 		pCmdUI->SetCheck(FALSE);
+	}
+}
+void CUAVSoftView::ElementDelEvent(Element::IElementPtr pElement)
+{
+	if(m_Dlg_Roi)
+	{
+		m_Dlg_Roi->RemoveROIElement(pElement);
 	}
 }
 void CUAVSoftView::ContainerChangeEvent(Element::IElementPtr pElement)

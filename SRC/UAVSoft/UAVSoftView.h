@@ -261,6 +261,7 @@ public:
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
 	void ContainerChangeEvent(Element::IElementPtr pElement);
+	void ElementDelEvent(Element::IElementPtr pElement);
 	void LayerDelEvent(Carto::ILayerPtr pLayer);
 
 	Carto::ILayerPtr FindLayerbyPointer(Carto::ILayer* pLayer);
@@ -269,6 +270,7 @@ protected:
 
 	boost::signals::connection m_ConnectionMapLayerDeleted;
 	boost::signals::connection m_ConnectionContainerChanged;
+	boost::signals::connection m_ConnectionElementDeleted;
 	boost::shared_ptr<CDialogCreateRoi> m_Dlg_Roi;
 
 public:
