@@ -302,16 +302,22 @@ BOOL CMainFrame::CreateRibbonBar ()
 	}
 	//主菜单
 	AddMainCategory();
+
 	//地图浏览
 	AddTab_MapControl();
+
 	//标绘量测
 	AddTab_Mesure();
+
 	//地理要素提取
 	AddTab_GeoInfoExtract();
+
 	//矢量编辑
 	AddTab_Editor();
+
 	//制图
 	AddTab_Print();
+
 	//-----------------------------------
 	// Add quick access toolbar commands:
 	//-----------------------------------
@@ -749,19 +755,27 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	pPanelPOL->Add (pBtnOilEdge);
 
 
+	CBCGPRibbonPanel* pPanelClasses = pCategory->AddPanel (_T("影像分类"));
+	//--------------------------
+	// ROI提取
+	//--------------------------
+	CBCGPRibbonButton* pBtnRoiDlg = new CBCGPRibbonButton(IDC_CREATE_ROI_DIALOG, _T("ROI提取"), -1, 2);
+	pPanelClasses->Add (pBtnRoiDlg);
+
+
     
-	CBCGPRibbonPanel* pPanelClasses = pCategory->AddPanel (_T("分类后处理"));
+	CBCGPRibbonPanel* pPanelAfterClasses = pCategory->AddPanel (_T("分类后处理"));
 	//--------------------------
 	// 分类结果编号命名
 	//--------------------------
 	CBCGPRibbonButton* pBtnClassRename = new CBCGPRibbonButton(ID_CLASSES_RENAME, _T("分类结果编号命名"), -1, 2);
-	pPanelClasses->Add (pBtnClassRename);
+	pPanelAfterClasses->Add (pBtnClassRename);
 
 	//--------------------------
 	// 子类合并
 	//--------------------------
 	CBCGPRibbonButton* pBtnClassMerge = new CBCGPRibbonButton(ID_CLASSES_MERGE, _T("分类矢量化"), -1, 3);
-	pPanelClasses->Add (pBtnClassMerge);
+	pPanelAfterClasses->Add (pBtnClassMerge);
 
 	
 }

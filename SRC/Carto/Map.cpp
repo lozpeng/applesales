@@ -9,7 +9,6 @@
 
 namespace Carto
 {
-
 	static boost::signal<void (ILayerPtr)> gCallbackDeleteLayer;
 	static boost::signal<void (ILayerPtr)> gCallbackActiveLayer; 
 	static boost::signal<void (CMap*)> gCallbackChangeMapExtent;
@@ -784,7 +783,6 @@ namespace Carto
 	{
 		m_pGraphicLayer.reset(new Carto::CGraphicLayer(m_Envelope));
 	}
-
 	boost::signals::connection  CMap::RegisterDeleteLayer(boost::function<void (ILayerPtr)> fun)
 	{
 		return gCallbackDeleteLayer.connect(fun);

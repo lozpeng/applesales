@@ -9,6 +9,7 @@
 #include <boost/signal.hpp>
 #include <boost/signals/connection.hpp>
 
+class CDialogCreateRoi;
 class CUAVSoftView : public CView
 {
 protected: // create from serialization only
@@ -243,6 +244,7 @@ public:
 	afx_msg void OnHighWaterpol();
 	afx_msg void OnClassifyFuzzyKMean();
 	afx_msg void OnGasDatainsert();
+	afx_msg void OnRoiDlg();
 	afx_msg void OnGasCreateImage();
 	afx_msg void OnOilEdge();
 	afx_msg void OnClassVector();
@@ -257,6 +259,7 @@ public:
 
 	LRESULT OnChangeActiveTab(WPARAM wp,LPARAM lp);
 
+	void ContainerChangeEvent(Element::IElementPtr pElement);
 	void LayerDelEvent(Carto::ILayerPtr pLayer);
 
 	Carto::ILayerPtr FindLayerbyPointer(Carto::ILayer* pLayer);
@@ -264,7 +267,11 @@ public:
 protected:
 
 	boost::signals::connection m_ConnectionMapLayerDeleted;
+	boost::signals::connection m_ConnectionContainerChanged;
+	boost::shared_ptr<CDialogCreateRoi> m_Dlg_Roi;
 
+public:
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // debug version in UAVSoftView.cpp

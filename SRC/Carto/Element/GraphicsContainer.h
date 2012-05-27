@@ -77,9 +77,10 @@ public:
 	virtual IElementPtr GetElement(long nIndex);
 
 	virtual long FindElement(IElementPtr pElement);
-
+public:
+	static boost::signals::connection RegisterContainerChanged(boost::function<void (Element::IElementPtr pElement)> fun);
 protected:
-	virtual void ContainerChangedEvent();
+	virtual void ContainerChangedEvent(IElementPtr pElement);
 
 protected:
 	std::vector<IElementPtr> m_vecElements;

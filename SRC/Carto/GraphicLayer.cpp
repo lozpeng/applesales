@@ -174,7 +174,7 @@ namespace Carto
 		m_vecElements.push_back(pElement);
 
 
-		ContainerChangedEvent();
+		ContainerChangedEvent(pElement);
 	}
 
 	void CGraphicLayer::RemoveElement(Element::IElementPtr pElement)
@@ -198,7 +198,7 @@ namespace Carto
 		}
 		/*}*/
 
-		ContainerChangedEvent();
+		ContainerChangedEvent(pElement);
 
 		gCallbackDeleteElement(pElement);
 	}
