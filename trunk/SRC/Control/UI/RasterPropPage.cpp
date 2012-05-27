@@ -58,16 +58,18 @@ BOOL CRasterPropPage::OnApply()
 
 	std::string strColormap = _T("µ÷É«°å");
 	pSubProp = NULL;
+	bool bfind=false;
 	for (int i=0; i<nCount; i++)
 	{
 		pSubProp = pProp->GetSubItem(i);
 		if (0 == strcmp(strColormap.c_str(),pSubProp->GetName()))
 		{
+			bfind=true;
 			break;
 		}
 	}
 
-	if (!pSubProp)
+	if (!bfind)
 		return TRUE;
 	Geodatabase::IRasterDatasetPtr pRaster = m_player->GetDataObject();
 	BYTE byRed[256];
