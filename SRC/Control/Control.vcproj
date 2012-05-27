@@ -1019,6 +1019,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\HSLGrdintClrComboBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\HSLGrdintClrComboBox.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\IComplexSymbolLayerCtrlInterface.h"
 				>
 			</File>
