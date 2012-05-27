@@ -1488,6 +1488,9 @@ void* CMaptreeCtrl::GetSelectedItemData()
 
 void CMaptreeCtrl::CreateSymbolBmp(Display::ISymbolPtr pSymbol,CBitmap &bmp)
 { 
+	if (pSymbol == NULL)
+		return;
+
 	CDC *pDC,memDC;
 	pDC = GetDC();
 	memDC.CreateCompatibleDC(pDC);

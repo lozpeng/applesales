@@ -215,10 +215,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\UI\FeatureRenderPage.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\UI\IRenderSetting.cpp"
 				>
 			</File>
@@ -306,10 +302,6 @@
 			</File>
 			<File
 				RelativePath=".\DllResource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\UI\FeatureRenderPage.h"
 				>
 			</File>
 			<File
@@ -883,6 +875,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\ClassifyColorRenderPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\ClassifyColorRenderPage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\ColorPickerCB.cpp"
 				>
 			</File>
@@ -1003,6 +1003,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UI\FeatureRenderPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\FeatureRenderPage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UI\GradientProgressCtrl.cpp"
 				>
 			</File>
@@ -1110,6 +1118,14 @@
 			</File>
 			<File
 				RelativePath=".\UI\RasterPropPage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\RasterRenderPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UI\RasterRenderPage.h"
 				>
 			</File>
 			<File

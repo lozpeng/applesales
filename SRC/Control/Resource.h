@@ -103,6 +103,12 @@
 #define IDB_FEATURE_RENDER1             4039
 #define IDB_RENDER_BG1                  4040
 #define IDD_SYMBOL_PREVIEW_PAGE         4048
+#define IDC_COMBO_COLORBAR_R            4050
+#define IDC_EDIT_RANGE_NUM_R            4051
+#define IDC_BTN_AUTO_SETRANGE_R         4052
+#define IDC_RANGE_SYMBOL_LIST_R         4053
+#define IDC_RANGE_NUM_SPIN_R            4054
+
 #define IDD_PAGE_ELEMENT_SIZE_POS       5001
 #define IDC_TEXT_SYMBOL_PREVIEW         5002
 #define IDC_TEXT_SYMBOLSET              5003
@@ -233,6 +239,8 @@
 #define IDD_TEXT_SYMBOL_PREVIEW_PAGE    9003
 #define IDD_TRANSPARENT_ENHANCE         9004
 #define IDD_SWIPE_SHOW                  9011
+#define IDD_RASTER_RENDER_SET           9012
+#define IDD_CLASSIFYCOLOUR_RENDER       9013
 #define ID_32771                        32771
 #define ID_ZOOMTO_LAYER                 32772
 #define ID_32773                        32773
@@ -255,7 +263,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        2032
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         2023
+#define _APS_NEXT_CONTROL_VALUE         2028
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif

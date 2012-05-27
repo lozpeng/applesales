@@ -83,6 +83,8 @@ void IRenderSetting::TrimField(CString &csValue)
 
 Display::ISymbolPtr IRenderSetting::CreateDefaultSymbol(Geodatabase::IFeatureClass *pFeatureClass)
 {
+	if(pFeatureClass == NULL)
+		return  Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
 	long ltype =pFeatureClass->ShapeType();
 
 	Display::ISymbolPtr pSymbol;

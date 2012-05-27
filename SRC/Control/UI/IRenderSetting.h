@@ -3,7 +3,7 @@
 #include "IRender.h"
 #include "ILayer.h"
 #include "IFeatureClass.h"
-
+#include "IRasterRender.h"
 class IRenderSetting
 {
 public:
@@ -16,6 +16,8 @@ public:
 	void SetLayer(Carto::ILayer* pLayer);
 
 	virtual Carto::IRenderPtr GetRender() =0;
+
+	virtual Carto::IRasterRenderPtr GetRasterRender(){return NULL;}
 
 	virtual bool CreateDlg(CWnd *pParent) =0;
 
