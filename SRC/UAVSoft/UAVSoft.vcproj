@@ -236,6 +236,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\SuperClassDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\UAVSoft.cpp"
 				>
 			</File>
@@ -291,6 +295,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SuperClassDlg.h"
 				>
 			</File>
 			<File

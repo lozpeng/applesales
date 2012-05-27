@@ -24,6 +24,7 @@
 #include "DlgDrawingExport.h"
 #include "DlgInterpolater.h"
 #include "DialogCreateRoi.h"
+#include "SuperClassDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -203,6 +204,7 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_OIL_EDGE,OnOilEdge)
 
 	ON_COMMAND(IDC_CREATE_ROI_DIALOG, OnRoiDlg)
+	ON_COMMAND(IDC_SUPER_CLASS_DIALOG,OnSuperClsDlg)
 	ON_COMMAND(ID_CLASSES_MERGE,OnClassVector)
 
 	ON_COMMAND(ID_CLASSES_RENAME,OnModifyClassinfo)
@@ -2082,7 +2084,18 @@ void CUAVSoftView::OnRoiDlg()
 		m_Dlg_Roi->Create(IDD_DLG_CREATE_ROI, this);
 		m_Dlg_Roi->ShowWindow(SW_SHOW);
 	}
-
+}
+void CUAVSoftView::OnSuperClsDlg()
+{
+	if(m_Dlg_Roi)
+	{
+		CSuperClassDlg dlg;
+		dlg.DoModal();
+	}
+	else
+	{
+		MessageBox("没有ROI对象！");
+	}
 }
 
 
