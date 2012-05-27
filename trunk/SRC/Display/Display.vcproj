@@ -258,6 +258,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HSLColorRamp.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\IColorRamp.cpp"
 				>
 			</File>
@@ -453,6 +457,10 @@
 			</File>
 			<File
 				RelativePath=".\HashLineSymbol.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HSLColorRamp.h"
 				>
 			</File>
 			<File
