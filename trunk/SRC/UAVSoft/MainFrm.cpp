@@ -762,7 +762,8 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	CBCGPRibbonButton* pBtnRoiDlg = new CBCGPRibbonButton(IDC_CREATE_ROI_DIALOG, _T("ROI提取"), -1, 2);
 	pPanelClasses->Add (pBtnRoiDlg);
 
-
+	CBCGPRibbonButton* pBtnSuperCls = new CBCGPRibbonButton(IDC_SUPER_CLASS_DIALOG, _T("ROI监督分类"), -1, 2);
+	pPanelClasses->Add (pBtnSuperCls);
     
 	CBCGPRibbonPanel* pPanelAfterClasses = pCategory->AddPanel (_T("分类后处理"));
 	//--------------------------

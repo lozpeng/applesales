@@ -245,6 +245,7 @@ public:
 	afx_msg void OnClassifyFuzzyKMean();
 	afx_msg void OnGasDatainsert();
 	afx_msg void OnRoiDlg();
+	afx_msg void OnSuperClsDlg();
 	afx_msg void OnGasCreateImage();
 	afx_msg void OnOilEdge();
 	afx_msg void OnClassVector();
