@@ -65,6 +65,8 @@ INT_PTR CLayerPropSheet::DoModal()
 void CLayerPropSheet::OnOK()
 {
 	OnApply();
+	CPropertySheet::OnClose();
+	
 }
 void CLayerPropSheet::OnApply()
 {
