@@ -116,13 +116,17 @@ namespace Carto
 	}
 	CRasterRGBRender::~CRasterRGBRender(void)
 	{
-		int nCount = m_pRasterDataset->GetBandCount();
-		for (int i=0; i<nCount; ++i)
+		if(m_pRasterDataset)
 		{
-			delete[] m_ppLut[i];
+			int nCount = m_pRasterDataset->GetBandCount();
+			for (int i=0; i<nCount; ++i)
+			{
+				delete[] m_ppLut[i];
+			}
+			delete []m_ppLut;
+			m_ppLut = NULL;
 		}
-		delete []m_ppLut;
-		m_ppLut = NULL;
+		
 		if (NULL != mp_pucBufSrc[0])
 		{
 			delete[] mp_pucBufSrc[0];

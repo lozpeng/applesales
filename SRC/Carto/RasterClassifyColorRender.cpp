@@ -7,6 +7,7 @@ namespace Carto
 CRasterClassifyColorRender::CRasterClassifyColorRender():m_nBreak(0)
 {
 
+	m_type = RASTER_CLASSIFY_COLORRAMP_RENDER;
 	mp_pucBufSrc[0] = NULL;
 	mp_pucBufSrc[1] = NULL;
 	mp_pucBufSrc[2] = NULL;
