@@ -47,6 +47,8 @@
 #define IDC_BUTTON1                     1061
 #define IDC_BTN_ADD                     1061
 #define IDC_CHECK_ISADD                 1062
+#define IDC_BTN_ADD2                    1062
+#define IDC_BTN_DEL                     1062
 #define IDC_BTN_SLECTPATH               1063
 #define IDC_COMBO_Export                1064
 #define IDC_LIST_CLASS                  1064
@@ -181,6 +183,7 @@
 #define IDC_EDIT_SEARCHRADIUS           40559
 #define IDC_CREATE_ROI_DIALOG           40560
 #define IDC_SUPER_CLASS_DIALOG          40561
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
