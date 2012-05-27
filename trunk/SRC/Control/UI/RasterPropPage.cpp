@@ -34,6 +34,9 @@ END_MESSAGE_MAP()
 
 BOOL CRasterPropPage::OnApply()
 {
+	if(!m_wndPropList)
+		return FALSE;
+
 	CBCGPProp* pProp = m_wndPropList.GetProperty(0);
 	int nCount = pProp->GetSubItemsCount();
 	std::string str = _T("波段组合");
@@ -48,6 +51,13 @@ BOOL CRasterPropPage::OnApply()
 	}
 	//
 	Carto::CRasterLayer* pRasLayer = dynamic_cast<Carto::CRasterLayer*>(m_player);
+
+	Carto::IRasterRenderPtr pRender =pRasLayer->GetRender();
+	Carto::RASTER_RENDER_TYPE rendertype =pRender->GetRenderType();
+
+	if(rendertype != Carto::RASTER_RGBRENDER)
+		return FALSE;
+
 	Carto::CRasterRGBRender* pRGBRender = dynamic_cast<Carto::CRasterRGBRender*>(pRasLayer->GetRender().get());
 	if (pRGBRender->GetRGBMode())
 	{
@@ -72,6 +82,7 @@ BOOL CRasterPropPage::OnApply()
 	if (!bfind)
 		return TRUE;
 	Geodatabase::IRasterDatasetPtr pRaster = m_player->GetDataObject();
+
 	BYTE byRed[256];
 	BYTE byGreen[256];
 	BYTE byBlue[256];
@@ -83,6 +94,8 @@ BOOL CRasterPropPage::OnApply()
 		byBlue[i] = GetBValue(lValue);
 	}
 	pRaster->SetChannelPalette(1,byRed,byGreen,byBlue);
+	
+
 	return TRUE;
 }
 // CRasterPropPage 消息处理程序
@@ -154,7 +167,7 @@ BOOL CRasterPropPage::OnInitDialog()
 	//波段组合
 	pBand = new CBCGPProp (_T("波段组合"), (_variant_t) lband,TRUE);
 	pBand->AllowEdit (FALSE);
-	if (lband > 1)
+	if (lband > 1&&pRGBRender)
 	{
 		pProp = new CBCGPProp (_T("红"), (_variant_t)pRGBRender->GetRedBandIndex(),_T(""));
 		pProp->EnableSpinControl (TRUE, 1, lband);

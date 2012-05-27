@@ -4,6 +4,7 @@
 #include "LayerBasepropPage.h"
 #include "RasterPropPage.h"
 #include "FeatureRenderPage.h"
+#include "RasterRenderPage.h"
 
 IMPLEMENT_DYNAMIC(CLayerPropSheet, CPropertySheet)
 
@@ -38,6 +39,7 @@ INT_PTR CLayerPropSheet::DoModal()
 	CLayerBasepropPage commonPage;
 	CFeatureRenderPage featurePage;
 	CRasterPropPage rasterPage;
+	CRasterRenderPage rasterRenderPage;
 
 	commonPage.SetLayer(m_layer.get());
 	AddPage(&commonPage);
@@ -52,9 +54,11 @@ INT_PTR CLayerPropSheet::DoModal()
 	}
 	else if (layerType == Carto::RasterLayer)
 	{
-       
 		rasterPage.SetLayer(m_layer.get());
 		AddPage(&rasterPage);
+
+		rasterRenderPage.SetLayer(m_layer.get());
+		AddPage(&rasterRenderPage);
 	
 	}
 
