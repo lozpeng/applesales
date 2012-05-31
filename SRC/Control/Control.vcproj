@@ -854,6 +854,42 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="LayoutMap"
+				>
+				<File
+					RelativePath=".\Tool\LayoutMapPan.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutMapPan.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutMapZoomFullExtent.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutMapZoomFullExtent.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutMapZoomin.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutMapZoomin.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutMapZoomout.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutMapZoomout.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="UI"

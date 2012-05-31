@@ -29,7 +29,7 @@ void CLayoutZoomoutTool::Initialize(Framework::IUIObject *pTargetControl)
 	//初始化光标
 	if(m_hCursor==NULL)
 	{
-		m_hCursor =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_ZOOMIN) );
+		m_hCursor =::LoadCursor( theApp.m_hInstance , MAKEINTRESOURCE( IDC_ZOOMOUT) );
 	}
 
 
