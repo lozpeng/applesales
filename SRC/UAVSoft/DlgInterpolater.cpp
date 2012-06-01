@@ -100,9 +100,10 @@ void CDlgInterpolater::Excel2Shp(std::string filename,std::vector<double> &dxs, 
 	if(pFeatureClass == NULL)
 	{
 		Geodatabase::CField *pField =new Geodatabase::CField();
-		pField->SetType(Geodatabase::BDT_DOUBLE);
+		pField->SetType(Geodatabase::FTYPE_DOUBLE);
 		pField->SetName(szFieldname);
 		pField->SetLength(12);
+		pField->SetPrecision(5);
 		fdef.FieldsDef.push_back(Geodatabase::CFieldPtr(pField));
 
 		pFeatureClass =pWorkspace->CreateFeatureClass(filename.c_str(),fdef);
@@ -142,12 +143,9 @@ void CDlgInterpolater::Excel2Shp(std::string filename,std::vector<double> &dxs, 
 
 		int lfieldindex = pFeatureClass->FindField(szFieldname);
 
+		pFeature->GetValue(lfieldindex).SetDouble(dzs[i]);
 		//提交要素
 		pFeatureClass->AddFeature(pFeature.get());
-
-		//pFeature->GetValue(lfieldindex).SetDouble(double(dzs[i]));
-		//pFeature->Update();
-
 
 	}
 
@@ -274,6 +272,12 @@ void CDlgInterpolater::OnBnClickedOk()
 		}
 	}
 
+	//创建shp文件
+	std::string strShpFile =m_strOutputFile.Left(m_strOutputFile.GetLength()-4);
+	strShpFile +=".shp";
+	this->Excel2Shp(strShpFile,dxs,dys,dzso2);
+
+
 	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
 	CUAVSoftDoc* pDoc = (CUAVSoftDoc*)pMainFrm->GetActiveDocument();
 
@@ -336,10 +340,10 @@ void CDlgInterpolater::OnBnClickedOk()
 
 
 
-	//创建shp文件
-	std::string strShpFile =m_strOutputFile.Left(m_strOutputFile.GetLength()-4);
-	strShpFile +=".shp";
-	this->Excel2Shp(strShpFile,dxs,dys,dzs);
+	////创建shp文件
+	//std::string strShpFile =m_strOutputFile.Left(m_strOutputFile.GetLength()-4);
+	//strShpFile +=".shp";
+	//this->Excel2Shp(strShpFile,dxs,dys,dzs);
 
 	//shp数据加载
 

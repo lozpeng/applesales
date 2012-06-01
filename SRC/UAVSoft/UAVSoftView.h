@@ -268,6 +268,8 @@ public:
 
 protected:
 
+	BOOL m_bLayout; //标示是否layout视图
+
 	boost::signals::connection m_ConnectionMapLayerDeleted;
 	boost::signals::connection m_ConnectionContainerChanged;
 	boost::signals::connection m_ConnectionElementDeleted;
