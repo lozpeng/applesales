@@ -245,6 +245,8 @@ CUAVSoftView::CUAVSoftView()
 	boost::function<void (Element::IElementPtr pElement)> funDel = boost::bind(&CUAVSoftView::ElementDelEvent,this, _1);
 	m_ConnectionContainerChanged = Carto::CGraphicLayer::RegisterDeleteElement(funDel);
 
+	m_bLayout = FALSE;
+
 }
 
 CUAVSoftView::~CUAVSoftView()
@@ -633,53 +635,105 @@ void CUAVSoftView::OnOpenImg()
 void CUAVSoftView::OnMapPan()
 {
 	Framework::ITool* pTool = NULL;
-	m_MapCtrl.SetCurTool("MapPan");
-
-	pTool=Framework::ITool::FindTool("MapPan");
-	if(pTool)
+	if(m_bLayout==FALSE)
 	{
-		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+		m_MapCtrl.SetCurTool("MapPan");
+
+		pTool=Framework::ITool::FindTool("MapPan");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+		}
 	}
+	else
+	{
+		m_LayoutCtrl.SetCurTool("Layout_MapPan");
+
+		pTool=Framework::ITool::FindTool("Layout_MapPan");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		}
+	}
+
 }
 
 void CUAVSoftView::OnUpdateMapPan(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapPan");
+	if(m_bLayout==FALSE)
+		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapPan");
+	else
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "Layout_MapPan");
 
 }
 
 void CUAVSoftView::OnMapZoomin()
 {
 	Framework::ITool* pTool = NULL;
-	m_MapCtrl.SetCurTool("MapZoomin");
-
-	pTool=Framework::ITool::FindTool("MapZoomin");
-	if(pTool)
+	if(m_bLayout==FALSE)
 	{
-		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+		m_MapCtrl.SetCurTool("MapZoomin");
+
+		pTool=Framework::ITool::FindTool("MapZoomin");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+		}
+	}
+	else
+	{
+		m_LayoutCtrl.SetCurTool("Layout_Map_ZoomIn");
+
+		pTool=Framework::ITool::FindTool("Layout_Map_ZoomIn");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		}
 	}
 }
 
 void CUAVSoftView::OnUpdateMapZoomin(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomin");
+	if(m_bLayout==FALSE)
+		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomin");
+	else
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "Layout_Map_ZoomIn");
 }
 
 void CUAVSoftView::OnMapZoomout()
 {
 	Framework::ITool* pTool = NULL;
-	m_MapCtrl.SetCurTool("MapZoomout");
 
-	pTool=Framework::ITool::FindTool("MapZoomout");
-	if(pTool)
+	if(m_bLayout==FALSE)
 	{
-		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+
+		m_MapCtrl.SetCurTool("MapZoomout");
+
+		pTool=Framework::ITool::FindTool("MapZoomout");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
+		}
 	}
+	else
+	{
+		m_LayoutCtrl.SetCurTool("Layout_Map_ZoomOut");
+
+		pTool=Framework::ITool::FindTool("Layout_Map_ZoomOut");
+		if(pTool)
+		{
+			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+		}
+	}
+
 }
 
 void CUAVSoftView::OnUpdateMapZoomout(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomout");
+	if(m_bLayout==FALSE)
+		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "MapZoomout");
+	else
+		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "Layout_Map_ZoomOut");
 }
 
 void CUAVSoftView::OnMapPreExtent()
@@ -727,16 +781,31 @@ void CUAVSoftView::OnUpdateMapNextExtent(CCmdUI* pCmdUI)
 //全图显示
 void CUAVSoftView::OnMapFullView()
 {
-	Carto::CMapPtr pMap =m_MapCtrl.GetMap();
-	if(!pMap)
+
+	if(m_bLayout==FALSE)
 	{
-		return;
+		Carto::CMapPtr pMap =m_MapCtrl.GetMap();
+		if(!pMap)
+		{
+			return;
+		}
+		GEOMETRY::geom::Envelope env = pMap->GetExtent();
+
+		pMap->GetDisplay()->GetDisplayTransformation().FitViewBound(env);
+
+		m_MapCtrl.UpdateControl(drawAll);
 	}
-	GEOMETRY::geom::Envelope env = pMap->GetExtent();
-
-	pMap->GetDisplay()->GetDisplayTransformation().FitViewBound(env);
-
-	m_MapCtrl.UpdateControl(drawAll);
+	else
+	{
+		Framework::ICommand* pCmd = NULL;
+		m_LayoutCtrl.SetCurTool("LayoutMapFullExtent");
+		pCmd= Framework::ICommand::FindCommand("LayoutMapFullExtent");
+		if(pCmd)
+		{
+			pCmd->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+			pCmd->Click();
+		}
+	}
 
 }
 
@@ -1429,9 +1498,11 @@ LRESULT CUAVSoftView::OnChangeActiveTab(WPARAM wp,LPARAM lp)
 	if(iTabIndex== 0)
 	{
 		//m_MapCtrl.SetMapFramedStatus(FALSE);
+		m_bLayout = FALSE;
 	}
 	else if(iTabIndex== 1)
 	{
+		m_bLayout = TRUE;
 		//m_MapCtrl.SetMapFramedStatus(TRUE);
 		//在此初始化layout
 		if(!m_LayoutCtrl.Initialized())
