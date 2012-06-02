@@ -32,6 +32,7 @@ public:
 	void						InitCol();
 	void						RemoveROIElement(Element::IElementPtr pElement);
 	void						AddROIElement(CRgn& rgn, Element::IElementPtr pElement);
+	HBITMAP                     CoverBitmap( Display::ISymbolPtr pSymbol );
 public:
 	bool						m_bNewROI;
 protected:
@@ -40,6 +41,8 @@ public:
 	std::list<ROI_INFO*>		m_lstROI;
 public:
 	CListCtrl m_list;
+	CImageList m_ImageList;
+	int m_cx, m_cy;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedBtnDel();
 };
