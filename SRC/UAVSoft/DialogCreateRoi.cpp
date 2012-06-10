@@ -147,16 +147,16 @@ BOOL CDialogCreateRoi::OnInitDialog()
 	CRect rect;
 	m_list.GetClientRect(rect);
 	long lwidth =rect.Width();
-	m_list.SetExtendedStyle(m_list.GetExStyle() | LVS_EX_GRIDLINES);
+    m_list.SetExtendedStyle(LVS_EX_GRIDLINES);
 	m_list.InsertColumn( 0, "颜色", LVCFMT_CENTER | LVCF_IMAGE/* | LVCF_SUBITEM*/, lwidth*0.2, 0 );
 	m_list.InsertColumn( 1, "类别名", LVCFMT_LEFT, lwidth*0.4);
 	m_list.InsertColumn( 2, "多边形个数", LVCFMT_LEFT, lwidth*0.4);
 
-	m_cx = lwidth*0.2;
+	m_cx = lwidth*0.2 - 5;
 	m_cy = 25;
 	m_ImageList.Create(m_cx, m_cy, ILC_COLOR24 | ILC_MASK, 4,  20);
 
-	m_list.SetImageList(&m_ImageList, TVSIL_STATE);
+	m_list.SetImageList(&m_ImageList, LVSIL_SMALL);
 
 	UpdateData(FALSE);
 	return TRUE;  // return TRUE unless you set the focus to a control
