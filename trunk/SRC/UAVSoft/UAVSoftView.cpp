@@ -86,7 +86,9 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_COMMAND(ID_DRAW_MAP_TITLE, OnDrawMapTitle)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_MAP_TITLE, OnUpdateDrawMapTitle)
 	ON_COMMAND(ID_LOAD_TEMP, OnLoadTemp)
+	ON_UPDATE_COMMAND_UI(ID_LOAD_TEMP, OnUpdateLoadTemp)
 	ON_COMMAND(ID_SAVE_TEMP, OnSaveTemp)
+	ON_UPDATE_COMMAND_UI(ID_SAVE_TEMP, OnUpdateSaveTemp)
 
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
@@ -453,6 +455,7 @@ void CUAVSoftView::OnOpenImg()
 	afx_msg void CUAVSoftView::OnUpdateLayoutPan(CCmdUI* pCmdUI)
 	{
 		pCmdUI->SetCheck(m_MapCtrl.GetCurToolName() == "LayoutPanTool");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	afx_msg void CUAVSoftView::OnLayoutZoomin()
@@ -470,6 +473,7 @@ void CUAVSoftView::OnOpenImg()
 	afx_msg void CUAVSoftView::OnUpdateLayoutZoomin(CCmdUI* pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "LayoutZoomInTool");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	afx_msg void CUAVSoftView::OnLayoutZoomout()
@@ -486,6 +490,7 @@ void CUAVSoftView::OnOpenImg()
 	afx_msg void CUAVSoftView::OnUpdateLayoutZoomout(CCmdUI* pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "LayoutZoomOutTool");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	afx_msg void CUAVSoftView::OnLayoutFullView()
@@ -503,6 +508,7 @@ void CUAVSoftView::OnOpenImg()
 	void CUAVSoftView::OnUpdateLayoutZoomFullExtent(CCmdUI *pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "LayoutZoomFullExtent");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	void CUAVSoftView::OnLayoutZoomActualSize()
@@ -520,6 +526,7 @@ void CUAVSoftView::OnOpenImg()
 	void CUAVSoftView::OnUpdateLayoutZoomActualSize(CCmdUI* pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "LayoutZoomActualSize");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	void CUAVSoftView::OnSelectFrameElement()
@@ -536,6 +543,7 @@ void CUAVSoftView::OnOpenImg()
 	void CUAVSoftView::OnUpdateSelectFrameElement(CCmdUI* pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "SelectFrameElementsTool");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	void CUAVSoftView::OnDrawNorthArrow()
@@ -553,6 +561,7 @@ void CUAVSoftView::OnOpenImg()
 	void CUAVSoftView::OnUpdateDrawNorthArrow(CCmdUI *pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawNorthArrowCmd");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	void CUAVSoftView::OnDrawScaleBar()
@@ -570,6 +579,7 @@ void CUAVSoftView::OnOpenImg()
 	void CUAVSoftView::OnUpdateDrawScaleBar(CCmdUI *pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawScaleBarCmd");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	void CUAVSoftView::OnDrawLegend()
@@ -587,6 +597,7 @@ void CUAVSoftView::OnOpenImg()
 	void CUAVSoftView::OnUpdateDrawLegend(CCmdUI *pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawLegendCmd");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 	void CUAVSoftView::OnDrawMapTitle()
@@ -614,6 +625,15 @@ void CUAVSoftView::OnOpenImg()
 			m_LayoutCtrl.LoadTemplate(m_MapCtrl.GetMap(),dlg.GetPathName().AllocSysString());
 		}
 	}
+	void CUAVSoftView::OnUpdateLoadTemp(CCmdUI* pCmdUI)
+	{
+		pCmdUI->Enable(m_bLayout);
+	}
+	
+	void CUAVSoftView::OnUpdateSaveTemp(CCmdUI* pCmdUI)
+	{
+		pCmdUI->Enable(m_bLayout);
+	}
 	void CUAVSoftView::OnSaveTemp()
 	{
 		//test
@@ -630,6 +650,7 @@ void CUAVSoftView::OnOpenImg()
 	void CUAVSoftView::OnUpdateDrawMapTitle(CCmdUI *pCmdUI)
 	{
 		pCmdUI->SetCheck(m_LayoutCtrl.GetCurToolName() == "DrawMapTitle");
+		pCmdUI->Enable(m_bLayout);
 	}
 
 void CUAVSoftView::OnMapPan()
