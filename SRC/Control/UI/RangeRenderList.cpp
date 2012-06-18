@@ -95,11 +95,12 @@ void CRangeRenderList::AddImgList(CBitmap * hBitmap)
 
 void CRangeRenderList::DeleteAll(void)
 {
-	int nCount = m_SymbolImage->GetImageCount();
-
-	m_SymbolImage->DeleteImageList();
-
-	delete m_SymbolImage;
+	if(m_SymbolImage)
+	{
+		int nCount = m_SymbolImage->GetImageCount();
+		m_SymbolImage->DeleteImageList();
+		delete m_SymbolImage;
+	}
 	m_SymbolImage = NULL;
 	m_SymbolImage = new CImageList;
 	m_SymbolImage->Create( m_LegendnWidth, m_LegendnHeight,  ILC_COLOR32, 1, 1 );
