@@ -115,7 +115,9 @@ public:
 	afx_msg void OnDrawMapTitle();
 	afx_msg void OnUpdateDrawMapTitle(CCmdUI* pCmdUI);
 	afx_msg void OnLoadTemp();
+	afx_msg void OnUpdateLoadTemp(CCmdUI* pCmdUI);
 	afx_msg void OnSaveTemp();
+	afx_msg void OnUpdateSaveTemp(CCmdUI* pCmdUI);
 	//
 	afx_msg void OnCurrLayerCombo();
 	afx_msg void OnCurrLayerCombo_Vector();
