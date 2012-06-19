@@ -491,6 +491,8 @@ namespace Control
 	//»ñµÃ×´Ì¬À¸
 	IStatusInfo* CMapControl::GetStatusInfo()
 	{
+		if(m_pStatusInfo==NULL)
+			return NULL;
 		m_pStatusInfo->UpdateInfo(GetExtractInfo());
 		return m_pStatusInfo;
 	}
