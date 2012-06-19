@@ -16,6 +16,8 @@ namespace Framework
 		m_cursor =NULL;
 
 		m_hCtrlWnd =NULL;
+
+		m_pStatusInfo=NULL;
 	}
 
 	IMapCtrl::~IMapCtrl()
