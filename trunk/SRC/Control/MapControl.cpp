@@ -511,7 +511,7 @@ namespace Control
 		
 		double rate=1.0;
 		std::string labelName ="总面积:";
-		std::string strUnit ="平方米";
+		std::string strUnit ="平方公里";
 		char szLabelName[64];
 
 		//投影
