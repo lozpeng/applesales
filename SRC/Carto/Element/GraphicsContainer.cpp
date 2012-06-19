@@ -107,7 +107,7 @@ void CGraphicsContainer::RemoveElement(IElementPtr pElement)
 		}
 	}
 	
-	ContainerChangedEvent(pElement);
+	//ContainerChangedEvent(pElement);
 }
 
 void CGraphicsContainer::RemoveAllElements()
