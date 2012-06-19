@@ -224,6 +224,7 @@ namespace Element{
 		if(unitType != m_unitType)
 		{
 			rate = SYSTEM::UnitConverter::ConvertUnits(1, unitType,m_unitType);
+			rate*=rate;
 		}
 
 		labelName ="×ÜÃæ»ý:";
