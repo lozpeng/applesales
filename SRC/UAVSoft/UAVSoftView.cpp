@@ -2031,6 +2031,8 @@ void CUAVSoftView::ContainerChangeEvent(Element::IElementPtr pElement)
 					rgn.CreatePolygonRgn(pt,coords->size(),ALTERNATE);
 					m_Dlg_Roi->m_strLyrName = pRaster->Getname();
 					m_Dlg_Roi->AddROIElement(rgn,pElement);
+					delete pt;
+					pt = NULL;
 					break;
 					//pRaster->CreateBuffer();
 					//for (int j=lLeft; j<lRight; j++)
@@ -2195,7 +2197,7 @@ void CUAVSoftView::OnRoiDlg()
 }
 void CUAVSoftView::OnSuperClsDlg()
 {
-	if(m_Dlg_Roi)
+	if(m_Dlg_Roi && m_Dlg_Roi->m_lstROI.size() > 0)
 	{
 		CSuperClassDlg dlg;
 		dlg.m_Rois = m_Dlg_Roi->m_lstROI;

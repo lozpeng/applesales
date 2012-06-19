@@ -19,7 +19,7 @@ CDialogCreateRoi::CDialogCreateRoi(Framework::IMapCtrl* pMapCtrl,CWnd* pParent /
 
 CDialogCreateRoi::~CDialogCreateRoi()
 {
-	std::list<ROI_INFO*>::iterator it;
+	std::vector<ROI_INFO*>::iterator it;
 	for (it=m_lstROI.begin(); it!=m_lstROI.end(); it++)
 	{
 		ROI_INFO* pRoiInfo = (*it);
@@ -79,47 +79,78 @@ HBITMAP CDialogCreateRoi::CoverBitmap( Display::ISymbolPtr pSymbol )
 
 void CDialogCreateRoi::AddROIElement(CRgn& rgn, Element::IElementPtr pElement)
 {
-	ROI_INFO* roiInfo = new ROI_INFO();
-	Display::ISymbolPtr pSymbol = pElement->GetSymbol();
-	srand(time(NULL));
-	pSymbol->SetColor(RGB(rand() % 256,rand() % 256,rand() % 256));
-	m_pMapCtrl->UpdateControl(drawElement);
-	CString str;
-	str.Format("%d",pSymbol->GetColor());
-	int n = m_list.GetItemCount();
+	if (!m_bMulti)
+	{
+		ROI_INFO* ri = new ROI_INFO();
+		m_lstROI.push_back(ri);
+		ELE_INFO eleInfo;
+		Display::ISymbolPtr pSymbol = pElement->GetSymbol();
+		srand(time(NULL));
+		m_lCurColor = RGB(rand() % 256,rand() % 256,rand() % 256);
+		pSymbol->SetColor(m_lCurColor);
+		m_pMapCtrl->UpdateControl(drawElement);
+		CString str;
+		str.Format("%d",pSymbol->GetColor());
+		int n = m_list.GetItemCount();
 
-	CBitmap bitmap;
-	bitmap.Attach(CoverBitmap(pSymbol));
-	int Index = m_ImageList.Add(&bitmap, RGB(255, 255, 255));
-	bitmap.DeleteObject();
+		CBitmap bitmap;
+		bitmap.Attach(CoverBitmap(pSymbol));
+		int Index = m_ImageList.Add(&bitmap, RGB(255, 255, 255));
+		bitmap.DeleteObject();
 
-	LV_ITEM lvi;
+		LV_ITEM lvi;
 
-	lvi.mask = /*LVIF_TEXT |*/ LVIF_IMAGE /*| LVIF_STATE*/;
-	lvi.iItem = n;
-	lvi.iSubItem = 0;
-	lvi.iImage = Index;
+		lvi.mask = /*LVIF_TEXT |*/ LVIF_IMAGE /*| LVIF_STATE*/;
+		lvi.iItem = n;
+		lvi.iSubItem = 0;
+		lvi.iImage = Index;
 
-	//m_list.InsertItem(n, "", Index);
-	m_list.InsertItem( &lvi );
-
-	str.Format("类别%d",n);
-	roiInfo->lColor = pSymbol->GetColor();
-	roiInfo->strClassNmae = str;
-	rgn.CopyRgn(&roiInfo->rgn);
-	m_list.SetItemText(n,1,str);
-	m_list.SetItemText(n,2,"1");
-	
-	m_lstROI.push_back(roiInfo);
-	m_bNewROI = false;
+		//m_list.InsertItem(n, "", Index);
+		m_list.InsertItem( &lvi );
+		str.Format("类别%d",n);
+		int nCount = m_lstROI.size();
+		ROI_INFO* roiInfo =m_lstROI[nCount-1];
+		roiInfo->lColor = pSymbol->GetColor();
+		roiInfo->strClassNmae = str;
+		eleInfo.strClassNmae = str;
+		eleInfo.elems.push_back(pElement);
+		m_lstEle.push_back(eleInfo);
+		CRgn* pRgn = new CRgn();
+		rgn.CopyRgn(pRgn);
+		roiInfo->rgns.push_back(pRgn);
+		m_list.SetItemText(n,1,str);
+		m_list.SetItemText(n,2,"1");
+		m_nIndex = n;
+		m_nCount = 1;
+	}
+	else
+	{
+		Display::ISymbolPtr pSymbol = pElement->GetSymbol();
+		pSymbol->SetColor(m_lCurColor);
+		m_pMapCtrl->UpdateControl(drawElement);
+		int nCount = m_lstROI.size();
+		ROI_INFO* roiInfo =m_lstROI[nCount-1];
+		m_lstEle[nCount-1].elems.push_back(pElement);
+		CRgn* pRgn = new CRgn();
+		rgn.CopyRgn(pRgn);
+		roiInfo->rgns.push_back(pRgn);
+		m_nCount++;
+		CString str;
+		str.Format("%d",m_nCount);
+		m_list.SetItemText(m_nIndex,2,str.GetBuffer());
+	}
+	m_bMulti = true;
+	//m_bNewROI = false;
 }
 
 void CDialogCreateRoi::OnBnClickedBtnAdd()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if (!m_bNewROI)
-	{
+	//if (!m_bNewROI)
+	//{
 		m_bNewROI = true;
+		m_bMulti = false;
+		m_nCount = 0;
 		Framework::ITool* pTool = NULL;
 		m_pMapCtrl->SetCurTool("DrawPolygonElementTool");
 		pTool=Framework::ITool::FindTool("DrawPolygonElementTool");
@@ -127,7 +158,7 @@ void CDialogCreateRoi::OnBnClickedBtnAdd()
 		{
 			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(m_pMapCtrl));
 		}
-	}
+	//}
 }
 
 //Framework::ITool* pTool = NULL;
@@ -166,5 +197,32 @@ BOOL CDialogCreateRoi::OnInitDialog()
 void CDialogCreateRoi::OnBnClickedBtnDel()
 {
 	// TODO: 在此添加控件通知处理程序代码
-
+	POSITION pos = m_list.GetFirstSelectedItemPosition();
+	int nItem = m_list.GetNextSelectedItem(pos);
+	if (nItem < 0)
+		return;
+	CString strText = m_list.GetItemText(nItem,1);
+	int nCount = m_lstROI.size();
+	std::vector<ELE_INFO>::iterator eleIt;
+	eleIt = m_lstEle.begin();
+	std::vector<ROI_INFO*>::iterator roiIt;
+	roiIt = m_lstROI.begin();
+	for (int i=0; i<nCount; i++)
+	{
+		if (m_lstROI[i]->strClassNmae == strText)
+		{
+			m_list.DeleteItem(nItem);
+			int nSize = m_lstEle[i].elems.size();
+			for (int j=0; j<nSize; j++)
+			{
+				m_pMapCtrl->GetMap()->GetGraphicLayer()->RemoveElement(m_lstEle[i].elems[j]);
+			}
+			m_lstEle.erase(eleIt);
+			m_lstROI.erase(roiIt);
+			m_pMapCtrl->UpdateControl(drawElement);
+			return;
+		}
+		eleIt++;
+		roiIt++;
+	}
 }

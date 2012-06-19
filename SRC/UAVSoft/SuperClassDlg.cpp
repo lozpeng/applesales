@@ -42,7 +42,7 @@ BOOL CSuperClassDlg::OnInitDialog()
 
 	// TODO:  在此添加额外的初始化
 	m_strInputFile = m_strName.c_str();
-	std::list<ROI_INFO*>::iterator iter;
+	std::vector<ROI_INFO*>::iterator iter;
 	int i =0;
 	for (iter=m_Rois.begin(); iter!=m_Rois.end(); iter++)
 	{
