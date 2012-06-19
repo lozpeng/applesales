@@ -39,6 +39,7 @@ protected:
 	Framework::IMapCtrl*		m_pMapCtrl;
 public:
 	std::list<ROI_INFO*>		m_lstROI;
+	std::string					m_strLyrName;
 public:
 	CListCtrl m_list;
 	CImageList m_ImageList;

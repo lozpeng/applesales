@@ -1,6 +1,7 @@
 #pragma once
 
-
+#include "DialogCreateRoi.h"
+#include "afxwin.h"
 // CSuperClassDlg ¶Ô»°¿ò
 
 class CSuperClassDlg : public CDialog
@@ -20,4 +21,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
+public:
+	std::list<ROI_INFO*>		m_Rois;
+	std::string					m_strName;
+	CString m_strInputFile;
+	afx_msg void OnBnClickedOk();
+	CListBox m_lstCls;
 };
