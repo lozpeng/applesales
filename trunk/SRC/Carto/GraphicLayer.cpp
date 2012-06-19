@@ -198,7 +198,7 @@ namespace Carto
 		}
 		/*}*/
 
-		ContainerChangedEvent(pElement);
+		//ContainerChangedEvent(pElement);
 
 		gCallbackDeleteElement(pElement);
 	}
