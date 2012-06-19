@@ -92,14 +92,14 @@ namespace Control
 		ReleaseCapture();
 
 		//工具设为选择
-		Framework::ITool* pTool = NULL;
+		/*Framework::ITool* pTool = NULL;
 		m_pMapCtrl->SetCurTool("SelectElementTool");
 
 		pTool=Framework::ITool::FindTool("SelectElementTool");
 		if(pTool)
 		{
 			pTool->Initialize(dynamic_cast<Framework::IUIObject*>(m_pMapCtrl));
-		}
+		}*/
 	}
 
 }
