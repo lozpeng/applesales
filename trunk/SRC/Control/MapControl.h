@@ -3,7 +3,7 @@
 
 #include "IMapCtrl.h"
 
-
+using namespace Framework;
 
 namespace Control
 {
@@ -55,6 +55,10 @@ namespace Control
 
 	public:
 		virtual BOOL PreTranslateMessage(MSG* pMsg);
+
+		IStatusInfo* GetStatusInfo();
+
+		std::string CMapControl::GetExtractInfo();
 	};
 }
 

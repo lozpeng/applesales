@@ -102,6 +102,7 @@ namespace Control
 			pTool->MouseMoveEvent( nFlags, point);
 		}
 
+		GetExtractInfo();
 		__super::OnMouseMove(nFlags, point);
 	}
 
@@ -487,4 +488,37 @@ namespace Control
 		return __super::PreTranslateMessage(pMsg);
 	}
 
+	//获得状态栏
+	IStatusInfo* CMapControl::GetStatusInfo()
+	{
+		m_pStatusInfo->UpdateInfo(GetExtractInfo());
+		return m_pStatusInfo;
+	}
+	
+	std::string CMapControl::GetExtractInfo()
+	{
+		if(!m_pGeoMap)
+			return "";
+		IElementPtr ipElement = m_pGeoMap->GetGraphicLayer()->GetSelectedElement(0);
+		if(ipElement==NULL)
+			return "";
+
+		if(ET_FILL_POLYGON_ELEMENT!=ipElement->GetType())
+			return "";
+		double dbArea = ipElement->GetGeometry()->getArea();
+		
+		double rate=1.0;
+		std::string labelName ="总面积:";
+		std::string strUnit ="平方米";
+		char szLabelName[64];
+
+		//投影
+		
+		if(SYSTEM::SYS_UNIT_TYPE::SYS_UNIT_METER != m_pGeoMap->GetUnit())
+			rate =111;
+		
+		sprintf(szLabelName, "%.3f", dbArea*rate);
+		labelName +=szLabelName+strUnit;
+		return labelName;
+	}
 }
