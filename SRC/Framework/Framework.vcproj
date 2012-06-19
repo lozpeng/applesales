@@ -285,6 +285,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IStatusInfo.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ITool.h"
 				>
 			</File>

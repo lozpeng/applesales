@@ -6,6 +6,7 @@
 #include "IDisplay.h"
 #include "ITool.h"
 #include "ICommand.h"
+#include "IStatusInfo.h"
 using namespace Element;
 
 namespace Framework
@@ -69,6 +70,12 @@ namespace Framework
 		//闪烁图形
 		void FlashShape(GEOMETRY::geom::Geometry* pShape,long nFlashes=1,long flashInterval=300,Display::ISymbol* symbol=NULL);
 
+		//设置状态栏
+		void SetStatusInfo(IStatusInfo *pSinfo){m_pStatusInfo=pSinfo;}
+
+		//获得状态栏
+		IStatusInfo* GetStatusInfo(){return m_pStatusInfo;}
+
 	protected:
 		//将地理内容贴到屏幕上
 		void RefreshGeography();
@@ -94,6 +101,8 @@ namespace Framework
 		HWND m_hCtrlWnd; 
 
 		CElementCollection  m_ElementCopyContainer;//存放需要copy的对象
+
+		IStatusInfo *m_pStatusInfo;
 
 
 	};
