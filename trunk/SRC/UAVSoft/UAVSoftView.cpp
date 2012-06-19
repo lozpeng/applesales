@@ -1989,7 +1989,10 @@ void CUAVSoftView::ContainerChangeEvent(Element::IElementPtr pElement)
 			Carto::CLayerArray layerArray = m_MapCtrl.GetMap()->GetLayers();
 			int nCount = layerArray.GetSize();
 			if (nCount <= 0)
+			{
+				m_Dlg_Roi->m_bNewROI = false;
 				return;
+			}
 			for (int i = nCount-1; i>=0; i--)
 			{
 				Carto::ILayerPtr pLayer = layerArray.GetAt(i);
@@ -2002,6 +2005,7 @@ void CUAVSoftView::ContainerChangeEvent(Element::IElementPtr pElement)
 						Coordinate coord = coords->getAt(j);
 						if (coord.x > pEnv.getMaxX() || coord.x < pEnv.getMinX()|| coord.y > pEnv.getMaxY() || coord.y < pEnv.getMinY())
 						{
+							m_Dlg_Roi->m_bNewROI = false;
 							return;
 						}
 					}
@@ -2025,6 +2029,7 @@ void CUAVSoftView::ContainerChangeEvent(Element::IElementPtr pElement)
 					}
 					CRgn rgn;
 					rgn.CreatePolygonRgn(pt,coords->size(),ALTERNATE);
+					m_Dlg_Roi->m_strLyrName = pRaster->Getname();
 					m_Dlg_Roi->AddROIElement(rgn,pElement);
 					break;
 					//pRaster->CreateBuffer();
@@ -2193,6 +2198,8 @@ void CUAVSoftView::OnSuperClsDlg()
 	if(m_Dlg_Roi)
 	{
 		CSuperClassDlg dlg;
+		dlg.m_Rois = m_Dlg_Roi->m_lstROI;
+		dlg.m_strName = m_Dlg_Roi->m_strLyrName;
 		dlg.DoModal();
 	}
 	else
