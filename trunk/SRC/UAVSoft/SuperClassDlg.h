@@ -22,7 +22,7 @@ protected:
 public:
 	virtual BOOL OnInitDialog();
 public:
-	std::list<ROI_INFO*>		m_Rois;
+	std::vector<ROI_INFO*>		m_Rois;
 	std::string					m_strName;
 	CString m_strInputFile;
 	afx_msg void OnBnClickedOk();
