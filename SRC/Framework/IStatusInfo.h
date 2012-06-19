@@ -5,14 +5,14 @@
 
 namespace Framework
 {
-class  IStatusInfo
+class FRAMEWORK_DLL IStatusInfo
 {
 public:
 	IStatusInfo(){}
 	virtual ~IStatusInfo(){}
 
 public:
-	virtual void UpdateInfo(std::string info);
+	virtual void UpdateInfo(std::string info){};
 
 	
 
