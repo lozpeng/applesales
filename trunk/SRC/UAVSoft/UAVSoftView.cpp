@@ -1343,6 +1343,11 @@ void CUAVSoftView::BrightContrast(int nBright,int nContrast)
 	if(!pRender)
 		return;
 	Carto::CRasterRGBRender* pRGBRender =  dynamic_cast<Carto::CRasterRGBRender*>(pRender.get());
+	if(pRGBRender==NULL)
+	{
+        return;
+
+	}
 	long RChannel=pRGBRender->GetRedBandIndex();
 	long GChannel=pRGBRender->GetGreenBandIndex();
 	long BChannel=pRGBRender->GetBlueBandIndex();
