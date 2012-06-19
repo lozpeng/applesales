@@ -26,11 +26,29 @@
 #include "DialogCreateRoi.h"
 #include "SuperClassDlg.h"
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
+class CStatusInfo : public Framework::IStatusInfo
+{
+public:
+	CStatusInfo(CMainFrame *pFrame){m_pFrame=pFrame;}
+
+	void UpdateInfo(std::string info)
+	{
+		if(m_pFrame)
+		{
+			m_pFrame->UpdateStatusInfo(info.c_str());
+		}
+	}
+
+private:
+	CMainFrame* m_pFrame;
+
+};
 // CUAVSoftView
 
 IMPLEMENT_DYNCREATE(CUAVSoftView, CView)
@@ -348,7 +366,18 @@ int CUAVSoftView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_WndTab.SetTabBorderSize (0);
 	m_WndTab.AutoDestroyWindow (FALSE);
 
+	
 	return 0;
+}
+
+void CUAVSoftView::SetStatusControl()
+{
+	//设置状态信息显示控件
+
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CStatusInfo* pSinfo=new CStatusInfo(pMainFrm);
+	m_MapCtrl.SetStatusInfo(pSinfo);
+
 }
 
 void CUAVSoftView::OnSize(UINT nType, int cx, int cy)

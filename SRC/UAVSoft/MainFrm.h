@@ -51,6 +51,8 @@ protected:
 	BOOL CreateRibbonBar ();
 	void ShowOptions (int nPage);
 
+	afx_msg void OnUpdatePosMap(CCmdUI *pCmdUI);
+
 public:
     Framework::IMaptreeCtrl* GetTOC();
 
@@ -63,6 +65,8 @@ public:
 	void        AddTab_GeoInfoExtract();
 	//ÖÆÍ¼
 	void        AddTab_Print();
+
+	void        UpdateStatusInfo(CString info);
 
 public:
 

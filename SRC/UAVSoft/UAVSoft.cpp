@@ -124,6 +124,10 @@ BOOL CUAVSoftApp::InitInstance()
 	pDoc->SetLinkMapTree(pMainFrame->GetTOC());
 	pMainFrame->GetTOC()->RefreshFromDoc();
 
+	POSITION pos=pDoc->GetFirstViewPosition();
+	CUAVSoftView* pView=(CUAVSoftView*)pDoc->GetNextView(pos);
+    pView->SetStatusControl();
+
 	m_pMainWnd->SetWindowText("无人机数据处理系统");
 
 	// The one and only window has been initialized, so show and update it

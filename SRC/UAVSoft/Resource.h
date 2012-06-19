@@ -32,8 +32,10 @@
 #define IDD_DIG_Interpolater            169
 #define IDD_DLG_CREATE_ROI              170
 #define IDD_DIALOG_CLASS                171
-#define IDD_DIALOG_SUPERCLASS           171
+#define IDD_DIALOG_SUPERCLASS           172
 #define IDD_DIG_DRAWINGEXPORT           176
+#define ID_INDICATOR_OTHER_INFO         178
+#define ID_INDICATOR_POS_MAP            179
 #define IDC_COMPANY_URL                 1041
 #define ID_TABCONTROL                   1054
 #define IDC_RADIO_EXPORT_ALL            1055
@@ -184,11 +186,12 @@
 #define IDC_CREATE_ROI_DIALOG           40560
 #define IDC_SUPER_CLASS_DIALOG          40561
 
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        172
+#define _APS_NEXT_RESOURCE_VALUE        180
 #define _APS_NEXT_COMMAND_VALUE         40632
 #define _APS_NEXT_CONTROL_VALUE         1065
 #define _APS_NEXT_SYMED_VALUE           108
