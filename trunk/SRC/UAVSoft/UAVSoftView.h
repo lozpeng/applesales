@@ -47,7 +47,7 @@ protected:
 	afx_msg void OnFilePrintPreview();
 	DECLARE_MESSAGE_MAP()
 
-private:
+public:
 	CBCGPTabWnd	m_WndTab;
 	CBCGPButton m_wndButton;
 	Control::CMapControl m_MapCtrl;
@@ -55,6 +55,8 @@ private:
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+
+	void SetStatusControl();
 
 public:
 

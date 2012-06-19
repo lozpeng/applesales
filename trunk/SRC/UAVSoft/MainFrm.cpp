@@ -5,11 +5,21 @@
 #include "UAVSoft.h"
 
 #include "MainFrm.h"
+#include "UAVSoftDoc.h"
+#include "UAVSoftView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+
+static UINT indicators[] =
+{
+	ID_SEPARATOR,           // status line indicator
+	ID_INDICATOR_OTHER_INFO,
+	ID_INDICATOR_POS_MAP,
+	
+};
 
 // CMainFrame
 
@@ -28,6 +38,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_OUTPUT, OnUpdateViewOutput)*/
 	ON_REGISTERED_MESSAGE(BCGM_ON_RIBBON_CUSTOMIZE, OnRibbonCustomize)
 	ON_COMMAND(ID_TOOLS_OPTIONS, OnToolsOptions)
+
+	ON_UPDATE_COMMAND_UI(ID_STATUSBAR_PANE1, &CMainFrame::OnUpdatePosMap)
 END_MESSAGE_MAP()
 
 // CMainFrame construction/destruction
@@ -63,10 +75,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	// TODO: add your status bar panes here:
-	/*m_wndStatusBar.AddElement (new CBCGPRibbonStatusBarPane (
-		ID_STATUSBAR_PANE1, _T("Pane 1"), TRUE), _T("Pane 1"));
-	m_wndStatusBar.AddExtendedElement (new CBCGPRibbonStatusBarPane (
-		ID_STATUSBAR_PANE2, _T("Pane 2"), TRUE), _T("Pane 2"));*/
+	
+	m_wndStatusBar.AddElement (new CBCGPRibbonStatusBarPane (
+		ID_STATUSBAR_PANE1, _T(""), TRUE), _T(""));
+	m_wndStatusBar.AddSeparator();
+	m_wndStatusBar.AddElement (new CBCGPRibbonStatusBarPane (
+		ID_STATUSBAR_PANE2, _T(""), TRUE), _T(""));
 
 	// Load control bar icons:
 	CBCGPToolBarImages imagesWorkspace;
@@ -970,4 +984,57 @@ void CMainFrame::OnUpdateViewWorkspace(CCmdUI* pCmdUI)
 Framework::IMaptreeCtrl* CMainFrame::GetTOC()
 {
 	return &m_wndWorkSpace.m_wndTree;
+}
+
+void CMainFrame::OnUpdatePosMap(CCmdUI *pCmdUI)
+{
+	CView* pActiveView = GetActiveView();
+	if(!pActiveView->IsKindOf(RUNTIME_CLASS(CUAVSoftView)))
+		return;
+
+	CUAVSoftView* pView = (CUAVSoftView*)pActiveView;
+
+	CBCGPRibbonStatusBarPane *pPanel=(CBCGPRibbonStatusBarPane*)m_wndStatusBar.FindByID(ID_STATUSBAR_PANE1);
+	//pPanel->SetRect()
+
+	if(pPanel==NULL)
+	{
+		return;
+	}
+	
+	POINT disPos;
+	GetCursorPos(&disPos);
+	pView->m_MapCtrl.ScreenToClient(&disPos);
+
+	double mapX, mapY;
+	Carto::CMapPtr pActiveMap = pView->m_MapCtrl.GetMap();
+	pActiveMap->GetDisplay()->GetDisplayTransformation().ConvertDisplayToGeo(disPos.x, disPos.y, mapX, mapY);
+
+	CString msg;
+	msg.Format("X:%f  ,Y:%f",  mapX, mapY);
+	pPanel->SetText(msg);
+	//pCmdUI->SetText(msg);
+	m_wndStatusBar.RecalcLayout ();
+	m_wndStatusBar.RedrawWindow ();
+
+
+
+
+}
+
+void CMainFrame::UpdateStatusInfo(CString info)
+{
+	CBCGPRibbonStatusBarPane *pPanel=(CBCGPRibbonStatusBarPane*)m_wndStatusBar.FindByID(ID_STATUSBAR_PANE2);
+	//pPanel->SetRect()
+
+	if(pPanel==NULL)
+	{
+		return;
+	}
+	pPanel->SetText(info);
+	
+	m_wndStatusBar.RecalcLayout ();
+	m_wndStatusBar.RedrawWindow ();
+
+
 }
