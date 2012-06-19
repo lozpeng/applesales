@@ -6,6 +6,9 @@
 #include "geos_c.h"
 #include <geometry/geom/BinaryOp.h>
 #include <geometry/operation/overlay/OverlayOp.h>
+#include "IStatusInfo.h"
+#include <sstream>
+
 extern CControlApp theApp;
 static Carto::ILayer* gpLayer =NULL;
 static int gtol =20;
@@ -201,6 +204,9 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 	//构建一个多边形图元
 	Element::CPolygonElement *ppolyElement =new Element::CPolygonElement(*pPolygon);
 
+	//计算面积
+	double area=pPolygon->getArea();
+
 	delete pPolygon;
 	pPolygon =NULL;
 
@@ -214,6 +220,15 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 
 	pMap->GetGraphicLayer()->AddElement(ppolyElement);
 
+	Framework::IStatusInfo *pSinfo=m_pMapCtrl->GetStatusInfo();
+	if(pSinfo)
+	{
+		area*=111000*111000;
+		std::ostringstream os;
+		os<<"面积:"<<area<<"平方米 ";
+		
+        pSinfo->UpdateInfo(os.str());
+	}
     m_pMapCtrl->UpdateControl(drawElement);
 
 }
