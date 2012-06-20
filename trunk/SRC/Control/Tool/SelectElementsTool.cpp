@@ -271,6 +271,13 @@ namespace Control
 
 					m_pMap->GetGraphicLayer()->Select(&queryfilter, selctOption);
 					GEOMETRY::geom::GeometryFactory::getDefaultInstance()->destroyGeometry(pSelGeometry);
+
+					//显示面积信息
+					Framework::IStatusInfo *pSinfo=m_pMapCtrl->GetStatusInfo();
+					if(pSinfo)
+					{
+						
+					}
 				}
 			}
 			break;

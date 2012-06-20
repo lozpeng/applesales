@@ -110,7 +110,18 @@ namespace Control
 
 
 			m_pMap->GetGraphicLayer()->AddElement(m_pPolygon);
-			m_pMap->GetGraphicLayer()->SelectElement(m_pPolygon);	
+			m_pMap->GetGraphicLayer()->SelectElement(m_pPolygon);
+			//显示面积
+			Framework::IStatusInfo *pSinfo=m_pMapCtrl->GetStatusInfo();
+			if(pSinfo)
+			{
+				double area=m_pPolygon->GetGeometry()->getArea();
+				area*=(111000.0*111000.0);
+				std::ostringstream os;
+				os<<"面积:"<<area<<"平方米 ";
+
+				pSinfo->UpdateInfo(os.str());
+			}
 		}
 
 		m_pPolygon.reset();

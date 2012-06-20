@@ -79,7 +79,18 @@ namespace Control
 		if(point.x != cPtStart.x || point.y != cPtStart.y)
 		{
 			m_pMap->GetGraphicLayer()->AddElement(m_pRectangle);
-			m_pMap->GetGraphicLayer()->SelectElement(m_pRectangle);	
+			m_pMap->GetGraphicLayer()->SelectElement(m_pRectangle);
+			//显示面积
+			Framework::IStatusInfo *pSinfo=m_pMapCtrl->GetStatusInfo();
+			if(pSinfo)
+			{
+				double area=m_pRectangle->GetGeometry()->getArea();
+				area*=(111000.0*111000.0);
+				std::ostringstream os;
+				os<<"面积:"<<area<<"平方米 ";
+
+				pSinfo->UpdateInfo(os.str());
+			}
 		}	
 		m_pRectangle.reset();
 
