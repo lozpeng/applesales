@@ -223,7 +223,7 @@ void CMagicStickTool::LButtonDownEvent (UINT nFlags, CPoint point)
 	Framework::IStatusInfo *pSinfo=m_pMapCtrl->GetStatusInfo();
 	if(pSinfo)
 	{
-		area*=111000*111000;
+		area*=(111000.0*111000.0);
 		std::ostringstream os;
 		os<<"面积:"<<area<<"平方米 ";
 		
