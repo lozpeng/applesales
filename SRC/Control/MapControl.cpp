@@ -517,9 +517,12 @@ namespace Control
 		//ͶӰ
 		
 		if(SYSTEM::SYS_UNIT_TYPE::SYS_UNIT_METER != m_pGeoMap->GetUnit())
-			rate =111;
+		{
+			rate = SYSTEM::UnitConverter::ConvertUnits(1, m_pGeoMap->GetUnit(),SYSTEM::SYS_UNIT_METER);
+			rate*=rate;
+		}
 		
-		sprintf(szLabelName, "%.3f", dbArea*rate*rate);
+		sprintf(szLabelName, "%.3f", dbArea*rate);
 		labelName +=szLabelName+strUnit;
 		return labelName;
 	}
