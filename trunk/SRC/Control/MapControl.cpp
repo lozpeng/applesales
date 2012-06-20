@@ -510,8 +510,8 @@ namespace Control
 		double dbArea = ipElement->GetGeometry()->getArea();
 		
 		double rate=1.0;
-		std::string labelName ="总面积:";
-		std::string strUnit ="平方公里";
+		std::string labelName ="面积:";
+		std::string strUnit ="平方米";
 		char szLabelName[64];
 
 		//投影
