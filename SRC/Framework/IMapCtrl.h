@@ -74,7 +74,7 @@ namespace Framework
 		void SetStatusInfo(IStatusInfo *pSinfo){m_pStatusInfo=pSinfo;}
 
 		//获得状态栏
-		IStatusInfo* GetStatusInfo(){return m_pStatusInfo;}
+		virtual IStatusInfo* GetStatusInfo(){return m_pStatusInfo;}
 
 	protected:
 		//将地理内容贴到屏幕上
