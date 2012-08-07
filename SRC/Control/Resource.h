@@ -49,24 +49,46 @@
 #define IDC_VERTIX_MOVE                 2026
 #define IDC_BTN_SELCHASHP               2027
 #define IDB_MAP_TREE                    2028
+#define IDC_EDIT_INIMG                  2028
 #define IDC_CHECK_USEHIS                2029
+#define IDC_EDIT_INIMG2                 2029
 #define IDB_MAPTREE_STATE               2030
 #define IDD_DIALOG_RASTER2VECTOR        2030
 #define IDC_CHECK_LOADCHANGE            2031
 #define IDD_DLG_MODIFYIMGCLASS          2031
+#define IDC_EDIT_RELSHP2                2031
 #define IDD_PROGRESS_BAR                2032
+#define IDC_BTN_SELCHASHP2              2032
 #define IDC_EDIT2                       2033
 #define IDC_EDIT_CLSNAME                2033
+#define IDD_DIALOG_TARGETCLIP           2033
+#define IDC_EDIT_TARGETFILE             2033
+#define IDC_EDIT_H1                     2033
 #define IDC_EDIT_CHANGETHD              2034
+#define IDC_EDIT_OUTPATH                2034
+#define IDC_EDIT_H2                     2034
 #define IDC_BUTTON1                     2035
 #define IDC_BT_SELCLASSFILE             2035
+#define IDC_BUTTON_INIMG                2035
+#define IDC_EDIT_P1                     2035
 #define IDC_BUTTON_POLYGON              2036
+#define IDC_BUTTON_TARGETFILE           2036
+#define IDC_EDIT_P2                     2036
 #define IDC_BTN_SHOWSYMBOL              2037
+#define IDC_BUTTON_OUTPATH              2037
+#define IDC_EDIT_W1                     2037
 #define IDR_LAYER_MENU                  2038
+#define IDC_BUTTON_INIMG2               2038
+#define IDC_EDIT_W2                     2038
 #define IDC_EDIT_MINAREA                2039
+#define IDC_EDIT_RELSHP3                2039
 #define IDD_LAYERPROP_GENERAL           2040
+#define IDC_BTN_SELCHASHP3              2040
 #define IDC_EDIT_MINAREA2               2041
+#define IDC_EDIT_RELSHP4                2041
+#define IDC_EDIT_RELMAP                 2041
 #define IDC_EDIT_TOLL                   2042
+#define IDC_BTN_RELMAP                  2042
 #define IDC_COMBO1                      2043
 #define IDC_COMBO_SELCLS_FILE           2043
 #define IDC_COMBO_RS_LYR                2044
@@ -108,7 +130,6 @@
 #define IDC_BTN_AUTO_SETRANGE_R         4052
 #define IDC_RANGE_SYMBOL_LIST_R         4053
 #define IDC_RANGE_NUM_SPIN_R            4054
-
 #define IDD_PAGE_ELEMENT_SIZE_POS       5001
 #define IDC_TEXT_SYMBOL_PREVIEW         5002
 #define IDC_TEXT_SYMBOLSET              5003
@@ -261,9 +282,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2032
+#define _APS_NEXT_RESOURCE_VALUE        2034
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         2028
+#define _APS_NEXT_CONTROL_VALUE         2029
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif
