@@ -113,7 +113,7 @@ BOOL CTDAppApp::InitInstance()
 	pDoc->SetLinkMapTree(pMainFrame->GetTOC());
 	pMainFrame->GetTOC()->RefreshFromDoc();
 
-	m_pMainWnd->SetWindowText(" 面向巨灾的地理信息变化增量快速提取");
+	m_pMainWnd->SetWindowText(" 重点目标震害信息提取");
 	m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);
 	m_pMainWnd->UpdateWindow();
 

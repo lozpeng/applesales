@@ -157,6 +157,7 @@
 #define ID_EDITOR_SAVE                  40036
 #define ID_CHANGE_DETECT                40500
 #define ID_CHANGE_RENDER                40501
+#define ID_TARGET_CLIP					40502
 #define ID_MAGIC_STICK                  40510
 #define ID_EDGE_EXTRACT                 40511
 #define ID_WATER_EXTRACT                40512

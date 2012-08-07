@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor;..\BlueToothComm"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor;..\BlueToothComm;..\Control\ImgProcessUI"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor;..\BlueToothComm"
+				AdditionalIncludeDirectories="..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourceRaster;..\Carto;..\Framework;..\Control;..\Control\UI;..\datasourcesfile;..\..\thirdPartyLib\bcg12\include;..\carto\Element;..\Editor;..\BlueToothComm;..\Control\ImgProcessUI"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
