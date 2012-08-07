@@ -62,6 +62,8 @@ public:
 	//地理要素提取
 	void        AddTab_GeoInfoExtract();
 
+	void        AddTab_TargetClip();
+
 	Framework::IMaptreeCtrl* GetTOC();
 
 	CBCGPRibbonBar						m_wndRibbonBar;	// Ribbon control bar

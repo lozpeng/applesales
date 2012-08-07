@@ -100,12 +100,13 @@ BOOL CMainFrame::CreateRibbonBar()
 	AddTab_MapControl();
 	//影像分析
 	AddTab_ImageAnalyse();
+	AddTab_TargetClip();
 	//变化发现
 	AddTab_ChangeDetect();
 	//地理要素提取
 	AddTab_GeoInfoExtract();
 	//矢量编辑
-	AddTab_Editor();
+	//AddTab_Editor();
 	//-----------------------------------
 	// Add quick access toolbar commands:
 	//-----------------------------------
@@ -281,19 +282,19 @@ void CMainFrame::AddTab_MapControl()
 	//CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 17);
 	//pPanelLabel->Add (pBtnElementSaveAs);
 
-	CBCGPRibbonPanel* pPanelSystem = pCategory->AddPanel (_T("系统"));
-	CBCGPRibbonButton* pBtnSetting = new CBCGPRibbonButton (ID_SETTING,_T("设置"), 3, 22);
-	pPanelSystem->Add(pBtnSetting);
-	CBCGPRibbonButton* pBtnHelp = new CBCGPRibbonButton (ID_FOR_HELP,_T("帮助"), 1, 26);
-	pPanelSystem->Add(pBtnHelp);
-	CBCGPRibbonButton* pBtnClose = new CBCGPRibbonButton (ID_FOR_EXIT,_T("退出"), 2, 25);
-	pPanelSystem->Add(pBtnClose);
+	//CBCGPRibbonPanel* pPanelSystem = pCategory->AddPanel (_T("系统"));
+	//CBCGPRibbonButton* pBtnSetting = new CBCGPRibbonButton (ID_SETTING,_T("设置"), 3, 22);
+	//pPanelSystem->Add(pBtnSetting);
+	//CBCGPRibbonButton* pBtnHelp = new CBCGPRibbonButton (ID_FOR_HELP,_T("帮助"), 1, 26);
+	//pPanelSystem->Add(pBtnHelp);
+	//CBCGPRibbonButton* pBtnClose = new CBCGPRibbonButton (ID_FOR_EXIT,_T("退出"), 2, 25);
+	//pPanelSystem->Add(pBtnClose);
 }
 
 void CMainFrame::AddTab_ImageAnalyse()
 {
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
-		_T("影像增强"),
+		_T("影像查看"),
 		IDB_FILESMALL,
 		IDB_FILELARGE);
 
@@ -466,7 +467,7 @@ void CMainFrame::AddTab_Editor()
 void CMainFrame::AddTab_GeoInfoExtract()
 {
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
-		_T("地理要素提取"),
+		_T("重点目标震害信息人工解译"),
 		IDB_FILELARGE,
 		IDB_ChangeDetect);
 
@@ -520,50 +521,50 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	//--------------------------
 	//将标绘要素保存为shp
 	//--------------------------
-	CBCGPRibbonButton* pBtnElementExport = new CBCGPRibbonButton(ID_DRAW_Export, _T("增量导出"), -1, 8);
-	pPanelLabel->Add (pBtnElementExport);
+	//CBCGPRibbonButton* pBtnElementExport = new CBCGPRibbonButton(ID_DRAW_Export, _T("增量导出"), -1, 8);
+	//pPanelLabel->Add (pBtnElementExport);
 
-	//半自动提取
-	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));
-
-	//添加当前图层
-	//CBCGPRibbonButtonsGroup* pMagicGroup = new CBCGPRibbonButtonsGroup;
-
-	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_MAGICSTICK_LAYER,FALSE,85,"目标图层:");
-	pPanelHalfAuto->Add(pBtnCurrLayer);
-	CBCGPRibbonEdit *pEditButton =new CBCGPRibbonEdit(ID_MAGICSTICK_TOL,100,"像素阈值:");
-	pEditButton->SetEditText("20");
-    pPanelHalfAuto->Add(pEditButton);
-
-//--------------------------
-	// 魔术棒
-	//--------------------------
-	CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 10, 10);
-
-    pPanelHalfAuto->Add (pBtnMagic);
-
-	// 删除上次魔术棒提取结果
-	//--------------------------
-	CBCGPRibbonButton* pBtnRemoveMagic = new CBCGPRibbonButton (ID_REMOVELASTMAGIC, _T("取消上次操作"), 12, 12);
-
-	pPanelHalfAuto->Add (pBtnRemoveMagic);
-
-	pPanelHalfAuto->AddSeparator();
-	
-	
-	//--------------------------
-	// 边缘提取
-	//--------------------------
-	CBCGPRibbonButton* pBtnEdge = new CBCGPRibbonButton (ID_EDGE_EXTRACT,_T("边界跟踪提取"), 0, 0);
-	pPanelHalfAuto->Add (pBtnEdge);
-
-	//水体自动提取
-	CBCGPRibbonPanel* pPanelAuto = pCategory->AddPanel (_T("自动提取"));
-	//--------------------------
-	// 水体自动
-	//--------------------------
-	CBCGPRibbonButton* pBtnWater = new CBCGPRibbonButton (ID_WATER_EXTRACT, _T("水体自动提取"), 11, 11);
-	pPanelAuto->Add (pBtnWater);
+//	//半自动提取
+//	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));
+//
+//	//添加当前图层
+//	//CBCGPRibbonButtonsGroup* pMagicGroup = new CBCGPRibbonButtonsGroup;
+//
+//	CBCGPRibbonComboBox* pBtnCurrLayer = new CBCGPRibbonComboBox(ID_MAGICSTICK_LAYER,FALSE,85,"目标图层:");
+//	pPanelHalfAuto->Add(pBtnCurrLayer);
+//	CBCGPRibbonEdit *pEditButton =new CBCGPRibbonEdit(ID_MAGICSTICK_TOL,100,"像素阈值:");
+//	pEditButton->SetEditText("20");
+//    pPanelHalfAuto->Add(pEditButton);
+//
+////--------------------------
+//	// 魔术棒
+//	//--------------------------
+//	CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 10, 10);
+//
+//    pPanelHalfAuto->Add (pBtnMagic);
+//
+//	// 删除上次魔术棒提取结果
+//	//--------------------------
+//	CBCGPRibbonButton* pBtnRemoveMagic = new CBCGPRibbonButton (ID_REMOVELASTMAGIC, _T("取消上次操作"), 12, 12);
+//
+//	pPanelHalfAuto->Add (pBtnRemoveMagic);
+//
+//	pPanelHalfAuto->AddSeparator();
+//	
+//	
+//	//--------------------------
+//	// 边缘提取
+//	//--------------------------
+//	CBCGPRibbonButton* pBtnEdge = new CBCGPRibbonButton (ID_EDGE_EXTRACT,_T("边界跟踪提取"), 0, 0);
+//	pPanelHalfAuto->Add (pBtnEdge);
+//
+//	//水体自动提取
+//	CBCGPRibbonPanel* pPanelAuto = pCategory->AddPanel (_T("自动提取"));
+//	//--------------------------
+//	// 水体自动
+//	//--------------------------
+//	CBCGPRibbonButton* pBtnWater = new CBCGPRibbonButton (ID_WATER_EXTRACT, _T("水体自动提取"), 11, 11);
+//	pPanelAuto->Add (pBtnWater);
 
 	//蓝牙
 	//CBCGPRibbonPanel* pPanelBlueTooth = pCategory->AddPanel (_T("文件发送"));
@@ -574,19 +575,35 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	pPanelBlueTooth->Add (pBtnBlue);*/
 }
 
-void CMainFrame::AddTab_ChangeDetect()
+void CMainFrame::AddTab_TargetClip()
 {
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
-		_T("变化检测"),
+		_T("重点目标区域提取"),
 		IDB_FILELARGE,
 		IDB_ChangeDetect);
 
 
-	CBCGPRibbonPanel* pPanel = pCategory->AddPanel (_T("变化发现工具"));
+	CBCGPRibbonPanel* pPanel = pCategory->AddPanel (_T(""));
 	//--------------------------
 	// 变化检测
 	//--------------------------
-	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_CHANGE_DETECT, _T("变化发现"), 1, 1);
+	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_TARGET_CLIP, _T("目标区域提取"), 2, 2);
+	pPanel->Add (pBtnChange);
+}
+
+void CMainFrame::AddTab_ChangeDetect()
+{
+	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
+		_T("重点目标震害信息提取"),
+		IDB_FILELARGE,
+		IDB_ChangeDetect);
+
+
+	CBCGPRibbonPanel* pPanel = pCategory->AddPanel (_T(""));
+	//--------------------------
+	// 变化检测
+	//--------------------------
+	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_CHANGE_DETECT, _T("震害信息提取"), 1, 1);
 	pPanel->Add (pBtnChange);
 	//--------------------------
 	// 变化标识
@@ -598,8 +615,8 @@ void CMainFrame::AddTab_ChangeDetect()
 	//--------------------------
 	// 变化结果导出
 	//--------------------------
-	CBCGPRibbonButton* pBtnChangeExport = new CBCGPRibbonButton (ID_CHANGE_SETSYMBOL,_T("变化标识"), -1, 8);
-	pPanel->Add (pBtnChangeExport);
+	//CBCGPRibbonButton* pBtnChangeExport = new CBCGPRibbonButton (ID_CHANGE_SETSYMBOL,_T("变化标识"), -1, 8);
+	//pPanel->Add (pBtnChangeExport);
 	
 
   
