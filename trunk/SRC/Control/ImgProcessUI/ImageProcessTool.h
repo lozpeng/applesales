@@ -22,6 +22,8 @@ public:
 
 	static void ShowClassVectorDlg();
 
+	static void ShowTargetClipDlg();
+
 	static void InitSymbol();
 
 	//水体提取流程

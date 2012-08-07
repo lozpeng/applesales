@@ -15,7 +15,16 @@ CDlgChangeDetect::CDlgChangeDetect(CWnd* pParent /*=NULL*/)
 	, m_strResult(_T(""))
 	, m_bLoadShp(TRUE)
 	, m_dCor(0.4)
-	, m_nSize(100)
+	, m_nSize(60)
+	, m_dblH1(-1)
+	, m_dblH2(0.2)
+	, m_dblP1(0.2)
+	, m_dblP2(0.4)
+	, m_dblW1(0.4)
+	, m_dblW2(1.0)
+	, n_strRel2(_T(""))
+	, m_strResult3(_T(""))
+	, m_strRelMap(_T(""))
 {
 
 }
@@ -35,6 +44,15 @@ void CDlgChangeDetect::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxDouble(pDX, m_dCor, 0.2, 1.0);
 	DDX_Text(pDX, IDC_EDIT1, m_nSize);
 	DDV_MinMaxInt(pDX, m_nSize, 10, 500);
+	DDX_Text(pDX, IDC_EDIT_H1, m_dblH1);
+	DDX_Text(pDX, IDC_EDIT_H2, m_dblH2);
+	DDX_Text(pDX, IDC_EDIT_P1, m_dblP1);
+	DDX_Text(pDX, IDC_EDIT_P2, m_dblP2);
+	DDX_Text(pDX, IDC_EDIT_W1, m_dblW1);
+	DDX_Text(pDX, IDC_EDIT_W2, m_dblW2);
+	DDX_Text(pDX, IDC_EDIT_RELSHP2, n_strRel2);
+	DDX_Text(pDX, IDC_EDIT_RELSHP3, m_strResult3);
+	DDX_Text(pDX, IDC_EDIT_RELMAP, m_strRelMap);
 }
 
 
@@ -42,6 +60,9 @@ BEGIN_MESSAGE_MAP(CDlgChangeDetect, CDialog)
 	ON_BN_CLICKED(IDC_BTN_SELCHASHP, &CDlgChangeDetect::OnBnClickedBtnSelchashp)
 	ON_BN_CLICKED(IDOK, &CDlgChangeDetect::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_CHECK_LOADCHANGE, &CDlgChangeDetect::OnBnClickedCheckLoadchange)
+	ON_BN_CLICKED(IDC_BTN_SELCHASHP2, &CDlgChangeDetect::OnBnClickedBtnSelchashp2)
+	ON_BN_CLICKED(IDC_BTN_SELCHASHP3, &CDlgChangeDetect::OnBnClickedBtnSelchashp3)
+	ON_BN_CLICKED(IDC_BTN_RELMAP, &CDlgChangeDetect::OnBnClickedBtnRelmap)
 END_MESSAGE_MAP()
 
 
@@ -75,7 +96,6 @@ void CDlgChangeDetect::OnBnClickedOk()
 
 	pLayer =(Carto::ILayer*)m_CmbDest.GetItemData(m_CmbDest.GetCurSel());
 	m_strDest =pLayer->GetDataObject()->Getname().c_str();
-
 
 	OnOK();
 }
@@ -123,4 +143,37 @@ BOOL CDlgChangeDetect::OnInitDialog()
 void CDlgChangeDetect::OnBnClickedCheckLoadchange()
 {
 	
+}
+
+void CDlgChangeDetect::OnBnClickedBtnSelchashp2()
+{
+	UpdateData();
+	CFileDialog dlg(false, "*.shp", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"shapefile(*.shp)|*.shp||",this);
+	if(dlg.DoModal()==IDOK) 
+	{
+		n_strRel2 =dlg.GetPathName();
+		UpdateData(FALSE);
+	}
+}
+
+void CDlgChangeDetect::OnBnClickedBtnSelchashp3()
+{
+	UpdateData();
+	CFileDialog dlg(false, "*.shp", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"shapefile(*.shp)|*.shp||",this);
+	if(dlg.DoModal()==IDOK) 
+	{
+		m_strResult3 =dlg.GetPathName();
+		UpdateData(FALSE);
+	}
+}
+
+void CDlgChangeDetect::OnBnClickedBtnRelmap()
+{
+	CFileDialog dlg(false, "*.*", "",OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,"Ó°ÏñÊý¾Ý(*.tif;*.img;*.tiff;*.bmp)|*.tif;*.img;*.tiff;*.bmp|All Files(*.*)|*.*||",this);
+	if(dlg.DoModal()==IDOK) 
+	{
+
+		m_strRelMap =dlg.GetPathName();
+		UpdateData(FALSE);
+	}
 }

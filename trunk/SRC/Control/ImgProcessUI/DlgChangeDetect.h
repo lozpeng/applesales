@@ -33,4 +33,16 @@ public:
 	afx_msg void OnBnClickedCheckLoadchange();
 	double m_dCor;
 	int m_nSize;
+	double m_dblH1;
+	double m_dblH2;
+	double m_dblP1;
+	double m_dblP2;
+	double m_dblW1;
+	double m_dblW2;
+	CString n_strRel2;
+	CString m_strResult3;
+	afx_msg void OnBnClickedBtnSelchashp2();
+	afx_msg void OnBnClickedBtnSelchashp3();
+	CString m_strRelMap;
+	afx_msg void OnBnClickedBtnRelmap();
 };
