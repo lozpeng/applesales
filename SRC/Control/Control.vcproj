@@ -1280,6 +1280,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ImgProcessUI\DlgTargetClip.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ImgProcessUI\DlgTargetClip.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ImgProcessUI\FuzzyKMeanDialog.cpp"
 					>
 				</File>
