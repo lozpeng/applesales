@@ -13,7 +13,16 @@ namespace ImageProcess
 		double dblCellX,
 		double dblCellY);
 
+	 IMP_DLL bool TargetClip(const char* pszInImage,
+		 const char* pszTargetFile,
+		 long lWidth,
+		 long lHeight,
+		 const char* pszOutPath);
 
+	 //相关系数图
+	IMP_DLL bool RelativeMap(const char* strSrc, const char* strDest, const char *strResult, int nsize, SYSTEM::IProgress *pProgress);
+
+    IMP_DLL double CalCorrelation(float* pBase, float* pSamp, int nBlockLen);
 }
 
 #endif
