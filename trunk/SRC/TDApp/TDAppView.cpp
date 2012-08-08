@@ -21,7 +21,7 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include "Tool/MagicStickTool.h"
-#include "imgprocessUI/ImageProcessTool.h"
+#include "ImageProcessTool.h"
 #include "ILayer.h"
 #include "DlgIncrementalExport.h"
 #include "DlgIncrementalImport.h"
@@ -156,6 +156,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 
 	
 	ON_COMMAND(ID_CHANGE_DETECT, OnImgChangeDetect)
+	ON_COMMAND(ID_TARGET_CLIP, OnImgTargetClip)
 	ON_COMMAND(ID_CHANGE_RENDER, OnImgChangeRender)
 	ON_COMMAND(ID_WATER_EXTRACT, OnWaterExtract)
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
@@ -1131,8 +1132,8 @@ void CTDAppView::RefreshLayerCombo()
 {
 	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
 	GetCurLyrCombox()->RemoveAllItems();
-	GetCurLyrCombox_Vector()->RemoveAllItems();
-	GetMagicLayer()->RemoveAllItems();
+	//GetCurLyrCombox_Vector()->RemoveAllItems();
+	//GetMagicLayer()->RemoveAllItems();
 	for (int i=0; i<nSize; ++i)
 	{
 		Carto::ILayerPtr pLayer = m_MapCtrl.GetMap()->GetLayers().GetAt(i);
@@ -1141,12 +1142,12 @@ void CTDAppView::RefreshLayerCombo()
 		if(pLayer->GetLayerType()==Carto::RasterLayer)
 		{
            GetCurLyrCombox()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
-		   GetMagicLayer()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+		   //GetMagicLayer()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
 		   
 		}
 		else if(pLayer->GetLayerType()==Carto::FeatureLayer)
 		{
-           GetCurLyrCombox_Vector()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+           //GetCurLyrCombox_Vector()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
 		   
 		}
 		
@@ -1154,12 +1155,12 @@ void CTDAppView::RefreshLayerCombo()
 	}
 	if(GetCurLyrCombox()->GetCount() > 0)
 		GetCurLyrCombox()->SelectItem(0);
-	if(GetCurLyrCombox_Vector()->GetCount() > 0)
-		GetCurLyrCombox_Vector()->SelectItem(0);
-	if(GetMagicLayer()->GetCount() > 0)
-	{
-		GetMagicLayer()->SelectItem(0);
-	}
+	//if(GetCurLyrCombox_Vector()->GetCount() > 0)
+	//	GetCurLyrCombox_Vector()->SelectItem(0);
+	//if(GetMagicLayer()->GetCount() > 0)
+	//{
+	//	GetMagicLayer()->SelectItem(0);
+	//}
 
 }
 
@@ -1781,9 +1782,13 @@ void CTDAppView::OnImgChangeDetect()
 {
 	Control::CImageProcessTool::ShowImgChangeDetectDlg();
 
-	RefreshLayerCombo();
-
 }
+
+void CTDAppView::OnImgTargetClip()
+{
+	Control::CImageProcessTool::ShowTargetClipDlg();
+}
+
 void CTDAppView::OnImgChangeRender()
 {
 	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
