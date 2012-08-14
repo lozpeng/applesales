@@ -73,6 +73,10 @@
 #define HID_SET_APREARENCE                      0x18082
 #define HID_START_EDIT                          0x18083
 #define HID_STOPSAVE_EDIT                       0x18084
+#define HID_LINK_IMG                            0x180E8
+#define HID_LINK_VECTOR                         0x180E9
+#define HID_LOAD_DB                             0x180EA
+#define HID_LOAD_TARGET                         0x180EB
 #define HID_MAPCTRL                             0x19C40
 #define HID_LAYOUTCTRL                          0x19C41
 #define HID_MAIN_BUTTON                         0x19C42

@@ -63,7 +63,10 @@ protected:
 public:
 	afx_msg void OnOpenVector();
 	afx_msg void OnOpenImg();
-
+	afx_msg void OnLoadTarget();
+	afx_msg void OnLinkImg();
+	afx_msg void OnLinkVector();
+	afx_msg void OnLoadDb();
 	afx_msg void OnMapPan();
 	afx_msg void OnUpdateMapPan(CCmdUI* pCmdUI);
 

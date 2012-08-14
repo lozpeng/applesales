@@ -210,6 +210,21 @@ void CMainFrame::AddTab_MapControl()
 	CBCGPRibbonButton* pPanelFeature = new CBCGPRibbonButton (ID_OPEN_Vector, _T("矢量数据加载"), 21);
 	pPanelFile->Add (pPanelFeature);
 
+	//
+	CBCGPRibbonPanel* pPanelDam = pCategory->AddPanel (_T("震害数据库"));
+
+	CBCGPRibbonButton* pLinkRaster = new CBCGPRibbonButton (ID_LINK_IMG, _T("连接栅格数据库"), 20);
+	pPanelDam->Add (pLinkRaster);
+	CBCGPRibbonButton* pLinkFeature = new CBCGPRibbonButton (ID_LINK_VECTOR, _T("连接矢量数据库"), 21);
+	pPanelDam->Add (pLinkFeature);
+
+	CBCGPRibbonButton* pLoadDB = new CBCGPRibbonButton (ID_LOAD_DB, _T("加载震害数据库"), 18);
+	pPanelDam->Add (pLoadDB);
+
+
+	CBCGPRibbonButton* pLoadTarget = new CBCGPRibbonButton (ID_LOAD_TARGET, _T("加载重点目标"), 19);
+	pPanelDam->Add (pLoadTarget);
+
 	//创建视图基本操作
 	CBCGPRibbonPanel* pPanelMap = pCategory->AddPanel (_T("浏览工具"));
 	//--------------------------
