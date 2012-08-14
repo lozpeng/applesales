@@ -8,8 +8,8 @@
 #include <vector>
 using namespace std;
 
-#import "C:\\Program Files\\Common Files\\System\\ado\\MSADO15.DLL" rename("EOF","adoEOF")
-#import "c:\\Program Files\\Common Files\\System\\ADO\\msadox.dll" rename_namespace("ADOX")\
+#import "D:\\Program Files\\Common Files\\System\\ado\\MSADO15.DLL" rename("EOF","adoEOF")
+#import "d:\\Program Files\\Common Files\\System\\ADO\\msadox.dll" rename_namespace("ADOX")\
 	rename("_Collection","_CollectionX")\
 	rename("_DynaCollection","_DynaCollectionX")\
 	rename("DataTypeEnum","DataTypeEnumX")\

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "TDApp.h"
 #include "WorkSpaceBar.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -87,3 +88,19 @@ void CWorkSpaceBar::OnPaint()
 								::GetSysColor (COLOR_3DSHADOW));
 }
 
+
+////////////////////////////////////////////////////////////
+// CMapTreeCtrlAction
+void CMapTreeCtrlAction::OpenAttributeTable(Carto::ILayerPtr pLayer, Geodatabase::IFeatureClassPtr pFeatureClass)
+{
+	CMainFrame* pMain = (CMainFrame*)AfxGetMainWnd();
+	pMain->ShowAttributeBar();
+	pMain->GetAttributeBar()->GetTable()->SetLayer(pLayer);
+	pMain->GetAttributeBar()->GetTable()->OpenTable(pFeatureClass,false);
+}
+
+void CMapTreeCtrlAction::CloseAttibuteTable()
+{
+	CMainFrame* pMain = (CMainFrame*)AfxGetMainWnd();
+	pMain->HideAttributeBar();
+}

@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Feature.h"
 #include <vector>
+#include "SmartPtr.h"
 using namespace std;
 
 namespace Editor

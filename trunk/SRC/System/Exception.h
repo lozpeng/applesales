@@ -34,6 +34,8 @@ private:
 
 }
 
-
+#ifndef THORW_EXCEPT
+#define THORW_EXCEPT(desc)  throw new SYSTEM::CException(desc, __FILE__, __FUNCTION__, __LINE__);
+#endif
 
 #endif

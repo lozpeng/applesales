@@ -69,6 +69,7 @@
 #include "ElementDefine.h"
 #include "SystemUnit.h"
 #include <afxdlgs.h>
+#include "EditorDef.h"
 
 #define WM_REPAINTLEGEND		(WM_USER + 0x107)
 #define WM_SETSYMBOLSTYLE		(WM_USER + 0x108)

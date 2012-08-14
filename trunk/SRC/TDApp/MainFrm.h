@@ -6,6 +6,7 @@
 #include "WorkSpaceBar.h"
 #include "WorkSpaceBar2.h"
 #include "OutputBar.h"
+#include "AttributeTableBar.h"
 
 class CMainFrame : public CBCGPFrameWnd
 {
@@ -50,8 +51,16 @@ protected:  // control bar embedded members
 	CBCGPToolBar            m_DrawingToolBar;
 
 	CBCGPToolBarImages	m_UserImages;
+
+	// Ù–‘±Ì
+	
+	CAttributeTableBar  m_AttributeBar;
+
 // Generated message map functions
 public:
+	void ShowAttributeBar();
+	void HideAttributeBar();
+
 	BOOL		CreateRibbonBar();
 	void		AddMainCategory();
 	void		AddTab_MapControl();
@@ -65,6 +74,8 @@ public:
 	void        AddTab_TargetClip();
 
 	Framework::IMaptreeCtrl* GetTOC();
+
+	CAttributeTableBar *GetAttributeBar() { return &m_AttributeBar; } 
 
 	CBCGPRibbonBar						m_wndRibbonBar;	// Ribbon control bar
 	CBCGPRibbonMainButton				m_MainButton;	// Ribbon main button

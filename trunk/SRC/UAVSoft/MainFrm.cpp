@@ -99,33 +99,33 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndWorkSpace.SetIcon (imagesWorkspace.ExtractIcon (0), FALSE);
 
-	//if (!m_wndWorkSpace2.Create (_T("View 2"), this, CRect (0, 0, 200, 200),
-	//	TRUE, ID_VIEW_WORKSPACE2,
-	//	WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
-	//{
-	//	TRACE0("Failed to create Workspace bar 2\n");
-	//	return -1;      // fail to create
-	//}
+	if (!m_wndWorkSpace2.Create (_T("View 2"), this, CRect (0, 0, 200, 200),
+		TRUE, ID_VIEW_WORKSPACE2,
+		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("Failed to create Workspace bar 2\n");
+		return -1;      // fail to create
+	}
 
-	//m_wndWorkSpace2.SetIcon (imagesWorkspace.ExtractIcon (1), FALSE);
+	m_wndWorkSpace2.SetIcon (imagesWorkspace.ExtractIcon (1), FALSE);
 
 
-	//if (!m_wndOutput.Create (_T("Output"), this, CSize (150, 150),
-	//	TRUE /* Has gripper */, ID_VIEW_OUTPUT,
-	//	WS_CHILD | WS_VISIBLE | CBRS_BOTTOM))
-	//{
-	//	TRACE0("Failed to create output bar\n");
-	//	return -1;      // fail to create
-	//}
+	if (!m_wndOutput.Create (_T("Output"), this, CSize (150, 150),
+		TRUE /* Has gripper */, ID_VIEW_OUTPUT,
+		WS_CHILD | WS_VISIBLE | CBRS_BOTTOM))
+	{
+		TRACE0("Failed to create output bar\n");
+		return -1;      // fail to create
+	}
 
 	m_wndWorkSpace.EnableDocking(CBRS_ALIGN_ANY);
-	/*m_wndWorkSpace2.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);*/
+	m_wndWorkSpace2.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);
 	EnableDocking(CBRS_ALIGN_ANY);
 	EnableAutoHideBars(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndWorkSpace);
-	//m_wndWorkSpace2.AttachToTabWnd (&m_wndWorkSpace, BCGP_DM_STANDARD, FALSE, NULL);
-	//DockControlBar(&m_wndOutput);
+	m_wndWorkSpace2.AttachToTabWnd (&m_wndWorkSpace, BCGP_DM_STANDARD, FALSE, NULL);
+	DockControlBar(&m_wndOutput);
 
 	OnAppLook (m_nAppLook);
 

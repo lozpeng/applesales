@@ -5,6 +5,12 @@
 
 using namespace Framework;
 
+typedef enum TimeControlType
+{
+	FLASH_TYPE ,
+	MOUSE_TYPE 
+}TIME_CONTROL_TYPE;
+
 namespace Control
 {
 
@@ -39,6 +45,8 @@ namespace Control
 
 		void OnTimer(UINT_PTR nIDEvent);
 
+		afx_msg LRESULT OnFlash(WPARAM wParam, LPARAM lParam);
+
 
 	private:
 		//计算要贴的图在memDC上的位置
@@ -46,12 +54,19 @@ namespace Control
 		//计算贴图在view中的位置
 		void CalDestRect(GEOMETRY::geom::Envelope srcExtent,GEOMETRY::geom::Envelope destExtent,CRect &rect);
 
+		void FlashLine(long);
+		void FlashShape1(long);
 	private:
 		double m_dblScale;
 		bool m_bTimer;
 		GEOMETRY::geom::Envelope m_srcEnvelop; //记录内存DC的地理范围
 		double   m_srcScale;
 		bool m_bMouseWheel;
+
+		//OnTimer响应的类型
+		TIME_CONTROL_TYPE m_TimeType;
+		//闪烁的图形
+		GEOMETRY::geom::Geometry *m_pGeo;
 
 	public:
 		virtual BOOL PreTranslateMessage(MSG* pMsg);

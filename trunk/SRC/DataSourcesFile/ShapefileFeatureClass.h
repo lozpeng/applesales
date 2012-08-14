@@ -132,6 +132,12 @@ private:
 	//建立空间索引
 	void BuildSpatialIndex();
 
+	bool CheckFieldLength( Geodatabase::CField *pField );
+
+	DBFHandle CreateDBF(const char *name, std::vector<Geodatabase::CField*> &allFields);
+
+	void InitFields();
+
 private:
     SHPHandle m_shpHandle;
 	DBFHandle m_dbfHandle;

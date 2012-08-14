@@ -216,6 +216,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\AttributeTableBar.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DlgBlueTooth.cpp"
 				>
 			</File>
@@ -273,6 +277,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\AttributeTableBar.h"
+				>
+			</File>
 			<File
 				RelativePath=".\DlgBlueTooth.h"
 				>
@@ -339,6 +347,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\res\AttributeBar.bmp"
+				>
+			</File>
 			<File
 				RelativePath=".\res\bitmap1.bmp"
 				>
@@ -424,11 +436,11 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\桌面\toolbar2.bmp"
+				RelativePath=".\res\toolbar2.bmp"
 				>
 			</File>
 			<File
-				RelativePath=".\res\toolbar2.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\桌面\toolbar2.bmp"
 				>
 			</File>
 			<File
@@ -440,11 +452,11 @@
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\桌面\viewToolbar.bmp"
+				RelativePath=".\res\viewToolbar.bmp"
 				>
 			</File>
 			<File
-				RelativePath=".\res\viewToolbar.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\桌面\viewToolbar.bmp"
 				>
 			</File>
 			<File

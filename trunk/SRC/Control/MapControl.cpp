@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "MapControl.h"
+#include "AttributeTable.h"
+#include "SymbolFactory.h"
 
 namespace Control
 {
@@ -11,7 +13,7 @@ namespace Control
 		m_bTimer = false;
 		m_bMouseWheel = false;
 
-
+		m_TimeType = MOUSE_TYPE;
 	}
 
 	CMapControl::~CMapControl()
@@ -32,7 +34,8 @@ namespace Control
 		ON_WM_MOUSEWHEEL()
 		ON_WM_SETCURSOR()
 		ON_WM_TIMER()
-
+	
+		ON_MESSAGE(WM_MESSAGE_FLASH, OnFlash)
 	END_MESSAGE_MAP()
 
 
@@ -287,6 +290,7 @@ namespace Control
 
 		if (!m_bTimer)
 		{
+			m_TimeType = MOUSE_TYPE;
 			m_srcEnvelop = m_pGeoMap->GetViewEnvelope();
 			SetTimer(1,300,NULL);
 			m_dblScale = pDispaly->GetDisplayTransformation().GetScale();
@@ -418,30 +422,188 @@ namespace Control
 	void CMapControl::OnTimer(UINT_PTR nIDEvent)
 	{
 		//如果在上个时间段，鼠标滚轮滑动,则将标记设为false
-		if(m_bMouseWheel)
+		
+		if ( m_TimeType == MOUSE_TYPE )
 		{
-			m_bMouseWheel =false;
+			if(m_bMouseWheel)
+			{
+				m_bMouseWheel =false;
+			}
+			else
+			{
+
+				m_pGeoMap->GetDisplay()->GetDisplayTransformation().ZoomToFixScale(m_dblScale);
+
+				UpdateControl(drawAll);
+
+				//记录视图范围
+				GEOMETRY::geom::Envelope curExtent;
+				m_pGeoMap->GetDisplay()->GetDisplayTransformation().GetGeoBound(curExtent);
+				m_pGeoMap->GetDisplay()->GetDisplayTransformation().RecordCurExtent(curExtent);
+
+				KillTimer(1);	
+				m_bTimer = false;
+			}
 		}
-		else
+		else if ( m_TimeType == FLASH_TYPE )
 		{
+			if ( m_pGeo == NULL)
+				return;
 
-			m_pGeoMap->GetDisplay()->GetDisplayTransformation().ZoomToFixScale(m_dblScale);
+			static long tNow = 0;
+			tNow += 100;
 
-			UpdateControl(drawAll);
+			//滑过线
+			FlashLine( tNow );
+			//图形闪烁
+			FlashShape1( tNow );
 
-			//记录视图范围
-			GEOMETRY::geom::Envelope curExtent;
-			m_pGeoMap->GetDisplay()->GetDisplayTransformation().GetGeoBound(curExtent);
-			m_pGeoMap->GetDisplay()->GetDisplayTransformation().RecordCurExtent(curExtent);
-
-			KillTimer(1);	
-			m_bTimer = false;
+			if ( tNow > 1000 )
+			{
+				tNow = 0;
+				KillTimer(1);
+			}
 		}
 
 	}
 
+	#define FLASH_COLOR RGB(0,155,0)
+	void CMapControl::FlashShape1( long tNow )
+	{
+		if ( tNow <= 500 )
+			return;
 
+		//转化地理坐标为屏幕坐标
+		Display::IDisplayPtr pDisplay = this->GetMap()->GetDisplay();
 
+		Display::ISymbolPtr pSymbol;
+
+		if ( tNow > 500 && tNow <= 1000 )
+		{
+			if (typeid(*m_pGeo)==typeid(GEOMETRY::geom::Polygon)) 
+			{
+				pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+				((Display::IFillSymbolPtr)pSymbol)->SetFillColor( FLASH_COLOR );
+			}
+			else if (typeid(*m_pGeo)==typeid(GEOMETRY::geom::Point))
+			{
+				pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_MARKER_SYMBOL);
+				((Display::CSimpleMarkerSymbolPtr)pSymbol)->SetMarkerColor( FLASH_COLOR );
+				((Display::CSimpleMarkerSymbolPtr)pSymbol)->SetOutLineFlag( false );
+				((Display::CSimpleMarkerSymbolPtr)pSymbol)->SetMarkerSize( 10.0 );
+			}	
+			else if (typeid(*m_pGeo)==typeid(GEOMETRY::geom::LineString) || typeid(*m_pGeo)==typeid(GEOMETRY::geom::LinearRing))
+			{
+				pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
+				((Display::ILineSymbolPtr)pSymbol)->SetLineWidth( 2 );
+				((Display::ILineSymbolPtr)pSymbol)->SetLineColor( FLASH_COLOR );
+			}
+
+			pDisplay->SetSymbol( pSymbol.get() );
+			pDisplay->Begin();
+			pDisplay->Draw( m_pGeo );
+			pDisplay->End();
+
+			BitBlt(m_hClientDC, 0, 0, m_lSizeX, m_lSizeY, m_hMemDC, 0, 0, SRCCOPY);
+		}
+
+		if ( tNow == 1000 )
+		{
+			RefreshScreen();
+		}
+	}
+
+	void CMapControl::FlashLine( long tNow )
+	{
+		if ( tNow > 500 )
+			return;
+
+		//转化地理坐标为屏幕坐标
+		Display::IDisplayPtr pDisplay = this->GetMap()->GetDisplay();
+
+		DIS_RECT *pDisplayEnv = pDisplay->GetDisplayTransformation().TransformToDisplay( &(this->GetMap()->GetViewEnvelope()) ); //显示范围
+		DIS_POINT *pDisplayPoint = pDisplay->GetDisplayTransformation().TransformToDisplay(  m_pGeo->getCentroid( ) );				//中心点
+
+		if ( pDisplayPoint == NULL )
+			return;
+
+		DIS_LINE *line[4];
+		for ( int i = 0; i < 4; i++ )
+		{
+			CreateDisplayLine( line[i], 2 );
+		}
+
+		if ( tNow > 100 && tNow <= 400 )
+		{
+
+			if ( tNow <= 300 )
+			{
+				line[0]->ps[0].x = pDisplayEnv->left;
+				line[0]->ps[0].y = pDisplayPoint->p.y;
+				line[0]->ps[1].x = pDisplayEnv->left + (pDisplayPoint->p.x - pDisplayEnv->left)*4/5;
+				line[0]->ps[1].y = pDisplayPoint->p.y;
+
+				line[1]->ps[0].x = pDisplayEnv->right;
+				line[1]->ps[0].y = pDisplayPoint->p.y;
+				line[1]->ps[1].x = pDisplayPoint->p.x + (pDisplayEnv->right - pDisplayPoint->p.x)/5;
+				line[1]->ps[1].y = pDisplayPoint->p.y;
+
+				line[2]->ps[0].x = pDisplayPoint->p.x;
+				line[2]->ps[0].y = pDisplayEnv->bottom;
+				line[2]->ps[1].x = pDisplayPoint->p.x;
+				line[2]->ps[1].y = pDisplayEnv->bottom + (pDisplayPoint->p.y - pDisplayEnv->bottom)*4/5;
+
+				line[3]->ps[0].x = pDisplayPoint->p.x;
+				line[3]->ps[0].y = pDisplayEnv->top;
+				line[3]->ps[1].x = pDisplayPoint->p.x;
+				line[3]->ps[1].y = pDisplayPoint->p.y + (pDisplayEnv->top - pDisplayPoint->p.y)/5;
+			}
+			else
+			{
+				line[0]->ps[0].x = pDisplayEnv->left;
+				line[0]->ps[0].y = pDisplayPoint->p.y;
+				line[0]->ps[1].x = pDisplayPoint->p.x;
+				line[0]->ps[1].y = pDisplayPoint->p.y;
+
+				line[1]->ps[0].x = pDisplayEnv->right;
+				line[1]->ps[0].y = pDisplayPoint->p.y;
+				line[1]->ps[1].x = pDisplayPoint->p.x;
+				line[1]->ps[1].y = pDisplayPoint->p.y;
+
+				line[2]->ps[0].x = pDisplayPoint->p.x;
+				line[2]->ps[0].y = pDisplayEnv->bottom;
+				line[2]->ps[1].x = pDisplayPoint->p.x;
+				line[2]->ps[1].y = pDisplayPoint->p.y;
+
+				line[3]->ps[0].x = pDisplayPoint->p.x;
+				line[3]->ps[0].y = pDisplayEnv->top;
+				line[3]->ps[1].x = pDisplayPoint->p.x;
+				line[3]->ps[1].y = pDisplayPoint->p.y;
+			}
+
+			Display::ISymbolPtr pLineSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_LINE_SYMBOL);
+			((Display::CSimpleLineSymbolPtr)pLineSymbol)->SetLineWidth( 2.0 );
+			((Display::CSimpleLineSymbolPtr)pLineSymbol)->SetLineStyle( SOLID );
+			((Display::CSimpleLineSymbolPtr)pLineSymbol)->SetLineColor( FLASH_COLOR );
+
+			pDisplay->SetSymbol( pLineSymbol.get() );
+			pDisplay->Begin();
+
+			for ( int i = 0; i < 4; i++ )
+			{
+				pDisplay->Draw( (void *)line[i] );
+				FreeDisplayObj( line[i] );
+			}
+
+			pDisplay->End();
+			BitBlt(m_hClientDC, 0, 0, m_lSizeX, m_lSizeY, m_hMemDC, 0, 0, SRCCOPY);	
+		}
+
+		if ( tNow == 500 )
+		{
+			RefreshScreen();
+		}
+	}
 
 	BOOL CMapControl::PreTranslateMessage(MSG* pMsg)
 	{
@@ -526,4 +688,16 @@ namespace Control
 		labelName +=szLabelName+strUnit;
 		return labelName;
 	}
+
+	LRESULT CMapControl::OnFlash(WPARAM wParam, LPARAM lParam)
+	{
+		m_TimeType = FLASH_TYPE;
+
+		m_pGeo = (GEOMETRY::geom::Geometry *)(void *)( lParam );
+
+		SetTimer( 1, 125, NULL );
+
+		return 0;
+	}
 }
+
