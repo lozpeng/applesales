@@ -37,6 +37,7 @@
 #define IDD_DIG_IncrementalImport       180
 #define IDD_DIG_Drawing_IncrExport      181
 #define IDD_BLUETOOTH_FILE              182
+#define IDR_TOOLBAR_ATTRTABLE           183
 #define IDC_COMPANY_URL                 1041
 #define IDC_TAB1                        1053
 #define ID_TABCONTROL                   1054
@@ -77,6 +78,7 @@
 #define ID_VIEW_USER_TOOLBAR10          32802
 #define ID_VIEW_WORKSPACE               32803
 #define ID_VIEW_OUTPUT                  32804
+#define ID_VIEW_ATTRIBUTE_BAR           32805
 #define ID_VIEW_APPLOOK_2000            32826
 #define ID_VIEW_APPLOOK_XP              32827
 #define ID_VIEW_APPLOOK_2003            32828
@@ -118,6 +120,19 @@
 #define ID_MAP_FULLVIEW                 32884
 #define ID_MAP_SRCVIEW                  32885
 #define ID_32886                        32886
+#define ID_SELRECORD_TEXT               32888
+#define ID_TABLE_EDITMODE               32889
+#define ID_FIND_REPLACE                 32890
+#define ID_TABLE_SQLQUERY               32891
+#define ID_ATTRTABLE_SELALL             32892
+#define ID_ATTRTABLE_SELNONE            32893
+#define ID_ADD_FIELD                    32894
+#define ID_SHOW_ALLFIELDS               32895
+#define ID_ATTRBAR_OUTPUTTABLE          32896
+#define ID_ATTRBAR_PRINT                32897
+#define ID_SET_APREARENCE               32898
+#define ID_START_EDIT                   32899
+#define ID_STOPSAVE_EDIT                32900
 #define ID_MAPCTRL                      40000
 #define ID_LAYOUTCTRL                   40001
 #define ID_MAIN_BUTTON                  40002
@@ -157,7 +172,7 @@
 #define ID_EDITOR_SAVE                  40036
 #define ID_CHANGE_DETECT                40500
 #define ID_CHANGE_RENDER                40501
-#define ID_TARGET_CLIP					40502
+#define ID_TARGET_CLIP                  40502
 #define ID_MAGIC_STICK                  40510
 #define ID_EDGE_EXTRACT                 40511
 #define ID_WATER_EXTRACT                40512
@@ -181,8 +196,8 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        183
-#define _APS_NEXT_COMMAND_VALUE         32887
+#define _APS_NEXT_RESOURCE_VALUE        185
+#define _APS_NEXT_COMMAND_VALUE         32901
 #define _APS_NEXT_CONTROL_VALUE         1065
 #define _APS_NEXT_SYMED_VALUE           108
 #endif

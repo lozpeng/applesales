@@ -63,6 +63,10 @@ public:
 
 	virtual void *GetSelectedItemData(); 
 
+	virtual void OpenAttributeTable(Carto::ILayerPtr pLayer, Geodatabase::IFeatureClassPtr pFeatureClass){}
+
+	virtual void CloseAttibuteTable(){}
+
 public:
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
@@ -108,9 +112,9 @@ public:
 
 	afx_msg void OnObjExport();
 
+	afx_msg void OnOpenAttribute();
+
 	BOOL SetItemState( HTREEITEM hItem, UINT nState, UINT nStateMask, BOOL bSearch=TRUE);
-
-
 
 
 private:

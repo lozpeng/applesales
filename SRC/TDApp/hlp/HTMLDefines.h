@@ -18,6 +18,7 @@
 #define HID_VIEW_USER_TOOLBAR10                 0x18022
 #define HID_VIEW_WORKSPACE                      0x18023
 #define HID_VIEW_OUTPUT                         0x18024
+#define HID_VIEW_ATTRIBUTE_BAR                  0x18025
 #define HID_VIEW_APPLOOK_2000                   0x1803A
 #define HID_VIEW_APPLOOK_XP                     0x1803B
 #define HID_VIEW_APPLOOK_2003                   0x1803C
@@ -59,6 +60,19 @@
 #define HID_MAP_FULLVIEW                        0x18074
 #define HID_MAP_SRCVIEW                         0x18075
 #define HID_32886                               0x18076
+#define HID_SELRECORD_TEXT                      0x18078
+#define HID_TABLE_EDITMODE                      0x18079
+#define HID_FIND_REPLACE                        0x1807A
+#define HID_TABLE_SQLQUERY                      0x1807B
+#define HID_ATTRTABLE_SELALL                    0x1807C
+#define HID_ATTRTABLE_SELNONE                   0x1807D
+#define HID_ADD_FIELD                           0x1807E
+#define HID_SHOW_ALLFIELDS                      0x1807F
+#define HID_ATTRBAR_OUTPUTTABLE                 0x18080
+#define HID_ATTRBAR_PRINT                       0x18081
+#define HID_SET_APREARENCE                      0x18082
+#define HID_START_EDIT                          0x18083
+#define HID_STOPSAVE_EDIT                       0x18084
 #define HID_MAPCTRL                             0x19C40
 #define HID_LAYOUTCTRL                          0x19C41
 #define HID_MAIN_BUTTON                         0x19C42
@@ -132,6 +146,7 @@
 #define HIDR_TOOLBAR_Drawing                    0x200A3
 #define HIDR_MENU1                              0x200B2
 #define HIDR_COMMAND_MENU                       0x200B2
+#define HIDR_TOOLBAR_ATTRTABLE                  0x200B7
  
 // Dialogs (IDD_*) 
 #define HIDD_ABOUTBOX                           0x20064

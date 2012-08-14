@@ -16,6 +16,7 @@
 #include <Geometry/geom/Polygon.h>
 #include <Geometry/geom/LinearRing.h>
 #include "RelativePath.h"
+#include "Exception.h"
 
 using namespace Geodatabase;
 using namespace std;
@@ -379,11 +380,232 @@ void CShapefileFeatureClass::DeleteFeature(long index)
 /************************************************************************************************
 * 以下为字段的操作方法
 *************************************************************************************************/
+DBFHandle CShapefileFeatureClass::CreateDBF(const char *name, std::vector<Geodatabase::CField*> &allFields)
+{
+
+	DBFHandle hDBF = DBFCreate( name);
+
+	if(hDBF ==NULL)
+	{
+		return NULL;
+	}
+
+	Geodatabase::CField* pField;
+	//创建DBF的字段结构
+	for(long i=0;i<allFields.size();i++)
+	{
+		pField =allFields[i];
+
+		if(!pField)
+		{
+			continue;
+		}
+		switch(pField->GetType())
+		{
+		case FTYPE_LONG:
+		case FTYPE_SHORT:
+			{
+				if( pField->GetLength() == 0 )
+				{
+					DBFAddField( hDBF, pField->GetName().c_str(), FTInteger, 11, 0 );
+				}			
+				else
+				{
+					DBFAddField( hDBF, pField->GetName().c_str(), FTInteger,
+						pField->GetLength(), 0 );
+				}
+
+				break;
+			}
+		case FTYPE_FLOAT:
+		case FTYPE_DOUBLE:
+			{
+				if( pField->GetLength() == 0 )
+				{
+					DBFAddField( hDBF, pField->GetName().c_str(), FTDouble, 24, pField->Precision());
+				}			
+				else
+				{
+					DBFAddField( hDBF, pField->GetName().c_str(), FTDouble,
+						pField->GetLength(), pField->Precision() );
+				}
+				break;
+			}
+		case FTYPE_STRING:
+			{
+				if( pField->GetLength() < 1)
+				{
+					DBFAddField( hDBF, pField->GetName().c_str(), FTString, 80, 0 );
+				}			
+				else
+				{
+					DBFAddField( hDBF, pField->GetName().c_str(), FTString,
+						pField->GetLength(), 0 );
+				}
+				break;
+			}
+		case FTYPE_BOOL:
+			{
+				if( pField->GetLength() < 1)
+				{
+					DBFAddNativeFieldType( hDBF, pField->GetName().c_str(), 'L', 1, 0 );
+				}			
+				else
+				{
+					DBFAddNativeFieldType( hDBF, pField->GetName().c_str(), 'L', pField->GetLength(), 0 );
+				}
+				break;
+			}
+		case FTYPE_TIME:
+		case FTYPE_DATE:
+			{
+				DBFAddNativeFieldType( hDBF, pField->GetName().c_str(), 'D', 8, 0 );
+				break;
+			}
+		default:
+			continue;
+			break;
+
+		}
+	}
+
+	return hDBF;
+}
 
 //增加一个字段
 void CShapefileFeatureClass::AddField(Geodatabase::CField *pField)
 {
+	if (m_dbfHandle==NULL || pField==NULL)
+	{
+		return;
+	}
 
+	//判断字段名称是否和原有的重复
+	std::string fname =pField->GetName();
+	for(size_t i=0;i<m_allFields.size();i++)
+	{
+		if(stricmp(m_allFields[i]->GetName().c_str(),fname.c_str())==0)
+		{
+			THORW_EXCEPT("新字段的名称和原有字段重复，无法执行此操作");
+			return;
+		}
+	}
+
+	//判断数据的长度
+
+	if ( !CheckFieldLength( pField ) )
+	{
+		THORW_EXCEPT("字段长度不匹配,重新设置!");
+		return;
+	}
+
+
+	/* -------------------------------------------------------------------- */
+	/*     创建新的DBF文件                                                  */
+	/* -------------------------------------------------------------------- */
+	std::string tempDbfname =m_name+"_temp.dbf";
+	std::vector<Geodatabase::CField*> allfields;
+
+	for(size_t i=0;i<m_allFields.size();i++)
+	{
+		allfields.push_back(m_allFields[i].get());
+	}
+	allfields.push_back(pField);
+	DBFHandle hdbf = CreateDBF(tempDbfname.c_str(),allfields);
+	if(hdbf==NULL)
+	{
+		THORW_EXCEPT("创建临时DBF文件失败");
+		return;
+	}
+	/* -------------------------------------------------------------------- */
+	/*     将原有记录写入新的dbf                                            */
+	/* -------------------------------------------------------------------- */
+
+	int iField;
+
+	for(int i=0;i<m_dbfHandle->nRecords;i++)
+	{
+		for(iField=0;iField<m_allFields.size();iField++)
+		{
+			DBFWriteAttributeDirectly(hdbf,i,iField,(void*)DBFReadStringAttribute(m_dbfHandle,i,iField));
+		}
+	}
+	/* -------------------------------------------------------------------- */
+	/*     将原有dbf删除，用新的替换                                         */
+	/* -------------------------------------------------------------------- */
+	DBFClose(m_dbfHandle);
+	DBFClose(hdbf);
+
+	std::string olddbf =m_name.substr(0,m_name.find_last_of('.'));
+
+	olddbf+=".dbf";
+
+	if(_unlink(olddbf.c_str())!=0)
+	{
+		THORW_EXCEPT("无法删除原有文件，请确保文件不是只读，并且没有被其它程序打开");
+		return;
+	}
+
+	rename(tempDbfname.c_str(),olddbf.c_str());
+
+	m_dbfHandle = DBFOpen (olddbf.c_str(),"r" );
+
+	m_Readonly =true;
+
+	InitFields();
+}
+
+void CShapefileFeatureClass::InitFields()
+{
+	m_allFields.clear();
+	int iField;
+	int lFieldnum =DBFGetFieldCount(m_dbfHandle);
+	char            szFieldName[20];
+	int             nWidth, nPrecision;
+	char            chNativeType;
+	DBFFieldType    eDBFType;
+	//获得属性字段的信息
+	for( iField = 0; 
+		m_dbfHandle != NULL && iField < lFieldnum; 
+		iField++ )
+	{
+		CField *pField =new CField();
+
+
+
+		chNativeType = DBFGetNativeFieldType( m_dbfHandle, iField );
+		eDBFType = DBFGetFieldInfo( m_dbfHandle, iField, szFieldName,
+			&nWidth, &nPrecision );
+
+		pField->SetName(szFieldName);
+
+		pField->SetLength(nWidth);
+
+		pField->SetPrecision(nPrecision);
+
+		if( chNativeType == 'D' )
+		{
+			/* XXX - mloskot:
+			* Shapefile date has following 8-chars long format: 20060101.
+			* OGR splits it as YYYY/MM/DD, so 2 additional characters are required.
+			* Is this correct assumtion? What about time part of date?
+			* Shouldn't this format look as datetime: YYYY/MM/DD HH:MM:SS
+			* with 4 additional characters?
+			*/
+			pField->SetLength( nWidth + 2 );
+			pField->SetType( FTYPE_DATE );
+		}
+		else if( eDBFType == FTDouble )
+			pField->SetType( FTYPE_DOUBLE);
+		else if( eDBFType == FTInteger )
+			pField->SetType(FTYPE_LONG);
+		else if(eDBFType==FTLogical)
+			pField->SetType(FTYPE_BOOL);
+		else
+			pField->SetType( FTYPE_STRING);
+
+		m_allFields.push_back(CFieldPtr(pField));
+	}
 }
 
 //删除一个字段
@@ -1688,5 +1910,44 @@ void CShapefileFeatureClass::BuildSpatialIndex()
 		//打开索引文件
         m_IndexTree =fopen(path.c_str(),"rb");
 	}
+}
+
+bool CShapefileFeatureClass::CheckFieldLength( Geodatabase::CField *pField )
+{
+	if (m_dbfHandle==NULL || pField==NULL)
+	{
+		return false;
+	}
+
+	bool bRes;
+
+	long nLength = pField->GetLength();
+	long nType = pField->GetType();
+
+	switch ( nType )
+	{
+	case FTYPE_BOOL:
+		bRes = ( nLength == 1 );
+		break;
+	case FTYPE_DATE:
+		bRes = ( nLength == 8 );
+		break;
+	case FTYPE_SHORT:
+	case FTYPE_LONG:
+		bRes = ( nLength >0 && nLength<= 10 );
+		break;
+	case FTYPE_FLOAT:
+	case FTYPE_DOUBLE:
+		bRes = ( nLength >0 && nLength<= 20 );
+		break;
+	case FTYPE_STRING:
+		bRes = ( nLength >0 && nLength<= 255 );
+		break;
+	default:
+		bRes = true;
+		break;
+	}
+
+	return bRes;
 }
 

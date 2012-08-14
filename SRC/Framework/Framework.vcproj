@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IAttributeTable.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ICommand.cpp"
 				>
 			</File>
@@ -262,6 +266,10 @@
 			</File>
 			<File
 				RelativePath=".\FrameworkDefine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IAttributeTable.h"
 				>
 			</File>
 			<File

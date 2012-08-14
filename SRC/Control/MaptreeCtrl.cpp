@@ -61,6 +61,7 @@ BEGIN_MESSAGE_MAP(CMaptreeCtrl, CTreeCtrl)
 	ON_COMMAND(ID_LAYER_PROP, &CMaptreeCtrl::OnLayerProp)
 	ON_COMMAND(ID_ZOOMTO_LAYER, &CMaptreeCtrl::OnZoomToLayer)
 	ON_COMMAND(ID_OBJ_EXPORT, &CMaptreeCtrl::OnObjExport)
+	ON_COMMAND(ID_OPEN_ATTRIBUTETABLE, &CMaptreeCtrl::OnOpenAttribute)
 
 END_MESSAGE_MAP()
 
@@ -2309,7 +2310,34 @@ void CMaptreeCtrl::RefreshFromDoc()
 
 }
 
+void CMaptreeCtrl::OnOpenAttribute()
+{
+	HTREEITEM item =CTreeCtrl::GetSelectedItem();
+	if(!item)
+		return;
 
+	Framework::IMapCtrl *pMapCtrl = Framework::IMapCtrl::GetActiveMapCtrl();
+	if(!pMapCtrl)
+		return;
+	
+	HTREEITEM layerItem, mapItem;
+	if(m_iSelectedItemType == Framework::eLayerItem)
+		layerItem =item;
+	else if(m_iSelectedItemType == Framework::eLegendItem)
+		layerItem =GetParentItem(item);
+
+	std::map  <HTREEITEM, Carto::ILayerPtr>::iterator layerIter;
+	//²éÕÒÍ¼²ã
+	layerIter =m_LayerItemMap.find(layerItem);
+	if(layerIter ==m_LayerItemMap.end())
+		return;
+	
+	Carto::ILayerPtr pLayer = layerIter->second;
+	if(pLayer->GetLayerType() != Carto::FeatureLayer)
+		return;
+
+	OpenAttributeTable(pLayer, pLayer->GetDataObject());
+}
 
 
 }//namespace Control

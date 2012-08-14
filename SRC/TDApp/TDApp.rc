@@ -87,6 +87,7 @@ IDB_ZOOMBARSMALL        BITMAP                  "res\\bmp00005.bmp"
 IDB_EDITORLARGE         BITMAP                  "res\\bmp00003.bmp"
 IDB_ChangeDetect        BITMAP                  "res\\bmp00004.bmp"
 IDB_EDITORSMALL         BITMAP                  "res\\editorla.bmp"
+IDR_TOOLBAR_ATTRTABLE   BITMAP                  "res\\AttributeBar.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -135,6 +136,28 @@ BEGIN
     BUTTON      ID_DRAW_CalloutText
     SEPARATOR
     BUTTON      ID_DRAW_EDITOR
+END
+
+IDR_TOOLBAR_ATTRTABLE TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_SELRECORD_TEXT
+    BUTTON      ID_TABLE_EDITMODE
+    SEPARATOR
+    BUTTON      ID_START_EDIT
+    BUTTON      ID_STOPSAVE_EDIT
+    SEPARATOR
+    BUTTON      ID_FIND_REPLACE
+    BUTTON      ID_TABLE_SQLQUERY
+    BUTTON      ID_ATTRTABLE_SELALL
+    BUTTON      ID_ATTRTABLE_SELNONE
+    SEPARATOR
+    BUTTON      ID_ADD_FIELD
+    BUTTON      ID_SHOW_ALLFIELDS
+    SEPARATOR
+    BUTTON      ID_ATTRBAR_OUTPUTTABLE
+    BUTTON      ID_ATTRBAR_PRINT
+    SEPARATOR
+    BUTTON      ID_SET_APREARENCE
 END
 
 
@@ -214,7 +237,7 @@ BEGIN
     BEGIN
         MENUITEM "&Help Topics",                ID_HELP_FINDER
         MENUITEM SEPARATOR
-        MENUITEM "&About 重点目标震害信息提取...", ID_APP_ABOUT
+        MENUITEM "&About 重点目标震害信息提取...",        ID_APP_ABOUT
     END
 END
 
@@ -728,6 +751,27 @@ END
 STRINGTABLE 
 BEGIN
     ID_RASLUT_EDIT          "当前图层闪烁\n闪烁"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_SELRECORD_TEXT       "选择记录\n选择记录"
+    ID_TABLE_EDITMODE       "编辑状态\n编辑状态"
+    ID_FIND_REPLACE         "查找替换\n查找替换"
+    ID_TABLE_SQLQUERY       "SQL查询\nSQL查询"
+    ID_ATTRTABLE_SELALL     "选择全部\n选择全部"
+    ID_ATTRTABLE_SELNONE    "取消全部\n取消全部"
+    ID_ADD_FIELD            "添加字段\n添加字段"
+    ID_SHOW_ALLFIELDS       "显示全部字段\n显示全部字段"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_ATTRBAR_OUTPUTTABLE  "输出表格\n输出表格"
+    ID_ATTRBAR_PRINT        "打印表格\n打印表格"
+    ID_SET_APREARENCE       "外观设置\n外观设置"
+    ID_START_EDIT           "开始编辑\n开始编辑"
+    ID_STOPSAVE_EDIT        "停止保存\n停止保存"
 END
 
 #endif    // 中文(中华人民共和国) resources

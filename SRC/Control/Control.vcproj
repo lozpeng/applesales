@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\;.\ui;.\ImgprocessUI;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi;..\workflowWizard"
+				AdditionalIncludeDirectories=".\;.\ui;.\ImgprocessUI;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi;..\workflowWizard;..\Editor;.\shapelib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;CONTROL_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -199,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\AttributeTable.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Control.cpp"
 				>
 			</File>
@@ -286,6 +290,10 @@
 			>
 			<File
 				RelativePath=".\ActivexLoad.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AttributeTable.h"
 				>
 			</File>
 			<File
@@ -1356,6 +1364,78 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="AttributeUI"
+				>
+				<File
+					RelativePath=".\UI\Calculator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\Calculator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\CommonData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgAddField.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgAddField.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgAttrTableProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgAttrTableProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgConditionSelect.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgConditionSelect.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgFieldCalculate.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgFieldCalculate.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgFieldProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgFieldProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgFieldStatics.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgFieldStatics.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgFRField.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgFRField.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Command"
@@ -1374,6 +1454,30 @@
 			</File>
 			<File
 				RelativePath=".\Tool\SwipeCommand.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="shplib"
+			>
+			<File
+				RelativePath=".\shapelib\dbfopen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapelib\safileio.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapelib\shapefil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\shapelib\shpopen.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\shapelib\shptree.cpp"
 				>
 			</File>
 		</Filter>

@@ -10,6 +10,14 @@
 
 #include "MaptreeCtrl.h"
 
+class CMapTreeCtrlAction : public Control::CMaptreeCtrl
+{
+public:
+	virtual void OpenAttributeTable(Carto::ILayerPtr pLayer, Geodatabase::IFeatureClassPtr pFeatureClass);
+
+	virtual void CloseAttibuteTable();
+};
+
 class CWorkSpaceBar : public CBCGPDockingControlBar
 {
 public:
@@ -17,7 +25,7 @@ public:
 
 // Attributes
 public:
-	Control::CMaptreeCtrl	m_wndTree;
+	CMapTreeCtrlAction	m_wndTree;
 
 // Operations
 public:

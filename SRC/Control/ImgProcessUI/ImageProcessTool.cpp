@@ -64,18 +64,16 @@ namespace Control
 			CProgressBar progress;
 			ImageProcess::ImgChangeDetect detect;
 
-			////
-			//bool bsuc = ImageProcess::RelativeMap(dlg.m_strSrc,dlg.m_strDest,dlg.m_strRelMap,10,&progress);
-			////
-			// bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult,dlg.m_nSize,dlg.m_dblH1,dlg.m_dblH2,&progress);
+			//
+			bool bsuc = ImageProcess::RelativeMap(dlg.m_strSrc,dlg.m_strDest,dlg.m_strRelMap,10,&progress);
+			//
+			 bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult,dlg.m_nSize,dlg.m_dblH1,dlg.m_dblH2,&progress);
 
-			////
-			//bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.n_strRel2,dlg.m_nSize,dlg.m_dblP1,dlg.m_dblP2,&progress);
+			//
+			bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.n_strRel2,dlg.m_nSize,dlg.m_dblP1,dlg.m_dblP2,&progress);
 
-			////
-			//bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult3,dlg.m_nSize,dlg.m_dblW1,dlg.m_dblW2,&progress);
-
-			bool bsuc = detect.TargetDetect(dlg.m_strSrc, dlg.m_strDest, dlg.m_strResult, dlg.m_nSize, dlg.m_dblH1,dlg.m_dblH2, dlg.m_dblP1, &progress);
+			//
+			bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult3,dlg.m_nSize,dlg.m_dblW1,dlg.m_dblW2,&progress);
 
 			 if(bsuc)
 			 {

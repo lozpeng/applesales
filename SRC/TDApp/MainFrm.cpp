@@ -65,7 +65,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	};
 
-	if (!m_wndWorkSpace.Create (_T("图层管理"), this, CRect (0, 0, 200, 200),
+	if (!m_wndWorkSpace.Create (_T("图层管理"), this, CRect(0, 0, 200, 200),
 		TRUE, ID_VIEW_WORKSPACE,
 		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
 	{
@@ -73,12 +73,45 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 
+	//属性表
+	if (!m_AttributeBar.Create (_T("属性表"), this, CSize (150, 150),
+		TRUE /* Has gripper */, ID_VIEW_ATTRIBUTE_BAR,
+		WS_CHILD | CBRS_BOTTOM))
+	{
+		TRACE0("Failed to create Attribute bar\n");
+		return -1;      // fail to create
+	}
+
 	m_wndWorkSpace.EnableDocking(CBRS_ALIGN_ANY);
+	m_AttributeBar.EnableDocking(CBRS_ALIGN_ANY);
+	
+	EnableDocking(CBRS_ALIGN_ANY);
+	//EnableAutoHideBars(CBRS_ALIGN_ANY);
+	
 	DockControlBar(&m_wndWorkSpace);
+	DockControlBar(&m_AttributeBar);
+
+	ShowControlBar(&m_wndWorkSpace, TRUE, FALSE, TRUE);
+	HideAttributeBar();
 
 	// VISUAL_MANAGER
 	return 0;
 }
+
+void CMainFrame::ShowAttributeBar()
+{
+	ShowControlBar (&m_AttributeBar,TRUE,FALSE, TRUE);
+
+	RecalcLayout ();
+}
+
+void CMainFrame::HideAttributeBar()
+{
+	ShowControlBar (&m_AttributeBar,FALSE,FALSE, TRUE);
+
+	RecalcLayout ();
+}
+
 BOOL CMainFrame::CreateRibbonBar()
 {
 	if (!m_wndRibbonBar.Create (this))
