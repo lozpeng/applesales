@@ -412,6 +412,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\..\QSLogo32.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\res\TDApp.ico"
 				>
 			</File>
@@ -452,11 +456,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\res\viewToolbar.bmp"
+				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
 				>
 			</File>
 			<File
-				RelativePath="C:\Documents and Settings\hhzhao\×ÀÃæ\viewToolbar.bmp"
+				RelativePath=".\res\viewToolbar.bmp"
 				>
 			</File>
 			<File

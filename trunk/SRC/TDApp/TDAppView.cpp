@@ -48,6 +48,10 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
 	ON_COMMAND(ID_OPEN_Vector, &CTDAppView::OnOpenVector)
 	ON_COMMAND(ID_OPEN_IMG, &CTDAppView::OnOpenImg)
+	ON_COMMAND(ID_LOAD_TARGET,&CTDAppView::OnLoadTarget)
+	ON_COMMAND(ID_LINK_IMG,&CTDAppView::OnLinkImg)
+	ON_COMMAND(ID_LINK_VECTOR,&CTDAppView::OnLinkVector)
+	ON_COMMAND(ID_LOAD_DB,&CTDAppView::OnLoadDb)
 
 	//浏览工具
 	ON_COMMAND(ID_MAP_PAN, OnMapPan)
@@ -1930,4 +1934,85 @@ void CTDAppView::OnDelAll()
 	//更新视图
 	m_MapCtrl.UpdateControl(drawAll);
 	
+}
+
+void CTDAppView::OnLoadTarget()
+{
+	std::string path = SYSTEM::CSystemPath::GetSystemPath();
+	std::string eqfile = path + "\\result\\eq.txt";
+	
+	FILE* fp = NULL;
+	fp =fopen(eqfile.c_str(),"r");
+	if(!fp)
+		return;
+
+	char cs[20];
+	fscanf(fp, "%s", cs);
+	fclose(fp);
+
+	std::string eqID;
+	eqID = cs;
+
+	std::string targetName = 	"dmg" + eqID.substr(2,2) + "keyobjdamagepoint.shp";
+	std::string targetPath = path + "result\\" + eqID +"\\" + targetName;
+	this->GetDocument()->LoadShpFile(targetPath.c_str());
+
+	m_MapCtrl.UpdateControl(drawAll);
+	RefreshLayerCombo();
+}
+
+void CTDAppView::OnLinkImg()
+{
+	std::string path = SYSTEM::CSystemPath::GetSystemPath();
+	std::string exeName = path + "loaddbraster.exe";
+
+	ShellExecute(NULL,"open",exeName.c_str(),NULL,NULL,SW_SHOWNORMAL); 
+}
+
+void CTDAppView::OnLinkVector()
+{
+	std::string path = SYSTEM::CSystemPath::GetSystemPath();
+	std::string exeName = path + "loaddbvector.exe";
+
+	ShellExecute(NULL,"open",exeName.c_str(),NULL,NULL,SW_SHOWNORMAL); 
+}
+
+void CTDAppView::OnLoadDb()
+{
+
+	std::string path = SYSTEM::CSystemPath::GetSystemPath();
+	char file[1024];
+	FILE* fp = NULL;
+
+	//
+	std::string rasterDB = path + "seldbraster.txt";
+	fp = fopen(rasterDB.c_str(), "r");
+	if(fp)
+	{
+		while (fscanf(fp,"%s", file) != EOF)
+		{
+			std::string filepath = file;
+			this->GetDocument()->LoadImageFile(filepath.c_str());
+		}
+
+	}
+	fclose(fp);
+	
+	//
+	rasterDB = path + "seldbvector.txt";
+	fp = fopen(rasterDB.c_str(), "r");
+	if(fp)
+	{
+		while (fscanf(fp,"%s", file) != EOF)
+		{
+			std::string filepath = file;
+			this->GetDocument()->LoadShpFile(filepath.c_str());
+		}
+
+	}
+	fclose(fp);
+
+
+	m_MapCtrl.UpdateControl(drawAll);
+	RefreshLayerCombo();
 }

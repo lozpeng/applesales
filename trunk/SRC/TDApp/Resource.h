@@ -133,6 +133,10 @@
 #define ID_SET_APREARENCE               32898
 #define ID_START_EDIT                   32899
 #define ID_STOPSAVE_EDIT                32900
+#define ID_LINK_IMG						33000
+#define ID_LINK_VECTOR                  33001
+#define ID_LOAD_DB                      33002
+#define ID_LOAD_TARGET                  33003
 #define ID_MAPCTRL                      40000
 #define ID_LAYOUTCTRL                   40001
 #define ID_MAIN_BUTTON                  40002
@@ -196,7 +200,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        185
+#define _APS_NEXT_RESOURCE_VALUE        186
 #define _APS_NEXT_COMMAND_VALUE         32901
 #define _APS_NEXT_CONTROL_VALUE         1065
 #define _APS_NEXT_SYMED_VALUE           108
