@@ -128,7 +128,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi;..\workflowWizard"
+				AdditionalIncludeDirectories=".\;.\ui;.\tool;..\..\thirdPartyLib\Boost;..\System;..\Display;..\Geometry\source\headers;..\Geodatabase;..\DataSourcesFile;..\DataSourceRaster;..\Carto;..\Framework;..\Carto\Element;..\..\thirdPartyLib\bcg12\include;..\ImageProcess;..\Geometry\capi;..\workflowWizard;;..\Editor;.\shapelib"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;CONTROL_EXPORTS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -1277,6 +1277,14 @@
 				</File>
 				<File
 					RelativePath=".\ImgProcessUI\DlgChangeDetect.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ImgProcessUI\DlgFtrDectect.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ImgProcessUI\DlgFtrDectect.h"
 					>
 				</File>
 				<File
