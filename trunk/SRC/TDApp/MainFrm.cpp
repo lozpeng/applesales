@@ -114,7 +114,7 @@ void CMainFrame::HideAttributeBar()
 
 BOOL CMainFrame::CreateRibbonBar()
 {
-	if (!m_wndRibbonBar.Create (this))
+	if (!m_wndRibbonBar.Create (this,WS_CHILD | WS_VISIBLE | CBRS_TOP))
 	{
 		return -1;      // fail to create
 	}
@@ -137,9 +137,9 @@ BOOL CMainFrame::CreateRibbonBar()
 	//变化发现
 	AddTab_ChangeDetect();
 	//地理要素提取
-	AddTab_GeoInfoExtract();
+	//AddTab_GeoInfoExtract();
 	//矢量编辑
-	//AddTab_Editor();
+	AddTab_Editor();
 	//-----------------------------------
 	// Add quick access toolbar commands:
 	//-----------------------------------
@@ -162,8 +162,7 @@ void CMainFrame::AddMainCategory()
 	m_MainButton.SetDescription (_T("单击此处打开、保存地图文件"));
 	m_MainButton.SetID (ID_MAIN_BUTTON);
 
-	m_wndRibbonBar.SetMainButton (&m_MainButton, CSize (45, 45));
-
+	m_wndRibbonBar.SetMainButton (&m_MainButton, CSize (48, 48));
 	CBCGPRibbonMainPanel* pMainPanel = m_wndRibbonBar.AddMainCategory (
 		_T("文件"), IDB_FILESMALL, IDB_FILELARGE);
 	
@@ -205,25 +204,30 @@ void CMainFrame::AddTab_MapControl()
 	pDisplayCombo->AddItem(_T("1:1000000"));
 	pPanelFile->Add (pDisplayCombo);
 	//加载数据
-	CBCGPRibbonButton* pPanelRaster = new CBCGPRibbonButton (ID_OPEN_IMG, _T("栅格数据加载"), 20);
+	CBCGPRibbonButton* pPanelRaster = new CBCGPRibbonButton (ID_OPEN_IMG, _T("栅格数据"), 20);
 	pPanelFile->Add (pPanelRaster);
-	CBCGPRibbonButton* pPanelFeature = new CBCGPRibbonButton (ID_OPEN_Vector, _T("矢量数据加载"), 21);
+	CBCGPRibbonButton* pPanelFeature = new CBCGPRibbonButton (ID_OPEN_Vector, _T("矢量数据"), 21);
 	pPanelFile->Add (pPanelFeature);
 
 	//
 	CBCGPRibbonPanel* pPanelDam = pCategory->AddPanel (_T("震害数据库"));
 
-	CBCGPRibbonButton* pLinkRaster = new CBCGPRibbonButton (ID_LINK_IMG, _T("连接栅格数据库"), 20);
+	CBCGPRibbonButton* pLinkRaster = new CBCGPRibbonButton (ID_LINK_IMG, _T("栅格数据库"), 20);
 	pPanelDam->Add (pLinkRaster);
-	CBCGPRibbonButton* pLinkFeature = new CBCGPRibbonButton (ID_LINK_VECTOR, _T("连接矢量数据库"), 21);
+	CBCGPRibbonButton* pLinkFeature = new CBCGPRibbonButton (ID_LINK_VECTOR, _T("矢量数据库"), 21);
 	pPanelDam->Add (pLinkFeature);
 
-	CBCGPRibbonButton* pLoadDB = new CBCGPRibbonButton (ID_LOAD_DB, _T("加载震害数据库"), 18);
-	pPanelDam->Add (pLoadDB);
+	//CBCGPRibbonButton* pLoadDB = new CBCGPRibbonButton (ID_LOAD_DB, _T("加载数据库"), 18);
+	//pPanelDam->Add (pLoadDB);
 
 
-	CBCGPRibbonButton* pLoadTarget = new CBCGPRibbonButton (ID_LOAD_TARGET, _T("加载重点目标"), 19);
+	CBCGPRibbonButton* pLoadTarget = new CBCGPRibbonButton (ID_LOAD_TARGET, _T("重点目标"), 19);
 	pPanelDam->Add (pLoadTarget);
+
+
+	CBCGPRibbonButton* pCheckResult = new CBCGPRibbonButton (ID_CHECK_RESULT, _T("提交成果"), 17);
+	pPanelDam->Add (pCheckResult);
+
 
 	//创建视图基本操作
 	CBCGPRibbonPanel* pPanelMap = pCategory->AddPanel (_T("浏览工具"));
@@ -651,8 +655,11 @@ void CMainFrame::AddTab_ChangeDetect()
 	//--------------------------
 	// 变化检测
 	//--------------------------
-	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_CHANGE_DETECT, _T("震害信息提取"), 1, 1);
+	CBCGPRibbonButton* pBtnChange = new CBCGPRibbonButton (ID_CHANGE_DETECT, _T("灰度相关法"), 1, 1);
 	pPanel->Add (pBtnChange);
+
+	CBCGPRibbonButton* pBtnChange2 = new CBCGPRibbonButton (ID_CHANGE_TARGET, _T("多特征组合法"), 9, 9);
+	pPanel->Add (pBtnChange2);
 	//--------------------------
 	// 变化标识
 	//--------------------------

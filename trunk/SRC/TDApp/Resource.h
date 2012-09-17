@@ -137,6 +137,7 @@
 #define ID_LINK_VECTOR                  33001
 #define ID_LOAD_DB                      33002
 #define ID_LOAD_TARGET                  33003
+#define ID_CHECK_RESULT                33004
 #define ID_MAPCTRL                      40000
 #define ID_LAYOUTCTRL                   40001
 #define ID_MAIN_BUTTON                  40002
@@ -195,7 +196,7 @@
 #define ID_CHANGE_SETSYMBOL             40530
 #define ID_SEND_BLUEFILE                40531
 #define ID_DEL_ALL                      40532
-
+#define ID_CHANGE_TARGET                40533
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
