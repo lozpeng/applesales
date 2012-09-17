@@ -102,9 +102,39 @@ BOOL CTDAppApp::InitInstance()
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
 
-	
+	//
+	struct AFX_OLDNONCLIENTMETRICS
+	{
+		UINT    cbSize;
+		int     iBorderWidth;
+		int     iScrollWidth;
+		int     iScrollHeight;
+		int     iCaptionWidth;
+		int     iCaptionHeight;
+		LOGFONT lfCaptionFont;
+		int     iSmCaptionWidth;
+		int     iSmCaptionHeight;
+		LOGFONT lfSmCaptionFont;
+		int     iMenuWidth;
+		int     iMenuHeight;
+		LOGFONT lfMenuFont;
+		LOGFONT lfStatusFont;
+		LOGFONT lfMessageFont;
+	};
 
-	
+	const UINT cbProperSize = sizeof(AFX_OLDNONCLIENTMETRICS);/*(_AfxGetComCtlVersion() < MAKELONG(1, 6))
+															  ? sizeof(AFX_OLDNONCLIENTMETRICS) : sizeof(NONCLIENTMETRICS);*/
+
+	NONCLIENTMETRICS info;
+	info.cbSize = cbProperSize;
+
+	::SystemParametersInfo(SPI_GETNONCLIENTMETRICS, cbProperSize, &info, 0);
+
+	LONG prelfHeight = info.lfMenuFont.lfHeight;
+	info.lfMenuFont.lfHeight = -14;
+
+	::SystemParametersInfo(SPI_SETNONCLIENTMETRICS, cbProperSize, &info, 0);
+	globalData.UpdateFonts();
 
 	//设置文档连接地图管理控件
 	CMainFrame *pMainFrame = (CMainFrame *)AfxGetMainWnd();
@@ -127,6 +157,31 @@ BOOL CTDAppApp::InitInstance()
 int CTDAppApp::ExitInstance() 
 {
 	BCGCBProCleanUp();
+
+	std::string path = SYSTEM::CSystemPath::GetSystemPath();
+	std::string result = path + "result\\message.txt";
+
+	if(AfxMessageBox("保存结果？", MB_YESNO) == IDYES )
+	{
+		FILE* fp = NULL;
+		fp = fopen(result.c_str(), "w");
+		if(!fp) return 0 ;
+
+		fprintf(fp, "YES");
+
+		fclose(fp);
+	}
+	else
+	{
+		FILE* fp = NULL;
+		fp = fopen(result.c_str(), "w");
+		if(!fp) return 0;
+
+		fprintf(fp, "NO");
+
+		fclose(fp);
+	}
+
 
 	return CWinApp::ExitInstance();
 }

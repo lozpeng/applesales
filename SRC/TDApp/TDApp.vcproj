@@ -153,6 +153,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="BCGCBPRO120080.lib Geometry.lib"
+				OutputFile="$(OutDir)\重点目标震害信息提取.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"

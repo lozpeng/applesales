@@ -52,6 +52,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	ON_COMMAND(ID_LINK_IMG,&CTDAppView::OnLinkImg)
 	ON_COMMAND(ID_LINK_VECTOR,&CTDAppView::OnLinkVector)
 	ON_COMMAND(ID_LOAD_DB,&CTDAppView::OnLoadDb)
+	ON_COMMAND(ID_CHECK_RESULT,&CTDAppView::OnCheckResult)
 
 	//浏览工具
 	ON_COMMAND(ID_MAP_PAN, OnMapPan)
@@ -161,6 +162,7 @@ BEGIN_MESSAGE_MAP(CTDAppView, CView)
 	
 	ON_COMMAND(ID_CHANGE_DETECT, OnImgChangeDetect)
 	ON_COMMAND(ID_TARGET_CLIP, OnImgTargetClip)
+	ON_COMMAND(ID_CHANGE_TARGET,OnChangeTarget)
 	ON_COMMAND(ID_CHANGE_RENDER, OnImgChangeRender)
 	ON_COMMAND(ID_WATER_EXTRACT, OnWaterExtract)
 	ON_COMMAND(ID_MAGIC_STICK, OnMagicStick)
@@ -199,6 +201,40 @@ CString  GetAppPathName()
 		FileName=PathName.Left(SplashPos);
 	return FileName;
 }
+
+
+DWORD 	WinExecAndWait32(	LPCTSTR lpszAppPath,   // 执行程序的路径
+		LPCTSTR lpParameters,  // 参数
+		LPCTSTR lpszDirectory, // 执行环境目录
+		DWORD dwMilliseconds)  // 最大等待时间, 超过这个时间强行终止
+	{
+		SHELLEXECUTEINFO ShExecInfo = {0};
+		ShExecInfo.cbSize	= sizeof(SHELLEXECUTEINFO);
+		ShExecInfo.fMask	= SEE_MASK_NOCLOSEPROCESS;
+		ShExecInfo.hwnd		= NULL;
+		ShExecInfo.lpVerb	= NULL;
+		ShExecInfo.lpFile	= lpszAppPath;		
+		ShExecInfo.lpParameters = lpParameters;	
+		ShExecInfo.lpDirectory	= lpszDirectory;
+		ShExecInfo.nShow	= SW_SHOWNORMAL;
+		ShExecInfo.hInstApp = NULL;	
+		ShellExecuteEx(&ShExecInfo);
+
+		// 指定时间没结束
+		if (WaitForSingleObject(ShExecInfo.hProcess, dwMilliseconds) == WAIT_TIMEOUT)
+		{	// 强行杀死进程
+			TerminateProcess(ShExecInfo.hProcess, 0);
+			return 0;	//强行终止
+		}
+
+		DWORD dwExitCode;
+		BOOL bOK = GetExitCodeProcess(ShExecInfo.hProcess, &dwExitCode);
+		ASSERT(bOK);
+
+		Sleep(1000);
+
+		return dwExitCode;
+	}
 
 
 // CTDAppView construction/destruction
@@ -1136,7 +1172,7 @@ void CTDAppView::RefreshLayerCombo()
 {
 	int nSize = m_MapCtrl.GetMap()->GetLayers().GetSize();
 	GetCurLyrCombox()->RemoveAllItems();
-	//GetCurLyrCombox_Vector()->RemoveAllItems();
+	GetCurLyrCombox_Vector()->RemoveAllItems();
 	//GetMagicLayer()->RemoveAllItems();
 	for (int i=0; i<nSize; ++i)
 	{
@@ -1151,7 +1187,7 @@ void CTDAppView::RefreshLayerCombo()
 		}
 		else if(pLayer->GetLayerType()==Carto::FeatureLayer)
 		{
-           //GetCurLyrCombox_Vector()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
+           GetCurLyrCombox_Vector()->AddItem(strName.c_str(),(DWORD_PTR)pLayer.get());
 		   
 		}
 		
@@ -1159,8 +1195,8 @@ void CTDAppView::RefreshLayerCombo()
 	}
 	if(GetCurLyrCombox()->GetCount() > 0)
 		GetCurLyrCombox()->SelectItem(0);
-	//if(GetCurLyrCombox_Vector()->GetCount() > 0)
-	//	GetCurLyrCombox_Vector()->SelectItem(0);
+	if(GetCurLyrCombox_Vector()->GetCount() > 0)
+		GetCurLyrCombox_Vector()->SelectItem(0);
 	//if(GetMagicLayer()->GetCount() > 0)
 	//{
 	//	GetMagicLayer()->SelectItem(0);
@@ -1953,7 +1989,7 @@ void CTDAppView::OnLoadTarget()
 	std::string eqID;
 	eqID = cs;
 
-	std::string targetName = 	"dmg" + eqID.substr(2,2) + "keyobjdamagepoint.shp";
+	std::string targetName = 	"dmg" + eqID.substr(2,2) + "keyobjdampt.shp";
 	std::string targetPath = path + "result\\" + eqID +"\\" + targetName;
 	this->GetDocument()->LoadShpFile(targetPath.c_str());
 
@@ -1966,7 +2002,27 @@ void CTDAppView::OnLinkImg()
 	std::string path = SYSTEM::CSystemPath::GetSystemPath();
 	std::string exeName = path + "loaddbraster.exe";
 
-	ShellExecute(NULL,"open",exeName.c_str(),NULL,NULL,SW_SHOWNORMAL); 
+	WinExecAndWait32(exeName.c_str(), NULL, NULL, INFINITE);
+
+	//
+	char file[1024];
+	FILE* fp = NULL;
+
+	std::string rasterDB = path + "seldbraster.txt";
+	fp = fopen(rasterDB.c_str(), "r");
+	if(fp)
+	{
+		while (fscanf(fp,"%s", file) != EOF)
+		{
+			std::string filepath = file;
+			this->GetDocument()->LoadImageFile(filepath.c_str());
+		}
+
+		fclose(fp);
+
+		m_MapCtrl.UpdateControl(drawAll);
+		RefreshLayerCombo();
+	}
 }
 
 void CTDAppView::OnLinkVector()
@@ -1974,7 +2030,34 @@ void CTDAppView::OnLinkVector()
 	std::string path = SYSTEM::CSystemPath::GetSystemPath();
 	std::string exeName = path + "loaddbvector.exe";
 
-	ShellExecute(NULL,"open",exeName.c_str(),NULL,NULL,SW_SHOWNORMAL); 
+	WinExecAndWait32(exeName.c_str(), NULL, NULL, INFINITE);
+
+	//
+	char file[1024];
+	FILE* fp = NULL;
+
+	std::string rasterDB = path + "seldbvector.txt";
+	fp = fopen(rasterDB.c_str(), "r");
+	if(fp)
+	{
+		while (fscanf(fp,"%s", file) != EOF)
+		{
+			std::string filepath = file;
+			this->GetDocument()->LoadShpFile(filepath.c_str());
+		}
+
+		fclose(fp);
+
+		m_MapCtrl.UpdateControl(drawAll);
+		RefreshLayerCombo();
+	}
+
+
+}
+
+void CTDAppView::OnChangeTarget()
+{
+	Control::CImageProcessTool::ShowTargetFeature();
 }
 
 void CTDAppView::OnLoadDb()
@@ -1995,8 +2078,9 @@ void CTDAppView::OnLoadDb()
 			this->GetDocument()->LoadImageFile(filepath.c_str());
 		}
 
+		fclose(fp);
 	}
-	fclose(fp);
+
 	
 	//
 	rasterDB = path + "seldbvector.txt";
@@ -2009,10 +2093,40 @@ void CTDAppView::OnLoadDb()
 			this->GetDocument()->LoadShpFile(filepath.c_str());
 		}
 
+		fclose(fp);
 	}
-	fclose(fp);
+
 
 
 	m_MapCtrl.UpdateControl(drawAll);
 	RefreshLayerCombo();
+}
+
+void CTDAppView::OnCheckResult()
+{
+	std::string path = SYSTEM::CSystemPath::GetSystemPath();
+	std::string result = path + "result\\message.txt";
+
+	if(AfxMessageBox("保存结果？", MB_YESNO) == IDYES )
+	{
+		FILE* fp = NULL;
+		fp = fopen(result.c_str(), "w");
+		if(!fp) return;
+
+		fprintf(fp, "YES");
+
+		fclose(fp);
+	}
+	else
+	{
+		FILE* fp = NULL;
+		fp = fopen(result.c_str(), "w");
+		if(!fp) return;
+
+		fprintf(fp, "NO");
+
+		fclose(fp);
+	}
+
+
 }

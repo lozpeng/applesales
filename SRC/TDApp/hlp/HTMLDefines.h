@@ -77,6 +77,7 @@
 #define HID_LINK_VECTOR                         0x180E9
 #define HID_LOAD_DB                             0x180EA
 #define HID_LOAD_TARGET                         0x180EB
+#define HID_CHECK_RESULT                        0x180EC
 #define HID_MAPCTRL                             0x19C40
 #define HID_LAYOUTCTRL                          0x19C41
 #define HID_MAIN_BUTTON                         0x19C42
@@ -135,6 +136,7 @@
 #define HID_CHANGE_SETSYMBOL                    0x19E52
 #define HID_SEND_BLUEFILE                       0x19E53
 #define HID_DEL_ALL                             0x19E54
+#define HID_CHANGE_TARGET                       0x19E55
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064
