@@ -45,6 +45,7 @@
 #define IDC_BTN_COLORPICK               2022
 #define IDC_EDIT1                       2023
 #define IDC_ON_VERTIX                   2024
+#define IDC_EDIT4                       2024
 #define IDC_EDIT_RELSHP                 2025
 #define IDC_VERTIX_MOVE                 2026
 #define IDC_BTN_SELCHASHP               2027
@@ -54,19 +55,26 @@
 #define IDC_EDIT_INIMG2                 2029
 #define IDB_MAPTREE_STATE               2030
 #define IDD_DIALOG_RASTER2VECTOR        2030
+#define IDC_CHECK1                      2030
 #define IDC_CHECK_LOADCHANGE            2031
 #define IDD_DLG_MODIFYIMGCLASS          2031
 #define IDC_EDIT_RELSHP2                2031
+#define IDC_CHECK2                      2031
 #define IDD_PROGRESS_BAR                2032
 #define IDC_BTN_SELCHASHP2              2032
+#define IDC_CHECK3                      2032
+#define IDC_COMBO_TARGET                2032
 #define IDC_EDIT2                       2033
 #define IDC_EDIT_CLSNAME                2033
 #define IDD_DIALOG_TARGETCLIP           2033
 #define IDC_EDIT_TARGETFILE             2033
 #define IDC_EDIT_H1                     2033
+#define IDC_COMBO_TARGET2               2033
 #define IDC_EDIT_CHANGETHD              2034
 #define IDC_EDIT_OUTPATH                2034
 #define IDC_EDIT_H2                     2034
+#define IDC_EDIT_TARGETFILE2            2034
+#define IDD_DIALOG_FTRDETECT            2034
 #define IDC_BUTTON1                     2035
 #define IDC_BT_SELCLASSFILE             2035
 #define IDC_BUTTON_INIMG                2035
@@ -77,21 +85,28 @@
 #define IDC_BTN_SHOWSYMBOL              2037
 #define IDC_BUTTON_OUTPATH              2037
 #define IDC_EDIT_W1                     2037
+#define IDC_BUTTON_TARGETFILE2          2037
 #define IDR_LAYER_MENU                  2038
 #define IDC_BUTTON_INIMG2               2038
 #define IDC_EDIT_W2                     2038
 #define IDC_EDIT_MINAREA                2039
 #define IDC_EDIT_RELSHP3                2039
+#define IDC_CHECK4                      2039
 #define IDD_LAYERPROP_GENERAL           2040
 #define IDC_BTN_SELCHASHP3              2040
+#define IDC_BTN_SELCHASHP4              2040
+#define IDC_CHECK5                      2040
 #define IDC_EDIT_MINAREA2               2041
 #define IDC_EDIT_RELSHP4                2041
 #define IDC_EDIT_RELMAP                 2041
+#define IDC_EDIT_H3                     2041
 #define IDC_EDIT_TOLL                   2042
 #define IDC_BTN_RELMAP                  2042
+#define IDC_EDIT_H4                     2042
 #define IDC_COMBO1                      2043
 #define IDC_COMBO_SELCLS_FILE           2043
 #define IDC_COMBO_RS_LYR                2044
+#define IDC_EDIT_P3                     2044
 #define IDD_RASTER_PROP                 2045
 #define IDC_EDIT_EXWATERSHP             2046
 #define IDD_IMG_CHANGEDETECT            2047
@@ -373,9 +388,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2034
+#define _APS_NEXT_RESOURCE_VALUE        2035
 #define _APS_NEXT_COMMAND_VALUE         32781
-#define _APS_NEXT_CONTROL_VALUE         2029
+#define _APS_NEXT_CONTROL_VALUE         2033
 #define _APS_NEXT_SYMED_VALUE           2000
 #endif
 #endif
