@@ -22,6 +22,7 @@
 #include "DlgModifyImgClass.h"
 #include "DlgTargetClip.h"
 #include "ImageClip.h"
+#include "DlgFtrDectect.h"
 
 namespace Control
 {
@@ -64,28 +65,118 @@ namespace Control
 			CProgressBar progress;
 			ImageProcess::ImgChangeDetect detect;
 
-			////
-			//bool bsuc = ImageProcess::RelativeMap(dlg.m_strSrc,dlg.m_strDest,dlg.m_strRelMap,10,&progress);
-			////
-			// bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult,dlg.m_nSize,dlg.m_dblH1,dlg.m_dblH2,&progress);
-
-			////
-			//bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.n_strRel2,dlg.m_nSize,dlg.m_dblP1,dlg.m_dblP2,&progress);
-
-			////
-			//bsuc =detect.RelativeDetect(dlg.m_strSrc,dlg.m_strDest,dlg.m_strResult3,dlg.m_nSize,dlg.m_dblW1,dlg.m_dblW2,&progress);
-
-			bool bsuc = detect.TargetDetect(dlg.m_strSrc, dlg.m_strDest, dlg.m_strResult, dlg.m_nSize, dlg.m_dblH1,dlg.m_dblH2, dlg.m_dblP1, &progress);
+			bool bsuc = detect.TargetDetect(dlg.m_strSrc, dlg.m_strDest, dlg.m_strResult, dlg.m_strResult2, dlg.m_nSize, dlg.m_dblH1,dlg.m_dblH2, dlg.m_dblP1, &progress);
 
 			 if(bsuc)
 			 {
 				 AfxMessageBox("ºÏ≤‚≥…π¶");
+				 if(dlg.m_bLoadShp)
+				 {
+					 Framework::IDocument *pDoc =(Framework::IDocument*)Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppDocument);
+					 //pDoc->LoadShpFile(dlg.m_strResult);
 
+					 CString csDataSourceTmp=dlg.m_strResult2;
+
+					 CString csThemeName = csDataSourceTmp.Mid (csDataSourceTmp.ReverseFind ('\\') + 1);
+					 csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
+
+					 Geodatabase::IWorkspace* ipWorkspace = CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(dlg.m_strResult2);
+					 Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->OpenFeatureClass(dlg.m_strResult2);
+
+
+					 Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
+					 pLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
+					 //…Ë÷√Õº≤„√˚
+					 pLayer->SetName(std::string(csThemeName));
+
+					 Carto::IFeatureLayerPtr pFeatureLayer =pLayer;
+					 Carto::CSimpleRenderPtr pRender =pFeatureLayer->GetFeatureRender();
+
+					 //…Ë÷√∑˚∫≈
+					 pRender->SetSymbol(m_pChangeSymbol);
+					 /* Display::CSimpleFillSymbolPtr pFillSymbol =pRender->GetSymbol();
+					 pFillSymbol->SetDrawFill(false);
+					 pFillSymbol->SetOutLineWidth(1.5);
+					 pFillSymbol->SetOutLineColor(RGB(255,0,0));*/
+
+					 pDoc->GetActiveMap()->AddLayer(pLayer);
+
+					 pDoc->GetLinkMapTree()->AddLayer(pLayer);
+
+					 pDoc->GetLinkMapCtrl()->UpdateControl(drawAll);
+				 }
 			 }
 				else
 			 {
 				 AfxMessageBox("ºÏ≤‚ ß∞‹");
 			 }
+		}
+	}
+
+	void CImageProcessTool::ShowTargetFeature()
+	{
+		CDllResource hdll;
+		if(!m_pChangeSymbol)
+		{
+			//…Ë÷√∑˚∫≈
+			Display::CSimpleFillSymbol *pSymbol =new Display::CSimpleFillSymbol();
+			pSymbol->SetDrawFill(false);
+			pSymbol->SetOutLineWidth(1.5);
+			pSymbol->SetOutLineColor(RGB(255,0,0));
+
+			m_pChangeSymbol =pSymbol;
+		}
+		CDlgFtrDectect dlg;
+		if(dlg.DoModal()==IDOK)
+		{
+			CProgressBar progress;
+			ImageProcess::ImgChangeDetect detect;
+
+			bool bsuc = detect.TargetDetect2(dlg.m_strInImg, dlg.m_strInImg2, dlg.m_strTargetFile, dlg.m_strResultFile, dlg.m_targetSize, dlg.m_H4,dlg.m_H3, dlg.m_P3, &progress);
+
+			if(bsuc)
+			{
+				AfxMessageBox("ºÏ≤‚≥…π¶");
+				
+				{
+					Framework::IDocument *pDoc =(Framework::IDocument*)Framework::IUIObject::GetUIObjectByName(Framework::CommonUIName::AppDocument);
+					//pDoc->LoadShpFile(dlg.m_strResult);
+
+					CString csDataSourceTmp=dlg.m_strResultFile;
+
+					CString csThemeName = csDataSourceTmp.Mid (csDataSourceTmp.ReverseFind ('\\') + 1);
+					csThemeName =csThemeName.Left(csThemeName.ReverseFind('.'));
+
+					Geodatabase::IWorkspace* ipWorkspace = CShapefileWorkspaceFactory::GetInstance()->OpenFromFile(dlg.m_strResultFile);
+					Geodatabase::IFeatureClassPtr ipFeatureCls = ipWorkspace->OpenFeatureClass(dlg.m_strResultFile);
+
+
+					Carto::ILayerPtr pLayer = Carto::ILayerPtr(new Carto::CFeatureLayer());
+					pLayer = Carto::ILayer::CreateLayer(ipFeatureCls);
+					//…Ë÷√Õº≤„√˚
+					pLayer->SetName(std::string(csThemeName));
+
+					Carto::IFeatureLayerPtr pFeatureLayer =pLayer;
+					Carto::CSimpleRenderPtr pRender =pFeatureLayer->GetFeatureRender();
+
+					//…Ë÷√∑˚∫≈
+					pRender->SetSymbol(m_pChangeSymbol);
+					/* Display::CSimpleFillSymbolPtr pFillSymbol =pRender->GetSymbol();
+					pFillSymbol->SetDrawFill(false);
+					pFillSymbol->SetOutLineWidth(1.5);
+					pFillSymbol->SetOutLineColor(RGB(255,0,0));*/
+
+					pDoc->GetActiveMap()->AddLayer(pLayer);
+
+					pDoc->GetLinkMapTree()->AddLayer(pLayer);
+
+					pDoc->GetLinkMapCtrl()->UpdateControl(drawAll);
+				}
+			}
+			else
+			{
+				AfxMessageBox("ºÏ≤‚ ß∞‹");
+			}
 		}
 	}
 
