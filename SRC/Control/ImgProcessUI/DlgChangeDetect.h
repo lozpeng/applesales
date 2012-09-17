@@ -45,4 +45,10 @@ public:
 	afx_msg void OnBnClickedBtnSelchashp3();
 	CString m_strRelMap;
 	afx_msg void OnBnClickedBtnRelmap();
+	int m_nBlockSize;
+	CString m_strResult2;
+	afx_msg void OnBnClickedBtnSelchashp4();
+	afx_msg void OnEnChangeEditRelshp();
+	afx_msg void OnCbnSelchangeComboDestimg();
+	CComboBox m_comboTarget;
 };

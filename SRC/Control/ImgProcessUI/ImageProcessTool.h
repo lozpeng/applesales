@@ -24,6 +24,8 @@ public:
 
 	static void ShowTargetClipDlg();
 
+	static void ShowTargetFeature();
+
 	static void InitSymbol();
 
 	//水体提取流程
