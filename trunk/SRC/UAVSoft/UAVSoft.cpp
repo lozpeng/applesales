@@ -128,7 +128,7 @@ BOOL CUAVSoftApp::InitInstance()
 	CUAVSoftView* pView=(CUAVSoftView*)pDoc->GetNextView(pos);
     pView->SetStatusControl();
 
-	m_pMainWnd->SetWindowText("无人机数据处理系统");
+	m_pMainWnd->SetWindowText("无人机数据处理系统");//无人机数据处理系统
 
 	// The one and only window has been initialized, so show and update it
 	m_pMainWnd->ShowWindow(SW_SHOWMAXIMIZED);

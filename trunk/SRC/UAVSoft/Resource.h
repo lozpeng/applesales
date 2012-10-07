@@ -185,8 +185,8 @@
 #define IDC_EDIT_SEARCHRADIUS           40559
 #define IDC_CREATE_ROI_DIALOG           40560
 #define IDC_SUPER_CLASS_DIALOG          40561
-
-
+#define ID_COMBOX_UNITTYPE              40562
+#define ID_LAYOUT_PRINT_TO_IMAGE        40563
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

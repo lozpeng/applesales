@@ -588,6 +588,15 @@ void CMainFrame::AddTab_Mesure()
 	CBCGPRibbonButton* pBtnAreaMeasure = new CBCGPRibbonButton(ID_AREA_MEASURE, _T("面积量测"), -1, 16);
 	pPanelMeasure->Add (pBtnAreaMeasure);
 
+	pPanelMeasure->Add (new CBCGPRibbonLabel (_T(" 单 位:")));
+	CBCGPRibbonComboBox* pBtnUnit= new CBCGPRibbonComboBox(ID_COMBOX_UNITTYPE,FALSE,50,"");
+	pPanelMeasure->Add(pBtnUnit);
+
+	pBtnUnit->AddItem("米");
+	pBtnUnit->AddItem("千米");
+	if(pBtnUnit->GetCount() > 0)
+		pBtnUnit->SelectItem(0);
+
 	//半自动提取
 	CBCGPRibbonPanel* pPanelHalfAuto = pCategory->AddPanel (_T("半自动提取工具"));
 
@@ -871,8 +880,12 @@ void CMainFrame::AddTab_Print()
 	//--------------------------
 	CBCGPRibbonButton* pBtnSaveTMP= new CBCGPRibbonButton (ID_SAVE_TEMP,_T("保存模板"), 18, 18);
 	pPanelMapSurround->Add (pBtnSaveTMP);
-}
-
+//--------------------------
+	// 导出到影像文件输出设置:
+	//--------------------------ID_LAYOUT_PRINT_TO_IMAGE
+	CBCGPRibbonButton* pBtnExportImg= new CBCGPRibbonButton (ID_LAYOUT_PRINT_TO_IMAGE,_T("导出到影像文件"), 19, 19);
+	pPanelMapSurround->Add (pBtnExportImg);
+}	
 
 LRESULT CMainFrame::OnRibbonCustomize (WPARAM wp, LPARAM lp)
 {
