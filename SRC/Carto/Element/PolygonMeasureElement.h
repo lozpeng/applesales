@@ -2,11 +2,11 @@
 // 版权(c) 2010-2020, 天地智绘
 // 作者：  hhzhao
 // 时间：  2011-11-21
-// 描述：  折线量测对象
+// 描述：  面积量测对象
 //////////////////////////////////////////////////////////////////////
 
-#ifndef CPOLYLINEMEASURE_ELEMENT_H
-#define CPOLYLINEMEASURE_ELEMENT_H
+#ifndef CPOLYGONMEASURE_ELEMENT_H
+#define CPOLYGONMEASURE_ELEMENT_H
 #include "PolygonElement.h"
 namespace Element{
 
@@ -22,6 +22,8 @@ public:
 	void serialization(SYSTEM::IArchive &ar);
 
 	void DrawNormal(Display::IDisplayPtr pDisplay);
+
+	void SetUnitType(SYSTEM::SYS_UNIT_TYPE unitType){m_unitType = unitType;} //设置量测单位
 
 	bool bDrawCloseButton;
  
