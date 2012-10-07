@@ -16,6 +16,12 @@
 #define IDC_COMBO_Export                1061
 #define IDC_EDIT_ITERCOUNT              1062
 #define IDC_EDIT_THREOLD                1063
+#define IDC_STATIC_PRINTIMGFILE         1098
+#define IDC_BUTTON_PRINTIMGFILE         1099
+#define IDC_EDIT_DPI                    1100
+#define IDC_STATIC_X                    1101
+#define IDC_STATIC_Y                    1102
+#define IDC_BUTTON_UpDate               1103
 #define IDC_PAN                         2000
 #define IDC_PROGRESS                    2001
 #define IDC_ZOOMIN                      2002
@@ -79,6 +85,7 @@
 #define IDC_BT_SELCLASSFILE             2035
 #define IDC_BUTTON_INIMG                2035
 #define IDC_EDIT_P1                     2035
+#define IDD_DLG_PRINTIMGFILE            2035
 #define IDC_BUTTON_POLYGON              2036
 #define IDC_BUTTON_TARGETFILE           2036
 #define IDC_EDIT_P2                     2036
@@ -388,7 +395,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        2035
+#define _APS_NEXT_RESOURCE_VALUE        2036
 #define _APS_NEXT_COMMAND_VALUE         32781
 #define _APS_NEXT_CONTROL_VALUE         2033
 #define _APS_NEXT_SYMED_VALUE           2000

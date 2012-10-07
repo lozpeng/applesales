@@ -766,6 +766,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Tool\LayoutPrintToImageCmd.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Tool\LayoutPrintToImageCmd.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Tool\LayoutZoomActualSize.cpp"
 					>
 				</File>
@@ -1323,6 +1331,14 @@
 			<Filter
 				Name="LayoutUI"
 				>
+				<File
+					RelativePath=".\UI\DlgPrintImgSet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\UI\DlgPrintImgSet.h"
+					>
+				</File>
 				<File
 					RelativePath=".\UI\MapTitleProperSheet.cpp"
 					>
