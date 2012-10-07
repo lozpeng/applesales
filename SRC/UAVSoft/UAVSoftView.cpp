@@ -25,6 +25,8 @@
 #include "DlgInterpolater.h"
 #include "DialogCreateRoi.h"
 #include "SuperClassDlg.h"
+#include "PolygonMeasureElement.h"
+#include "PolylineMeasureElement.h"
 
 
 #ifdef _DEBUG
@@ -107,7 +109,7 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_UPDATE_COMMAND_UI(ID_LOAD_TEMP, OnUpdateLoadTemp)
 	ON_COMMAND(ID_SAVE_TEMP, OnSaveTemp)
 	ON_UPDATE_COMMAND_UI(ID_SAVE_TEMP, OnUpdateSaveTemp)
-
+	ON_COMMAND(ID_LAYOUT_PRINT_TO_IMAGE, OnLayoutPrintToImage)
 
 	ON_COMMAND(ID_POINT_SELECTFEATURE, OnSelectFeatureByPoint)
 	ON_UPDATE_COMMAND_UI(ID_POINT_SELECTFEATURE, OnUpdateSelectFeatureByPoint)
@@ -177,6 +179,7 @@ BEGIN_MESSAGE_MAP(CUAVSoftView, CView)
 	ON_UPDATE_COMMAND_UI(ID_LINE_MEASURE, OnUpdateLineMeasure)
 	ON_COMMAND(ID_AREA_MEASURE, OnAreaMeasure)
 	ON_UPDATE_COMMAND_UI(ID_AREA_MEASURE, OnUpdateAreaMeasure)
+	ON_COMMAND(ID_COMBOX_UNITTYPE,OnChangeUnit)
 
 	//编辑工具
 
@@ -663,6 +666,20 @@ void CUAVSoftView::OnOpenImg()
 	{
 		pCmdUI->Enable(m_bLayout);
 	}
+	
+	void CUAVSoftView::OnLayoutPrintToImage()
+	{
+		//PrintToImage
+		Framework::ICommand* pCmd = NULL;
+		m_MapCtrl.SetCurTool("PrintToImage");
+		pCmd= Framework::ICommand::FindCommand("PrintToImage");
+		if(pCmd)
+		{
+			pCmd->Initialize(dynamic_cast<Framework::IUIObject*>(&m_LayoutCtrl));
+			pCmd->Click();
+		}
+
+	}
 	void CUAVSoftView::OnSaveTemp()
 	{
 		//test
@@ -979,6 +996,46 @@ afx_msg void CUAVSoftView::OnAreaMeasure()
 	{
 		pTool->Initialize(dynamic_cast<Framework::IUIObject*>(&m_MapCtrl));
 	}
+}
+afx_msg void CUAVSoftView::OnChangeUnit()
+{
+	//改变测量单位
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CBCGPRibbonComboBox* pCombox = (CBCGPRibbonComboBox*)pMainFrm->m_wndRibbonBar.FindByID(ID_COMBOX_UNITTYPE);
+	string strUnit = pCombox->GetEditText();
+	SYSTEM::SYS_UNIT_TYPE unitType;
+	if (strUnit=="米")
+	{
+		unitType = SYSTEM::SYS_UNIT_METER;
+	}
+	else if (strUnit=="千米")
+	{
+		unitType = SYSTEM::SYS_UNIT_KILOMETER;
+	}
+	else
+		unitType = SYSTEM::SYS_UNIT_METER;
+
+
+	Carto::CMapPtr pMap = m_MapCtrl.GetMap();
+
+	//获取量测对象改变其单位
+	for (size_t i=0;i<pMap->GetGraphicLayer()->GetElementCount();i++)
+	{
+		IElementPtr ipElement = pMap->GetGraphicLayer()->GetElement(i);
+		Element::ELEMENT_TYPE elementType = ipElement->GetType();
+		if(elementType == Element::ELEMENT_TYPE::ET_MEASURE_POLYLINE_ELEMENT)
+		{
+			Element::CPolylineMeasureElementPtr ipPolylineMeasureElement= ipElement; 
+			ipPolylineMeasureElement->SetUnitType(unitType);
+		}
+		else if(elementType == Element::ELEMENT_TYPE::ET_MEASURE_POLYGON_ELEMENT)
+		{
+			Element::CPolygonMeasureElementPtr ipPolygonMeasureElement= ipElement; 
+			ipPolygonMeasureElement->SetUnitType(unitType);
+		}
+	}
+
+	m_MapCtrl.UpdateControl(drawAll);
 }
 afx_msg void CUAVSoftView::OnUpdateAreaMeasure(CCmdUI* pCmdUI)
 {

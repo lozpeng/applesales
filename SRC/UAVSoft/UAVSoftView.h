@@ -120,6 +120,7 @@ public:
 	afx_msg void OnUpdateLoadTemp(CCmdUI* pCmdUI);
 	afx_msg void OnSaveTemp();
 	afx_msg void OnUpdateSaveTemp(CCmdUI* pCmdUI);
+	afx_msg void OnLayoutPrintToImage();
 	//
 	afx_msg void OnCurrLayerCombo();
 	afx_msg void OnCurrLayerCombo_Vector();
@@ -193,6 +194,7 @@ public:
 	afx_msg void OnAreaMeasure();
 	afx_msg void OnUpdateAreaMeasure(CCmdUI* pCmdUI);
 
+	afx_msg void CUAVSoftView::OnChangeUnit();
 
 	//±à¼­¹¤¾ß
 	afx_msg void OnEditorStart();
