@@ -23,6 +23,8 @@ public:
 
 	void DrawNormal(Display::IDisplayPtr pDisplay);
 
+	void SetUnitType(SYSTEM::SYS_UNIT_TYPE unitType){m_unitType = unitType;} //设置量测单位
+
 	bool bDrawCloseButton;
 
 private:
@@ -30,6 +32,8 @@ private:
 	void DrawVertixCircle(Display::IDisplayPtr pDisplay);//显示量测点
 
 	void DrawCloseButton(Display::IDisplayPtr pDisplay);//绘制关闭按钮
+
+
 
 	SYSTEM::SYS_UNIT_TYPE  m_unitType;  //量测单位
 
