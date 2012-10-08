@@ -351,7 +351,7 @@ void CPrintToImageCmd::PrintToImg(CString csPrintImgPath, double dpi)
 					return;
 				}
 
-				if(!pRasPrintImg->DataWriteBand(j, lstartRow, lstartCol, lProWidth, lProHeight, pbyBuffer))
+				if(!pRasPrintImg->DataWriteBand(j, lstartCol, lstartRow, lProWidth, lProHeight, pbyBuffer))
 				{
 					delete []pbyBuffer;
 					return;
@@ -377,7 +377,7 @@ Geodatabase::IRasterDatasetPtr CPrintToImageCmd::CreatePrintImg(CString csPrintI
 	if(!pWorkspace->CreateRasterDataset(csPrintImgPath,&rasInfo))
 		return NULL;
 
-	return pWorkspace->OpenRasterDataset(csPrintImgPath);
+	return pWorkspace->OpenRasterDataset(csPrintImgPath,false);
 }
 
 
