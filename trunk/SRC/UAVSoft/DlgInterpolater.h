@@ -1,5 +1,6 @@
 #pragma once
-
+#include "afxwin.h"
+#include <map>
 
 // CDlgInterpolater 对话框
 
@@ -29,4 +30,14 @@ public:
 
 	void Excel2Shp(std::string filename,std::vector<double> &dxs, std::vector<double> &dys, 
 		std::vector<double> &dzs);
+
+private:
+	//处理插值，返回错误信息
+	CString Process();
+
+private:
+	CComboBox m_comboGas;
+	//气体的列号与名称的map
+	std::map<CString,short> m_gascolmap;
+	CString m_gasName;
 };

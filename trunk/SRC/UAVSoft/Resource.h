@@ -54,6 +54,7 @@
 #define IDC_BTN_SLECTPATH               1063
 #define IDC_COMBO_Export                1064
 #define IDC_LIST_CLASS                  1064
+#define IDC_GAS_TYPE                    1065
 #define ID_VIEW_TOOLBARS                32771
 #define ID_VIEW_WORKSPACE2              32792
 #define ID_VIEW_WORKSPACE               32803
@@ -193,7 +194,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        180
 #define _APS_NEXT_COMMAND_VALUE         40632
-#define _APS_NEXT_CONTROL_VALUE         1065
+#define _APS_NEXT_CONTROL_VALUE         1066
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif
