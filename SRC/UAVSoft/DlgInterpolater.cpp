@@ -22,7 +22,15 @@ CDlgInterpolater::CDlgInterpolater(CWnd* pParent /*=NULL*/)
 , m_strOutputFile(_T(""))
 , m_dbCellSize(0.00002)
 , m_dbSearchRadius(0.1)
+, m_gasName(_T(""))
 {
+	m_gascolmap["二氧化硫"]='F'-'A'+1;
+	m_gascolmap["二氧化氮"]='I'-'A'+1;
+	m_gascolmap["一氧化氮"]='L'-'A'+1;
+	m_gascolmap["硫化氢"]='O'-'A'+1;
+	m_gascolmap["一氧化碳"]='R'-'A'+1;
+	m_gascolmap["甲烷"]='U'-'A'+1;
+
 
 }
 
@@ -37,6 +45,8 @@ void CDlgInterpolater::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_OUTPUTFILE, m_strOutputFile);
 	DDX_Text(pDX, IDC_EDIT_CELLSIZE, m_dbCellSize);
 	DDX_Text(pDX, IDC_EDIT_SEARCHRADIUS, m_dbSearchRadius);
+	DDX_Control(pDX, IDC_GAS_TYPE, m_comboGas);
+	DDX_CBString(pDX, IDC_GAS_TYPE, m_gasName);
 }
 
 
@@ -170,19 +180,34 @@ void CDlgInterpolater::OnBnClickedOk()
 		MessageBox("参数不能为空，请设置!","提示",MB_OK);
 		return;
 	}
+	if(CB_ERR==m_comboGas.GetCurSel())
+	{
+		MessageBox("请选择一种气体类型!","提示",MB_OK);
+		return;
+	}
 
+	CString error = Process();
+	if(!error.IsEmpty())
+	{
+       MessageBox(error);
+	}
+	OnOK();
+}
+
+CString CDlgInterpolater::Process()
+{
 	//设置中文
 	locale oldloc = locale::global(locale(""));
 
 	double x, y, z;
-	std::vector<double> dxs,dys,dzs,dzso2,dzno,dzh2s,dzco;
-	
+	std::vector<double> dxs,dys,dzs,dzdata;
+
 	CString tempString = PathFindExtension(m_strInputFile);
 	tempString.MakeLower();
 	if (tempString == ".xls"||tempString == ".xlsx") 
 	{
 		CSpreadSheet sheet(m_strInputFile,"sheet1");  //打开工作簿中的工作表sheet1!
-		
+
 		CStringArray pArray;
 		CString pVal;
 
@@ -212,42 +237,58 @@ void CDlgInterpolater::OnBnClickedOk()
 			y= atof(pVal);
 			dys.push_back(y);
 		}
+
+		std::map<CString,short>::iterator iter = m_gascolmap.find(m_gasName);
+		if(iter==m_gascolmap.end())
+		{
+			return "没有找到气体数据";
+		}
+
+		int nStartFlag = iter->second;
+		sheet.ReadColumn(pArray,nStartFlag);
+		for (int k=1;k< lCnt;k++)
+		{
+			pVal = pArray.GetAt(k);
+			z= atof(pVal);
+			dzdata.push_back(z);
+		}
 		
-		//数据读取(二氧化硫)
-		int nStartFlag = 'F'-'A'+1;
-		sheet.ReadColumn(pArray,nStartFlag);
-		for (int k=1;k< lCnt;k++)
-		{
-			pVal = pArray.GetAt(k);
-			z= atof(pVal);
-			dzso2.push_back(z);
-		}
 
-		nStartFlag+=6;
-		sheet.ReadColumn(pArray,nStartFlag);
-		for (int k=1;k< lCnt;k++)
-		{
-			pVal = pArray.GetAt(k);
-			z= atof(pVal);
-			dzno.push_back(z);
-		}
+		////数据读取(二氧化硫)
+		//int nStartFlag = 'F'-'A'+1;
+		//sheet.ReadColumn(pArray,nStartFlag);
+		//for (int k=1;k< lCnt;k++)
+		//{
+		//	pVal = pArray.GetAt(k);
+		//	z= atof(pVal);
+		//	dzso2.push_back(z);
+		//}
 
-		nStartFlag+=3;
-		sheet.ReadColumn(pArray,nStartFlag);
-		for (int k=1;k< lCnt;k++)
-		{
-			pVal = pArray.GetAt(k);
-			z= atof(pVal);
-			dzh2s.push_back(z);
-		}
-		nStartFlag+=3;
-		sheet.ReadColumn(pArray,nStartFlag);
-		for (int k=1;k< lCnt;k++)
-		{
-			pVal = pArray.GetAt(k);
-			z= atof(pVal);
-			dzco.push_back(z);
-		}
+		//nStartFlag+=6;
+		//sheet.ReadColumn(pArray,nStartFlag);
+		//for (int k=1;k< lCnt;k++)
+		//{
+		//	pVal = pArray.GetAt(k);
+		//	z= atof(pVal);
+		//	dzno.push_back(z);
+		//}
+
+		//nStartFlag+=3;
+		//sheet.ReadColumn(pArray,nStartFlag);
+		//for (int k=1;k< lCnt;k++)
+		//{
+		//	pVal = pArray.GetAt(k);
+		//	z= atof(pVal);
+		//	dzh2s.push_back(z);
+		//}
+		//nStartFlag+=3;
+		//sheet.ReadColumn(pArray,nStartFlag);
+		//for (int k=1;k< lCnt;k++)
+		//{
+		//	pVal = pArray.GetAt(k);
+		//	z= atof(pVal);
+		//	dzco.push_back(z);
+		//}
 
 	}
 	else if (tempString == ".txt") 
@@ -256,8 +297,8 @@ void CDlgInterpolater::OnBnClickedOk()
 
 		std::ifstream in(filename.c_str());
 		if(!in) {
-			::AfxMessageBox(_T("打开txt文件失败..."));
-			return;
+			//::AfxMessageBox(_T("打开txt文件失败..."));
+			return "打开txt文件失败...";
 		}
 
 		while(!in.eof()) {
@@ -275,7 +316,7 @@ void CDlgInterpolater::OnBnClickedOk()
 	//创建shp文件
 	std::string strShpFile =m_strOutputFile.Left(m_strOutputFile.GetLength()-4);
 	strShpFile +=".shp";
-	this->Excel2Shp(strShpFile,dxs,dys,dzso2);
+	this->Excel2Shp(strShpFile,dxs,dys,dzdata);
 
 
 	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
@@ -283,12 +324,12 @@ void CDlgInterpolater::OnBnClickedOk()
 
 	CString retFile=m_strOutputFile;
 	int extFlag = m_strOutputFile.Find(".tif",0);
-	retFile.Insert(extFlag,"_so2");
+	//retFile.Insert(extFlag,"_so2");
 
 	Control::CProgressBar progress;
-	const char* szProName="SO2数据插值中，请等待...";
+	const char* szProName="气体数据插值中，请等待...";
 	//调用插值函数
-	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzso2,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
+	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzdata,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
 	{
 		MessageBox("处理失败");
 
@@ -297,46 +338,46 @@ void CDlgInterpolater::OnBnClickedOk()
 
 
 
-	szProName="NO数据插值中，请等待...";
-	retFile=m_strOutputFile;
-	retFile.Insert(extFlag,"_no");
-	//调用插值函数
-	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzno,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
-	{
-		MessageBox("处理失败");
+	//szProName="NO数据插值中，请等待...";
+	//retFile=m_strOutputFile;
+	//retFile.Insert(extFlag,"_no");
+	////调用插值函数
+	//if(!ImageProcess::CInverseDist::Run(dxs,dys,dzno,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
+	//{
+	//	MessageBox("处理失败");
 
-	}
-	pDoc->LoadImageFile(retFile);
+	//}
+	//pDoc->LoadImageFile(retFile);
 
 
-	//
-	szProName="H2S数据插值中，请等待...";
-	retFile=m_strOutputFile;
-	retFile.Insert(extFlag,"_h2s");
-	//调用插值函数
-	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzh2s,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
-	{
-		MessageBox("处理失败");
+	////
+	//szProName="H2S数据插值中，请等待...";
+	//retFile=m_strOutputFile;
+	//retFile.Insert(extFlag,"_h2s");
+	////调用插值函数
+	//if(!ImageProcess::CInverseDist::Run(dxs,dys,dzh2s,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
+	//{
+	//	MessageBox("处理失败");
 
-	}
+	//}
 
-	pDoc->LoadImageFile(retFile);
+	//pDoc->LoadImageFile(retFile);
 
-	//
-	szProName="CO数据插值中，请等待...";
-	retFile=m_strOutputFile;
-	retFile.Insert(extFlag,"_co");
-	//调用插值函数
-	if(!ImageProcess::CInverseDist::Run(dxs,dys,dzco,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
-	{
-		MessageBox("处理失败");
+	////
+	//szProName="CO数据插值中，请等待...";
+	//retFile=m_strOutputFile;
+	//retFile.Insert(extFlag,"_co");
+	////调用插值函数
+	//if(!ImageProcess::CInverseDist::Run(dxs,dys,dzco,m_dbCellSize,m_dbCellSize,m_dbSearchRadius,retFile,&progress,szProName))
+	//{
+	//	MessageBox("处理失败");
 
-	}
-	else
-	{
-		MessageBox("处理成功");
-	}
-	pDoc->LoadImageFile(retFile);
+	//}
+	//else
+	//{
+	//	MessageBox("处理成功");
+	//}
+	//pDoc->LoadImageFile(retFile);
 
 
 
@@ -353,5 +394,5 @@ void CDlgInterpolater::OnBnClickedOk()
 	pDoc->GetLinkMapCtrl()->UpdateControl(drawAll);
 
 	locale::global(oldloc);
-	OnOK();
+	return "";
 }
