@@ -81,6 +81,8 @@ FeatureGroupNode* FeatureLayer::createFeatureGroupNode(const TerrainTile* tile,P
 
 void FeatureLayer::read(const Config& config)
 {
+	_on_ground = config.value<bool>("onGroud",true);
+
 	Layer::read(config);
 	//TODO
 }

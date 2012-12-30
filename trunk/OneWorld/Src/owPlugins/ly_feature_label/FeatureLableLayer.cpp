@@ -4,12 +4,13 @@
 #include <owScene/FeatureSource.h>
 #include <owScene/TerrainTile.h>
 #include <Windows.h>
+#include <osgDB/ReadFile>
 
 using namespace owPlugins;
 
 FeatureLabelLayer::FeatureLabelLayer() : _font_size(10), _font_name("fonts/SIMLI.TTF"), _size_mode(OBJECT_SIZE)
 {
-
+	_color = osg::Vec4(1.0, 0.0, 0.0, 1.0);
 }
 
 FeatureLabelLayer::~FeatureLabelLayer()
@@ -22,7 +23,6 @@ osg::Node* FeatureLabelLayer::createNode(const TerrainTile* tile, Feature* f)
 {
 	//
 	osg::MatrixTransform* mt = new osg::MatrixTransform;
-	osg::Geode* _geode= new osg::Geode;
 
 	//
 	GeoShapeList shapes = f->getShapes();
@@ -46,13 +46,21 @@ osg::Node* FeatureLabelLayer::createNode(const TerrainTile* tile, Feature* f)
 	lat = osg::DegreesToRadians(ins[0]._v[1]);
 	h = ins[0]._v[2];
 
-	srs->getEllipsoid()->convertLatLongHeightToXYZ(lat, lon, h+10000000.0,start._v[0], start._v[1], start._v[2]);
-	srs->getEllipsoid()->convertLatLongHeightToXYZ(lat, lon, h-10000000.0,end._v[0], end._v[1], end._v[2]);
-	tile->genIntersectPoint(start, end, pos);
+	if(_on_ground)
+	{
+		srs->getEllipsoid()->convertLatLongHeightToXYZ(lat, lon, h+10000.0,start._v[0], start._v[1], start._v[2]);
+		srs->getEllipsoid()->convertLatLongHeightToXYZ(lat, lon, h-10000.0,end._v[0], end._v[1], end._v[2]);
+		tile->genIntersectPoint(start, end, pos);
 
+	}
+	else
+	{
+		srs->getEllipsoid()->convertLatLongHeightToXYZ(lat, lon, h+100,pos._v[0], pos._v[1], pos._v[2]);
+	}
+	
 	mt->setMatrix(osg::Matrix::translate(pos));
 
-	//
+	osg::Geode* _geode= new osg::Geode;
 	osgText::Text* text = new osgText::Text;
 
 	std::string name= f->getAttribute(_key).asString();

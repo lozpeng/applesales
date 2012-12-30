@@ -47,8 +47,6 @@ TerrainTile::TerrainTile(const TileKey& key,SpatialProperty* sp) : _key(key),_sp
 {
 	setUpdateCallback(new TerrainTileUpdateCallback);
 
-	std::map<std::string, int> tt;
-	tt["test"] = 10;
 }
 
 TerrainTile::TerrainTile(const TerrainTile& tile, const CopyOp& copyop/*=CopyOp::SHALLOW_COPY*/)

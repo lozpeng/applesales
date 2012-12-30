@@ -30,8 +30,8 @@ void SunModel::Init(int year, int month, int day, int hour, int min, int sec, do
 	//
 	_sunls = new osg::LightSource;
 	_sunls->getLight()->setPosition(osg::Vec4(pos,0.0));
-	_sunls->getLight()->setAmbient(osg::Vec4(0.5,0.5,0.5,1.0));
-	_sunls->getLight()->setDiffuse(osg::Vec4(1.0,1.0,1.0,1.0));
+	_sunls->getLight()->setAmbient(osg::Vec4(0.3,0.3,0.3,1.0));
+	_sunls->getLight()->setDiffuse(osg::Vec4(0.8,0.8,0.8,1.0));
 	_sunls->getLight()->setSpecular(osg::Vec4(0.8,0.8,0.8,1.0));
 
 	addChild(_sunls.get());

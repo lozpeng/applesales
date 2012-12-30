@@ -64,6 +64,10 @@ namespace owScene
 
 		//字体抬高
 		float _height_off;
+
+		//贴着地面
+		bool _on_ground;
+
 	};
 }
 
