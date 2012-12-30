@@ -2,23 +2,23 @@
 #include <osgDB/FileNameUtils>
 #include <osgDB/Options>
 #include <osgDB/Registry>
-#include <owPlugins/ly_img_raster/RasterImageLayer.h>
+#include <owPlugins/ly_feature_geometry/FeatureGeometryLayer.h>
 
 using namespace owPlugins;
 
-class RasterImageLayerFactory : public osgDB::ReaderWriter
+class FeatureGeometryLayerFactory : public osgDB::ReaderWriter
 {
 public:
-	RasterImageLayerFactory(){}
+	FeatureGeometryLayerFactory(){}
 
 	virtual const char* className()
 	{
-		return "RasterImageLayerFactory";
+		return "FeatureGeometryLayerFactory";
 	}
 
 	virtual bool acceptsExtension(const std::string& extension) const
 	{
-		return osgDB::equalCaseInsensitive( extension, "ly_img_raster" );
+		return osgDB::equalCaseInsensitive( extension, "ly_feature_geometry" );
 	}
 
 	virtual ReadResult readObject(const std::string& file_name, const Options* opt) const
@@ -35,11 +35,11 @@ public:
 		if(!config)
 			return ReadResult::ERROR_IN_READING_FILE;
 
-		RasterImageLayer* rasterimglayer  = new RasterImageLayer();
-		rasterimglayer->read(*config);
+		FeatureGeometryLayer* gmflyr  = new FeatureGeometryLayer();
+		gmflyr->read(*config);
 
-		return rasterimglayer;
+		return gmflyr;
 	}
 };
 
-REGISTER_OSGPLUGIN(ly_img_raster, RasterImageLayerFactory)
+REGISTER_OSGPLUGIN(ly_feature_geometry, FeatureGeometryLayerFactory)

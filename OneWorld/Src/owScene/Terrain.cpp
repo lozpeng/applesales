@@ -893,7 +893,7 @@ void Terrain::validate()
 	_terrainrendertech = new ImageLayersRenderTech(ImageLayersRenderTech::AUTO);
 
 	//背面裁剪,terrainnode朝向地心为前面,背向地心为背面
-	getOrCreateStateSet()->setAttributeAndModes(new CullFace(CullFace::FRONT), StateAttribute::ON);
+	//getOrCreateStateSet()->setAttributeAndModes(new CullFace(CullFace::FRONT), StateAttribute::ON);
 
 
 }
