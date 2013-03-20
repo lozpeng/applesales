@@ -212,6 +212,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MarkToolBox.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\OutputBar.cpp"
 				>
 			</File>
@@ -286,6 +290,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MarkToolBox.h"
+				>
+			</File>
+			<File
 				RelativePath=".\OutputBar.h"
 				>
 			</File>
@@ -332,6 +340,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\bitmap3.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\bmp00001.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\drawmesu.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\DrawMesure.bmp"
 				>
 			</File>
@@ -349,6 +369,10 @@
 			</File>
 			<File
 				RelativePath=".\res\filesmall.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\mark.bmp"
 				>
 			</File>
 			<File
@@ -381,6 +405,10 @@
 			</File>
 			<File
 				RelativePath=".\res\Toolbar.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\toolbar2.bmp"
 				>
 			</File>
 			<File

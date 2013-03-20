@@ -5,8 +5,7 @@
 #include "UAVSoft.h"
 
 #include "MainFrm.h"
-#include "UAVSoftDoc.h"
-#include "UAVSoftView.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -39,6 +38,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPFrameWnd)
 	ON_REGISTERED_MESSAGE(BCGM_ON_RIBBON_CUSTOMIZE, OnRibbonCustomize)
 	ON_COMMAND(ID_TOOLS_OPTIONS, OnToolsOptions)
 
+	ON_COMMAND(ID_MEASUREBAR, OnToolBox)
+
 	ON_UPDATE_COMMAND_UI(ID_STATUSBAR_PANE1, &CMainFrame::OnUpdatePosMap)
 END_MESSAGE_MAP()
 
@@ -59,8 +60,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CBCGPFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
 
+	//
 	if (!CreateRibbonBar ())
 	{
 		TRACE0("Failed to create ribbon bar\n");
@@ -332,6 +333,9 @@ BOOL CMainFrame::CreateRibbonBar ()
 	//制图
 	AddTab_Print();
 
+	//系统设置
+	AddTab_Setting();
+
 	//-----------------------------------
 	// Add quick access toolbar commands:
 	//-----------------------------------
@@ -520,58 +524,60 @@ void CMainFrame::AddTab_MapControl()
 	pPanelSystem->Add(pBtnClose);
 }
 
-void CMainFrame::AddTab_Mesure()
+void CMainFrame::AddTab_Setting()
 {
+
+
 	CBCGPRibbonCategory* pCategory = m_wndRibbonBar.AddCategory (
-		_T("标绘量测"),
+		_T("系统设置"),
 		IDB_FILELARGE,
 		IDB_DRAWMESURE);
 
 
-	CBCGPRibbonPanel* pPanelLabel = pCategory->AddPanel (_T("标绘工具"));
-	//--------------------------
-	// 选择:
-	//--------------------------
-	CBCGPRibbonButton* pBtnSelected = new CBCGPRibbonButton(ID_DRAW_SELECT, _T("选择"), -1, 2);
-	pPanelLabel->Add (pBtnSelected);
+	//CBCGPRibbonPanel* pPanelLabel = pCategory->AddPanel (_T("标绘工具"));
+	////--------------------------
+	//// 选择:
+	////--------------------------
+	//CBCGPRibbonButton* pBtnSelected = new CBCGPRibbonButton(ID_DRAW_SELECT, _T("选择"), -1, 2);
+	//pPanelLabel->Add (pBtnSelected);
 
-	//--------------------------
-	// 删除全部:
-	//--------------------------
-	CBCGPRibbonButton* pBtnDelAll = new CBCGPRibbonButton(ID_DEL_ALL, _T("删除全部"), -1, 14);
-	pPanelLabel->Add (pBtnDelAll);
+	////--------------------------
+	//// 删除全部:
+	////--------------------------
+	//CBCGPRibbonButton* pBtnDelAll = new CBCGPRibbonButton(ID_DEL_ALL, _T("删除全部"), -1, 14);
+	//pPanelLabel->Add (pBtnDelAll);
 
-	//--------------------------
-	// 矢量要素:
-	//--------------------------
-	CBCGPRibbonButton* pBtnRect = new CBCGPRibbonButton (ID_DRAW_RECT, _T("矩形"), -1, 3);
-	pPanelLabel->Add (pBtnRect);
-	//--------------------------
-	// 矢量要素:
-	//--------------------------
-	CBCGPRibbonButton* pBtnPolygon = new CBCGPRibbonButton(ID_DRAW_POLYGON, _T("多边形"), -1, 4);
-	pPanelLabel->Add (pBtnPolygon);		
-	//--------------------------
-	//添加标绘线工具
-	//--------------------------
-	CBCGPRibbonButton* pBtnPolyline = new CBCGPRibbonButton(ID_DRAW_POLYLINE, _T("多段线"), -1, 5);
-	pPanelLabel->Add (pBtnPolyline);	
-	// 点标绘:
-	//--------------------------
-	CBCGPRibbonButton* pBtnPoint = new CBCGPRibbonButton(ID_DRAW_MARKER, _T("点"), -1, 6);
-	pPanelLabel->Add (pBtnPoint);
+	////--------------------------
+	//// 矢量要素:
+	////--------------------------
+	//CBCGPRibbonButton* pBtnRect = new CBCGPRibbonButton (ID_DRAW_RECT, _T("矩形"), -1, 3);
+	//pPanelLabel->Add (pBtnRect);
+	////--------------------------
+	//// 矢量要素:
+	////--------------------------
+	//CBCGPRibbonButton* pBtnPolygon = new CBCGPRibbonButton(ID_DRAW_POLYGON, _T("多边形"), -1, 4);
+	//pPanelLabel->Add (pBtnPolygon);		
+	////--------------------------
+	////添加标绘线工具
+	////--------------------------
+	//CBCGPRibbonButton* pBtnPolyline = new CBCGPRibbonButton(ID_DRAW_POLYLINE, _T("多段线"), -1, 5);
+	//pPanelLabel->Add (pBtnPolyline);	
+	//// 点标绘:
+	////--------------------------
+	//CBCGPRibbonButton* pBtnPoint = new CBCGPRibbonButton(ID_DRAW_MARKER, _T("点"), -1, 6);
+	//pPanelLabel->Add (pBtnPoint);
 
-	//--------------------------
-	//添加编辑选择要素工具要素工具
-	//--------------------------
-	CBCGPRibbonButton* pBtnEditNodeElement = new CBCGPRibbonButton(ID_DRAW_EDITOR, _T("编辑结点"), -1, 7);
-	pPanelLabel->Add (pBtnEditNodeElement);
+	////--------------------------
+	////添加编辑选择要素工具要素工具
+	////--------------------------
+	//CBCGPRibbonButton* pBtnEditNodeElement = new CBCGPRibbonButton(ID_DRAW_EDITOR, _T("编辑结点"), -1, 7);
+	//pPanelLabel->Add (pBtnEditNodeElement);
 
-	//--------------------------
-	//将标绘要素保存为shp
-	//--------------------------
-	CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 8);
-	pPanelLabel->Add (pBtnElementSaveAs);
+	////--------------------------
+	////将标绘要素保存为shp
+	////--------------------------
+	//CBCGPRibbonButton* pBtnElementSaveAs = new CBCGPRibbonButton(ID_DRAW_SAVEAS, _T("导出"), -1, 8);
+	//pPanelLabel->Add (pBtnElementSaveAs);
 
 
 	//量测工具	
@@ -579,14 +585,14 @@ void CMainFrame::AddTab_Mesure()
 	//--------------------------
 	// 线量测:
 	//--------------------------
-	CBCGPRibbonButton* pBtnLineMeasure = new CBCGPRibbonButton(ID_LINE_MEASURE, _T("距离量测"), -1, 15);
-	pPanelMeasure->Add (pBtnLineMeasure);
+	//CBCGPRibbonButton* pBtnLineMeasure = new CBCGPRibbonButton(ID_LINE_MEASURE, _T("距离量测"), -1, 15);
+	//pPanelMeasure->Add (pBtnLineMeasure);
 
-	//--------------------------
-	// 面量测:
-	//--------------------------
-	CBCGPRibbonButton* pBtnAreaMeasure = new CBCGPRibbonButton(ID_AREA_MEASURE, _T("面积量测"), -1, 16);
-	pPanelMeasure->Add (pBtnAreaMeasure);
+	////--------------------------
+	//// 面量测:
+	////--------------------------
+	//CBCGPRibbonButton* pBtnAreaMeasure = new CBCGPRibbonButton(ID_AREA_MEASURE, _T("面积量测"), -1, 16);
+	//pPanelMeasure->Add (pBtnAreaMeasure);
 
 	pPanelMeasure->Add (new CBCGPRibbonLabel (_T(" 单 位:")));
 	CBCGPRibbonComboBox* pBtnUnit= new CBCGPRibbonComboBox(ID_COMBOX_UNITTYPE,FALSE,50,"");
@@ -612,17 +618,82 @@ void CMainFrame::AddTab_Mesure()
 	//--------------------------
 	// 魔术棒
 	//--------------------------
-	CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 10, 10);
+	//CBCGPRibbonButton* pBtnMagic = new CBCGPRibbonButton (ID_MAGIC_STICK, _T("魔术棒提取"), 10, 10);
 
-	pPanelHalfAuto->Add (pBtnMagic);
+	//pPanelHalfAuto->Add (pBtnMagic);
 
-	// 删除上次魔术棒提取结果
-	//--------------------------
-	CBCGPRibbonButton* pBtnRemoveMagic = new CBCGPRibbonButton (ID_REMOVELASTMAGIC, _T("取消上次操作"), 12, 12);
+	//// 删除上次魔术棒提取结果
+	////--------------------------
+	//CBCGPRibbonButton* pBtnRemoveMagic = new CBCGPRibbonButton (ID_REMOVELASTMAGIC, _T("取消上次操作"), 12, 12);
 
-	pPanelHalfAuto->Add (pBtnRemoveMagic);
+	//pPanelHalfAuto->Add (pBtnRemoveMagic);
 
 	pPanelHalfAuto->AddSeparator();
+}
+void CMainFrame::AddTab_Mesure()
+{
+	
+	//标绘工具栏
+	UINT uiToolbarHotID = 0;
+
+	if (!m_wndMarkBar.Create (_T("工具箱"), this, CRect (0, 0, 20, 500),
+		TRUE, 
+		ID_MEASUREBAR,
+		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("Failed to create ToolBox Bar\n");
+		return ;		// fail to create
+	}
+	m_wndMarkBar.AddToolsPage(_T("标绘工具"), IDB_BITMAP_MARK, 20, 
+		_T("选择\n全部删除\n矩形\n多边形\n折线\n点\n节点\n导出"));
+
+	m_wndMarkBar.GetPage (0)->SetMode (CBCGPToolBoxPage::ToolBoxPageMode_Default);
+
+	m_wndMarkBar.AddToolsPage(_T("量测工具"), IDB_MESURE, 20, 
+		_T("线量测\n面量测"));
+
+	m_wndMarkBar.GetPage (1)->SetMode (CBCGPToolBoxPage::ToolBoxPageMode_Default);
+
+	m_wndMarkBar.AddToolsPage(_T("提取工具"), IDB_BITMAP_MAGIC, 20, 
+		_T("魔术棒提取\n取消上次操作"));
+
+
+	m_wndMarkBar.AddToolsPage(_T("影像分类"), IDB_BITMAP_IMGPRO, 20, 
+		_T("ROI提取\nROI分类\n分类结果编码\n分类矢量化"));
+
+	//标准工具栏IDB_BITMAP_IMGPRO
+	//uiToolbarHotID =  0;
+	//if (!m_wndStandBar.Create(this,
+	//	WS_CHILD|WS_VISIBLE|CBRS_TOP|CBRS_TOOLTIPS|CBRS_FLYBY|CBRS_HIDE_INPLACE|CBRS_SIZE_DYNAMIC|
+	//	CBRS_GRIPPER | CBRS_BORDER_3D,ID_MEASUREBAR) ||
+	//	!m_wndStandBar.LoadToolBar(IDR_MARKBAR, 0, 0, FALSE, 0, 0, uiToolbarHotID))
+	//{
+	//	TRACE0("Failed to create toolbar\n");
+	//	return ;      // fail to create
+	//}
+	////
+	//CBCGPToolbarComboBoxButton  comboButton(ID_DUMMY_COMBO, 
+	//	CImageHash::GetImageOfCommand (ID_DUMMY_COMBO, FALSE),
+	//	CBS_DROPDOWNLIST);
+	//m_wndStandBar.ReplaceButton (ID_DUMMY_COMBO, comboButton, TRUE);
+
+	////CBCGPBaseControlBar* pControlbar = new CBCGPBaseControlBar();
+	//
+	//m_wndMarkBar.AddControlBar(&m_wndStandBar);
+	m_wndMarkBar.SetWindowText (_T("工具箱"));
+	m_wndMarkBar.EnableDocking(CBRS_ALIGN_ANY);
+
+	// 此处控制工具箱的大小位置
+	CRect viewRect,dockRect;
+	this->GetClientRect(&viewRect);
+	dockRect.left=viewRect.right-100;
+	dockRect.right=dockRect.left+110;
+	dockRect.top=viewRect.top+200;
+	dockRect.bottom=dockRect.top+350;
+	dockRect.NormalizeRect();
+	m_wndMarkBar.FloatControlBar(dockRect);
+	m_wndMarkBar.ShowControlBar(FALSE, TRUE, TRUE);
+
 
 	
 }
@@ -726,31 +797,55 @@ void CMainFrame::AddTab_GeoInfoExtract()
 		IDB_POL_LARGE,
 		IDB_POL_LARGE);
 
-	CBCGPRibbonPanel* pPanelEdge = pCategory->AddPanel (_T("图像边缘提取"));
-	//--------------------------
-	// 边缘增强
-	//--------------------------
-	CBCGPRibbonButton* pBtnEdgeEnhance = new CBCGPRibbonButton(ID_EDGE_ENHANCE, _T("图像边缘增强"), -1, 0);
-	pPanelEdge->Add (pBtnEdgeEnhance);
+	//CBCGPRibbonPanel* pPanelEdge = pCategory->AddPanel (_T("图像边缘提取"));
+	////--------------------------
+	//// 边缘增强
+	////--------------------------
+	//CBCGPRibbonButton* pBtnEdgeEnhance = new CBCGPRibbonButton(ID_EDGE_ENHANCE, _T("图像边缘增强"), -1, 0);
+	//pPanelEdge->Add (pBtnEdgeEnhance);
+
+	////--------------------------
+	//// 边缘提取
+	////--------------------------
+	//CBCGPRibbonButton* pBtnEdgeExtract = new CBCGPRibbonButton(ID_EDGE_EXTRACT, _T("图像边缘提取"), -1, 1);
+	//pPanelEdge->Add (pBtnEdgeExtract);
+
+	CBCGPRibbonPanel* pPanelPOL = pCategory->AddPanel (_T("污染体气识别"));
 
 	//--------------------------
-	// 边缘提取
+	// 气体污染数据插值
 	//--------------------------
-	CBCGPRibbonButton* pBtnEdgeExtract = new CBCGPRibbonButton(ID_EDGE_EXTRACT, _T("图像边缘提取"), -1, 1);
-	pPanelEdge->Add (pBtnEdgeExtract);
+	CBCGPRibbonButton* pBtnGasDataInsert = new CBCGPRibbonButton(ID_GAS_DATAINSERT, _T("气体污染数据插值"), 8, 8);
+	pPanelPOL->Add (pBtnGasDataInsert);
 
-	CBCGPRibbonPanel* pPanelPOL = pCategory->AddPanel (_T("环境污染识别"));
-	//--------------------------
-	// 垮塌事故识别
-	//--------------------------
-	CBCGPRibbonButton* pBtnBuildDamage = new CBCGPRibbonButton(ID_BUILD_DAMAGE, _T("垮塌事故识别"), 6, 6);
-	pPanelPOL->Add (pBtnBuildDamage);
 
+	CBCGPRibbonPanel* pPanelWater = pCategory->AddPanel (_T("水源地污染识别"));
 	//--------------------------
 	// 高精度水华识别
 	//--------------------------
 	CBCGPRibbonButton* pBtnHighWPL = new CBCGPRibbonButton(ID_HIGH_WATERPOL, _T("高精度水华识别"), 4, 4);
-	pPanelPOL->Add (pBtnHighWPL);
+	pPanelWater->Add (pBtnHighWPL);
+
+
+	CBCGPRibbonPanel* pPanelOil = pCategory->AddPanel (_T("溢油污染识别"));
+
+	//--------------------------
+	// 溢油边缘检测
+	//--------------------------
+	CBCGPRibbonButton* pBtnOilEdge = new CBCGPRibbonButton(ID_OIL_EDGE, _T("溢油边缘检测"), 7, 7);
+	pPanelOil->Add (pBtnOilEdge);
+
+	CBCGPRibbonPanel* pPanelDamage = pCategory->AddPanel (_T("垮塌事故识别"));
+
+	//--------------------------
+	// 垮塌事故识别
+	//--------------------------
+	CBCGPRibbonButton* pBtnBuildDamage = new CBCGPRibbonButton(ID_BUILD_DAMAGE, _T("垮塌事故识别"), 6, 6);
+	pPanelDamage->Add (pBtnBuildDamage);
+
+
+	return;
+
 
 	//--------------------------
 	// 自适应水华识别
@@ -758,11 +853,7 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	CBCGPRibbonButton* pBtnAdaptWPL = new CBCGPRibbonButton(ID_CLASSIFY_FUZZYKMEAN, _T("自适应水华识别"), 5, 5);
 	pPanelPOL->Add (pBtnAdaptWPL);
 
-	//--------------------------
-	// 气体污染数据插值
-	//--------------------------
-	CBCGPRibbonButton* pBtnGasDataInsert = new CBCGPRibbonButton(ID_GAS_DATAINSERT, _T("气体污染数据插值"), 8, 8);
-	pPanelPOL->Add (pBtnGasDataInsert);
+
 
 	//--------------------------
 	// 浓度影像生成
@@ -771,11 +862,6 @@ void CMainFrame::AddTab_GeoInfoExtract()
 	pPanelPOL->Add (pBtnGasCreateImage);
 
 
-	//--------------------------
-	// 溢油边缘检测
-	//--------------------------
-	CBCGPRibbonButton* pBtnOilEdge = new CBCGPRibbonButton(ID_OIL_EDGE, _T("溢油边缘检测"), 7, 7);
-	pPanelPOL->Add (pBtnOilEdge);
 
 
 	CBCGPRibbonPanel* pPanelClasses = pCategory->AddPanel (_T("影像分类"));
@@ -1048,6 +1134,102 @@ void CMainFrame::UpdateStatusInfo(CString info)
 	
 	m_wndStatusBar.RecalcLayout ();
 	m_wndStatusBar.RedrawWindow ();
+}
 
+CUAVSoftView*  CMainFrame::GetActiveMapView()
+{
+	CUAVSoftDoc * pDoc = (CUAVSoftDoc *)GetActiveDocument();
+	if(!pDoc)
+		return NULL;
 
+	POSITION pos = pDoc->GetFirstViewPosition();
+	CUAVSoftView* pMapView;
+	pMapView = (CUAVSoftView*)pDoc->GetNextView(pos);
+
+	return pMapView;
+}
+//标绘符号工具
+void CMainFrame::OnToolBox()
+{
+	CUAVSoftView* pView=this->GetActiveMapView();
+	int nPage = -1;
+	int nTool = -1;
+	nTool=m_wndMarkBar.GetLastClickedTool (nPage);
+
+	//标绘
+	if(nPage == 0)
+	{
+		switch(nTool)
+		{
+		case 0:
+			pView->OnDrawSelect();
+			break;
+		case 1:
+			pView->OnDelAll();
+			break;
+		case 2:
+			pView->OnDrawRect();
+			break;
+		case 3:
+			pView->OnDrawPolygon();
+			break;
+		case 4:
+			pView->OnDrawPolyline();
+			break;
+		case 5:
+			pView->OnDrawMarker();
+			break;
+		case 6:
+			pView->OnEditElement();
+			break;
+		case 7:
+			pView->OnDrawSaveAs();
+			break;
+		default:
+			;
+
+		}
+	}
+	else if(nPage == 1)
+	{
+		switch(nTool)
+		{
+		case 0:
+			pView->OnLineMeasure();
+			break;
+		case 1:
+			pView->OnAreaMeasure();
+			break;
+		}
+	}
+	else if(nPage == 2)
+	{
+		switch(nTool)
+		{
+		case 0:
+			pView->OnMagicStick();
+			break;
+		case 1:
+			pView->OnDeleteLastMagic();
+			break;
+		}
+	}
+	else if(nPage == 3)
+	{
+		switch(nTool)
+		{
+		case 0:
+			pView->OnRoiDlg();
+			break;
+		case 1:
+			pView->OnSuperClsDlg();
+			break;
+		case 2:
+			pView->OnModifyClassinfo();
+			break;
+		case 3:
+			pView->OnClassVector();
+			break;
+		}
+	}
 }

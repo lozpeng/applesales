@@ -33,9 +33,15 @@
 #define IDD_DLG_CREATE_ROI              170
 #define IDD_DIALOG_CLASS                171
 #define IDD_DIALOG_SUPERCLASS           172
+#define IDB_BITMAP_MARK                 175
 #define IDD_DIG_DRAWINGEXPORT           176
 #define ID_INDICATOR_OTHER_INFO         178
 #define ID_INDICATOR_POS_MAP            179
+#define IDB_BITMAP_MAGIC                180
+#define IDB_BITMAP3                     181
+#define IDB_BITMAP_IMGPRO               181
+#define IDR_MARKBAR                     242
+#define IDB_MESURE                      243
 #define IDC_COMPANY_URL                 1041
 #define ID_TABCONTROL                   1054
 #define IDC_RADIO_EXPORT_ALL            1055
@@ -91,6 +97,7 @@
 #define ID_DRAW_POLYLINE                32863
 #define ID_DRAW_CURVE                   32864
 #define ID_DRAW_TEXT                    32865
+#define ID_NONE                         32869
 #define ID_DRAW_EDITOR                  32874
 #define ID_DRAW_Ellipse                 32875
 #define ID_DRAW_CalloutText             32876
@@ -103,6 +110,12 @@
 #define ID_32886                        32886
 #define ID_LINE_MEASURE                 32900
 #define ID_AREA_MEASURE                 32901
+#define ID_MARK_TOOL                    33007
+#define ID_DRAW_LINE                    33008
+#define ID_DRAW_RECTANGLE               33010
+#define ID_DRAW_ELLIPSE                 33011
+#define ID_DRAW_EDIT                    33014
+#define ID_DRAW_DELETE                  33015
 #define ID_MAPCTRL                      40000
 #define ID_LAYOUTCTRL                   40001
 #define ID_MAIN_BUTTON                  40002
@@ -188,12 +201,15 @@
 #define IDC_SUPER_CLASS_DIALOG          40561
 #define ID_COMBOX_UNITTYPE              40562
 #define ID_LAYOUT_PRINT_TO_IMAGE        40563
+#define ID_MEASUREBAR                   40564
+#define ID_BUTTON40632                  40632
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        180
-#define _APS_NEXT_COMMAND_VALUE         40632
+#define _APS_NEXT_RESOURCE_VALUE        182
+#define _APS_NEXT_COMMAND_VALUE         40633
 #define _APS_NEXT_CONTROL_VALUE         1066
 #define _APS_NEXT_SYMED_VALUE           108
 #endif

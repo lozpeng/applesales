@@ -6,6 +6,9 @@
 #include "WorkSpaceBar.h"
 #include "WorkSpaceBar2.h"
 #include "OutputBar.h"
+#include "MarkToolBox.h"
+#include "UAVSoftDoc.h"
+#include "UAVSoftView.h"
 
 class CMainFrame : public CBCGPFrameWnd
 {
@@ -59,6 +62,7 @@ public:
 	void		AddMainCategory();
 	void		AddTab_MapControl();
 	void		AddTab_Mesure();
+	void        AddTab_Setting();
 	//编辑模块
 	void		AddTab_Editor();
 	//地理要素提取
@@ -67,6 +71,9 @@ public:
 	void        AddTab_Print();
 
 	void        UpdateStatusInfo(CString info);
+
+	void OnToolBox();
+	CUAVSoftView* GetActiveMapView();
 
 public:
 
@@ -79,6 +86,10 @@ public:
 	CWorkSpaceBar			m_wndWorkSpace;
 	CWorkSpaceBar2			m_wndWorkSpace2;
 	COutputBar				m_wndOutput;
+
+
+	CMarkToolBoxBarEx		m_wndMarkBar;
+	CBCGPToolBar			m_wndStandBar;
 	UINT	m_nAppLook;
 };
 
