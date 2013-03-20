@@ -88,6 +88,11 @@ IDB_FILESMALL           BITMAP                  "res\\filesmall.bmp"
 IDB_MAIN                BITMAP                  "res\\earth.bmp"
 IDB_LAYOUT              BITMAP                  "res\\bitmap2.bmp"
 IDB_POL_LARGE           BITMAP                  "res\\pollution.bmp"
+IDR_MARKBAR             BITMAP                  "res\\toolbar2.bmp"
+IDB_BITMAP_MARK         BITMAP                  "res\\mark.bmp"
+IDB_MESURE              BITMAP                  "res\\drawmesu.bmp"
+IDB_BITMAP_MAGIC        BITMAP                  "res\\bitmap3.bmp"
+IDB_BITMAP_IMGPRO       BITMAP                  "res\\bmp00001.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -404,6 +409,28 @@ BEGIN
     IDC_GAS_TYPE, 0x403, 5, 0
 0xd7bc, 0xe9cd, "\000" 
     0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MARKBAR TOOLBAR  48, 48
+BEGIN
+    BUTTON      33006
+    BUTTON      ID_DRAW_DELETE
+    SEPARATOR
+    BUTTON      ID_DRAW_RECTANGLE
+    BUTTON      33012
+    BUTTON      33009
+    SEPARATOR
+    BUTTON      33013
+    SEPARATOR
+    BUTTON      ID_DRAW_EDIT
+    SEPARATOR
+    BUTTON      ID_BUTTON40632
 END
 
 

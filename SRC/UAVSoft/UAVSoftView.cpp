@@ -2242,13 +2242,15 @@ void CUAVSoftView::OnEdgeExtract()
 
 void CUAVSoftView::OnBuildDamage()
 {
-
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	pMainFrm->m_wndMarkBar.ShowControlBar(TRUE, TRUE, TRUE);
 }
 
 void CUAVSoftView::OnHighWaterpol()
 {
 	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
 	Control::CImageProcessTool::ShowDistillWaterSheet(&m_MapCtrl, pMainFrm);
+	pMainFrm->m_wndMarkBar.ShowControlBar(TRUE, TRUE, TRUE);
 }
 
 void CUAVSoftView::OnGasDatainsert()
@@ -2265,7 +2267,8 @@ void CUAVSoftView::OnGasCreateImage()
 
 void CUAVSoftView::OnOilEdge()
 {
-
+	CMainFrame* pMainFrm = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	pMainFrm->m_wndMarkBar.ShowControlBar(TRUE, TRUE, TRUE);
 }
 
 void CUAVSoftView::OnClassVector()
