@@ -39,5 +39,8 @@ private:
 	CComboBox m_comboGas;
 	//气体的列号与名称的map
 	std::map<CString,short> m_gascolmap;
+	std::map<CString,CString> m_gasnamemap;
 	CString m_gasName;
+public:
+	afx_msg void OnCbnSelchangeGasType();
 };
