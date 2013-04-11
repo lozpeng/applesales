@@ -11,6 +11,9 @@
 #include "CSpreadSheet.h"
 #include "IWorkspace.h"
 #include "ShapefileWorkspaceFactory.h"
+#include  <io.h>
+#include  <stdio.h>
+#include  <stdlib.h>
 using namespace std;
 // CDlgInterpolater 对话框
 
@@ -32,6 +35,12 @@ CDlgInterpolater::CDlgInterpolater(CWnd* pParent /*=NULL*/)
 	m_gascolmap["甲烷"]='U'-'A'+1;
 
 
+	m_gasnamemap["二氧化硫"]="SO2";
+	m_gasnamemap["二氧化氮"]="NO2";
+	m_gasnamemap["一氧化氮"]="NO";
+	m_gasnamemap["硫化氢"]="H2S";
+	m_gasnamemap["一氧化碳"]="CO";
+	m_gasnamemap["甲烷"]="CH4";
 }
 
 CDlgInterpolater::~CDlgInterpolater()
@@ -54,6 +63,7 @@ BEGIN_MESSAGE_MAP(CDlgInterpolater, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_OUTPUTFILE, &CDlgInterpolater::OnBnClickedButtonOutputfile)
 	ON_BN_CLICKED(IDC_BUTTON_INPUTFILE, &CDlgInterpolater::OnBnClickedButtonInputfile)
 	ON_BN_CLICKED(IDOK, &CDlgInterpolater::OnBnClickedOk)
+	ON_CBN_SELCHANGE(IDC_GAS_TYPE, &CDlgInterpolater::OnCbnSelchangeGasType)
 END_MESSAGE_MAP()
 
 
@@ -63,8 +73,13 @@ void CDlgInterpolater::OnBnClickedButtonOutputfile()
 {
 	// TODO: 在此添加控件通知处理程序代码
 
+	UpdateData();
 	CString strFilter = "Image Files(*.tif)|*.tif|All Files(*.*)|*.*||";
 	CFileDialog dlg(TRUE, "Image Files(*.tif)", NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, strFilter);
+	
+	std::string enname =(const char*) (m_gasnamemap[m_gasName]);
+	enname+=".tif";
+	//dlg.m_ofn.lpstrFile = (LPSTR)enname.c_str();
 	if(dlg.DoModal() == IDOK)
 	{
 		m_strOutputFile = dlg.GetPathName();
@@ -395,4 +410,34 @@ CString CDlgInterpolater::Process()
 
 	locale::global(oldloc);
 	return "";
+}
+
+void CDlgInterpolater::OnCbnSelchangeGasType()
+{
+	UpdateData();
+	if(m_strInputFile.IsEmpty())
+	{
+        return;
+	}
+	std::string path =m_strInputFile;
+	//得到文件路径
+	path =path.substr(0,path.rfind('\\')+1);
+
+	std::string enname =(const char*) (m_gasnamemap[m_gasName]);
+	std::string filename = enname+".tif";
+	std::string fullname = path+filename;
+	int index = 1;
+	//判断文件是否存在
+	while(_access( fullname.c_str(), 0 )!= -1 )
+	{
+		//改变文件名
+		CString newname;
+		newname.Format("(%d).tif",index);
+		fullname = path+enname;
+		fullname+=newname;
+		index++;
+
+	}
+	m_strOutputFile = fullname.c_str();
+	UpdateData(FALSE);
 }
