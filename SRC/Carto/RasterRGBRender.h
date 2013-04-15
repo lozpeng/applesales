@@ -32,6 +32,12 @@ namespace Carto
 		* @param envelop 读取的数据块地理范围
 		*/
 		void ReadDrawData(GEOMETRY::geom::Envelope dataDrawExtent);
+
+		/*
+		* 得到图例的信息
+		*/
+		virtual CLegendInfoPtr GetLegendInfo();
+
 	private:
 
 		/**

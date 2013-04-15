@@ -128,6 +128,9 @@ bool CRasterLayer::SetData(Geodatabase::IGeodataObjectPtr pDataObject)
 	//设置一个默认的RasterRender
     CRasterRGBRender *pRender =new CRasterRGBRender();
 
+	pRender->SetRasterDataSet(dynamic_cast<Geodatabase::IRasterDataset*>(m_pDataObject.get()));
+
+
 	if(pRaster->GetBandCount()>=3)
 	{
 		pRender->SetRedBandIndex(1);

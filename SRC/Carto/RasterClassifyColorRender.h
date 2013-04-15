@@ -34,6 +34,11 @@ public:
 
 	void setColorRamp(Display::IColorRampPtr pColorRamp);
 
+	/*
+	* 得到图例的信息
+	*/
+	virtual CLegendInfoPtr GetLegendInfo();
+
 private:
 
 	template<class DataType>

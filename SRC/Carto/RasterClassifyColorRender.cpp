@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "RasterClassifyColorRender.h"
 #include "DIB.h"
+#include "SymbolFactory.h"
+#include "SimpleFillSymbol.h"
 namespace Carto
 {
 
@@ -337,6 +339,62 @@ bool CRasterClassifyColorRender::DibDraw()
 	}
 
 	return true;
+}
+
+
+CLegendInfoPtr CRasterClassifyColorRender::GetLegendInfo()
+{
+	if(NULL == m_pRasterDataset)
+		return NULL;
+
+
+	double dmin,dmax;
+
+	
+
+	m_pRasterDataset->GetBandMinMaxValue(1, &dmax, &dmin);
+	double dsegvalue=(dmax-dmin)/m_nBreak;
+
+	CLegendInfoPtr pLegendInfo(new CLegendInfo());
+
+	//只有一个Gruop
+	CLegendGroupPtr pGroup(new CLegendGroup());
+
+	std::string strHeading;
+
+	LegendItem item;
+
+	char buffer[100];
+
+	strHeading ="颜色梯度";
+
+	pGroup->SetHeading(strHeading);
+
+	for(int i=0;i<m_nBreak;i++)
+	{
+		Display::ISymbolPtr pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+
+		//红色符号
+		Display::CSimpleFillSymbol *pfillSymbol =dynamic_cast<Display::CSimpleFillSymbol*>(pSymbol.get());
+		pfillSymbol->SetFillColor(RGB(m_colorgroup[i].red,
+			m_colorgroup[i].green,
+			m_colorgroup[i].blue));
+		pfillSymbol->SetOutLineColor(RGB(255,255,255));
+
+		memset(buffer,0,sizeof(char)*100);
+		sprintf(buffer,"%.6f-%.6f",dmin+i*dsegvalue,dmin+(i+1)*dsegvalue);
+
+		item.pSymbol =pSymbol;
+		item.strLabel =buffer;
+		pGroup->AddItem(item);
+	}
+
+
+
+	pLegendInfo->AddGroup(pGroup);
+
+	return pLegendInfo;
+
 }
 
 } //namespace Carto
