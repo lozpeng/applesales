@@ -251,6 +251,11 @@ Carto::IRasterRenderPtr CClassifyColorPage::GetRasterRender()
 {
 	UpdateData(TRUE);
 	long classnum =m_Classes.size();
+	if(classnum<1)
+	{
+		return NULL;
+
+	}
 	if(classnum>=1)
 	{
 		Display::HSLColorRampPtr pHslramp=new Display::HSLColorRamp();

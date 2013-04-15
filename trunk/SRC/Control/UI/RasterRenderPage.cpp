@@ -255,7 +255,13 @@ BOOL CRasterRenderPage::OnApply()
 {
 	if(m_nActivePage>=0 && m_pLayer)
 	{
-		dynamic_cast<Carto::CRasterLayer*>(m_pLayer)->SetRender(m_pages[m_nActivePage]->GetRasterRender());
+		Carto::IRasterRenderPtr pRender = m_pages[m_nActivePage]->GetRasterRender();
+
+		if(pRender)
+		{
+			dynamic_cast<Carto::CRasterLayer*>(m_pLayer)->SetRender(pRender);
+		}
+		
 	}
 	return TRUE;
 }

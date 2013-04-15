@@ -89,4 +89,9 @@ CLegendInfoPtr IRasterRender::GetLegendInfo()
 	return NULL;
 }
 
+void IRasterRender::SetRasterDataSet(Geodatabase::IRasterDataset* pDataSet)
+{
+	m_pRasterDataset = pDataSet;
+}
+
 } //namespace Carto

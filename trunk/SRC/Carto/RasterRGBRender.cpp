@@ -3,6 +3,8 @@
 #include "IRasterDataset.h"
 #include "ImgProFunction.h"
 #include "RasterLUTAlgorithm.h"
+#include "SymbolFactory.h"
+#include "SimpleFillSymbol.h"
 #include "DIB.h"
 
 namespace Carto
@@ -764,6 +766,171 @@ void CRasterRGBRender::SetBrightAndContrast(BYTE *srcLUT,int brightVal,int contr
 
 	SetBandLUT(1,dispLUT);
 
+}
+
+
+CLegendInfoPtr CRasterRGBRender::GetLegendInfo()
+{
+	if(NULL == m_pRasterDataset)
+		return NULL;
+
+	CLegendInfoPtr pLegendInfo(new CLegendInfo());
+
+	//只有一个Gruop
+	CLegendGroupPtr pGroup(new CLegendGroup());
+
+	std::string strHeading;
+
+	//		strHeading ="灰度图";
+
+
+	LegendItem item;
+
+	char buffer[100];
+	if(m_bRGB)
+	{
+		strHeading ="彩色";
+
+		pGroup->SetHeading(strHeading);
+
+		Display::ISymbolPtr pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+
+		//红色符号
+		Display::CSimpleFillSymbol *pfillSymbol =dynamic_cast<Display::CSimpleFillSymbol*>(pSymbol.get());
+		pfillSymbol->SetFillColor(RGB(255,0,0));
+		pfillSymbol->SetOutLineColor(RGB(255,255,255));
+
+		memset(buffer,0,sizeof(char)*100);
+		sprintf(buffer,"通道_%d",m_ShowBandIndex[0]);
+
+		item.pSymbol =pSymbol;
+		item.strLabel =buffer;
+		pGroup->AddItem(item);
+
+		//绿色符号
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+
+		pfillSymbol =dynamic_cast<Display::CSimpleFillSymbol*>(pSymbol.get());
+		pfillSymbol->SetFillColor(RGB(0,255,0));
+		pfillSymbol->SetOutLineColor(RGB(255,255,255));
+
+		memset(buffer,0,sizeof(char)*100);
+		sprintf(buffer,"通道_%d",m_ShowBandIndex[1]);
+
+		item.pSymbol =pSymbol;
+		item.strLabel =buffer;
+		pGroup->AddItem(item);
+
+		//蓝色符号
+		pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+
+		pfillSymbol =dynamic_cast<Display::CSimpleFillSymbol*>(pSymbol.get());
+		pfillSymbol->SetFillColor(RGB(0,0,255));
+		pfillSymbol->SetOutLineColor(RGB(255,255,255));
+
+		memset(buffer,0,sizeof(char)*100);
+		sprintf(buffer,"通道_%d",m_ShowBandIndex[2]);
+
+		item.pSymbol =pSymbol;
+		item.strLabel =buffer;
+		pGroup->AddItem(item);
+
+
+	}
+	else
+	{
+
+		//
+
+		long lClassNum;
+		long* plClassValue = NULL;
+		char** ppszClassList = NULL;
+		BOOL bClassFile = FALSE;
+		BYTE pbRed[256], pbGreen[256], pbBlue[256], pbLUT[256];
+		for(long i= 0; i< 256; i++)
+			pbRed[i] = pbGreen[i] = pbBlue[i] = pbLUT[i] = i;
+
+		//if(m_pRasterDataset->GetClassInfo(&lClassNum, plClassValue, &ppszClassList))
+		//{
+		//	if(lClassNum > 0 && lClassNum <= 255 && plClassValue != NULL )
+		//	{
+		//		m_pRasterDataset->GetChannelPalette(1, pbRed, pbGreen, pbBlue);
+		//		m_pRasterDataset->GetChannelLUT(1, pbLUT);
+
+
+		//		strHeading ="分类图";
+
+		//		pGroup->SetHeading(strHeading);
+
+		//		Display::ISymbolPtr pSymbol;
+
+		//		Display::CSimpleFillSymbol *pfillSymbol;
+
+		//		for(long i = 1; i<= lClassNum; i++)
+		//		{
+		//			pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+
+		//			pfillSymbol =dynamic_cast<Display::CSimpleFillSymbol*>(pSymbol.get());
+
+		//			pfillSymbol =dynamic_cast<Display::CSimpleFillSymbol*>(pSymbol.get());
+		//			pfillSymbol->SetFillColor(RGB(pbRed[pbLUT[plClassValue[i-1]]], pbGreen[pbLUT[plClassValue[i-1]]], pbBlue[pbLUT[plClassValue[i-1]]]));
+		//			pfillSymbol->SetOutLineColor(RGB(255,255,255));
+
+		//			memset(buffer,0,sizeof(char)*100);
+		//			if(ppszClassList != NULL)
+		//				sprintf(buffer,"%s", (const char*)((ppszClassList)[i-1]));
+		//			else
+		//				sprintf(buffer,"%s", "内容不详");
+
+		//			item.pSymbol =pSymbol;
+		//			item.strLabel =buffer;
+		//			pGroup->AddItem(item);
+		//		}
+
+		//		bClassFile = TRUE;
+
+		//		//if(plClassValue != NULL)
+		//		//{
+		//		//	delete[] plClassValue;
+		//		//}
+		//		//if(ppszClassList != NULL)
+		//		//{
+		//		//	for(long i = 0; i < lClassNum; i++)
+		//		//	{
+		//		//		delete[] ppszClassList[i];
+		//		//	}
+		//		//	delete[] ppszClassList;
+		//		//}
+		//	}
+		//}
+
+		//
+		if (!bClassFile)
+		{
+			strHeading ="全色图";
+
+			pGroup->SetHeading(strHeading);
+
+			Display::ISymbolPtr pSymbol = Display::CSymbolFactory::CreateSymbol(SIMPLE_FILL_SYMBOL);
+
+			//灰度符号
+			Display::CSimpleFillSymbol *pfillSymbol =dynamic_cast<Display::CSimpleFillSymbol*>(pSymbol.get());
+			pfillSymbol->SetFillColor(RGB(150,150,150));
+			pfillSymbol->SetOutLineColor(RGB(255,255,255));
+
+			memset(buffer,0,sizeof(char)*50);
+			sprintf(buffer,"通道_%d",m_ShowBandIndex[0]);
+			item.pSymbol =pSymbol;
+			item.strLabel =buffer;
+			pGroup->AddItem(item);
+		}
+
+	}
+
+
+	pLegendInfo->AddGroup(pGroup);
+
+	return pLegendInfo;
 }
 
 }

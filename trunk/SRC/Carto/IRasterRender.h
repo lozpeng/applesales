@@ -74,6 +74,8 @@ public:
 	*/
 	virtual CLegendInfoPtr GetLegendInfo();
 
+	virtual void SetRasterDataSet(Geodatabase::IRasterDataset* pDataSet);
+
 protected:
 
 	
